@@ -6,6 +6,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Created by dongy on 2016-11-15.
  */
@@ -18,8 +21,20 @@ public class OrderDbService {
         transaction.commit();
     }
 
+    public void get(int customer_id){
+        SessionFactory factory = new Configuration().configure().buildSessionFactory();
+        Session session = factory.openSession();
+        session.beginTransaction();
+        List orders = session.createQuery("From Order where customer_id = " + customer_id).list();
+
+        Iterator iterator = orders.iterator();
+        while (iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+    }
+
     public static void main(String[] args) {
         OrderDbService service = new OrderDbService();
-        service.record(1,1,1,1);
+        service.get(1);
     }
 }
