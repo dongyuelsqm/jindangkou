@@ -2,9 +2,11 @@ package com.kingdangkou.weixin.weixiaodan.controller;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.transaction.Transactional;
 import java.sql.Connection;
@@ -12,8 +14,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 @Transactional
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("")
 public class TakeNewOrderTest {
-    @Autowired
     private BasicDataSource dataSource;
     @Test
     public void testName() throws Exception {
