@@ -13,8 +13,8 @@ import java.util.List;
  * Created by dongy on 2016-11-15.
  */
 public class OrderDbService {
+    SessionFactory factory = new Configuration().configure().buildSessionFactory();
     public void record(int customer_id, int product_id, int number, int address_id){
-        SessionFactory factory = new Configuration().configure().buildSessionFactory();
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(new Order(customer_id, product_id, number, address_id));

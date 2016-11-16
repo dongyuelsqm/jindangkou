@@ -10,5 +10,6 @@
     <property name="connection.password">root123456</property>
     <!-- DB schema will be updated if needed -->
       <mapping resource="Order.hbm.xml"/>
+      <mapping class="com.kingdangkou.weixin.weixiaodan.model.Customer"/>
   </session-factory>
 </hibernate-configuration>
