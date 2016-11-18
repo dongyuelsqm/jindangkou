@@ -1,8 +1,8 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
-import com.kingdangkou.weixin.weixiaodan.model.Address;
-import com.kingdangkou.weixin.weixiaodan.model.Customer;
-import com.kingdangkou.weixin.weixiaodan.model.Product;
+import com.kingdangkou.weixin.weixiaodan.entity.Address;
+import com.kingdangkou.weixin.weixiaodan.entity.Customer;
+import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

@@ -1,4 +1,4 @@
-package com.kingdangkou.weixin.weixiaodan.model;
+package com.kingdangkou.weixin.weixiaodan.entity;
 
 import javax.persistence.*;
 
@@ -9,27 +9,29 @@ import javax.persistence.*;
 @Table(name = "customers")
 public class Customer {
 
-    private String openID;
+    private String id;
     private String name;
     private String gender;
     private String phone;
 
+    public Customer() {
+    }
+
     public Customer(String openID, String name, String gender, String phone) {
-        this.openID = openID;
+        this.id = openID;
         this.name = name;
         this.gender = gender;
         this.phone = phone;
     }
 
     @Id
-    @GeneratedValue
     @Column(name = "open_id")
-    public String getOpenID() {
-        return openID;
+    public String getId() {
+        return id;
     }
 
-    public void setOpenID(String openID) {
-        this.openID = openID;
+    public void setId(String openID) {
+        this.id = openID;
     }
 
     @Column(name = "name")

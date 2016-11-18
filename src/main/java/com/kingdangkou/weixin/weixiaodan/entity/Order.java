@@ -1,21 +1,30 @@
-package com.kingdangkou.weixin.weixiaodan.model;
+package com.kingdangkou.weixin.weixiaodan.entity;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by dongy on 2016-11-15.
  */
-
+@Entity
+@Table(name = "orders")
 public class Order {
-    private int order_id;
+    private int id;
     private int product_id;
     private float discount;
+    private String openID;
+    private int address_id;
+    private Date date;
+    private int ship_id;
+    private int state;
 
-    public Order(int order_id, int product_id, float discount, int customer_id, int address_id, Date date, int ship_id, int state, int number) {
-        this.order_id = order_id;
+    public Order() {}
+
+    public Order(int id, int product_id, float discount, String openID, int address_id, Date date, int ship_id, int state, int number) {
+        this.id = id;
         this.product_id = product_id;
         this.discount = discount;
-        this.customer_id = customer_id;
+        this.openID = openID;
         this.address_id = address_id;
         this.date = date;
         this.ship_id = ship_id;
@@ -23,17 +32,8 @@ public class Order {
         this.number = number;
     }
 
-    private int customer_id;
-    private int address_id;
-    private Date date;
-    private int ship_id;
-    private int state;
-
-    public Order() {
-    }
-
-    public Order(int customer_id, int product_id, int number, int address_id) {
-        this.customer_id = customer_id;
+    public Order(String openID, int product_id, int number, int address_id) {
+        this.openID = openID;
         this.product_id = product_id;
         this.number = number;
         this.address_id = address_id;
@@ -41,6 +41,7 @@ public class Order {
         state = 0;
     }
 
+    @Column(name = "number")
     public int getNumber() {
         return number;
     }
@@ -51,14 +52,18 @@ public class Order {
 
     private int number;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     public int getOrder_id() {
-        return order_id;
+        return id;
     }
 
     public void setOrder_id(int id) {
-        this.order_id = id;
+        this.id = id;
     }
 
+    @Column(name = "product_id")
     public int getProduct_id() {
         return product_id;
     }
@@ -67,6 +72,7 @@ public class Order {
         this.product_id = product_id;
     }
 
+    @Column(name = "discount")
     public float getDiscount() {
         return discount;
     }
@@ -75,14 +81,16 @@ public class Order {
         this.discount = discount;
     }
 
-    public int getCustomer_id() {
-        return customer_id;
+    @Column(name = "open_id")
+    public String getOpenID() {
+        return openID;
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
+    public void setOpenID(String openID) {
+        this.openID = openID;
     }
 
+    @Column(name = "address_id")
     public int getAddress_id() {
         return address_id;
     }
@@ -91,6 +99,7 @@ public class Order {
         this.address_id = address_id;
     }
 
+    @Column(name = "deal_date")
     public Date getDate() {
         return date;
     }
@@ -99,6 +108,7 @@ public class Order {
         this.date = date;
     }
 
+    @Column(name = "ship_id")
     public int getShip_id() {
         return ship_id;
     }
@@ -107,6 +117,7 @@ public class Order {
         this.ship_id = ship_id;
     }
 
+    @Column(name = "state")
     public int getState() {
         return state;
     }

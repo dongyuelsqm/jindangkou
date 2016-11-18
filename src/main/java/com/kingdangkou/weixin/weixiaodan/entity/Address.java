@@ -1,4 +1,4 @@
-package com.kingdangkou.weixin.weixiaodan.model;
+package com.kingdangkou.weixin.weixiaodan.entity;
 
 import javax.persistence.*;
 
@@ -15,6 +15,8 @@ public class Address {
     private String disctrict;
     private String detail;
 
+    public Address() {}
+
     public Address(String openID, String province, String city, String disctrict, String detail) {
         this.openID = openID;
         this.province = province;
@@ -25,7 +27,7 @@ public class Address {
 
     @Column(name = "address_id")
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }

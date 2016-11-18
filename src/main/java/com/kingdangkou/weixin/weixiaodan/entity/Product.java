@@ -1,8 +1,6 @@
-package com.kingdangkou.weixin.weixiaodan.model;
+package com.kingdangkou.weixin.weixiaodan.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by dongy on 2016-11-16.
@@ -12,12 +10,12 @@ import javax.persistence.Table;
 public class Product {
     private int id;
     private String name;
-    private String department;
+    private int department;
     private float price;
     private String description;
     private String pic;
 
-    public Product(String name, String department, float price, String description, String pic) {
+    public Product(String name, int department, float price, String description, String pic) {
         this.name = name;
         this.department = department;
         this.price = price;
@@ -25,7 +23,10 @@ public class Product {
         this.pic = pic;
     }
 
-    @Column(name = "department_id")
+    public Product() {}
+
+    @Id
+    @Column(name = "product_id")
     public int getId() {
 
         return id;
@@ -45,11 +46,11 @@ public class Product {
     }
 
     @Column(name = "department_id")
-    public String getDepartment() {
+    public int getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(int department) {
         this.department = department;
     }
 

@@ -3,13 +3,17 @@
     "-//Hibernate/Hibernate Configuration DTD//EN"
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
+
   <session-factory>
+    <property name="hibernate.current_session_context_class">thread</property>
     <property name="connection.url">jdbc:mysql://localhost/emp</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="connection.username">root</property>
     <property name="connection.password">root123456</property>
     <!-- DB schema will be updated if needed -->
-      <mapping resource="Order.hbm.xml"/>
-      <mapping class="com.kingdangkou.weixin.weixiaodan.model.Customer"/>
+      <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Order"/>
+      <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Customer"/>
+      <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Product"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Address"/>
   </session-factory>
 </hibernate-configuration>

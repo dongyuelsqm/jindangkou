@@ -1,8 +1,8 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import com.kingdangkou.weixin.weixiaodan.model.Address;
-import com.kingdangkou.weixin.weixiaodan.model.Customer;
-import com.kingdangkou.weixin.weixiaodan.model.Product;
+import com.kingdangkou.weixin.weixiaodan.entity.Address;
+import com.kingdangkou.weixin.weixiaodan.entity.Customer;
+import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,6 @@ public class RegisterController {
     private final int SUCCESS = 0;
     @Autowired
     private RegisterService service;
-
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
     public void registerCustomer(HttpServletRequest request, HttpServletResponse response){
         String openID = request.getParameter("openID");
@@ -56,7 +55,7 @@ public class RegisterController {
     @RequestMapping(value = "/product", method = RequestMethod.POST)
     public void registerProduct(HttpServletRequest request, HttpServletResponse response){
         String name = request.getParameter("name");
-        String department = request.getParameter("department");
+        int department = Integer.valueOf(request.getParameter("department"));
         float unit_price = Float.valueOf(request.getParameter("unit_price"));
         String description = request.getParameter("description");
         String picture = request.getParameter("picture");
