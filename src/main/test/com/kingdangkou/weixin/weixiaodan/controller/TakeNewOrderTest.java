@@ -40,7 +40,6 @@ public class TakeNewOrderTest {
     public void testQueryOrderInfo() throws Exception {
         ApplicationContext context = new ClassPathXmlApplicationContext("spitter-servlet.xml");
         dataSource = (BasicDataSource) context.getBean("dataSource");
-        TakeNewOrder takeNewOrder = new TakeNewOrder(dataSource);
         //takeNewOrder.doGet();
     }
 }

@@ -3,6 +3,7 @@ package com.kingdangkou.weixin.weixiaodan.service;
 import com.kingdangkou.weixin.weixiaodan.entity.Address;
 import com.kingdangkou.weixin.weixiaodan.entity.Customer;
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
+import com.kingdangkou.weixin.weixiaodan.model.Result;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -16,11 +17,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegisterService {
     SessionFactory factory = new Configuration().configure().buildSessionFactory();
-    public void save(Customer customer){
+    public Result save(Customer customer){
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(customer);
         transaction.commit();
+        return new Result(true, "");
     }
     public void save(Address address){
         Session session = factory.openSession();

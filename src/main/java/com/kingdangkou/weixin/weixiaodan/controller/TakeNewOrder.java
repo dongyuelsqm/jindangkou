@@ -1,6 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import org.apache.commons.dbcp.BasicDataSource;
+import com.kingdangkou.weixin.weixiaodan.service.OrderDbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.SQLException;
 
 /**
  * Created by dongy on 2016-11-13.
@@ -19,20 +19,14 @@ import java.sql.*;
 @RequestMapping("/Order")
 public class TakeNewOrder {
     @Autowired
-    private BasicDataSource dataSource;
+    private OrderDbService orderDbService;
     @Inject
-    public TakeNewOrder(BasicDataSource dataSource) {
-        this.dataSource = dataSource;
+    public TakeNewOrder(OrderDbService orderDbService) {
+        this.orderDbService = orderDbService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        String id = request.getParameter("id");
-        Connection connection = dataSource.getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM product_order WHERE id = " + id);
-        while (resultSet.next()){
-            response.getWriter().print(resultSet.getString("address_id"));
-        }
+        orderDbService.get(request.getParameter("openID"));
     }
 }
