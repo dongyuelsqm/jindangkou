@@ -12,15 +12,23 @@ public class Product {
     private String name;
     private int department;
     private float price;
-    private String description;
-    private String pic;
 
+    private String description;
+
+    private String pic;
     public Product(String name, int department, float price, String description, String pic) {
         this.name = name;
         this.department = department;
         this.price = price;
         this.description = description;
         this.pic = pic;
+    }
+
+    public Product(String name, int department, float price, String description) {
+        this.name = name;
+        this.department = department;
+        this.price = price;
+        this.description = description;
     }
 
     public Product() {}
@@ -79,5 +87,17 @@ public class Product {
 
     public void setPic(String pic) {
         this.pic = pic;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (id != product.id) return false;
+
+        return true;
     }
 }

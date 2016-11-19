@@ -80,4 +80,16 @@ public class Address {
     public void setDetail(String detail) {
         this.detail = detail;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Address address = (Address) o;
+
+        if (province.equals(address.province) || city.equals(address.city) || disctrict.equals(address.disctrict) || detail.equals(address.detail)) return false;
+
+        return true;
+    }
 }

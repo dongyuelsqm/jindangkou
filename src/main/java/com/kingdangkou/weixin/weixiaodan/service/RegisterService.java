@@ -24,18 +24,20 @@ public class RegisterService {
         transaction.commit();
         return new Result(true, "");
     }
-    public void save(Address address){
+    public Result save(Address address){
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(address);
         transaction.commit();
+        return new Result(true, "");
     }
 
-    public void save(Product product){
+    public Result save(Product product){
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(product);
         transaction.commit();
+        return new Result(true, "");
     }
 
     public Customer get(String openID){

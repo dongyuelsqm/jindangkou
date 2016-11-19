@@ -1,13 +1,10 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
+import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
 import com.kingdangkou.weixin.weixiaodan.entity.Order;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -15,23 +12,31 @@ import java.util.List;
  */
 @Service
 public class OrderDbService {
-    SessionFactory factory = new Configuration().configure().buildSessionFactory();
-    public void save(String customer_id, int product_id, int number, int address_id){
-        Session session = factory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.save(new Order(customer_id, product_id, number, address_id));
-        transaction.commit();
+    @Autowired
+    private OrderDao orderDao;
+
+    public OrderDbService() {}
+
+    public OrderDbService(OrderDao orderDao) {
+        this.orderDao = orderDao;
     }
 
-    public void get(String openID){
-        SessionFactory factory = new Configuration().configure().buildSessionFactory();
-        Session session = factory.openSession();
-        session.beginTransaction();
-        List orders = session.createQuery("From Order where openID = " + openID).list();
+    public void save(String customer_id, int product_id, int number, int address_id){
+        orderDao.save(new Order(customer_id, product_id, number, address_id));
+    }
+    public Order get(String id){
+        return orderDao.get(Order.class, id);
+    }
 
-        Iterator iterator = orders.iterator();
-        while (iterator.hasNext()){
-            System.out.println(iterator.next());
-        }
+    public List<Order> find(String openID){
+        return orderDao.findOrders(openID);
+    }
+
+    public OrderDao getOrderDao() {
+        return orderDao;
+    }
+
+    public void setOrderDao(OrderDao orderDao) {
+        this.orderDao = orderDao;
     }
 }
