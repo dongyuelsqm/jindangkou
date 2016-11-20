@@ -1,11 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import com.kingdangkou.weixin.weixiaodan.entity.Address;
-import com.kingdangkou.weixin.weixiaodan.entity.Customer;
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
-import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
-import com.kingdangkou.weixin.weixiaodan.service.RegisterService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

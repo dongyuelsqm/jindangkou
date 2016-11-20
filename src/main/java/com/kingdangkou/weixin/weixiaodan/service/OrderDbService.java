@@ -2,6 +2,7 @@ package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
 import com.kingdangkou.weixin.weixiaodan.entity.Order;
+import com.kingdangkou.weixin.weixiaodan.model.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,9 @@ public class OrderDbService {
         this.orderDao = orderDao;
     }
 
-    public void save(String customer_id, int product_id, int number, int address_id){
+    public Result save(String customer_id, int product_id, int number, int address_id){
         orderDao.save(new Order(customer_id, product_id, number, address_id));
+        return new Result(true, "");
     }
     public Order get(String id){
         return orderDao.get(Order.class, id);

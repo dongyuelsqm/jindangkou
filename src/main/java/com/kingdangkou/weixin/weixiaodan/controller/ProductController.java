@@ -2,7 +2,7 @@ package com.kingdangkou.weixin.weixiaodan.controller;
 
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
-import org.json.JSONObject;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +25,16 @@ public class ProductController {
     public void get(HttpServletRequest request, HttpServletResponse response){
         Product product = productService.get(request.getParameter("id"));
         try {
-            response.getWriter().print(JSONObject.valueToString(product).toString());
+            response.getWriter().print(JSONObject.fromObject(product).toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/list")
+    public void list(HttpServletRequest request, HttpServletResponse response){
+        try {
+            response.getWriter().print(productService.list());
         } catch (IOException e) {
             e.printStackTrace();
         }
