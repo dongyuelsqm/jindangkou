@@ -2,6 +2,7 @@ package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
 import com.kingdangkou.weixin.weixiaodan.entity.Order;
+import com.kingdangkou.weixin.weixiaodan.model.OrderModel;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class OrderDbService {
         return orderDao.get(Order.class, id);
     }
 
-    public List<Order> find(String openID){
+    public List<OrderModel> find(String openID){
         return orderDao.findOrders(openID);
     }
 

@@ -1,6 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.dao;
 
 import com.kingdangkou.weixin.weixiaodan.entity.Order;
+import com.kingdangkou.weixin.weixiaodan.model.OrderModel;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,8 +11,13 @@ import java.util.List;
  */
 @Component
 public class OrderDao extends BaseDaoHibernate4<Order>{
-    public List<Order> findOrders(String openID){
-        return find("From Order where openID = " + openID);
+    public List<OrderModel> findOrders(String openID){
+//        Session session = sessionFactory.openSession();
+//        Transaction transaction = session.beginTransaction();
+//        List orders = session.createQuery("From Order where openID = " + openID).list();
+//        transaction.commit();
+//        return orders;
+        return null;
     }
 
     public Order getOrder(String key){

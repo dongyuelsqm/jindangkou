@@ -1,0 +1,59 @@
+package com.kingdangkou.weixin.weixiaodan.controller;
+
+import com.kingdangkou.weixin.weixiaodan.entity.Address;
+import com.kingdangkou.weixin.weixiaodan.service.AddressService;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.contains;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")
+public class AddressControllerTest {
+
+    private Address address = new Address("111", "zhejiang", "hangzhou", "xihu", "detail");
+    private MockMvc mockMvc;
+    @Mock
+    private AddressService addressService;
+    @InjectMocks
+    private AddressController addressController;
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(addressController).build();
+    }
+
+    @Test
+    public void testRegister() throws Exception {
+
+    }
+
+    @Test
+    public void testGet() throws Exception {
+        ArrayList<Address> addresses = new ArrayList<Address>();
+        addresses.add(new Address("111", "zhejiang", "hangzhou", "xihu", "detail"));
+        addresses.add(new Address("112", "zhejiang", "hangzhou", "gongshu", "detail"));
+        when(addressService.list(any(String.class))).thenReturn(addresses);
+        ResultActions result = mockMvc.perform(get("/address/list").param("openID", "111")).andDo(print());
+        result.andExpect(status().isOk()).andExpect(content().string(contains("shirt")));
+
+    }
+}

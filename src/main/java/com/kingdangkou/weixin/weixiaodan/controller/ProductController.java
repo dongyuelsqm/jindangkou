@@ -2,6 +2,7 @@ package com.kingdangkou.weixin.weixiaodan.controller;
 
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,7 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public void list(HttpServletRequest request, HttpServletResponse response){
         try {
-            response.getWriter().print(productService.list());
+            response.getWriter().print(JSONArray.fromObject(productService.list()));
         } catch (IOException e) {
             e.printStackTrace();
         }

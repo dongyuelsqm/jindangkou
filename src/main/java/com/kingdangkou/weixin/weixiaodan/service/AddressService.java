@@ -20,7 +20,7 @@ public class AddressService {
         return new Result(true, "detail");
     }
 
-    public List<Address> get(String openID){
+    public List<Address> list(String openID){
         return addressDao.findAddresses(openID);
     }
 }

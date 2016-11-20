@@ -17,7 +17,7 @@ import java.io.IOException;
  * Created by dongy on 2016-11-20.
  */
 @Controller
-@RequestMapping("/Customer")
+@RequestMapping("/customer")
 public class CustomerController {
     private final int SUCCESS = 0;
     @Autowired
@@ -31,7 +31,7 @@ public class CustomerController {
         }
     }
 
-    @RequestMapping(value = "/customer", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void registerCustomer(HttpServletRequest request, HttpServletResponse response){
         String openID = request.getParameter("openID");
         String name = request.getParameter("name");

@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by dongy on 2016-11-20.
  */
 @Controller
-@RequestMapping(value = "address")
+@RequestMapping(value = "/address")
 public class AddressController {
     @Autowired
     private AddressService addressService;
@@ -33,6 +34,17 @@ public class AddressController {
         Result result = addressService.save(new Address(openID, province, city, district, detail));
         try {
             response.getWriter().print(JSONObject.fromObject(request).toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public void get(HttpServletRequest request, HttpServletResponse response){
+        String openID = request.getParameter("openID");
+        List<Address> addresses = addressService.list(openID);
+        try {
+            response.getWriter().print(JSONObject.fromObject(addresses));
         } catch (IOException e) {
             e.printStackTrace();
         }

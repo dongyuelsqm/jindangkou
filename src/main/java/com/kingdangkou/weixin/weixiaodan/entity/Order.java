@@ -16,15 +16,17 @@ public class Order {
     private int address_id;
     private Date date;
     private int ship_id;
+    private int number;
+
     private int state;
 
     public Order() {}
 
-    public Order(int id, int product_id, float discount, String openID, int address_id, Date date, int ship_id, int state, int number) {
+    public Order(int id, String openID, int product_id, float discount, int address_id, Date date, int ship_id, int state, int number) {
         this.id = id;
+        this.openID = openID;
         this.product_id = product_id;
         this.discount = discount;
-        this.openID = openID;
         this.address_id = address_id;
         this.date = date;
         this.ship_id = ship_id;
@@ -49,8 +51,6 @@ public class Order {
     public void setNumber(int number) {
         this.number = number;
     }
-
-    private int number;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

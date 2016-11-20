@@ -1,8 +1,9 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import com.kingdangkou.weixin.weixiaodan.entity.Order;
+import com.kingdangkou.weixin.weixiaodan.model.OrderModel;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.OrderDbService;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,16 +30,16 @@ public class OrderController {
         this.orderDbService = orderDbService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, value = "/list")
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        List<Order> orders = orderDbService.find(request.getParameter("openID"));
-        response.getWriter().print(JSONObject.fromObject(orders).toString());
+        List<OrderModel> orders = orderDbService.find(request.getParameter("openID"));
+        response.getWriter().print(JSONArray.fromObject(orders).toString());
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
     public void createOrder(HttpServletRequest request, HttpServletResponse response){
         String openID = request.getParameter("openID");
-        int product_id = Integer.valueOf(request.getParameter(request.getParameter("product_id")));
+        int product_id = Integer.valueOf(request.getParameter("product_id"));
         int number = Integer.valueOf(request.getParameter("number"));
         int address_id = Integer.valueOf(request.getParameter("address_id"));
         Result result = orderDbService.save(openID, product_id, number, address_id);
