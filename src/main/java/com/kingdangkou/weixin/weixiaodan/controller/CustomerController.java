@@ -19,16 +19,12 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
-    private final int SUCCESS = 0;
     @Autowired
     private CustomerService customerService;
     @RequestMapping(value = "get", method = RequestMethod.GET)
     public void get(HttpServletRequest request, HttpServletResponse response){
         Customer customer = customerService.get(request);
-        try {
-            response.getWriter().print(JSONObject.fromObject(customer).toString());
-        } catch (IOException e) {
-        }
+        getResponse(response, JSONObject.fromObject(customer).toString());
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -38,10 +34,10 @@ public class CustomerController {
         String gender = request.getParameter("gender");
         String phone = request.getParameter("phone");
         Result result = customerService.save(new Customer(openID, name, gender, phone));
-        getResponse(response, SUCCESS);
+        getResponse(response, JSONObject.fromObject(result).toString());
     }
 
-    private void getResponse(HttpServletResponse response, int result){
+    private void getResponse(HttpServletResponse response, String result){
         try {
             response.getWriter().print(result);
         } catch (IOException e) {

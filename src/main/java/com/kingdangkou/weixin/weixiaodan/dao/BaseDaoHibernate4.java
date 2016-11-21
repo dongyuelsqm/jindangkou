@@ -3,12 +3,14 @@ package com.kingdangkou.weixin.weixiaodan.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class BaseDaoHibernate4<T> implements BaseDao<T>
 {
-	private SessionFactory sessionFactory;
+	private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 	public void setSessionFactory(SessionFactory sessionFactory)
 	{
 		this.sessionFactory = sessionFactory;

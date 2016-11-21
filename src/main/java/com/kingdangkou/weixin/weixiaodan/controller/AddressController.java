@@ -33,7 +33,7 @@ public class AddressController {
 
         Result result = addressService.save(new Address(openID, province, city, district, detail));
         try {
-            response.getWriter().print(JSONObject.fromObject(request).toString());
+            response.getWriter().print(JSONObject.fromObject(result).toString());
         } catch (IOException e) {
             e.printStackTrace();
         }

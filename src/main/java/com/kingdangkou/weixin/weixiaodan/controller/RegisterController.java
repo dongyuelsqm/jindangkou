@@ -5,6 +5,7 @@ import com.kingdangkou.weixin.weixiaodan.entity.Customer;
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.RegisterService;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,12 +32,12 @@ public class RegisterController {
         String gender = request.getParameter("gender");
         String phone = request.getParameter("phone");
         Result result = service.save(new Customer(openID, name, gender, phone));
-        getResponse(response, SUCCESS);
+        getResponse(response, result);
     }
 
-    private void getResponse(HttpServletResponse response, int result){
+    private void getResponse(HttpServletResponse response, Result result){
         try {
-            response.getWriter().print(result);
+            response.getWriter().print(JSONObject.fromObject(result).toString());
         } catch (IOException e) {
             return;
         }
@@ -49,8 +50,8 @@ public class RegisterController {
         String city = request.getParameter("city");
         String district = request.getParameter("district");
         String detail = request.getParameter("detail");
-        service.save(new Address(openID, province, city, district, detail));
-        getResponse(response, SUCCESS);
+        Result result = service.save(new Address(openID, province, city, district, detail));
+        getResponse(response, result);
     }
 
     @RequestMapping(value = "/product", method = RequestMethod.POST)
@@ -59,8 +60,8 @@ public class RegisterController {
         int department = Integer.valueOf(request.getParameter("department"));
         float unit_price = Float.valueOf(request.getParameter("price"));
         String description = request.getParameter("description");
-        service.save(new Product(name, department, unit_price, description));
-        getResponse(response, SUCCESS);
+        Result result = service.save(new Product(name, department, unit_price, description));
+        getResponse(response, result);
     }
 
     public RegisterService getService() {
