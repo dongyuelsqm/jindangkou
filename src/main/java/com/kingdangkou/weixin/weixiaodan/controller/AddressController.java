@@ -23,7 +23,7 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
-    @RequestMapping(value = "register", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void register(HttpServletRequest request, HttpServletResponse response){
         String openID = request.getParameter("openID");
         String province = request.getParameter("province");

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,10 +24,6 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private OrderDbService orderDbService;
-    @Inject
-    public OrderController(OrderDbService orderDbService) {
-        this.orderDbService = orderDbService;
-    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {

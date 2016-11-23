@@ -21,7 +21,7 @@ import java.io.IOException;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
-    @RequestMapping(value = "get", method = RequestMethod.GET)
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
     public void get(HttpServletRequest request, HttpServletResponse response){
         Customer customer = customerService.get(request);
         getResponse(response, JSONObject.fromObject(customer).toString());

@@ -4,7 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -23,10 +22,10 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 	{
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "From " + entityClazz.getSimpleName() +" where id = " + key;
-		T obj = session.createQuery(hql, entityClazz).uniqueResult();
+//		String hql = "From " + entityClazz.getSimpleName() + " where id = " + key;
+//		T obj = session.createQuery(hql, entityClazz).uniqueResult();
 		transaction.commit();
-		return obj;
+		return null;
 	}
 	public void save(T entity)
 	{

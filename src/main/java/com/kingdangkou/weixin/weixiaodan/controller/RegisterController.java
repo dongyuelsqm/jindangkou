@@ -6,6 +6,7 @@ import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.RegisterService;
 import net.sf.json.JSONObject;
+import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +22,13 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
-
-    private final int SUCCESS = 0;
+//    @Autowired
+//    private FileHandler handler;
     @Autowired
     private RegisterService service;
     @RequestMapping(value = "/customer", method = RequestMethod.POST)
-    public void registerCustomer(HttpServletRequest request, HttpServletResponse response){
+    public void registerCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException, FileUploadException {
+        //handler.saveFile(request);
         String openID = request.getParameter("openID");
         String name = request.getParameter("name");
         String gender = request.getParameter("gender");
