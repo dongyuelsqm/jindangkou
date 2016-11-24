@@ -6,12 +6,12 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -20,8 +20,8 @@ import java.util.List;
 @Component
 public class FileHandler extends HttpServlet {
     public void saveFile(HttpServletRequest request) throws IOException, FileUploadException {
-        String realPath = this.getServletContext().getRealPath("/WEB-INF/upload");
-        String tmpPath = this.getServletContext().getRealPath("/WEB-INF/temp");
+        String realPath = getBaseFile(request) + "WEB-INF"+ File.separator + "upload" + File.separator;
+        String tmpPath = getBaseFile(request) + "WEB-INF"+ File.separator + "temp" + File.separator;
         File tmpFile = new File(tmpPath);
         if (!tmpFile.exists()){
             tmpFile.mkdir();
@@ -41,27 +41,49 @@ public class FileHandler extends HttpServlet {
 
         List<FileItem> fileItems = upload.parseRequest(request);
         for (FileItem item: fileItems){
-            if (item.isFormField()){
-                String name = item.getFieldName();
-                String value = item.getString("UTF-8");
-
-            }else {
-                String inputFullName = item.getName();
-                if (inputFullName == null || inputFullName.trim().equals("")){
-                    continue;
-                }
-                String fileName = inputFullName.substring(inputFullName.lastIndexOf("\\") + 1);
-                InputStream stream = item.getInputStream();
-                FileOutputStream fileOutputStream = new FileOutputStream(realPath + fileName);
-                byte buffer[] = new byte[1024];
-                int len = 0;
-                while ((len = stream.read(buffer)) >0){
-                    fileOutputStream.write(buffer, 0, len);
-                }
-                stream.close();
-                fileOutputStream.close();
-                item.delete();
+            String inputFullName = item.getName();
+            if (inputFullName == null || inputFullName.trim().equals("")){
+                continue;
             }
+            String fileName = inputFullName.substring(inputFullName.lastIndexOf("\\") + 1);
+            InputStream stream = item.getInputStream();
+            FileOutputStream fileOutputStream = new FileOutputStream(realPath + fileName);
+            byte buffer[] = new byte[1024];
+            int len = 0;
+            while ((len = stream.read(buffer)) >0){
+                fileOutputStream.write(buffer, 0, len);
+            }
+            stream.close();
+            fileOutputStream.close();
+            item.delete();
         }
+    }
+
+    private String getBaseFile(HttpServletRequest request) {
+        return request.getSession().getServletContext().getRealPath("");
+    }
+
+    public void getFile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String picName = request.getParameter("picName");
+        String filePath = getBaseFile(request) + "WEB-INF"+ File.separator + "upload" + File.separator + picName;
+        File file = new File(filePath);
+        if (!file.exists()){
+            request.setAttribute("message", "您要下载的资源已被删除！！");
+            request.getRequestDispatcher("/message.jsp").forward(request, response);
+            return;
+        }
+
+        response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(picName, "UTF-8"));
+        FileInputStream in = new FileInputStream(filePath);
+        OutputStream out = response.getOutputStream();
+        byte buffer[] = new byte[1024];
+        int len = 0;
+        while ((len = in.read(buffer)) > 0){
+            out.write(buffer, 0, len);
+        }
+        in.close();
+        out.close();
+
+
     }
 }
