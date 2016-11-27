@@ -14,7 +14,7 @@ public class AddressDaoTest {
     @Test
     public void testFindAddress() throws Exception {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Address address = new Address("111", "zhejiang", "hangzhou", "", "");
+        Address address = new Address("zhangsan", "55555", "111", "zhejiang", "hangzhou", "", "");
         AddressDao dao = new AddressDao();
         dao.setSessionFactory(sessionFactory);
         dao.save(address);

@@ -13,4 +13,5 @@ public class AddressDao extends BaseDaoHibernate4<Address> {
     public List<Address> findAddresses(String customerID){
         return find("From Address where openID = " + customerID);
     }
+
 }

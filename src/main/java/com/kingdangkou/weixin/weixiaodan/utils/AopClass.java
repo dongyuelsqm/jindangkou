@@ -12,18 +12,17 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class AopClass {
-    @Pointcut("execution(* com.kingdangkou.weixin.weixiaodan.utils.JustForAopLearn.testMethod(..))")
-    private void testTestMethod(){}
+    @Pointcut("execution(* com.kingdangkou.weixin.weixiaodan.utils.JustForAopLearn.testMethod(..)) && args(param)")
+    private void testTestMethod(String param){}
 
-    @Before("testTestMethod()")
-    public void before() throws Exception {
-        System.out.println("before point cut");
-        throw new Exception("exception");
+    @Before("testTestMethod(param)")
+    public void before(String param) throws Exception {
+        System.out.println("before point cut" + param);
     }
 
-    @After("testTestMethod()")
-    public void after(){
-        System.out.println("after point cut");
+    @After("testTestMethod(param)")
+    public void after(String param){
+        System.out.println("after point cut " + param);
     }
 
 }

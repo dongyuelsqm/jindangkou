@@ -17,7 +17,12 @@ public class AddressService {
     private AddressDao addressDao;
     public Result save(Address address){
         addressDao.save(address);
-        return new Result(true, "detail");
+        return new Result(true, "");
+    }
+
+    public Result update(Address address){
+        addressDao.update(address);
+        return new Result(true, "");
     }
 
     public List<Address> list(String openID){

@@ -17,7 +17,6 @@ public class Order {
     private Date date;
     private int ship_id;
     private int number;
-
     private int state;
 
     public Order() {}

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,11 +33,11 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public void createOrder(HttpServletRequest request, HttpServletResponse response){
-        String openID = request.getParameter("openID");
-        int product_id = Integer.valueOf(request.getParameter("product_id"));
-        int number = Integer.valueOf(request.getParameter("number"));
-        int address_id = Integer.valueOf(request.getParameter("address_id"));
+    public void createOrder(@RequestParam("openID") String openID,
+                            @RequestParam("product_id") int product_id,
+                            @RequestParam("number") int number,
+                            @RequestParam("address_id") int address_id,
+                            HttpServletRequest request, HttpServletResponse response){
         Result result = orderDbService.save(openID, product_id, number, address_id);
         try {
             response.getWriter().print(JSONObject.fromObject(result));

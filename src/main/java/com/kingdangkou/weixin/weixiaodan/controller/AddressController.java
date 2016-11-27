@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -23,30 +23,37 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public void register(HttpServletRequest request, HttpServletResponse response){
-        String openID = request.getParameter("openID");
-        String province = request.getParameter("province");
-        String city = request.getParameter("city");
-        String district = request.getParameter("district");
-        String detail = request.getParameter("detail");
-
-        Result result = addressService.save(new Address(openID, province, city, district, detail));
-        try {
-            response.getWriter().print(JSONObject.fromObject(result).toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public void list(@RequestParam("openID") String openID, HttpServletResponse response) throws IOException {
+        List<Address> addresses = addressService.list(openID);
+        response.getWriter().print(JSONObject.fromObject(addresses));
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public void get(HttpServletRequest request, HttpServletResponse response){
-        String openID = request.getParameter("openID");
-        List<Address> addresses = addressService.list(openID);
-        try {
-            response.getWriter().print(JSONObject.fromObject(addresses));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public void register(@RequestParam("name") String name,
+                         @RequestParam("phone") String phone,
+                         @RequestParam("openID") String openID,
+                         @RequestParam("province") String province,
+                         @RequestParam("city") String city,
+                         @RequestParam("district") String district,
+                         @RequestParam("detail") String detail,
+                         HttpServletResponse response) throws IOException {
+
+        Result result = addressService.save(new Address(name, phone, openID, province, city, district, detail));
+        response.getWriter().print(JSONObject.fromObject(result).toString());
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public void update(@RequestParam("name") String name,
+                         @RequestParam("phone") String phone,
+                         @RequestParam("openID") String openID,
+                         @RequestParam("province") String province,
+                         @RequestParam("city") String city,
+                         @RequestParam("district") String district,
+                         @RequestParam("detail") String detail,
+                         HttpServletResponse response) throws IOException {
+
+        Result result = addressService.update(new Address(name, phone, openID, province, city, district, detail));
+        response.getWriter().print(JSONObject.fromObject(result).toString());
     }
 }

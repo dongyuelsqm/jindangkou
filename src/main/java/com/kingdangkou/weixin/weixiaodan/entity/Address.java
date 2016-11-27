@@ -14,10 +14,14 @@ public class Address {
     private String city;
     private String disctrict;
     private String detail;
+    private String name;
+    private String phone;
 
     public Address() {}
 
-    public Address(String openID, String province, String city, String disctrict, String detail) {
+    public Address(String name, String phone, String openID, String province, String city, String disctrict, String detail) {
+        this.name = name;
+        this.phone = phone;
         this.openID = openID;
         this.province = province;
         this.city = city;
@@ -79,6 +83,24 @@ public class Address {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Column(name = "phone")
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override

@@ -9,9 +9,9 @@ public class JustForAopLearnTest {
     @Test
     public void testTestMethod() throws Exception {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("file:src/main/webapp/WEB-INF/spitter-servlet.xml");
-        JustForAopLearn test = (JustForAopLearn) ctx.getBean("test");
+        JustForAopLearn test = (JustForAopLearn) ctx.getBean("justForAopLearn");
         try {
-            test.testMethod();
+            test.testMethod("ddddd");
         }catch (Exception ex){
             System.out.println(ex);
         }

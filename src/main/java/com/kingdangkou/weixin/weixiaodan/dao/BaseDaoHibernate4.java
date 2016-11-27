@@ -18,14 +18,18 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 	{
 		return this.sessionFactory;
 	}
-	public T get(Class<T> entityClazz , String key)
+	public T get(Class<T> entityClazz , String value)
 	{
+		return get(entityClazz, value, "id");
+	}
+
+	public T get(Class<T> entityClazz, String value, String key){
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-//		String hql = "From " + entityClazz.getSimpleName() + " where id = " + key;
-//		T obj = session.createQuery(hql, entityClazz).uniqueResult();
+		String hql = "From " + entityClazz.getSimpleName() + " where " + key +" = " + value;
+		T obj = session.createQuery(hql, entityClazz).uniqueResult();
 		transaction.commit();
-		return null;
+		return obj;
 	}
 	public void save(T entity)
 	{
@@ -42,5 +46,14 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 		List orders = session.createQuery(hql).list();
 		transaction.commit();
 		return orders;
+	}
+
+
+	@Override
+	public void update(T entity){
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		session.update(entity);
+		transaction.commit();
 	}
 }

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class JustForAopLearn {
-    public void testMethod(){
-        System.out.println("test");
+    public void testMethod(String param){
+        System.out.println(param);
     }
 
     public void controlMethod(){
