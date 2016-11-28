@@ -1,7 +1,14 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by dongy on 2016-11-15.
@@ -10,46 +17,36 @@ import java.util.Date;
 @Table(name = "orders")
 public class Order {
     private int id;
-    private int product_id;
     private float discount;
     private String openID;
-    private int address_id;
+    @ManyToOne(targetEntity = Address.class)
+    @JoinColumn(name = "address_id", nullable = false)
+    @Cascade(CascadeType.ALL)
+    private Address address;
     private Date date;
-    private int ship_id;
-    private int number;
+    private String ship_id;
     private int state;
-
+    @OneToMany(targetEntity = SubOrder.class, mappedBy = "order_id")
+    private Set<SubOrder> subOrders = new HashSet<SubOrder>();
     public Order() {}
 
-    public Order(int id, String openID, int product_id, float discount, int address_id, Date date, int ship_id, int state, int number) {
+    public Order(int id, String openID, float discount, int address_id, Date date, String ship_id, int state) {
         this.id = id;
         this.openID = openID;
-        this.product_id = product_id;
         this.discount = discount;
         this.address_id = address_id;
         this.date = date;
         this.ship_id = ship_id;
         this.state = state;
-        this.number = number;
     }
 
-    public Order(String openID, int product_id, int number, int address_id) {
+    public Order(String openID, int address_id) {
         this.openID = openID;
-        this.product_id = product_id;
-        this.number = number;
         this.address_id = address_id;
         date = new Date();
         state = 0;
     }
 
-    @Column(name = "number")
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,15 +57,6 @@ public class Order {
 
     public void setOrder_id(int id) {
         this.id = id;
-    }
-
-    @Column(name = "product_id")
-    public int getProduct_id() {
-        return product_id;
-    }
-
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
     }
 
     @Column(name = "discount")
@@ -108,11 +96,11 @@ public class Order {
     }
 
     @Column(name = "ship_id")
-    public int getShip_id() {
+    public String getShip_id() {
         return ship_id;
     }
 
-    public void setShip_id(int ship_id) {
+    public void setShip_id(String ship_id) {
         this.ship_id = ship_id;
     }
 

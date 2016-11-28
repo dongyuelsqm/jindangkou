@@ -1,9 +1,8 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import com.kingdangkou.weixin.weixiaodan.entity.Order;
 import com.kingdangkou.weixin.weixiaodan.model.OrderModel;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
-import com.kingdangkou.weixin.weixiaodan.service.OrderDbService;
+import com.kingdangkou.weixin.weixiaodan.service.OrderService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +31,7 @@ public class OrderControllerTest {
 
     private MockMvc mockMvc;
     @Mock
-    private OrderDbService orderDbService;
+    private OrderService orderService;
     @InjectMocks
     private OrderController orderController;
 
@@ -47,7 +46,7 @@ public class OrderControllerTest {
         ArrayList<OrderModel> orders = new ArrayList<OrderModel>();
         orders.add(new OrderModel("11", "name", 1f, 1, 1f, "address", "dddd", "finished", new Date()));
         orders.add(new OrderModel("111", "name", 1f, 1, 1f, "address", "dddd", "finished", new Date()));
-        when(orderDbService.find(any(String.class))).thenReturn(orders);
+        when(orderService.find(any(String.class))).thenReturn(orders);
         ResultActions result = mockMvc.perform(get("/order/list").param("openID", "11")).andDo(print());
         result.andExpect(status().isOk());
 
@@ -55,7 +54,7 @@ public class OrderControllerTest {
 
     @Test
     public void testCreateOrder() throws Exception {
-        when(orderDbService.save("11", 11, 11, 11)).thenReturn(new Result(true, "yes"));
+        when(orderService.save("11", 11, 11, 11)).thenReturn(new Result(true, "yes"));
         ResultActions resultActions = mockMvc.perform(post("/order/create")
                 .param("openID", "11")
                 .param("product_id", "11")

@@ -38,12 +38,11 @@ public class AddressController {
                          @RequestParam("district") String district,
                          @RequestParam("detail") String detail,
                          HttpServletResponse response) throws IOException {
-
         Result result = addressService.save(new Address(name, phone, openID, province, city, district, detail));
         response.getWriter().print(JSONObject.fromObject(result).toString());
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public void update(@RequestParam("name") String name,
                          @RequestParam("phone") String phone,
                          @RequestParam("openID") String openID,

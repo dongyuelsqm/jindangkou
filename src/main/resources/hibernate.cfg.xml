@@ -15,5 +15,6 @@
       <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Customer"/>
       <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Product"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Address"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.SubOrder"/>
   </session-factory>
 </hibernate-configuration>

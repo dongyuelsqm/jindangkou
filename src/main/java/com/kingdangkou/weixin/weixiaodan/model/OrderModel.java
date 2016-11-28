@@ -1,5 +1,9 @@
 package com.kingdangkou.weixin.weixiaodan.model;
 
+import com.kingdangkou.weixin.weixiaodan.entity.Address;
+import com.kingdangkou.weixin.weixiaodan.entity.Order;
+import com.kingdangkou.weixin.weixiaodan.entity.Product;
+
 import javax.enterprise.inject.Model;
 import java.util.Date;
 
@@ -10,19 +14,36 @@ import java.util.Date;
 public class OrderModel {
     private String id;
     private String productName;
-
+    private String addressee;
+    private String contacts;
     private float unitPrice;
-
     private float totalPrice;
     private String address;
     private String shipNumber;
-    private String state;
+    private int state;
     private int number;
     private Date date;
 
     public OrderModel() {}
 
-    public OrderModel(String id, String productName, float unitPrice, int number, float totalPrice, String address, String shipNumber, String state, Date date) {
+    public OrderModel(Order order, Product product, Address address){
+        id = String.valueOf(order.getOrder_id());
+        this.addressee = address.getName();
+        this.contacts = address.getPhone();
+        this.productName = product.getName();
+        this.unitPrice = product.getPrice();
+        this.totalPrice = order.getNumber() * product.getPrice() * order.getDiscount();
+        this.address = getAddress(address);
+        this.shipNumber = order.getShip_id();
+        this.state = order.getState();
+        this.date = order.getDate();
+    }
+
+    private String getAddress(Address address) {
+        return address.getProvince() + address.getCity() + address.getDisctrict() + address.getDetail();
+    }
+
+    public OrderModel(String id, String productName, float unitPrice, int number, float totalPrice, String address, String shipNumber, int state, Date date) {
         this.id = id;
         this.productName = productName;
         this.unitPrice = unitPrice;
@@ -32,6 +53,21 @@ public class OrderModel {
         this.state = state;
         this.number = number;
         this.date = date;
+    }
+    public String getAddressee() {
+        return addressee;
+    }
+
+    public void setAddressee(String addressee) {
+        this.addressee = addressee;
+    }
+
+    public String getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
     }
 
     public String getId() {
@@ -82,11 +118,11 @@ public class OrderModel {
         this.shipNumber = shipNumber;
     }
 
-    public String getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 

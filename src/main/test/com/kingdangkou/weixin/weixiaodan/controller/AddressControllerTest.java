@@ -45,9 +45,11 @@ public class AddressControllerTest {
 
     @Test
     public void testRegister() throws Exception {
-        when(addressService.save(address)).thenReturn(new Result(true, "success"));
+        when(addressService.save(any(Address.class))).thenReturn(new Result(true, "success"));
         ResultActions resultActions = mockMvc.perform(
                 post("/address/register")
+                        .param("name", address.getName())
+                        .param("phone", address.getPhone())
                         .param("openID", address.getOpenID())
                         .param("province", address.getProvince())
                         .param("city", address.getCity())
