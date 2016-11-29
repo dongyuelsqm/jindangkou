@@ -1,6 +1,8 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
+import com.kingdangkou.weixin.weixiaodan.dao.AddressDao;
 import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
+import com.kingdangkou.weixin.weixiaodan.entity.Address;
 import com.kingdangkou.weixin.weixiaodan.entity.Order;
 import com.kingdangkou.weixin.weixiaodan.entity.SubOrder;
 import com.kingdangkou.weixin.weixiaodan.model.OrderModel;
@@ -24,6 +26,9 @@ public class OrderService {
     @Autowired
     private OrderDao orderDao;
 
+    @Autowired
+    private AddressDao addressDao;
+
     public OrderService() {}
 
     public OrderService(OrderDao orderDao) {
@@ -31,7 +36,9 @@ public class OrderService {
     }
 
     public Result save(String customer_id, String subOrders, String address_id){
-        Order order = new Order(customer_id, address_id);
+        Address address = addressDao.get(address_id);
+        Order order = new Order(customer_id);
+        order.setAddress(address);
         orderDao.save(order);
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         JSONArray jsonArray = JSONArray.fromObject(subOrders);
@@ -45,12 +52,12 @@ public class OrderService {
         }
         return new Result(true, "");
     }
-    public OrderModel get(String id){
-//        Order order = orderDao.get(Order.class, id);
+    public Order get(String id){
+        Order order = orderDao.getOrder(id);
 //        Product product = productDao.get(Product.class, String.valueOf(order.getProduct_id()));
 //        Address address = addressDao.get(Address.class, String.valueOf(order.getAddress_id()));
 //        return new OrderModel(order, product, address);
-        return null;
+        return order;
     }
 
     public List<OrderModel> find(String openID){

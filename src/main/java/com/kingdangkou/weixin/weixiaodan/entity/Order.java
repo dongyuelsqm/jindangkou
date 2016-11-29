@@ -1,6 +1,11 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,20 +17,20 @@ import java.util.Set;
 @Table(name = "orders")
 public class Order {
     private int id;
+
     private float discount;
     private String openID;
     private Date date;
     private String ship_id;
     private int state;
-    private String address_id;
+    private Address address;
 
     private Set<SubOrder> subOrders = new HashSet<SubOrder>();
 
     public Order() {}
 
-    public Order(String openID, String address_id) {
+    public Order(String openID) {
         this.openID = openID;
-        this.address_id = address_id;
         date = new Date();
         state = 0;
     }
@@ -33,12 +38,22 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    public int getOrder_id() {
+    public int getId() {
         return id;
     }
 
-    public void setOrder_id(int id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    @ManyToOne(targetEntity = Address.class)
+    @JoinColumn(name = "address_id", nullable = false)
+    @Cascade(CascadeType.ALL)
+    public Address getAddress() {
+        return address;
+    }
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Column(name = "discount")
@@ -57,15 +72,6 @@ public class Order {
 
     public void setOpenID(String openID) {
         this.openID = openID;
-    }
-
-    @Column(name = "address_id")
-    public String getAddress_id() {
-        return address_id;
-    }
-
-    public void setAddress_id(String address_id) {
-        this.address_id = address_id;
     }
 
     @Column(name = "deal_date")

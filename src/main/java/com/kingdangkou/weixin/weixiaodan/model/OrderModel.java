@@ -27,7 +27,7 @@ public class OrderModel {
     public OrderModel() {}
 
     public OrderModel(Order order, Product product, Address address){
-        id = String.valueOf(order.getOrder_id());
+        id = String.valueOf(order.getId());
         this.addressee = address.getName();
         this.contacts = address.getPhone();
         this.productName = product.getName();
