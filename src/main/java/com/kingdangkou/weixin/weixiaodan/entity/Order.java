@@ -1,11 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.CascadeType;
-
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,34 +14,21 @@ public class Order {
     private int id;
     private float discount;
     private String openID;
-    @ManyToOne(targetEntity = Address.class)
-    @JoinColumn(name = "address_id", nullable = false)
-    @Cascade(CascadeType.ALL)
-    private Address address;
     private Date date;
     private String ship_id;
     private int state;
-    @OneToMany(targetEntity = SubOrder.class, mappedBy = "order_id")
+    private String address_id;
+
     private Set<SubOrder> subOrders = new HashSet<SubOrder>();
+
     public Order() {}
 
-    public Order(int id, String openID, float discount, int address_id, Date date, String ship_id, int state) {
-        this.id = id;
-        this.openID = openID;
-        this.discount = discount;
-        this.address_id = address_id;
-        this.date = date;
-        this.ship_id = ship_id;
-        this.state = state;
-    }
-
-    public Order(String openID, int address_id) {
+    public Order(String openID, String address_id) {
         this.openID = openID;
         this.address_id = address_id;
         date = new Date();
         state = 0;
     }
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,11 +60,11 @@ public class Order {
     }
 
     @Column(name = "address_id")
-    public int getAddress_id() {
+    public String getAddress_id() {
         return address_id;
     }
 
-    public void setAddress_id(int address_id) {
+    public void setAddress_id(String address_id) {
         this.address_id = address_id;
     }
 
@@ -111,5 +93,14 @@ public class Order {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    @OneToMany(targetEntity = SubOrder.class, mappedBy = "order")
+    public Set<SubOrder> getSubOrders() {
+        return subOrders;
+    }
+
+    public void setSubOrders(Set<SubOrder> subOrders) {
+        this.subOrders = subOrders;
     }
 }

@@ -35,7 +35,7 @@ public class OrderController {
     @RequestMapping(method = RequestMethod.POST, value = "/create")
     public void createOrder(@RequestParam("openID") String openID,
                             @RequestParam("sub_orders") String subOrders,
-                            @RequestParam("address_id") int address_id,
+                            @RequestParam("address_id") String address_id,
                             HttpServletResponse response){
         Result result = orderService.save(openID, subOrders, address_id);
         try {

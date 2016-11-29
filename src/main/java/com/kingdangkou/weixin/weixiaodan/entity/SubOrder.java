@@ -18,8 +18,18 @@ public class SubOrder {
     private Order order;
     @Column(name = "product_id")
     private int product_id;
+
     @Column(name = "number")
     private int number;
+
+    public SubOrder() {
+    }
+
+    public SubOrder(Order order, int product_id, int number) {
+        this.order = order;
+        this.product_id = product_id;
+        this.number = number;
+    }
 
     public int getId() {
         return id;

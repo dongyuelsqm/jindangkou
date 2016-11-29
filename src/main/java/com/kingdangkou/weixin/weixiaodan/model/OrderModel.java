@@ -32,7 +32,7 @@ public class OrderModel {
         this.contacts = address.getPhone();
         this.productName = product.getName();
         this.unitPrice = product.getPrice();
-        this.totalPrice = order.getNumber() * product.getPrice() * order.getDiscount();
+        this.totalPrice = product.getPrice();
         this.address = getAddress(address);
         this.shipNumber = order.getShip_id();
         this.state = order.getState();
