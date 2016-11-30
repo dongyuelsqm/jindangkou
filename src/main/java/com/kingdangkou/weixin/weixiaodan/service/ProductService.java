@@ -21,6 +21,19 @@ public class ProductService {
         return productDao.find();
     }
 
+    public void save(Product product){
+        productDao.save(product);
+    }
+
+    public void update(String id, String field, String value){
+        productDao.update("product_id", id, field, value, Product.class);
+    }
+
+    public void remove(String id){
+        Product product = productDao.get(id);
+        productDao.delete(product);
+    }
+
     public ProductDao getProductDao() {
         return productDao;
     }

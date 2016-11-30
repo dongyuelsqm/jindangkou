@@ -14,7 +14,7 @@ public class OrderDaoTest {
         OrderDao orderDao = new OrderDao();
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         orderDao.setSessionFactory(sessionFactory);
-        assertTrue(orderDao.findOrders("1").size()>0 );
+        assertTrue(orderDao.findAllOrders("1").size()>0 );
     }
 
     @Test

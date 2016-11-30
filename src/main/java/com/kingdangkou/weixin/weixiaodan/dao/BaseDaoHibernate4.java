@@ -48,6 +48,22 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 		return orders;
 	}
 
+	@Override
+	public List<T> find(String name, String value, Class<T> cls) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		List list = session.createQuery("select from " + cls.getSimpleName() + " where " + name + " = " + value).list();
+		transaction.commit();
+		return list;
+	}
+
+	public List<T> find(String openID, String name, String value, Class<T> cls){
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		List list = session.createQuery("select from " + cls.getSimpleName() + " where " + name + " = " + value + " and openID = " + openID).list();
+		transaction.commit();
+		return list;
+	}
 
 	@Override
 	public void update(T entity){
@@ -55,5 +71,23 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 		Transaction transaction = session.beginTransaction();
 		session.update(entity);
 		transaction.commit();
+	}
+
+	@Override
+	public void update(String idName, String id, String field, String value, Class<T> cls) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "update " + cls.getSimpleName() + " set " + field + " = " + value + " where " + idName +" = " + id;
+		session.createQuery(hql);
+		transaction.commit();
+	}
+
+	@Override
+	public void delete(T entity) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		session.delete(entity);
+		transaction.commit();
+		session.close();
 	}
 }

@@ -2,10 +2,10 @@ package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.dao.AddressDao;
 import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
+import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
 import com.kingdangkou.weixin.weixiaodan.entity.Address;
 import com.kingdangkou.weixin.weixiaodan.entity.Order;
 import com.kingdangkou.weixin.weixiaodan.entity.SubOrder;
-import com.kingdangkou.weixin.weixiaodan.model.OrderModel;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -29,6 +29,9 @@ public class OrderService {
     @Autowired
     private AddressDao addressDao;
 
+    @Autowired
+    private ProductDao productDao;
+
     public OrderService() {}
 
     public OrderService(OrderDao orderDao) {
@@ -45,23 +48,27 @@ public class OrderService {
         for(Object obj :jsonArray){
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
-            SubOrder subOrder = (SubOrder) JSONObject.toBean((JSONObject) obj, SubOrder.class);
-            subOrder.setOrder(order);
+            SubOrder subOrder = new SubOrder(order);
+            JSONObject jsonObject = (JSONObject) obj;
+            subOrder.setNumber(Integer.valueOf(jsonObject.get("number").toString()));
+            subOrder.setColor(jsonObject.get("color").toString());
+            subOrder.setSize(Integer.valueOf(jsonObject.get("size").toString()));
+            subOrder.setProduct(productDao.get(jsonObject.get("product_id").toString()));
             session.persist(subOrder);
             transaction.commit();
         }
         return new Result(true, "");
     }
     public Order get(String id){
-        Order order = orderDao.getOrder(id);
-//        Product product = productDao.get(Product.class, String.valueOf(order.getProduct_id()));
-//        Address address = addressDao.get(Address.class, String.valueOf(order.getAddress_id()));
-//        return new OrderModel(order, product, address);
-        return order;
+        return orderDao.getOrder(id);
     }
 
-    public List<OrderModel> find(String openID){
-        return orderDao.findOrders(openID);
+    public List<Order> find(String openID){
+        return orderDao.findAllOrders(openID);
+    }
+
+    public List<Order> find(String openID, String state){
+        return orderDao.find(openID, "state", state, Order.class);
     }
 
     public OrderDao getOrderDao() {

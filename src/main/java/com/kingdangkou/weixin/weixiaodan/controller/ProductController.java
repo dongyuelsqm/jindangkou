@@ -34,4 +34,24 @@ public class ProductController {
     public void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.getWriter().print(JSONArray.fromObject(productService.list()));
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
+    public void register(@RequestParam("product_name") String name,
+                         @RequestParam("department") int department,
+                         @RequestParam("unit_price") float unitPrice,
+                         @RequestParam("description") String description,
+                         @RequestParam("pic") String pic){
+        productService.save(new Product(name, department, unitPrice, description, pic));
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
+    public void save(@RequestParam("id") String id, @RequestParam("name") String name,
+                     @RequestParam("value") String value){
+        productService.update(id, name, value);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/remove")
+    public void remove(@RequestParam("id") String id){
+
+    }
 }

@@ -13,4 +13,8 @@ public class ProductDao extends BaseDaoHibernate4<Product>  {
     public List<Product> find(){
         return find("select * from Product");
     }
+
+    public Product get(String productID){
+        return get(Product.class, productID);
+    }
 }
