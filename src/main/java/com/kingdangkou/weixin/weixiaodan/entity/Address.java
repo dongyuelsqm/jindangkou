@@ -1,12 +1,19 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
+import com.sun.istack.internal.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * Created by dongy on 2016-11-16.
  */
 @Entity
 @Table(name = "addresses")
+@Component
 public class Address {
     private int id;
     private String openID;
@@ -40,7 +47,9 @@ public class Address {
         this.id = id;
     }
 
+    @NotNull
     @Column(name = "open_id")
+    @NotEmpty
     public String getOpenID() {
         return openID;
     }
@@ -49,7 +58,9 @@ public class Address {
         this.openID = openID;
     }
 
+    @Size(min = 1, max = 10, message = "province can not be run")
     @Column(name = "province")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getProvince() {
         return province;
     }
@@ -59,6 +70,7 @@ public class Address {
     }
 
     @Column(name = "city")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getCity() {
         return city;
     }
@@ -68,6 +80,7 @@ public class Address {
     }
 
     @Column(name = "district")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getDisctrict() {
         return disctrict;
     }
@@ -77,6 +90,7 @@ public class Address {
     }
 
     @Column(name = "detail")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getDetail() {
         return detail;
     }
@@ -86,6 +100,7 @@ public class Address {
     }
 
     @Column(name = "name")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getName() {
         return name;
     }
@@ -95,6 +110,7 @@ public class Address {
     }
 
     @Column(name = "phone")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getPhone() {
         return phone;
     }

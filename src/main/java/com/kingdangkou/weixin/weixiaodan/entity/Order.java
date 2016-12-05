@@ -6,6 +6,7 @@ import org.hibernate.annotations.CascadeType;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,6 +39,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public int getId() {
         return id;
     }
@@ -46,6 +48,7 @@ public class Order {
         this.id = id;
     }
 
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     @ManyToOne(targetEntity = Address.class)
     @JoinColumn(name = "address_id", nullable = false)
     @Cascade(CascadeType.ALL)
@@ -57,6 +60,7 @@ public class Order {
     }
 
     @Column(name = "discount")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public float getDiscount() {
         return discount;
     }
@@ -66,6 +70,7 @@ public class Order {
     }
 
     @Column(name = "open_id")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getOpenID() {
         return openID;
     }
@@ -75,6 +80,7 @@ public class Order {
     }
 
     @Column(name = "deal_date")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public Date getDate() {
         return date;
     }
@@ -84,6 +90,7 @@ public class Order {
     }
 
     @Column(name = "ship_id")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getShip_id() {
         return ship_id;
     }
@@ -93,6 +100,7 @@ public class Order {
     }
 
     @Column(name = "state")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public int getState() {
         return state;
     }
@@ -102,6 +110,7 @@ public class Order {
     }
 
     @OneToMany(targetEntity = SubOrder.class, mappedBy = "order")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public Set<SubOrder> getSubOrders() {
         return subOrders;
     }

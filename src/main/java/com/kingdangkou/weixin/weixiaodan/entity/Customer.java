@@ -1,6 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 /**
  * Created by dongy on 2016-11-16.
@@ -43,6 +44,7 @@ public class Customer {
 
     @Id
     @Column(name = "open_id")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getId() {
         return id;
     }
@@ -52,6 +54,7 @@ public class Customer {
     }
 
     @Column(name = "name")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getName() {
         return name;
     }
@@ -60,6 +63,7 @@ public class Customer {
     }
 
     @Column(name = "gender")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getGender() {
         return gender;
     }
@@ -69,6 +73,7 @@ public class Customer {
     }
 
     @Column(name = "phone")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getPhone() {
         return phone;
     }

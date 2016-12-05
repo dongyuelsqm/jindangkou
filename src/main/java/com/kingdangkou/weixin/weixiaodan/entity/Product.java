@@ -1,6 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 /**
  * Created by dongy on 2016-11-16.
@@ -46,6 +47,7 @@ public class Product {
     }
 
     @Column(name = "product_name")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getName() {
         return name;
     }
@@ -55,6 +57,7 @@ public class Product {
     }
 
     @Column(name = "department_id")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public int getDepartment() {
         return department;
     }
@@ -64,6 +67,7 @@ public class Product {
     }
 
     @Column(name = "unit_price")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public float getPrice() {
         return price;
     }
@@ -73,6 +77,7 @@ public class Product {
     }
 
     @Column(name = "description")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getDescription() {
         return description;
     }
@@ -82,6 +87,7 @@ public class Product {
     }
 
     @Column(name = "picture")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getPic() {
         return pic;
     }
