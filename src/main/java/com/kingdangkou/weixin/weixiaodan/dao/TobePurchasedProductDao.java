@@ -9,4 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TobePurchasedProductDao extends BaseDaoHibernate4<TobePurchasedProductEntity> {
 
+    public TobePurchasedProductEntity get(String id){
+        return get(TobePurchasedProductEntity.class, id);
+    }
 }

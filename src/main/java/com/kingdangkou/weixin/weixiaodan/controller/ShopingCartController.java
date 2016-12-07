@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by dongy on 2016-12-06.
@@ -40,5 +41,10 @@ public class ShopingCartController {
                     @RequestParam("size") String size, HttpServletResponse response) throws IOException {
         Result result = shopingCartService.add(new TobePurchasedProductEntity(openID, product_id, color, number, size));
         response.getWriter().print(JSONObject.fromObject(result));
+    }
+
+    @RequestMapping(value = "/del", method = RequestMethod.POST)
+    public void del(@RequestParam("id_list") List<String> id_list, HttpServletResponse response){
+        shopingCartService.del(id_list);
     }
 }
