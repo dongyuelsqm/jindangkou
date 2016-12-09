@@ -40,7 +40,7 @@ public class ProductController {
                          @RequestParam("department") int department,
                          @RequestParam("unit_price") float unitPrice,
                          @RequestParam("description") String description,
-                         @RequestParam("pic") String pic){
+                         @RequestParam("pic") String pic, HttpServletResponse response){
         productService.save(new Product(name, department, unitPrice, description, pic));
     }
 
