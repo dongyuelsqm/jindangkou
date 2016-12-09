@@ -2,6 +2,8 @@ package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
+import com.kingdangkou.weixin.weixiaodan.model.Result;
+import com.kingdangkou.weixin.weixiaodan.model.Success;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +23,9 @@ public class ProductService {
         return productDao.find();
     }
 
-    public void save(Product product){
+    public Result save(Product product){
         productDao.save(product);
+        return new Success();
     }
 
     public void update(String id, String field, String value){

@@ -11,26 +11,91 @@ import javax.validation.constraints.Pattern;
 public class Product {
     private int id;
     private String name;
-    private int department;
     private float price;
-
-    private String description;
-
-    private String pic;
-    public Product(String name, int department, float price, String description, String pic) {
+    private String department;
+    private String sizes;
+    private String colors;
+    private int minimum;
+    private String postal;
+    private String prictures;
+    private String videos;
+    private String code;
+    public Product(String name, float price, String department, String sizes, String colors, String code, int minimum, String postal, String prictures, String videos) {
         this.name = name;
-        this.department = department;
         this.price = price;
-        this.description = description;
-        this.pic = pic;
+        this.department = department;
+        this.sizes = sizes;
+        this.colors = colors;
+        this.code = code;
+        this.minimum = minimum;
+        this.postal = postal;
+        this.prictures = prictures;
+        this.videos = videos;
     }
 
-    public Product(String name, int department, float price, String description) {
-        this.name = name;
-        this.department = department;
-        this.price = price;
-        this.description = description;
+    @Column(name = "size")
+    public String getSizes() {
+        return sizes;
     }
+
+    public void setSizes(String sizes) {
+        this.sizes = sizes;
+    }
+
+    @Column(name = "colors")
+    public String getColors() {
+        return colors;
+    }
+
+    public void setColors(String colors) {
+        this.colors = colors;
+    }
+
+    @Column(name = "code")
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    @Column(name = "minimum")
+    public int getMinimum() {
+        return minimum;
+    }
+
+    public void setMinimum(int minimum) {
+        this.minimum = minimum;
+    }
+
+    @Column(name = "postal")
+    public String getPostal() {
+        return postal;
+    }
+
+    public void setPostal(String postal) {
+        this.postal = postal;
+    }
+
+    @Column(name = "pictures")
+    public String getPrictures() {
+        return prictures;
+    }
+
+    public void setPrictures(String prictures) {
+        this.prictures = prictures;
+    }
+
+    @Column(name = "videos")
+    public String getVideos() {
+        return videos;
+    }
+
+    public void setVideos(String videos) {
+        this.videos = videos;
+    }
+
 
     public Product() {}
 
@@ -58,11 +123,11 @@ public class Product {
 
     @Column(name = "department_id")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public int getDepartment() {
+    public String getDepartment() {
         return department;
     }
 
-    public void setDepartment(int department) {
+    public void setDepartment(String department) {
         this.department = department;
     }
 
@@ -74,26 +139,6 @@ public class Product {
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    @Column(name = "description")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Column(name = "picture")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic;
     }
 
     @Override

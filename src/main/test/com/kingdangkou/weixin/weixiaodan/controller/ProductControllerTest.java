@@ -1,7 +1,10 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
+import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.when;
@@ -21,12 +26,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")
 public class ProductControllerTest {
 
-    private Product product = new Product("shirt", 11, 2f, "desc", "pic");
+    private Product product = new Product("name", 1.0f, "type", "size", "color", "code", 10, "postal", "pictures", "videos");
 
     private MockMvc mockMvc;
     @Mock
@@ -49,5 +55,30 @@ public class ProductControllerTest {
                         .param("id", String.valueOf(product.getId())))
                 .andDo(print());
         resultActions.andExpect(status().isOk()).andExpect(content().string(contains("shirt")));
+    }
+
+    @Test
+    public void testAddProduct() throws Exception {
+        when(service.save(any(Product.class))).thenReturn(new Success());
+        mockMvc.perform(post("/product/add").
+                param("name", "product").
+                param("price", "1.1").
+                param("department", "shirt").
+                param("size", "1").
+                param("color", "b").
+                param("code", "code").
+                param("minimum", "10").
+                param("postal", "300000").
+                param("pictures", "[\"dddd\",\"ffff\"]").
+                param("videos", "[\"dddd\",\"ffff\"]")).andDo(print()).andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
+    }
+
+    @Test
+    public void testName() throws Exception {
+        ArrayList<String> pictures = new ArrayList<String>();
+        pictures.add("dddd");
+        pictures.add("ffff");
+        System.out.println(JSONArray.fromObject(pictures));
+
     }
 }
