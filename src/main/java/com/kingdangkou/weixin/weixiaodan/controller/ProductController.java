@@ -35,7 +35,7 @@ public class ProductController {
         response.getWriter().print(JSONArray.fromObject(productService.list()));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/register")
+    @RequestMapping(method = RequestMethod.POST, value = "/add")
     public void register(@RequestParam("product_name") String name,
                          @RequestParam("department") int department,
                          @RequestParam("unit_price") float unitPrice,
