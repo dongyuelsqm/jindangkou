@@ -1,8 +1,10 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
+import com.kingdangkou.weixin.weixiaodan.dao.CollectionDao;
 import com.kingdangkou.weixin.weixiaodan.entity.CollectionEntity;
-import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
+import com.kingdangkou.weixin.weixiaodan.model.Success;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,15 +14,18 @@ import java.util.List;
  */
 @Service
 public class CollectionService {
+    @Autowired
+    private CollectionDao collectionDao;
     public Result add(CollectionEntity entity) {
-        return null;
+        collectionDao.save(entity);
+        return new Success();
     }
 
-    public List<Product> get(String openID) {
-        return null;
+    public List<CollectionEntity> get(String openID) {
+        return collectionDao.find(openID);
     }
 
     public Result del(String id) {
-        return null;
+        return del(id);
     }
 }
