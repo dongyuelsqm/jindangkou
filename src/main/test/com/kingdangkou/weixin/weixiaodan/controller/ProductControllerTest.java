@@ -4,7 +4,6 @@ import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,10 +22,10 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")

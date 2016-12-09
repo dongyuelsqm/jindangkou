@@ -23,6 +23,11 @@ public class FileController{
         fileService.getFile(request, response);
     }
 
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public void upload(HttpServletRequest request, HttpServletResponse response){
+        fileService.saveFile(request);
+    }
+
     public FileService getFileService() {
         return fileService;
     }
