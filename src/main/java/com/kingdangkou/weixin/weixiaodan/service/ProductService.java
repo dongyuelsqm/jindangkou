@@ -5,10 +5,13 @@ import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
+import com.kingdangkou.weixin.weixiaodan.utils.JsonHandler;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -32,8 +35,13 @@ public class ProductService {
 
     public Result save(Product product){
         productDao.save(product);
-        fileHandler.moveFile(new ArrayList<String>(), String.valueOf(product.getId()));
+        moveFiles(product.getPictures(), product.getId());
+        moveFiles(product.getVideos(), product.getId());
         return new Success();
+    }
+
+    private void moveFiles(String fils, int id){
+        fileHandler.moveFile(JsonHandler.toArrayList(fils), String.valueOf(id));
     }
 
     public void update(String id, String field, String value){
@@ -51,5 +59,20 @@ public class ProductService {
 
     public void setProductDao(ProductDao productDao) {
         this.productDao = productDao;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<String> files = new ArrayList<String>();
+        files.add("1");
+        files.add("12");
+        files.add("13");
+        files.add("14");
+        JSONArray jsonArray = JSONArray.fromObject(files);
+        System.out.println(jsonArray);
+        JSONArray jsonArray1 = JSONArray.fromObject(jsonArray.toString());
+        Collection<String> collection = jsonArray.toCollection(jsonArray1);
+        for (String file: collection){
+            System.out.println(file);
+        }
     }
 }
