@@ -1,7 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
 import com.kingdangkou.weixin.weixiaodan.entity.CollectionEntity;
-import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.CollectionService;
 import net.sf.json.JSONObject;
@@ -27,13 +26,13 @@ public class CollectionController {
     @RequestMapping(method = RequestMethod.POST)
     public void add(@RequestParam("openID") String openID,
                     @RequestParam("product_id") String product_id, HttpServletResponse response) throws IOException {
-        Result result = collectionService.add(new CollectionEntity(openID, product_id));
+        Result result = collectionService.add(product_id, openID);
         response.getWriter().print(JSONObject.fromObject(result));
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public void get(@RequestParam("openID") String openID, HttpServletResponse response) throws IOException {
-        List<Product> products = collectionService.get(openID);
+        List<CollectionEntity> products = collectionService.get(openID);
         response.getWriter().print(JSONObject.fromObject(products));
     }
 

@@ -1,11 +1,14 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
+import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
@@ -21,11 +24,13 @@ public class FileService {
         return fileHandler;
     }
 
-    public void saveFile(HttpServletRequest request){
+    public Result saveFile(HttpServletRequest request){
         try {
-            fileHandler.saveFile(request);
+            ArrayList<String> files = fileHandler.saveFile(request);
+            return new Result(true, JSONArray.fromObject(files).toString());
         } catch (Throwable e) {
             logger.warning(e.getMessage());
+            return new Result(false, "");
         }
     }
 

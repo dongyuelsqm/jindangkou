@@ -11,6 +11,7 @@ public class CollectionEntity {
     private Product product;
     private String openID;
 
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

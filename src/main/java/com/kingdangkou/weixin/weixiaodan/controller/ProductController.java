@@ -1,6 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
+import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -35,13 +36,20 @@ public class ProductController {
         response.getWriter().print(JSONArray.fromObject(productService.list()));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public void register(@RequestParam("product_name") String name,
-                         @RequestParam("department") int department,
-                         @RequestParam("unit_price") float unitPrice,
-                         @RequestParam("description") String description,
-                         @RequestParam("pic") String pic, HttpServletResponse response){
-        productService.save(new Product(name, department, unitPrice, description, pic));
+    @RequestMapping(method = RequestMethod.POST, value = "/add")
+    public void register(@RequestParam("name") String name,
+                         @RequestParam("price") String price,
+                         @RequestParam("department") String department,
+                         @RequestParam("size") String size,
+                         @RequestParam("color") String colors,
+                         @RequestParam("code") String code,
+                         @RequestParam("minimum") String minimum,
+                         @RequestParam("postal") String postal,
+                         @RequestParam("pictures") String pictures,
+                         @RequestParam("videos") String videos,
+                         HttpServletResponse response) throws IOException {
+        Result result = productService.save(new Product(name, Float.valueOf(price), department, size, colors, code, Integer.valueOf(minimum), postal, pictures, videos));
+        response.getWriter().print(JSONObject.fromObject(result));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/update")

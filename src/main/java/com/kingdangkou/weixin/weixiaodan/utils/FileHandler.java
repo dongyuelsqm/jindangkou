@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,8 @@ import java.util.List;
  */
 @Component
 public class FileHandler extends HttpServlet {
-    public void saveFile(HttpServletRequest request) throws IOException, FileUploadException {
+    public ArrayList<String> saveFile(HttpServletRequest request) throws IOException, FileUploadException {
+        ArrayList<String> fileNames = new ArrayList<String>();
         String realPath = getBaseFile(request) + "WEB-INF"+ File.separator + "upload" + File.separator;
         String tmpPath = getBaseFile(request) + "WEB-INF"+ File.separator + "temp" + File.separator;
         File tmpFile = new File(tmpPath);
@@ -34,7 +36,7 @@ public class FileHandler extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(diskFileItemFactory);
         upload.setHeaderEncoding("UTF-8");
         if (!ServletFileUpload.isMultipartContent(request)){
-            return;
+            return fileNames;
         }
         upload.setFileSizeMax(1024*1024);
         upload.setSizeMax(1024*1024 * 10);
@@ -45,9 +47,11 @@ public class FileHandler extends HttpServlet {
             if (inputFullName == null || inputFullName.trim().equals("")){
                 continue;
             }
-            String fileName = inputFullName.substring(inputFullName.lastIndexOf("\\") + 1);
+            String extandName = inputFullName.substring(inputFullName.lastIndexOf(".") + 1);
             InputStream stream = item.getInputStream();
-            FileOutputStream fileOutputStream = new FileOutputStream(realPath + fileName);
+            int fileName = RandomDataGenerator.generate();
+            String storageName = String.valueOf(fileName) + extandName;
+            FileOutputStream fileOutputStream = new FileOutputStream(realPath + storageName);
             byte buffer[] = new byte[1024];
             int len = 0;
             while ((len = stream.read(buffer)) >0){
@@ -56,7 +60,10 @@ public class FileHandler extends HttpServlet {
             stream.close();
             fileOutputStream.close();
             item.delete();
+            fileNames.add(storageName);
         }
+
+        return fileNames;
     }
 
     private String getBaseFile(HttpServletRequest request) {
@@ -85,5 +92,14 @@ public class FileHandler extends HttpServlet {
         out.close();
 
 
+    }
+
+    public void moveFile(ArrayList<String> files, String target){
+        String realPath = "WEB-INF"+ File.separator + "files" + File.separator + target + File.separator;
+        String originPath = "WEB-INF"+ File.separator + "upload" + File.separator;
+        for (String fileName: files){
+            File file = new File(originPath + fileName);
+            file.renameTo(new File(realPath + fileName));
+        }
     }
 }
