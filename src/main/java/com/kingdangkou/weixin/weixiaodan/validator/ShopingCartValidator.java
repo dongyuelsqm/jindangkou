@@ -10,7 +10,6 @@ import org.springframework.validation.Validator;
  */
 @Component
 public class ShopingCartValidator implements Validator {
-    @Override
     public boolean supports(Class<?> aClass) {
         return false;
     }

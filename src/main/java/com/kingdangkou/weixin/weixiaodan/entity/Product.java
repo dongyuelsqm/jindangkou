@@ -17,10 +17,10 @@ public class Product {
     private String colors;
     private int minimum;
     private String postal;
-    private String prictures;
+    private String pictures;
     private String videos;
     private String code;
-    public Product(String name, float price, String department, String sizes, String colors, String code, int minimum, String postal, String prictures, String videos) {
+    public Product(String name, float price, String department, String sizes, String colors, String code, int minimum, String postal, String pictures, String videos) {
         this.name = name;
         this.price = price;
         this.department = department;
@@ -29,7 +29,7 @@ public class Product {
         this.code = code;
         this.minimum = minimum;
         this.postal = postal;
-        this.prictures = prictures;
+        this.pictures = pictures;
         this.videos = videos;
     }
 
@@ -79,12 +79,12 @@ public class Product {
     }
 
     @Column(name = "pictures")
-    public String getPrictures() {
-        return prictures;
+    public String getPictures() {
+        return pictures;
     }
 
-    public void setPrictures(String prictures) {
-        this.prictures = prictures;
+    public void setPictures(String prictures) {
+        this.pictures = prictures;
     }
 
     @Column(name = "videos")

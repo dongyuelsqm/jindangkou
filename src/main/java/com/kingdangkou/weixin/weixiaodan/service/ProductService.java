@@ -4,8 +4,11 @@ import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
+import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +16,11 @@ import java.util.List;
  */
 @Service
 public class ProductService {
+    @Autowired
     private ProductDao productDao;
+
+    @Autowired
+    private FileHandler fileHandler;
 
     public Product get(String id){
         return productDao.get(Product.class, id);
@@ -25,6 +32,7 @@ public class ProductService {
 
     public Result save(Product product){
         productDao.save(product);
+        fileHandler.moveFile(new ArrayList<String>(), String.valueOf(product.getId()));
         return new Success();
     }
 
