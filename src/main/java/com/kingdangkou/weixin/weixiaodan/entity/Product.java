@@ -20,6 +20,23 @@ public class Product {
     private String pictures;
     private String videos;
     private String code;
+    private int number = 0;
+
+    public Product(int id, String name, float price, String department, String sizes, String colors, int minimum, String postal, String pictures, String videos, String code, int number) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.department = department;
+        this.sizes = sizes;
+        this.colors = colors;
+        this.minimum = minimum;
+        this.postal = postal;
+        this.pictures = pictures;
+        this.videos = videos;
+        this.code = code;
+        this.number = number;
+    }
+
     public Product(String name, float price, String department, String sizes, String colors, String code, int minimum, String postal, String pictures, String videos) {
         this.name = name;
         this.price = price;
@@ -96,8 +113,8 @@ public class Product {
         this.videos = videos;
     }
 
-
     public Product() {}
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -139,6 +156,15 @@ public class Product {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    @Column(name = "number")
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     @Override

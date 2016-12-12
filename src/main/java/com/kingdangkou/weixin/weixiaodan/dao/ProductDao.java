@@ -17,4 +17,5 @@ public class ProductDao extends BaseDaoHibernate4<Product>  {
     public Product get(String productID){
         return get(Product.class, productID);
     }
+
 }

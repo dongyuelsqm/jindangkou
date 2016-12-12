@@ -1,5 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
+import com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
 
@@ -11,6 +12,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum.NOT_PAY;
+
 /**
  * Created by dongy on 2016-11-15.
  */
@@ -18,12 +21,11 @@ import java.util.Set;
 @Table(name = "orders")
 public class Order {
     private int id;
-
     private float discount;
     private String openID;
     private Date date;
     private String ship_id;
-    private int state;
+    private int state = NOT_PAY;
     private Address address;
 
     private Set<SubOrder> subOrders = new HashSet<SubOrder>();

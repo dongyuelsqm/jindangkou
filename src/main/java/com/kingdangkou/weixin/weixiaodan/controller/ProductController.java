@@ -49,17 +49,33 @@ public class ProductController {
                          @RequestParam("videos") String videos,
                          HttpServletResponse response) throws IOException {
         Result result = productService.save(new Product(name, Float.valueOf(price), department, size, colors, code, Integer.valueOf(minimum), postal, pictures, videos));
-        response.getWriter().print(JSONObject.fromObject(result));
+        response.getWriter().print(result);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/update")
     public void save(@RequestParam("id") String id, @RequestParam("name") String name,
-                     @RequestParam("value") String value){
-        productService.update(id, name, value);
+                     @RequestParam("value") String value, HttpServletResponse response) throws IOException {
+        Result result = productService.update(id, name, value);
+        response.getWriter().print(result);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/remove")
-    public void remove(@RequestParam("id") String id){
+    @RequestMapping(method = RequestMethod.GET, value = "check")
+    public void getProductNumber(@RequestParam("id") String id, HttpServletResponse response) throws IOException {
+        int number = productService.getNumber(id);
+        response.getWriter().print(number);
+    }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/number")
+    public void updateNumber(@RequestParam("id") String id, @RequestParam("newNumber") int number, HttpServletResponse response) throws IOException {
+        Result result = productService.updateNumber(id, number);
+        response.getWriter().print(result);
+    }
+
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/remove")
+    public void remove(@RequestParam("id") String id, HttpServletResponse response) throws IOException {
+        Result result = productService.remove(id);
+        response.getWriter().print(result);
     }
 }

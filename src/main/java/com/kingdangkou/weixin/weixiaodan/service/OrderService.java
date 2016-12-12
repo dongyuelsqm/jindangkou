@@ -5,8 +5,10 @@ import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
 import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
 import com.kingdangkou.weixin.weixiaodan.entity.Address;
 import com.kingdangkou.weixin.weixiaodan.entity.Order;
+import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.entity.SubOrder;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
+import com.kingdangkou.weixin.weixiaodan.model.Success;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.hibernate.Session;
@@ -46,19 +48,40 @@ public class OrderService {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         JSONArray jsonArray = JSONArray.fromObject(subOrders);
         for(Object obj :jsonArray){
-            Session session = sessionFactory.openSession();
-            Transaction transaction = session.beginTransaction();
-            SubOrder subOrder = new SubOrder(order);
-            JSONObject jsonObject = (JSONObject) obj;
-            subOrder.setNumber(Integer.valueOf(jsonObject.get("number").toString()));
-            subOrder.setColor(jsonObject.get("color").toString());
-            subOrder.setSize(Integer.valueOf(jsonObject.get("size").toString()));
-            subOrder.setProduct(productDao.get(jsonObject.get("product_id").toString()));
-            session.persist(subOrder);
-            transaction.commit();
+            peristenceDB(order, sessionFactory, (JSONObject) obj);
+            adjustInventory((JSONObject) obj);
         }
         return new Result(true, "");
     }
+
+    public void adjustInventory(JSONObject obj){
+        String product_id = obj.get("product_id").toString();
+        Product product = productDao.get(product_id);
+        int current = product.getNumber();
+        int sold = Integer.valueOf(obj.get("number").toString());
+        current = current - sold;
+        product.setNumber(current);
+        productDao.save(product);
+    }
+
+    private void peristenceDB(Order order, SessionFactory sessionFactory, JSONObject obj) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        SubOrder subOrder = newSubOrder(order, obj);
+        session.persist(subOrder);
+        transaction.commit();
+    }
+
+    private SubOrder newSubOrder(Order order, JSONObject obj) {
+        SubOrder subOrder = new SubOrder(order);
+        JSONObject jsonObject = obj;
+        subOrder.setNumber(Integer.valueOf(jsonObject.get("number").toString()));
+        subOrder.setColor(jsonObject.get("color").toString());
+        subOrder.setSize(Integer.valueOf(jsonObject.get("size").toString()));
+        subOrder.setProduct(productDao.get(jsonObject.get("product_id").toString()));
+        return subOrder;
+    }
+
     public Order get(String id){
         return orderDao.getOrder(id);
     }
@@ -77,5 +100,16 @@ public class OrderService {
 
     public void setOrderDao(OrderDao orderDao) {
         this.orderDao = orderDao;
+    }
+
+    public Result updateState(String id, int newState){
+        updatePersistence(id, newState);
+        return new Success();
+    }
+
+    private void updatePersistence(String id, int newState) {
+        Order order = orderDao.getOrder(id);
+        order.setState(newState);
+        orderDao.update(order);
     }
 }

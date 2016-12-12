@@ -6,12 +6,9 @@ import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
 import com.kingdangkou.weixin.weixiaodan.utils.JsonHandler;
-import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -44,13 +41,27 @@ public class ProductService {
         fileHandler.moveFile(JsonHandler.toArrayList(fils), String.valueOf(id));
     }
 
-    public void update(String id, String field, String value){
+    public Result update(String id, String field, String value){
         productDao.update("product_id", id, field, value, Product.class);
+        return new Success();
     }
 
-    public void remove(String id){
+    public Result updateNumber(String id, int number){
+        Product product = productDao.get(id);
+        product.setNumber(number);
+        productDao.update(product);
+        return new Success();
+    }
+
+    public int getNumber(String id){
+        Product product = productDao.get(id);
+        return product.getNumber();
+    }
+
+    public Result remove(String id){
         Product product = productDao.get(id);
         productDao.delete(product);
+        return new Success();
     }
 
     public ProductDao getProductDao() {
@@ -59,20 +70,5 @@ public class ProductService {
 
     public void setProductDao(ProductDao productDao) {
         this.productDao = productDao;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<String> files = new ArrayList<String>();
-        files.add("1");
-        files.add("12");
-        files.add("13");
-        files.add("14");
-        JSONArray jsonArray = JSONArray.fromObject(files);
-        System.out.println(jsonArray);
-        JSONArray jsonArray1 = JSONArray.fromObject(jsonArray.toString());
-        Collection<String> collection = jsonArray.toCollection(jsonArray1);
-        for (String file: collection){
-            System.out.println(file);
-        }
     }
 }
