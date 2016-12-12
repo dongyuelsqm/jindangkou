@@ -2,6 +2,8 @@ package com.kingdangkou.weixin.weixiaodan.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by dongy on 2016-11-16.
@@ -21,6 +23,8 @@ public class Product {
     private String videos;
     private String code;
     private int number = 0;
+
+    private Set<ProductQuantityEntity> productQuantityEntitys = new HashSet<ProductQuantityEntity>();
 
     public Product(int id, String name, float price, String department, String sizes, String colors, int minimum, String postal, String pictures, String videos, String code, int number) {
         this.id = id;
@@ -165,6 +169,15 @@ public class Product {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    @OneToMany(targetEntity = ProductQuantityEntity.class, mappedBy = "order")
+    public Set<ProductQuantityEntity> getProductQuantityEntitys() {
+        return productQuantityEntitys;
+    }
+
+    public void setProductQuantityEntitys(Set<ProductQuantityEntity> productQuantityEntitySet) {
+        this.productQuantityEntitys = productQuantityEntitySet;
     }
 
     @Override

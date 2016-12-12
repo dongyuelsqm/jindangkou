@@ -1,12 +1,9 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
-import com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum;
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.HashSet;
@@ -57,6 +54,7 @@ public class Order {
     public Address getAddress() {
         return address;
     }
+
     public void setAddress(Address address) {
         this.address = address;
     }
