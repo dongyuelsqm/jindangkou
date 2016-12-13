@@ -15,61 +15,35 @@ public class Product {
     private String name;
     private float price;
     private String department;
-    private String sizes;
-    private String colors;
     private int minimum;
     private String postal;
     private String pictures;
     private String videos;
     private String code;
-    private int number = 0;
 
     private Set<ProductQuantityEntity> productQuantityEntitys = new HashSet<ProductQuantityEntity>();
 
-    public Product(int id, String name, float price, String department, String sizes, String colors, int minimum, String postal, String pictures, String videos, String code, int number) {
+    public Product(int id, String name, float price, String department, int minimum, String postal, String pictures, String videos, String code) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.department = department;
-        this.sizes = sizes;
-        this.colors = colors;
         this.minimum = minimum;
         this.postal = postal;
         this.pictures = pictures;
         this.videos = videos;
         this.code = code;
-        this.number = number;
     }
 
-    public Product(String name, float price, String department, String sizes, String colors, String code, int minimum, String postal, String pictures, String videos) {
+    public Product(String name, float price, String department, String code, int minimum, String postal, String pictures, String videos) {
         this.name = name;
         this.price = price;
         this.department = department;
-        this.sizes = sizes;
-        this.colors = colors;
         this.code = code;
         this.minimum = minimum;
         this.postal = postal;
         this.pictures = pictures;
         this.videos = videos;
-    }
-
-    @Column(name = "size")
-    public String getSizes() {
-        return sizes;
-    }
-
-    public void setSizes(String sizes) {
-        this.sizes = sizes;
-    }
-
-    @Column(name = "colors")
-    public String getColors() {
-        return colors;
-    }
-
-    public void setColors(String colors) {
-        this.colors = colors;
     }
 
     @Column(name = "code")
@@ -160,15 +134,6 @@ public class Product {
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    @Column(name = "number")
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
     }
 
     @OneToMany(targetEntity = ProductQuantityEntity.class, mappedBy = "order")

@@ -1,7 +1,5 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 
 /**
@@ -9,18 +7,31 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "product_quantity")
-@Component
 public class ProductQuantityEntity {
+    private int id;
     private Product product;
     private int number;
     private int color;
     private int size;
 
-    public ProductQuantityEntity(Product product, int number, int color, int size) {
+    public ProductQuantityEntity() {}
+
+    public ProductQuantityEntity(Product product, int color, int size, int number) {
         this.product = product;
         this.number = number;
         this.color = color;
         this.size = size;
+    }
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int key) {
+        this.id = key;
     }
 
     @ManyToOne

@@ -5,7 +5,6 @@ import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
 import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
 import com.kingdangkou.weixin.weixiaodan.entity.Address;
 import com.kingdangkou.weixin.weixiaodan.entity.Order;
-import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.entity.SubOrder;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
@@ -56,12 +55,13 @@ public class OrderService {
 
     public void adjustInventory(JSONObject obj){
         String product_id = obj.get("product_id").toString();
-        Product product = productDao.get(product_id);
-        int current = product.getNumber();
+        int size = Integer.valueOf(obj.get("size").toString());
+        Integer color = Integer.valueOf(obj.get("color").toString());
         int sold = Integer.valueOf(obj.get("number").toString());
+
+        int current = productDao.getQuantity(product_id, color, size);
         current = current - sold;
-        product.setNumber(current);
-        productDao.save(product);
+        productDao.updateQuantity(product_id, color, size, current);
     }
 
     private void peristenceDB(Order order, SessionFactory sessionFactory, JSONObject obj) {

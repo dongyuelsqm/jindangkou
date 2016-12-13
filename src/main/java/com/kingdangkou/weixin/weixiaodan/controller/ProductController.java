@@ -25,6 +25,7 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
     @RequestMapping(method = RequestMethod.GET, value = "/detail")
     public void get(@RequestParam("id") String id, HttpServletResponse response) throws IOException, FileUploadException {
         Product product = productService.get(id);
@@ -38,17 +39,16 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/add")
     public void register(@RequestParam("name") String name,
-                         @RequestParam("price") String price,
+                         @RequestParam("price") float price,
                          @RequestParam("department") String department,
-                         @RequestParam("size") String size,
-                         @RequestParam("color") String colors,
+                         @RequestParam("quantity") String quantity,
                          @RequestParam("code") String code,
-                         @RequestParam("minimum") String minimum,
+                         @RequestParam("minimum") int minimum,
                          @RequestParam("postal") String postal,
                          @RequestParam("pictures") String pictures,
                          @RequestParam("videos") String videos,
                          HttpServletResponse response) throws IOException {
-        Result result = productService.save(new Product(name, Float.valueOf(price), department, size, colors, code, Integer.valueOf(minimum), postal, pictures, videos));
+        Result result = productService.save(name, price, department, code, minimum, postal, pictures, videos, quantity);
         response.getWriter().print(result);
     }
 

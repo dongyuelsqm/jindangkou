@@ -28,10 +28,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")
+@ContextConfiguration("file:/spitter-servlet.xml")
 public class ProductControllerTest {
 
-    private Product product = new Product("name", 1.0f, "type", "size", "color", "code", 10, "postal", "pictures", "videos");
+    private Product product = new Product("name", 1.0f, "type", "code", 10, "postal", "pictures", "videos");
 
     private MockMvc mockMvc;
     @Mock

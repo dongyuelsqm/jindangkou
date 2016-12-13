@@ -9,7 +9,7 @@ import java.util.List;
 
 public class BaseDaoHibernate4<T> implements BaseDao<T>
 {
-	private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+	protected SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 	public void setSessionFactory(SessionFactory sessionFactory)
 	{
 		this.sessionFactory = sessionFactory;
@@ -36,6 +36,7 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		session.save(entity);
+
 		transaction.commit();
 	}
 
