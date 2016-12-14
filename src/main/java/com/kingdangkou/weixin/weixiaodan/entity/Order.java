@@ -1,15 +1,15 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum.NOT_PAY;
 
 /**
  * Created by dongy on 2016-11-15.
@@ -18,12 +18,11 @@ import java.util.Set;
 @Table(name = "orders")
 public class Order {
     private int id;
-
     private float discount;
     private String openID;
     private Date date;
     private String ship_id;
-    private int state;
+    private int state = NOT_PAY;
     private Address address;
 
     private Set<SubOrder> subOrders = new HashSet<SubOrder>();
@@ -55,6 +54,7 @@ public class Order {
     public Address getAddress() {
         return address;
     }
+
     public void setAddress(Address address) {
         this.address = address;
     }

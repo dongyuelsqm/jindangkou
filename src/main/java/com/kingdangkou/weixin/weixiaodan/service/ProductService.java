@@ -2,17 +2,19 @@ package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
+import com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
 import com.kingdangkou.weixin.weixiaodan.utils.JsonHandler;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dongy on 2016-11-19.
@@ -33,6 +35,11 @@ public class ProductService {
         return productDao.find();
     }
 
+    public List<Product> list(String department){
+        List<Product> products = productDao.find("department", department, Product.class);
+        return products;
+    }
+
     public Result save(Product product){
         productDao.save(product);
         moveFiles(product.getPictures(), product.getId());
@@ -40,17 +47,55 @@ public class ProductService {
         return new Success();
     }
 
+    public Result save(String name, float price, String department, String code, int minimum,
+                       String postal,
+                       String pictures,
+                       String videos,
+                       String quantity){
+        Product product = new Product(name,price, department, code, minimum, postal, pictures, videos);
+        Set<ProductQuantityEntity> productQuantityEntitySet = convertJsonToProductEntitySet(quantity);
+        product.setProductQuantityEntitys(productQuantityEntitySet);
+        productDao.save(product);
+        return new Success();
+    }
+
+    private Set<ProductQuantityEntity> convertJsonToProductEntitySet(String quantity) {
+        Set<ProductQuantityEntity> productQuantityEntitySet = new HashSet<ProductQuantityEntity>();
+        JSONArray jsonArray = JSONArray.fromObject(quantity);
+        for (Object obj: jsonArray){
+            JSONObject json = (JSONObject) obj;
+            ProductQuantityEntity productQuantityEntity = new ProductQuantityEntity();
+            productQuantityEntity.setNumber(Integer.valueOf(json.get("quantity").toString()));
+            productQuantityEntity.setColor(json.get("color").toString());
+            productQuantityEntity.setSize(json.get("size").toString());
+            productQuantityEntitySet.add(productQuantityEntity);
+        }
+        return productQuantityEntitySet;
+    }
+
     private void moveFiles(String fils, int id){
         fileHandler.moveFile(JsonHandler.toArrayList(fils), String.valueOf(id));
     }
 
-    public void update(String id, String field, String value){
+    public Result update(String id, String field, String value){
         productDao.update("product_id", id, field, value, Product.class);
+        return new Success();
     }
 
-    public void remove(String id){
+    public Result updateNumber(String id, String color, String size, int number){
+        productDao.updateQuantity(id, color, size, number);
+        return new Success();
+    }
+
+    public Result getNumber(String id, String color, String size){
+        int quantity = productDao.getQuantity(id, color, size);
+        return new Result(true, String.valueOf(quantity));
+    }
+
+    public Result remove(String id){
         Product product = productDao.get(id);
         productDao.delete(product);
+        return new Success();
     }
 
     public ProductDao getProductDao() {
@@ -59,20 +104,5 @@ public class ProductService {
 
     public void setProductDao(ProductDao productDao) {
         this.productDao = productDao;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<String> files = new ArrayList<String>();
-        files.add("1");
-        files.add("12");
-        files.add("13");
-        files.add("14");
-        JSONArray jsonArray = JSONArray.fromObject(files);
-        System.out.println(jsonArray);
-        JSONArray jsonArray1 = JSONArray.fromObject(jsonArray.toString());
-        Collection<String> collection = jsonArray.toCollection(jsonArray1);
-        for (String file: collection){
-            System.out.println(file);
-        }
     }
 }

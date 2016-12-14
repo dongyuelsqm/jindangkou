@@ -2,6 +2,9 @@ package com.kingdangkou.weixin.weixiaodan.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by dongy on 2016-11-16.
@@ -13,42 +16,38 @@ public class Product {
     private String name;
     private float price;
     private String department;
-    private String sizes;
-    private String colors;
     private int minimum;
     private String postal;
     private String pictures;
     private String videos;
     private String code;
-    public Product(String name, float price, String department, String sizes, String colors, String code, int minimum, String postal, String pictures, String videos) {
+    private Date date;
+
+    private Set<ProductQuantityEntity> productQuantityEntitys = new HashSet<ProductQuantityEntity>();
+
+    public Product(int id, String name, float price, String department, int minimum, String postal, String pictures, String videos, String code) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.department = department;
-        this.sizes = sizes;
-        this.colors = colors;
+        this.minimum = minimum;
+        this.postal = postal;
+        this.pictures = pictures;
+        this.videos = videos;
+        this.code = code;
+        this.date = new Date();
+    }
+
+    public Product(String name, float price, String department, String code, int minimum, String postal, String pictures, String videos) {
+        this.name = name;
+        this.price = price;
+        this.department = department;
         this.code = code;
         this.minimum = minimum;
         this.postal = postal;
         this.pictures = pictures;
         this.videos = videos;
-    }
-
-    @Column(name = "size")
-    public String getSizes() {
-        return sizes;
-    }
-
-    public void setSizes(String sizes) {
-        this.sizes = sizes;
-    }
-
-    @Column(name = "colors")
-    public String getColors() {
-        return colors;
-    }
-
-    public void setColors(String colors) {
-        this.colors = colors;
+        this.date = new Date();
     }
 
     @Column(name = "code")
@@ -96,12 +95,12 @@ public class Product {
         this.videos = videos;
     }
 
-
     public Product() {}
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
+    @Column(name = "id")
     public int getId() {
 
         return id;
@@ -111,7 +110,7 @@ public class Product {
         this.id = id;
     }
 
-    @Column(name = "product_name")
+    @Column(name = "name")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getName() {
         return name;
@@ -139,6 +138,15 @@ public class Product {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    @OneToMany(targetEntity = ProductQuantityEntity.class, mappedBy = "order")
+    public Set<ProductQuantityEntity> getProductQuantityEntitys() {
+        return productQuantityEntitys;
+    }
+
+    public void setProductQuantityEntitys(Set<ProductQuantityEntity> productQuantityEntitySet) {
+        this.productQuantityEntitys = productQuantityEntitySet;
     }
 
     @Override
