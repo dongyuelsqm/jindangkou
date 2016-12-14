@@ -2,6 +2,7 @@ package com.kingdangkou.weixin.weixiaodan.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +21,7 @@ public class Product {
     private String pictures;
     private String videos;
     private String code;
+    private Date date;
 
     private Set<ProductQuantityEntity> productQuantityEntitys = new HashSet<ProductQuantityEntity>();
 
@@ -33,6 +35,7 @@ public class Product {
         this.pictures = pictures;
         this.videos = videos;
         this.code = code;
+        this.date = new Date();
     }
 
     public Product(String name, float price, String department, String code, int minimum, String postal, String pictures, String videos) {
@@ -44,6 +47,7 @@ public class Product {
         this.postal = postal;
         this.pictures = pictures;
         this.videos = videos;
+        this.date = new Date();
     }
 
     @Column(name = "code")
@@ -96,7 +100,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
+    @Column(name = "id")
     public int getId() {
 
         return id;
@@ -106,7 +110,7 @@ public class Product {
         this.id = id;
     }
 
-    @Column(name = "product_name")
+    @Column(name = "name")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getName() {
         return name;
