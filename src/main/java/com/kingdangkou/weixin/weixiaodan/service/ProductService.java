@@ -35,6 +35,11 @@ public class ProductService {
         return productDao.find();
     }
 
+    public List<Product> list(String department){
+        List<Product> products = productDao.find("department", department, Product.class);
+        return products;
+    }
+
     public Result save(Product product){
         productDao.save(product);
         moveFiles(product.getPictures(), product.getId());
@@ -61,8 +66,8 @@ public class ProductService {
             JSONObject json = (JSONObject) obj;
             ProductQuantityEntity productQuantityEntity = new ProductQuantityEntity();
             productQuantityEntity.setNumber(Integer.valueOf(json.get("quantity").toString()));
-            productQuantityEntity.setColor(Integer.valueOf(json.get("color").toString()));
-            productQuantityEntity.setSize(Integer.valueOf(json.get("size").toString()));
+            productQuantityEntity.setColor(json.get("color").toString());
+            productQuantityEntity.setSize(json.get("size").toString());
             productQuantityEntitySet.add(productQuantityEntity);
         }
         return productQuantityEntitySet;
@@ -77,17 +82,14 @@ public class ProductService {
         return new Success();
     }
 
-    public Result updateNumber(String id, int number){
-        Product product = productDao.get(id);
-//        product.setNumber(number);
-//        productDao.update(product);
+    public Result updateNumber(String id, String color, String size, int number){
+        productDao.updateQuantity(id, color, size, number);
         return new Success();
     }
 
-    public int getNumber(String id){
-        Product product = productDao.get(id);
-//        return product.getNumber();
-        return 0;
+    public Result getNumber(String id, String color, String size){
+        int quantity = productDao.getQuantity(id, color, size);
+        return new Result(true, String.valueOf(quantity));
     }
 
     public Result remove(String id){

@@ -10,17 +10,17 @@ import javax.persistence.*;
 public class ProductQuantityEntity {
     private int id;
     private Product product;
+    private String color;
+    private String size;
     private int number;
-    private int color;
-    private int size;
 
     public ProductQuantityEntity() {}
 
-    public ProductQuantityEntity(Product product, int color, int size, int number) {
+    public ProductQuantityEntity(Product product, String color, String size, int number) {
         this.product = product;
-        this.number = number;
         this.color = color;
         this.size = size;
+        this.number = number;
     }
 
     @Id
@@ -54,20 +54,20 @@ public class ProductQuantityEntity {
     }
 
     @Column(name = "color")
-    public int getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(int color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
     @Column(name = "size")
-    public int getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(String size) {
         this.size = size;
     }
 }

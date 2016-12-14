@@ -55,8 +55,8 @@ public class OrderService {
 
     public void adjustInventory(JSONObject obj){
         String product_id = obj.get("product_id").toString();
-        int size = Integer.valueOf(obj.get("size").toString());
-        Integer color = Integer.valueOf(obj.get("color").toString());
+        String size = obj.get("size").toString();
+        String color = obj.get("color").toString();
         int sold = Integer.valueOf(obj.get("number").toString());
 
         int current = productDao.getQuantity(product_id, color, size);

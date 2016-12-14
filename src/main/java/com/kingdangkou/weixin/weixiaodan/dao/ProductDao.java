@@ -21,16 +21,16 @@ public class ProductDao extends BaseDaoHibernate4<Product>  {
         return get(Product.class, productID);
     }
 
-    public int getQuantity(String id, int color, int size){
+    public int getQuantity(String id, String color, String size){
         Product product = get(Product.class, id);
         for (ProductQuantityEntity entity: product.getProductQuantityEntitys()){
-            if (entity.getColor() == color && entity.getSize() == size)
+            if (entity.getColor().equals(color) && entity.getSize().equals(size))
                 return entity.getNumber();
         }
         return 0;
     }
 
-    public void updateQuantity(String id, int color, int size, int number){
+    public void updateQuantity(String id, String color, String size, int number){
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Product product = get(Product.class, id);
