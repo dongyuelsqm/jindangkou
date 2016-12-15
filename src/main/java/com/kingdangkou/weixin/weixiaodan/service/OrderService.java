@@ -10,10 +10,6 @@ import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,44 +39,38 @@ public class OrderService {
         Address address = addressDao.get(address_id);
         Order order = new Order(customer_id);
         order.setAddress(address);
-        orderDao.save(order);
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        JSONArray jsonArray = JSONArray.fromObject(subOrders);
-        for(Object obj :jsonArray){
-            peristenceDB(order, sessionFactory, (JSONObject) obj);
-            adjustInventory((JSONObject) obj);
+        JSONArray items = JSONArray.fromObject(subOrders);
+        for(Object obj: items){
+            SubOrder entity = convertToEntity(order, (JSONObject) obj);
+            order.getSubOrders().add(entity);
         }
+        orderDao.save(order);
+        adjustInventory(order);
         return new Result(true, "");
     }
 
-    public void adjustInventory(JSONObject obj){
-        String product_id = obj.get("product_id").toString();
-        String size = obj.get("size").toString();
-        String color = obj.get("color").toString();
-        int sold = Integer.valueOf(obj.get("number").toString());
-
-        int current = productDao.getQuantity(product_id, color, size);
-        current = current - sold;
-        productDao.updateQuantity(product_id, color, size, current);
-    }
-
-    private void peristenceDB(Order order, SessionFactory sessionFactory, JSONObject obj) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        SubOrder subOrder = newSubOrder(order, obj);
-        session.persist(subOrder);
-        transaction.commit();
-    }
-
-    private SubOrder newSubOrder(Order order, JSONObject obj) {
+    private SubOrder convertToEntity(Order order, JSONObject obj) {
         SubOrder subOrder = new SubOrder(order);
-        JSONObject jsonObject = obj;
-        subOrder.setNumber(Integer.valueOf(jsonObject.get("number").toString()));
-        subOrder.setColor(jsonObject.get("color").toString());
-        subOrder.setSize(Integer.valueOf(jsonObject.get("size").toString()));
-        subOrder.setProduct(productDao.get(jsonObject.get("product_id").toString()));
+        subOrder.setNumber(Integer.valueOf(obj.get("number").toString()));
+        subOrder.setColor(obj.get("color").toString());
+        subOrder.setSize(Integer.valueOf(obj.get("size").toString()));
+        subOrder.setProduct(productDao.get(obj.get("product_id").toString()));
         return subOrder;
     }
+
+    public void adjustInventory(Order obj){
+        for (SubOrder subOrder: obj.getSubOrders()){
+            String product_id = subOrder.getProduct().getId();
+            String size = String.valueOf(subOrder.getSize());
+            String color = subOrder.getColor();
+            int sold = subOrder.getNumber();
+
+            int current = productDao.getQuantity(product_id, color, size);
+            current = current - sold;
+            productDao.updateQuantity(product_id, color, size, current);
+        }
+    }
+
 
     public Order get(String id){
         return orderDao.getOrder(id);
