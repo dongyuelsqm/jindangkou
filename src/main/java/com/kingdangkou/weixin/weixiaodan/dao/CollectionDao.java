@@ -2,7 +2,6 @@ package com.kingdangkou.weixin.weixiaodan.dao;
 
 import com.kingdangkou.weixin.weixiaodan.entity.CollectionEntity;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 /**

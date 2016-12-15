@@ -14,6 +14,7 @@ import java.util.Set;
 public class Product {
     private int id;
     private String name;
+    private String descriptive;
     private float price;
     private String department;
     private int minimum;
@@ -25,9 +26,10 @@ public class Product {
 
     private Set<ProductQuantityEntity> productQuantityEntitys = new HashSet<ProductQuantityEntity>();
 
-    public Product(int id, String name, float price, String department, int minimum, String postal, String pictures, String videos, String code) {
+    public Product(int id, String name, String descriptive, float price, String department, int minimum, String postal, String pictures, String videos, String code) {
         this.id = id;
         this.name = name;
+        this.descriptive = descriptive;
         this.price = price;
         this.department = department;
         this.minimum = minimum;
@@ -38,8 +40,9 @@ public class Product {
         this.date = new Date();
     }
 
-    public Product(String name, float price, String department, String code, int minimum, String postal, String pictures, String videos) {
+    public Product(String name, String descriptive, float price, String department, String code, int minimum, String postal, String pictures, String videos) {
         this.name = name;
+        this.descriptive = descriptive;
         this.price = price;
         this.department = department;
         this.code = code;
@@ -120,6 +123,14 @@ public class Product {
         this.name = name;
     }
 
+    public String getDescriptive() {
+        return descriptive;
+    }
+
+    public void setDescriptive(String descriptive) {
+        this.descriptive = descriptive;
+    }
+
     @Column(name = "department_id")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getDepartment() {
@@ -138,6 +149,15 @@ public class Product {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    @Column(name = "date")
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @OneToMany(targetEntity = ProductQuantityEntity.class, mappedBy = "order")

@@ -45,6 +45,7 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/add")
     public void register(@RequestParam("name") String name,
+                         @RequestParam("descriptive") String descriptive,
                          @RequestParam("price") float price,
                          @RequestParam("department") String department,
                          @RequestParam("quantity") String quantity,
@@ -54,7 +55,7 @@ public class ProductController {
                          @RequestParam("pictures") String pictures,
                          @RequestParam("videos") String videos,
                          HttpServletResponse response) throws IOException {
-        Result result = productService.save(name, price, department, code, minimum, postal, pictures, videos, quantity);
+        Result result = productService.save(name, descriptive, price, department, code, minimum, postal, pictures, videos, quantity);
         returnOperationResult(response, result);
     }
 

@@ -4,7 +4,6 @@ import com.kingdangkou.weixin.weixiaodan.entity.Order;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.OrderService;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,21 +30,19 @@ public class OrderController {
         response.getWriter().print(JSONArray.fromObject(orders).toString());
     }
 
-
-
     @RequestMapping(method = RequestMethod.POST, value = "/create")
     public void createOrder(@RequestParam("openID") String openID,
                             @RequestParam("sub_orders") String subOrders,
                             @RequestParam("address_id") String address_id,
                             HttpServletResponse response) throws IOException {
         Result result = orderService.save(openID, subOrders, address_id);
-        response.getWriter().print(JSONObject.fromObject(result));
+        response.getWriter().print(result);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/state")
-    public void listOrders(@RequestParam("openID") String openID, @RequestParam("State") String state, HttpServletResponse response) throws IOException {
+    public void listOrders(@RequestParam("openID") String openID,
+                           @RequestParam("State") String state, HttpServletResponse response) throws IOException {
         List<Order> orders = orderService.find(openID, state);
-        response.getWriter().print(JSONObject.fromObject(orders).toString());
+        response.getWriter().print(JSONArray.fromObject(orders).toString());
     }
-
 }

@@ -15,6 +15,7 @@ import java.util.List;
 public class ShopingCartService {
     @Autowired
     private TobePurchasedProductDao tobePurchasedProductDao;
+
     public Result add(TobePurchasedProductEntity entity){
         tobePurchasedProductDao.save(entity);
         return new Result(true, "");
