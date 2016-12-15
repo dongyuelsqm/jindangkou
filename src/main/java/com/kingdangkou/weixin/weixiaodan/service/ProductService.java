@@ -73,8 +73,8 @@ public class ProductService {
         return productQuantityEntitySet;
     }
 
-    private void moveFiles(String fils, int id){
-        fileHandler.moveFile(JsonHandler.toArrayList(fils), String.valueOf(id));
+    private void moveFiles(String fils, String id){
+        fileHandler.moveFile(JsonHandler.toArrayList(fils), id);
     }
 
     public Result update(String id, String field, String value){

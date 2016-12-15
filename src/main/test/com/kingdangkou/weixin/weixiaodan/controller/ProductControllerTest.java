@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration("file:/spitter-servlet.xml")
 public class ProductControllerTest {
 
-    private Product product = new Product("name", 1.0f, "type", "code", 10, "postal", "pictures", "videos");
+    private Product product = new Product("name", "", 1.0f, "type", "code", 10, "postal", "pictures", "videos");
 
     private MockMvc mockMvc;
     @Mock
@@ -43,7 +43,7 @@ public class ProductControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-        product.setId(11111);
+        product.setId("11");
     }
 
     @Test
