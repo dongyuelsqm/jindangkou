@@ -47,12 +47,12 @@ public class ProductService {
         return new Success();
     }
 
-    public Result save(String name, float price, String department, String code, int minimum,
+    public Result save(String name, String descriptive, float price, String department, String code, int minimum,
                        String postal,
                        String pictures,
                        String videos,
                        String quantity){
-        Product product = new Product(name,price, department, code, minimum, postal, pictures, videos);
+        Product product = new Product(name, descriptive, price, department, code, minimum, postal, pictures, videos);
         Set<ProductQuantityEntity> productQuantityEntitySet = convertJsonToProductEntitySet(quantity);
         product.setProductQuantityEntitys(productQuantityEntitySet);
         productDao.save(product);
@@ -73,8 +73,8 @@ public class ProductService {
         return productQuantityEntitySet;
     }
 
-    private void moveFiles(String fils, int id){
-        fileHandler.moveFile(JsonHandler.toArrayList(fils), String.valueOf(id));
+    private void moveFiles(String fils, String id){
+        fileHandler.moveFile(JsonHandler.toArrayList(fils), id);
     }
 
     public Result update(String id, String field, String value){

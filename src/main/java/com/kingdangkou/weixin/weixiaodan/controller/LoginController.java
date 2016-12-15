@@ -18,7 +18,8 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
     @RequestMapping(method = RequestMethod.POST)
-    public void login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response) throws IOException {
+    public void login(@RequestParam("username") String username,
+                      @RequestParam("password") String password, HttpServletResponse response) throws IOException {
         boolean result = loginService.check(username, password);
         response.getWriter().print(result);
     }

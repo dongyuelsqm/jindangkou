@@ -12,8 +12,9 @@ import java.util.Set;
 @Entity
 @Table(name = "products")
 public class Product {
-    private int id;
+    private String id;
     private String name;
+    private String descriptive;
     private float price;
     private String department;
     private int minimum;
@@ -25,21 +26,11 @@ public class Product {
 
     private Set<ProductQuantityEntity> productQuantityEntitys = new HashSet<ProductQuantityEntity>();
 
-    public Product(int id, String name, float price, String department, int minimum, String postal, String pictures, String videos, String code) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.department = department;
-        this.minimum = minimum;
-        this.postal = postal;
-        this.pictures = pictures;
-        this.videos = videos;
-        this.code = code;
-        this.date = new Date();
-    }
+    public Product() {}
 
-    public Product(String name, float price, String department, String code, int minimum, String postal, String pictures, String videos) {
+    public Product(String name, String descriptive, float price, String department, String code, int minimum, String postal, String pictures, String videos) {
         this.name = name;
+        this.descriptive = descriptive;
         this.price = price;
         this.department = department;
         this.code = code;
@@ -95,18 +86,16 @@ public class Product {
         this.videos = videos;
     }
 
-    public Product() {}
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public int getId() {
+    public String getId() {
 
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -118,6 +107,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescriptive() {
+        return descriptive;
+    }
+
+    public void setDescriptive(String descriptive) {
+        this.descriptive = descriptive;
     }
 
     @Column(name = "department_id")
@@ -138,6 +135,15 @@ public class Product {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    @Column(name = "date")
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @OneToMany(targetEntity = ProductQuantityEntity.class, mappedBy = "order")

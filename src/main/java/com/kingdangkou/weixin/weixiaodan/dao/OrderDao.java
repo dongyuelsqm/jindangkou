@@ -1,6 +1,8 @@
 package com.kingdangkou.weixin.weixiaodan.dao;
 
 import com.kingdangkou.weixin.weixiaodan.entity.Order;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,6 +18,15 @@ public class OrderDao extends BaseDaoHibernate4<Order>{
 
     public Order getOrder(String key){
         return get(Order.class, key, "order_id");
+    }
+
+    @Override
+    public void save(Order entity) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(entity);
+
+        transaction.commit();
     }
 
     public List<Order> listOrdersByState(String state){

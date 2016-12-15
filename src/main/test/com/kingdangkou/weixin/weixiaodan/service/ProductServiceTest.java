@@ -25,7 +25,7 @@ public class ProductServiceTest {
     private ProductDao productDao;
     @Test
     public void testSave() throws Exception {
-        productService.save("name", 1.1f, "department", "code", 1, "true", "pic", "video", "quantity");
+        productService.save("name", "descriptive", 1.1f, "department", "code", 1, "true", "pic", "video", "quantity");
         List<Product> products = productDao.find();
         for (Product product: products){
             product.getName().equals("name");

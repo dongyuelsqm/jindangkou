@@ -18,7 +18,7 @@ public class SubOrder {
     private Order order;
 
     @OneToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "product_id", unique = true)
+    @JoinColumn(name = "product_id",referencedColumnName = "id", unique = true)
     private Product product;
 
     @Column(name = "number")
