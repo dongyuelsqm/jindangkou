@@ -146,7 +146,7 @@ public class Product {
         this.date = date;
     }
 
-    @OneToMany(targetEntity = ProductQuantityEntity.class, mappedBy = "order")
+    @OneToMany(targetEntity = ProductQuantityEntity.class, mappedBy = "product")
     public Set<ProductQuantityEntity> getProductQuantityEntitys() {
         return productQuantityEntitys;
     }

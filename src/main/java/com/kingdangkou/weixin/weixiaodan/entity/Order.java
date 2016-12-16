@@ -37,7 +37,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
+    @Column(name = "id")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public int getId() {
         return id;
@@ -49,7 +49,7 @@ public class Order {
 
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     @ManyToOne(targetEntity = Address.class)
-    @JoinColumn(name = "address_id", nullable = false)
+    @JoinColumn(name = "adress_id", nullable = false)
     @Cascade(CascadeType.ALL)
     public Address getAddress() {
         return address;
