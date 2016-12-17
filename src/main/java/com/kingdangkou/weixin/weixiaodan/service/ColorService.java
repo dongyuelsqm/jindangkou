@@ -16,6 +16,7 @@ import java.util.List;
 public class ColorService {
     @Autowired
     private ColorDao colorDao;
+
     public Result add(String color) {
         colorDao.add(color);
         return new Success();
@@ -29,5 +30,13 @@ public class ColorService {
         Color color = colorDao.get(Color.class, id);
         colorDao.delete(color);
         return new Success();
+    }
+
+    public ColorDao getColorDao() {
+        return colorDao;
+    }
+
+    public void setColorDao(ColorDao colorDao) {
+        this.colorDao = colorDao;
     }
 }
