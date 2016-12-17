@@ -1,0 +1,57 @@
+@charset "utf-8";
+@font-face {
+	font-family: "iconfont"; 
+	src: url('./iconfont/iconfont.eot');
+	src: url('./iconfont/iconfont.eot?#iefix') format('embedded-opentype'), 
+		 url('./iconfont/iconfont.woff') format('woff'), 
+		 url('./iconfont/iconfont.ttf') format('truetype'),
+		 url('./iconfont/iconfont.svg#iconfont') format('svg'); 
+}
+.iconfont {
+	font-family: "iconfont" !important; 
+	font-style: normal; 
+	-webkit-font-smoothing: antialiased;
+	/*-webkit-text-stroke-width: 0.1px;*/ 
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* CSS Document */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+button,
+input,
+textarea,
+select,
+th,
+td,
+label {margin: 0; padding: 0; }
+body{color: #242424; overflow:hidden; font:12px "Microsoft YaHei";}
+img {border: none; }
+li {list-style: none; }
+table {border-collapse: collapse; }
+a {text-decoration: none; font:12px "Microsoft YaHei";}
+	a:link, a:visited, a:hover, a:active {text-decoration: none;}
+input,
+textarea,
+select { border:1px solid #d8d8d8; font: 12px "Microsoft YaHei"; }
+input:hover,
+textarea:hover,
+select:hover {border: 1px solid #1ec1c2; }
+input[disabled]:hover { border: 1px solid #d8d8d8; }
+textarea {resize: none; }
+label{display: inline;}

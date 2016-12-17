@@ -1,0 +1,17 @@
+@charset "utf-8";
+
+@media (min-width: 768px){
+	.banner{
+		height: 350px;
+	}
+}
+@media (min-width: 992px) {
+	.banner{
+		height: 440px;
+	}
+}
+@media (min-width: 1200px) {
+	.banner{
+		height: 530px;
+	}
+}
