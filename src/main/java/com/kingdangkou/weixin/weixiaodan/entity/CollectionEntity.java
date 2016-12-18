@@ -34,7 +34,7 @@ public class CollectionEntity {
         this.product = product;
     }
 
-    @Column(name = "openID")
+    @Column(name = "open_id")
     public String getOpenID() {
         return openID;
     }
