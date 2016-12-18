@@ -1,11 +1,14 @@
 package com.kingdangkou.weixin.weixiaodan.filter;
 
+import org.springframework.stereotype.Component;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+@Component
 public class LoginFilter implements Filter {
 
     @Override
@@ -43,7 +46,7 @@ public class LoginFilter implements Filter {
         // 判断如果没有取到员工信息,就跳转到登陆页面
         if (empId == null || "".equals(empId)) {
             // 跳转到登陆页面
-            servletResponse.sendRedirect("/login.jsp");
+            servletResponse.sendRedirect("/weixin-1.0-SNAPSHOT/login.jsp");
         } else {
             // 已经登陆,继续此次请求
             chain.doFilter(request, response);

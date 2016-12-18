@@ -9,6 +9,7 @@ import javax.validation.constraints.Pattern;
  * Created by dongy on 2016-12-07.
  */
 @Entity
+@Table(name = "shoping_cart")
 public class TobePurchasedProductEntity {
     private int id;
 

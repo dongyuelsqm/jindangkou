@@ -14,11 +14,11 @@ public class SubOrder {
     private int id;
 
     @ManyToOne(targetEntity = Order.class)
-    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "order_id", referencedColumnName = "order_id", nullable = false)
     private Order order;
 
     @OneToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "id", unique = true)
+    @JoinColumn(name = "product_id",referencedColumnName = "product_id", unique = true)
     private Product product;
 
     @Column(name = "number")
