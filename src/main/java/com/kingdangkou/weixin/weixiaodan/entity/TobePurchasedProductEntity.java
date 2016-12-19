@@ -1,9 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 
 /**
  * Created by dongy on 2016-12-07.
@@ -40,9 +37,7 @@ public class TobePurchasedProductEntity {
     }
 
 
-    @Column(name = "openID")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    @NotNull
+    @Column(name = "open_id")
     public String getOpenID() {
         return openID;
     }
@@ -50,7 +45,7 @@ public class TobePurchasedProductEntity {
     public void setOpenID(String openID) {
         this.openID = openID;
     }
-
+    @Column(name = "product_id")
     public String getProduct_id() {
         return product_id;
     }
