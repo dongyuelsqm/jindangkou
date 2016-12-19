@@ -89,7 +89,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "product_id")
     public String getId() {
 
         return id;
@@ -146,7 +146,7 @@ public class Product {
         this.date = date;
     }
 
-    @OneToMany(targetEntity = ProductQuantityEntity.class, mappedBy = "order")
+    @OneToMany(targetEntity = ProductQuantityEntity.class, mappedBy = "product")
     public Set<ProductQuantityEntity> getProductQuantityEntitys() {
         return productQuantityEntitys;
     }

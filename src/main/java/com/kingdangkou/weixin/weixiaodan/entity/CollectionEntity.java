@@ -6,6 +6,7 @@ import javax.persistence.*;
  * Created by dongy on 2016-12-07.
  */
 @Entity
+@Table(name = "collections")
 public class CollectionEntity {
     private int id;
     private Product product;
@@ -33,7 +34,7 @@ public class CollectionEntity {
         this.product = product;
     }
 
-    @Column(name = "openID")
+    @Column(name = "open_id")
     public String getOpenID() {
         return openID;
     }

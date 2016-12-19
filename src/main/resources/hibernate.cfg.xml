@@ -11,11 +11,14 @@
     <property name="connection.username">root</property>
     <property name="connection.password">root123456</property>
     <!-- DB schema will be updated if needed -->
-      <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Order"/>
-      <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Customer"/>
-      <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Product"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Address"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.CollectionEntity"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Order"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Customer"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Product"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.SubOrder"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.TobePurchasedProductEntity"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.User"/>
   </session-factory>
 </hibernate-configuration>

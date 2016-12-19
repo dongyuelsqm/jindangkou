@@ -1,0 +1,74 @@
+@charset "utf-8";
+@import url(./reset.css);
+    
+.J_body{bottom:0; left:0; position:absolute; right:0; top:0; overflow: hidden;}
+
+/* Header */
+.header{width: 100%;}
+.header a{color: #333; display: inline-block; font-size:16px; }
+.header ul > li{float:left; padding:0 20px; position: relative;}
+.header ul > li a:hover,
+.header ul > li.active > a{color: #ea3527; text-decoration: underline;}
+    /*.header>.title{background: #000; color: #fff; height:30px; }
+        .title .brand{float:left; line-height: 30px; }
+		.title .links{float: right;}
+			.title .links > li{line-height:30px;}
+                #user-name,
+                #login{padding-right: 5px;}
+                #logout,
+                #register{padding-left: 5px;}*/
+	.header > .navs-wrapper{background-color: #fff;}
+        .navs-wrapper .brand{background:url(./img/brand-icon.png) no-repeat 0 center; height:80px; width: 176px;}
+		.navs{height: 80px; overflow: visible;}
+            .navs > li{line-height: 80px;}
+            .navs > li > a{}
+            	 #message-count{font-size: 12px; vertical-align: super;}
+/*				.navs > li > .active-arrow{background: url(../base/img/header-arrow.png) center no-repeat; bottom: -7px; height: 7px; left: 0; position: absolute; width: 100%; z-index: 11;}
+    .header > .subnavs-wrapper{background: #fff; display: none; left:0; height: 70px; position:absolute; right: 0; z-index: 10;}
+        .subnavs{position: absolute;}
+        #subnavs-2{left: 300px;}
+            .subnavs > li{ line-height: 70px;}
+            .subnavs > li > a{color: #333; }*/
+
+/* nav-link */
+/*.nav-link{background:rgba(0, 0, 0, 0.4); filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr=#44000000,endColorStr=#44000000); border-radius:4px; -moz-border-radius:4px; -o-border-radius:4px; -webkit-border-radius:4px; height:150px; position:fixed; right:20px; top: 100px; width:50px; z-index: 10;}
+	.nav-link > li{height: 50px; width: 50px;}
+	.nav-link a{background: url(./img/nav-icon.png) no-repeat 0 center; display: inline-block; height: 50px; width: 50px;}
+        .nav-link .link-notice{background-position: 0 center; border-radius: 4px 4px 0 0; -moz-border-radius: 4px 4px 0 0; -o-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; }
+        .nav-link .link-help{background-position: -50px center;}
+        .nav-link .link-contacts{background-position: -100px center; border-radius: 0 0 4px 4px; -moz-border-radius: 0 0 4px 4px; -o-border-radius: 0 0 4px 4px; -webkit-border-radius: 0 0 4px 4px; }
+    .nav-link li > a:hover,
+    .nav-link li.active > a{background-color: #ea3527;}*/
+	
+/* footer */
+.footer{background: #303437; color: #9c9c9c; font-size: 12px; height: 100px; line-height: 100px; margin-top: -100px; position: relative; width: 100%;}
+	.footer a{color:#fff; font-size:12px;}
+		.footer .about > span{margin:0 10px; }
+		.footer .link > a{margin-left: 10px;}
+		.footer .link > a.attention{position: relative;}
+			.footer .link > a.attention{position: relative;}
+				a.attention > img.qrcode {background: #fff; box-shadow: 0 0 10px 0 #ccc; -o-box-shadow: 0 0 10px 0 #ccc; -moz-box-shadow: 0 0 10px 0 #ccc; -webkit-box-shadow: 0 0 10px 0 #ccc; display: none; left: -75px; height: 150px; padding: 10px; position: absolute; top: -160px; width: 150px; z-index: 1;}
+				a.attention:hover > img.qrcode{display: block;}
+
+/* J_main */
+.J_main{background-color: #e7e8eb; min-height: 100%; height: auto !important; height: 100%;}
+	.main{padding-bottom: 100px;}
+
+/* main */
+.breadcrumb{background:none; color:#7a7a7a; height:30px; line-height:30px; margin: 0; padding: 0;}
+	.breadcrumb a{color: #ea3527;}
+div.container{margin: 0 auto; position: relative; padding-left: 0; padding-right: 0; width: 1200px;}
+.main > .container{margin-top: 20px;}
+.outer-content{overflow: hidden;}
+	.content-top,
+	.content,
+	.content-left{background: #fff; border: 1px solid #cbcbcb;}
+	.outer-content > div{float: left; margin-bottom: -99999px; padding-bottom: 99999px;}
+		.content-left{margin-left: -100%; width: 200px;}
+		.content-wrapper{width: 100%;}
+			.content-offset-left{margin-left: 210px;}
+				.content{margin-bottom: 30px; margin-top: 10px; position: relative;}
+				.content-top{}
+.content-title {background: #fbfafa; border-bottom: 1px solid #cbcbcb; font-size: 15px; height: 50px; line-height: 50px; padding: 0 10px;}
+	.content-title > .iconfont{color: #ea3527; font-size: 15px; margin-right: 10px;}
+.block-body{padding: 20px;}
