@@ -1,12 +1,9 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
-import com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -95,15 +92,5 @@ public class ProductController {
 
     private void returnOperationResult(HttpServletResponse response, Result result) throws IOException {
         response.getWriter().print(result);
-    }
-
-    public static void main(String[] args) {
-        JsonConfig config = new JsonConfig();
-        config.setExcludes(new String[]{"product"});//除去dept属性
-        Product object = new Product("name", "descriptive", 1.1f, "department", "code", 10, "postal", "pictures", "videos");
-        object.getProductQuantityEntitys().add(new ProductQuantityEntity(object, "color", "size", 10));
-        JSONObject json = JSONObject.fromObject(object, config);
-        System.out.println(json.toString());
-
     }
 }

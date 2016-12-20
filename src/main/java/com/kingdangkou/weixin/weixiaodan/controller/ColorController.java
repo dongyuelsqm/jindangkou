@@ -1,6 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import com.kingdangkou.weixin.weixiaodan.entity.Color;
+import com.kingdangkou.weixin.weixiaodan.entity.ColorEntity;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.ColorService;
 import net.sf.json.JSONArray;
@@ -31,8 +31,8 @@ public class ColorController {
 
     @RequestMapping(method = RequestMethod.GET)
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        List<Color> colors = colorService.list();
-        response.getWriter().print(JSONArray.fromObject(colors));
+        List<ColorEntity> colorEntities = colorService.list();
+        response.getWriter().print(JSONArray.fromObject(colorEntities));
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

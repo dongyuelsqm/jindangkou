@@ -13,7 +13,7 @@
     <!-- DB schema will be updated if needed -->
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Address"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.CollectionEntity"/>
-    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Color"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.ColorEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Order"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Product"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity"/>

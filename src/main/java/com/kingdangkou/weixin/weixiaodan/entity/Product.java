@@ -155,6 +155,15 @@ public class Product {
         this.productQuantityEntitys = productQuantityEntitySet;
     }
 
+    public ProductQuantityEntity getProductQuantityEntity(int color, int size){
+        for (ProductQuantityEntity entity: productQuantityEntitys){
+            if (entity.getColorEntity().getId() == color && entity.getSizeEntity().getId() == size){
+                return entity;
+            }
+        }
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

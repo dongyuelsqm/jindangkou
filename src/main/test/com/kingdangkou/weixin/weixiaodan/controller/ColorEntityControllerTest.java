@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")
-public class ColorControllerTest {
+public class ColorEntityControllerTest {
 
     private MockMvc mockMvc;
 

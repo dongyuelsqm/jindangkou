@@ -1,8 +1,12 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
+import com.kingdangkou.weixin.weixiaodan.dao.ColorDao;
 import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
+import com.kingdangkou.weixin.weixiaodan.dao.SizeDao;
+import com.kingdangkou.weixin.weixiaodan.entity.ColorEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity;
+import com.kingdangkou.weixin.weixiaodan.entity.SizeEntity;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
@@ -23,6 +27,12 @@ import java.util.Set;
 public class ProductService {
     @Autowired
     private ProductDao productDao;
+
+    @Autowired
+    private ColorDao colorDao;
+
+    @Autowired
+    private SizeDao sizeDao;
 
     @Autowired
     private FileHandler fileHandler;
@@ -66,8 +76,8 @@ public class ProductService {
             JSONObject json = (JSONObject) obj;
             ProductQuantityEntity productQuantityEntity = new ProductQuantityEntity();
             productQuantityEntity.setNumber(Integer.valueOf(json.get("quantity").toString()));
-            productQuantityEntity.setColor(json.get("color").toString());
-            productQuantityEntity.setSize(json.get("size").toString());
+            productQuantityEntity.setColorEntity(colorDao.get(json.get("color").toString()));
+            productQuantityEntity.setSizeEntity(sizeDao.get(json.get("size").toString()));
             productQuantityEntitySet.add(productQuantityEntity);
         }
         return productQuantityEntitySet;
@@ -83,7 +93,9 @@ public class ProductService {
     }
 
     public Result updateNumber(String id, String color, String size, int number){
-        productDao.updateQuantity(id, color, size, number);
+        ColorEntity colorEntity = colorDao.get(color);
+        SizeEntity sizeEntity = sizeDao.get(size);
+        productDao.updateQuantity(id, colorEntity, sizeEntity, number);
         return new Success();
     }
 

@@ -10,12 +10,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "colors")
 @Component
-public class Color {
+public class ColorEntity {
     private int id;
     private String name;
 
-    private Color(){}
-    public Color(String name) {
+    private ColorEntity(){}
+    public ColorEntity(String name) {
         this.name = name;
     }
 

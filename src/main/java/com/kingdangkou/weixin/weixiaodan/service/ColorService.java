@@ -1,7 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.dao.ColorDao;
-import com.kingdangkou.weixin.weixiaodan.entity.Color;
+import com.kingdangkou.weixin.weixiaodan.entity.ColorEntity;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +22,13 @@ public class ColorService {
         return new Success();
     }
 
-    public List<Color> list() {
+    public List<ColorEntity> list() {
         return colorDao.list();
     }
 
     public Result del(String id) {
-        Color color = colorDao.get(Color.class, id);
-        colorDao.delete(color);
+        ColorEntity colorEntity = colorDao.get(ColorEntity.class, id);
+        colorDao.delete(colorEntity);
         return new Success();
     }
 
