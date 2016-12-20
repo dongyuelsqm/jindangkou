@@ -36,7 +36,7 @@ public class Address {
         this.detail = detail;
     }
 
-    @Column(name = "address_id")
+    @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {

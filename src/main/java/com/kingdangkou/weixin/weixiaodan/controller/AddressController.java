@@ -3,6 +3,7 @@ package com.kingdangkou.weixin.weixiaodan.controller;
 import com.kingdangkou.weixin.weixiaodan.entity.Address;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.AddressService;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ public class AddressController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public void list(@RequestParam("openID") String openID, HttpServletResponse response) throws IOException {
         List<Address> addresses = addressService.list(openID);
-        response.getWriter().print(JSONObject.fromObject(addresses));
+        response.getWriter().print(JSONArray.fromObject(addresses));
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

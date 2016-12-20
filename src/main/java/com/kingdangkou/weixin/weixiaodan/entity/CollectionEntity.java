@@ -25,7 +25,7 @@ public class CollectionEntity {
     }
 
     @ManyToOne(targetEntity = Product.class)
-    @JoinColumn(name = "product_id",referencedColumnName = "product_id", unique = true)
+    @JoinColumn(name = "product_id",referencedColumnName = "id", unique = true)
     public Product getProduct() {
         return product;
     }

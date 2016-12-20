@@ -49,11 +49,10 @@ public class ProductControllerTest {
     @Test
     public void testGet() throws Exception {
         when(service.get(any(String.class))).thenReturn(product);
-        ResultActions resultActions = mockMvc.perform(
+        mockMvc.perform(
                 get("/product/detail")
                         .param("id", String.valueOf(product.getId())))
-                .andDo(print());
-        resultActions.andExpect(status().isOk()).andExpect(content().string(contains("shirt")));
+                .andDo(print()).andExpect(status().isOk()).andExpect(content().string(contains("shirt")));
     }
 
     @Test
@@ -62,14 +61,14 @@ public class ProductControllerTest {
         mockMvc.perform(post("/product/add").
                 param("name", "product").
                 param("price", "1.1").
+                param("quantity", "{quantity:\"1\", size:\"1\", color:\"1\", }").
                 param("department", "shirt").
-                param("size", "1").
-                param("color", "b").
                 param("code", "code").
                 param("minimum", "10").
                 param("postal", "300000").
                 param("pictures", "[\"dddd\",\"ffff\"]").
-                param("videos", "[\"dddd\",\"ffff\"]")).andDo(print()).andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
+                param("videos", "[\"dddd\",\"ffff\"]").
+                param("descriptive", "good")).andDo(print()).andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
     }
 
     @Test
