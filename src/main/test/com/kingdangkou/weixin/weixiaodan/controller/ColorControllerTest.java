@@ -25,12 +25,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:spitter-servlet.xml")
-@Transactional
-@Rollback(true)
+@ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")
 public class ColorControllerTest {
 
     private MockMvc mockMvc;
+
     @Autowired
     private ColorController colorController;
 

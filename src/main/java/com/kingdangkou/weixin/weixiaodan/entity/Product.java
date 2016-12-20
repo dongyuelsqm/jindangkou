@@ -41,6 +41,28 @@ public class Product {
         this.date = new Date();
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public String getId() {
+
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Column(name = "name")
+    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Column(name = "code")
     public String getCode() {
         return code;
@@ -77,6 +99,7 @@ public class Product {
         this.pictures = prictures;
     }
 
+
     @Column(name = "videos")
     public String getVideos() {
         return videos;
@@ -84,29 +107,6 @@ public class Product {
 
     public void setVideos(String videos) {
         this.videos = videos;
-    }
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    public String getId() {
-
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Column(name = "name")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescriptive() {
