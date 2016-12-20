@@ -8,4 +8,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SizeDao extends BaseDaoHibernate4<SizeEntity>{
+    public void del(String id){
+        SizeEntity sizeEntity = get(SizeEntity.class, id);
+        delete(sizeEntity);
+    }
 }
