@@ -16,7 +16,7 @@ import java.util.List;
 @Component
 public class ProductDao extends BaseDaoHibernate4<Product>  {
     public List<Product> find(){
-        return find("select * from Product");
+        return find("from Product product");
     }
 
     public Product get(String productID){
@@ -25,6 +25,7 @@ public class ProductDao extends BaseDaoHibernate4<Product>  {
 
     public int getQuantity(String id, String color, String size){
         Product product = get(Product.class, id);
+
         ProductQuantityEntity productQuantityEntity = product.getProductQuantityEntity(Integer.valueOf(color), Integer.valueOf(size));
         return productQuantityEntity == null? 0:productQuantityEntity.getNumber();
     }

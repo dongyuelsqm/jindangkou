@@ -3,23 +3,23 @@ package com.kingdangkou.weixin.weixiaodan.entity;
 import javax.persistence.*;
 
 /**
- * Created by dongy on 2016-12-17.
+ * Created by dongy on 2016-12-22.
  */
 @Entity
-@Table(name = "sizes")
-public class SizeEntity {
+@Table(name = "departments")
+public class DepartmentEntity {
     private int id;
     private String name;
 
-    public SizeEntity() {}
+    public DepartmentEntity() {}
 
-    public SizeEntity(String name) {
+    public DepartmentEntity(String name) {
         this.name = name;
     }
 
+    @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     public int getId() {
         return id;
     }
