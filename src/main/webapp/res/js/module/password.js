@@ -1,6 +1,6 @@
 /**
- * 贯众锐数 - 找回密码
- * cailuwei<cailuwei@chinamobile.com>
+ * 金档口 - 找回密码
+ * cailuwei<>
  */
 'use strict';
 define(function(require, exports, module) {

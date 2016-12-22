@@ -1,6 +1,6 @@
 /**
- *  轮播
- *  cailuwei <cailuwei@chinamobile.com>
+ * 金档口 - 轮播
+ * cailuwei<>
  */
 'use strict';
 define(function (require, exports, module) {

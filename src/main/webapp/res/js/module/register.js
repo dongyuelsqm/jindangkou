@@ -1,6 +1,6 @@
 /**
- * 贯众锐数 - 注册
- * cailuwei<cailuwei@chinamobile.com>
+ * 金档口 - 注册
+ * cailuwei<>
  */
 'use strict';
 define(function(require, exports, module) {

@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ include file="./taglibs.jsp"%>
-<h1 class="content-title">消费记录</h1>
+<%@ include file="../common/taglibs.jsp"%>
+<%@ include file="../common/head.jsp"%>
+<h1 class="content-title">商品列表</h1>
 <div id="table-wrapper" class="table-wrapper block-body">
 	<div class="table-operation clearfix" id="search-box">
 		<div class="operation-left left">
@@ -37,3 +38,10 @@
 	</table>
 	<div id="pagination" class="pages"></div>
 </div>
+<%@include file="../common/footer.jsp"%>
+
+<script type="text/javascript">
+    seajs.use('module/product/list', function(mod){
+        mod.run();
+    });
+</script>

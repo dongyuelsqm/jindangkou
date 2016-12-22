@@ -1,6 +1,6 @@
 /**
- * 个人中心 - 菜单
- * cailuwei<923825601@qq.com>
+ * 金档口 - 菜单数据
+ * cailuwei<>
  */
 'use strict';
 define(function (require, exports, module) {

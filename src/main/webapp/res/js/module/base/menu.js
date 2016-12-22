@@ -1,6 +1,6 @@
 /**
- * 菜单
- * cailuwei<cailuwei@chinamobile.com>
+ * 金档口 - 菜单
+ * cailuwei<>
  */
 'use strict';
 define(function (require, exports, module) {

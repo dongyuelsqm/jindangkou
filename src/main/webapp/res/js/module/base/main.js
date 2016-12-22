@@ -1,6 +1,6 @@
 /**
- * main
- * cailuwei<cailuwei@chinamobile.com>
+ * 金档口 - main
+ * cailuwei<>
  */
 'use strict';
 /**

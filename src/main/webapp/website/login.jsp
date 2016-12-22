@@ -7,7 +7,7 @@
     .error{color: #4d4d4d; display: none; line-height: 25px; text-align: center; }
     .error .iconfont{color: #e11377;}
 </style>
-<%@ include file="./common/top.jsp"%>
+<%@ include file="common/head.jsp"%>
 <h1 class="content-title">
     账号登录
     <!-- <span class="cor-grey">Account login</span>  -->
