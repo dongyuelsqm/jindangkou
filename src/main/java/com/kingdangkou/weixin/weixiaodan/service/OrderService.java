@@ -1,11 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
-import com.kingdangkou.weixin.weixiaodan.dao.AddressDao;
-import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
-import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
-import com.kingdangkou.weixin.weixiaodan.entity.Address;
-import com.kingdangkou.weixin.weixiaodan.entity.Order;
-import com.kingdangkou.weixin.weixiaodan.entity.SubOrder;
+import com.kingdangkou.weixin.weixiaodan.dao.*;
+import com.kingdangkou.weixin.weixiaodan.entity.*;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import net.sf.json.JSONArray;
@@ -28,6 +24,12 @@ public class OrderService {
 
     @Autowired
     private ProductDao productDao;
+
+    @Autowired
+    private ColorDao colorDao;
+
+    @Autowired
+    private SizeDao sizeDao;
 
     public OrderService() {}
 
@@ -63,11 +65,12 @@ public class OrderService {
             String product_id = subOrder.getProduct().getId();
             String size = String.valueOf(subOrder.getSize());
             String color = subOrder.getColor();
+            SizeEntity sizeEntity = sizeDao.get(size);
+            ColorEntity colorEntity = colorDao.get(color);
             int sold = subOrder.getNumber();
-
             int current = productDao.getQuantity(product_id, color, size);
             current = current - sold;
-            productDao.updateQuantity(product_id, color, size, current);
+            productDao.updateQuantity(product_id, colorEntity, sizeEntity, current);
         }
     }
 

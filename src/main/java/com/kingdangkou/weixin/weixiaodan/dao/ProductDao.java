@@ -1,7 +1,9 @@
 package com.kingdangkou.weixin.weixiaodan.dao;
 
+import com.kingdangkou.weixin.weixiaodan.entity.ColorEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity;
+import com.kingdangkou.weixin.weixiaodan.entity.SizeEntity;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
@@ -14,7 +16,7 @@ import java.util.List;
 @Component
 public class ProductDao extends BaseDaoHibernate4<Product>  {
     public List<Product> find(){
-        return find("select * from Product");
+        return find("from Product product");
     }
 
     public Product get(String productID){
@@ -23,14 +25,12 @@ public class ProductDao extends BaseDaoHibernate4<Product>  {
 
     public int getQuantity(String id, String color, String size){
         Product product = get(Product.class, id);
-        for (ProductQuantityEntity entity: product.getProductQuantityEntitys()){
-            if (entity.getColor().equals(color) && entity.getSize().equals(size))
-                return entity.getNumber();
-        }
-        return 0;
+
+        ProductQuantityEntity productQuantityEntity = product.getProductQuantityEntity(Integer.valueOf(color), Integer.valueOf(size));
+        return productQuantityEntity == null? 0:productQuantityEntity.getNumber();
     }
 
-    public void updateQuantity(String id, String color, String size, int number){
+    public void updateQuantity(String id, ColorEntity color, SizeEntity size, int number){
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         Product product = get(Product.class, id);

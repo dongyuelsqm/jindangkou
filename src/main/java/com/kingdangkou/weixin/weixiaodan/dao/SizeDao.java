@@ -12,4 +12,8 @@ public class SizeDao extends BaseDaoHibernate4<SizeEntity>{
         SizeEntity sizeEntity = get(SizeEntity.class, id);
         delete(sizeEntity);
     }
+
+    public SizeEntity get(String id){
+        return get(SizeEntity.class, id);
+    }
 }

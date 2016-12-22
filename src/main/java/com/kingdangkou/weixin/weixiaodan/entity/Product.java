@@ -1,6 +1,10 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,9 +18,9 @@ import java.util.Set;
 public class Product {
     private String id;
     private String name;
-    private String descriptive;
+    private String description;
     private float price;
-    private String department;
+    private DepartmentEntity department;
     private int minimum;
     private String postal;
     private String pictures;
@@ -28,11 +32,10 @@ public class Product {
 
     public Product() {}
 
-    public Product(String name, String descriptive, float price, String department, String code, int minimum, String postal, String pictures, String videos) {
+    public Product(String name, String description, float price, String code, int minimum, String postal, String pictures, String videos) {
         this.name = name;
-        this.descriptive = descriptive;
+        this.description = description;
         this.price = price;
-        this.department = department;
         this.code = code;
         this.minimum = minimum;
         this.postal = postal;
@@ -109,21 +112,22 @@ public class Product {
         this.videos = videos;
     }
 
-    public String getDescriptive() {
-        return descriptive;
+    @Column(name = "description")
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptive(String descriptive) {
-        this.descriptive = descriptive;
+    public void setDescription(String descriptive) {
+        this.description = descriptive;
     }
 
-    @Column(name = "department_id")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public String getDepartment() {
+    @ManyToOne(targetEntity = DepartmentEntity.class)
+    @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
+    public DepartmentEntity getDepartment() {
         return department;
     }
 
-    public void setDepartment(String department) {
+    public void setDepartment(DepartmentEntity department) {
         this.department = department;
     }
 
@@ -137,7 +141,7 @@ public class Product {
         this.price = price;
     }
 
-    @Column(name = "date")
+    @Column(name = "input_date")
     public Date getDate() {
         return date;
     }
@@ -151,8 +155,20 @@ public class Product {
         return productQuantityEntitys;
     }
 
+    public void addProductQuantity(ProductQuantityEntity quantity){
+        this.productQuantityEntitys.add(quantity);
+    }
     public void setProductQuantityEntitys(Set<ProductQuantityEntity> productQuantityEntitySet) {
         this.productQuantityEntitys = productQuantityEntitySet;
+    }
+
+    public ProductQuantityEntity getProductQuantityEntity(int color, int size){
+        for (ProductQuantityEntity entity: productQuantityEntitys){
+            if (entity.getColorEntity().getId() == color && entity.getSizeEntity().getId() == size){
+                return entity;
+            }
+        }
+        return null;
     }
 
     @Override

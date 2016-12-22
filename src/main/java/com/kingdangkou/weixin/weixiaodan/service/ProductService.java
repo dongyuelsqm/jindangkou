@@ -1,8 +1,11 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
+import com.kingdangkou.weixin.weixiaodan.dao.ColorDao;
+import com.kingdangkou.weixin.weixiaodan.dao.DepartmentDao;
 import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
-import com.kingdangkou.weixin.weixiaodan.entity.Product;
-import com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity;
+import com.kingdangkou.weixin.weixiaodan.dao.SizeDao;
+import com.kingdangkou.weixin.weixiaodan.entity.*;
+import com.kingdangkou.weixin.weixiaodan.model.ListResult;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
@@ -12,6 +15,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +26,15 @@ import java.util.Set;
 @Service
 public class ProductService {
     @Autowired
+    private DepartmentDao departmentDao;
+    @Autowired
     private ProductDao productDao;
+
+    @Autowired
+    private ColorDao colorDao;
+
+    @Autowired
+    private SizeDao sizeDao;
 
     @Autowired
     private FileHandler fileHandler;
@@ -31,8 +43,10 @@ public class ProductService {
         return productDao.get(Product.class, id);
     }
 
-    public List<Product> list(){
-        return productDao.find();
+    public ListResult list(){
+        List<Product> products = productDao.find();
+        ListResult result = new ListResult(true, products);
+        return result;
     }
 
     public List<Product> list(String department){
@@ -52,7 +66,9 @@ public class ProductService {
                        String pictures,
                        String videos,
                        String quantity){
-        Product product = new Product(name, descriptive, price, department, code, minimum, postal, pictures, videos);
+        DepartmentEntity departmentEntity = departmentDao.get(department);
+        Product product = new Product(name, descriptive, price, code, minimum, postal, pictures, videos);
+        product.setDepartment(departmentEntity);
         Set<ProductQuantityEntity> productQuantityEntitySet = convertJsonToProductEntitySet(quantity);
         product.setProductQuantityEntitys(productQuantityEntitySet);
         productDao.save(product);
@@ -66,8 +82,8 @@ public class ProductService {
             JSONObject json = (JSONObject) obj;
             ProductQuantityEntity productQuantityEntity = new ProductQuantityEntity();
             productQuantityEntity.setNumber(Integer.valueOf(json.get("quantity").toString()));
-            productQuantityEntity.setColor(json.get("color").toString());
-            productQuantityEntity.setSize(json.get("size").toString());
+            productQuantityEntity.setColorEntity(colorDao.get(json.get("color").toString()));
+            productQuantityEntity.setSizeEntity(sizeDao.get(json.get("size").toString()));
             productQuantityEntitySet.add(productQuantityEntity);
         }
         return productQuantityEntitySet;
@@ -83,7 +99,9 @@ public class ProductService {
     }
 
     public Result updateNumber(String id, String color, String size, int number){
-        productDao.updateQuantity(id, color, size, number);
+        ColorEntity colorEntity = colorDao.get(color);
+        SizeEntity sizeEntity = sizeDao.get(size);
+        productDao.updateQuantity(id, colorEntity, sizeEntity, number);
         return new Success();
     }
 
@@ -104,5 +122,12 @@ public class ProductService {
 
     public void setProductDao(ProductDao productDao) {
         this.productDao = productDao;
+    }
+
+    public static void main(String[] args) {
+        List<String> strings = new ArrayList<>();
+        strings.add("a");
+        strings.add("b");
+        System.out.println(JSONArray.fromObject(strings));
     }
 }
