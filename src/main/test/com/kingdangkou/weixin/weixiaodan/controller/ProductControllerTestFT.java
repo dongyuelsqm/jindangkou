@@ -37,14 +37,28 @@ public class ProductControllerTestFT {
 
     @Test
     public void testList() throws Exception {
-        ResultActions resultActions = mockMvc.perform(get("/product/list")).andDo(print()).andExpect(status().isOk());
-        MvcResult mvcResult = resultActions.andReturn();
-        String content = mvcResult.getResponse().getContentAsString();
+        String content = visit("/product/list").andReturn().getResponse().getContentAsString();
+
         JSONObject result = JSONObject.fromObject(content);
         assertEquals("true", result.getString("result"));
         JSONArray objs = JSONArray.fromObject(result.getString("objs"));
         assertEquals(1, objs.size());
         JSONObject json = (JSONObject) objs.get(0);
         assertEquals("jeans", json.getString("name"));
+    }
+
+    @Test
+    public void testFind() throws Exception {
+        ResultActions resultActions = mockMvc.perform(get("/product/department").param("department", "1")).andDo(print()).andExpect(status().isOk());
+        String content = resultActions.andReturn().getResponse().getContentAsString();
+        JSONArray jsonObject = JSONArray.fromObject(content);
+
+        JSONObject json = (JSONObject) jsonObject.get(0);
+        assertEquals("jeans", json.getString("name"));
+
+    }
+
+    private ResultActions visit(String url) throws Exception {
+        return mockMvc.perform(get(url)).andDo(print()).andExpect(status().isOk());
     }
 }
