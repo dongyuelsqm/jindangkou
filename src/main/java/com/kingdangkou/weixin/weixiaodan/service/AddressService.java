@@ -29,4 +29,10 @@ public class AddressService {
     public List<Address> list(String openID){
         return addressDao.findAddresses(openID);
     }
+
+    public Result del(String id) {
+        Address entity = addressDao.get(id);
+        addressDao.delete(entity);
+        return new Success();
+    }
 }

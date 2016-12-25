@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -51,5 +52,13 @@ public class AddressControllerTestFT {
                 param("district", "xihu").
                 param("detail", "zheda")).andDo(print());
         result.andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
+    }
+
+    @Test
+    public void testDel() throws Exception {
+        ResultActions result = mockMvc.perform(delete("/address").param("id", "3")).andDo(print());
+        result.andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
+
+
     }
 }
