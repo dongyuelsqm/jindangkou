@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.matchers.Contains;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -12,8 +11,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.mockito.Matchers.contains;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,5 +38,18 @@ public class AddressControllerTestFT {
         ResultActions result = mockMvc.perform(get("/address/list").param("openID", "111")).andDo(print());
         result.andExpect(status().isOk()).andExpect(content().string("[{\"city\":\"hangzhou\",\"detail\":\"\",\"disctrict\":\"\",\"id\":1,\"name\":\"\",\"openID\":\"111\",\"phone\":\"\",\"province\":\"zhejiang\"},{\"city\":\"hangzhou\",\"detail\":\"\",\"disctrict\":\"\",\"id\":2,\"name\":\"\",\"openID\":\"111\",\"phone\":\"\",\"province\":\"zhejiang\"}]"));
 
+    }
+
+    @Test
+    public void testAddAndDel() throws Exception {
+        ResultActions result = mockMvc.perform(post("/address/register").
+                param("name", "zhangsan").
+                param("phone", "151111111").
+                param("openID", "ssss").
+                param("province", "zhejiang").
+                param("city", "hangzhou").
+                param("district", "xihu").
+                param("detail", "zheda")).andDo(print());
+        result.andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
     }
 }
