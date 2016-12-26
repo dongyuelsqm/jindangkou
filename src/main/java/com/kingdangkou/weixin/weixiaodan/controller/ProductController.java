@@ -35,7 +35,7 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET, value = "/detail")
     public void get(@RequestParam("id") String id, HttpServletResponse response) throws IOException, FileUploadException {
         Product result = productService.get(id);
-        response.getWriter().print(result);
+        response.getWriter().print(JSONObject.fromObject(result, productJsonConfig));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/list")
@@ -47,7 +47,7 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET, value = "/department")
     public void find(@RequestParam("department") String department, HttpServletResponse response) throws IOException {
         List<Product> products = productService.list(department);
-        response.getWriter().print(JSONArray.fromObject(products));
+        response.getWriter().print(JSONArray.fromObject(products, productJsonConfig));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/add")

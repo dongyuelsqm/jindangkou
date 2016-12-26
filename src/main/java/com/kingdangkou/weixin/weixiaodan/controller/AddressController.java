@@ -56,4 +56,11 @@ public class AddressController {
         Result result = addressService.update(new Address(name, phone, openID, province, city, district, detail));
         response.getWriter().print(JSONObject.fromObject(result).toString());
     }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    public void delete(@RequestParam("id") String id, HttpServletResponse response) throws IOException {
+        Result result = addressService.del(id);
+        response.getWriter().print(result);
+
+    }
 }
