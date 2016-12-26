@@ -22,7 +22,7 @@ public class Order {
     private String openID;
     private Date date;
     private String ship_id;
-    private int state = NOT_PAY;
+    private int state = NOT_PAY.getValue();
     private Address address;
 
     private Set<SubOrder> subOrders = new HashSet<SubOrder>();

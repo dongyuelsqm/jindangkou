@@ -11,6 +11,9 @@ public enum  OrderStateEnum {
     }
 
     private int value;
+    public int getValue(){
+        return value;
+    }
     public static OrderStateEnum getEnum(int value){
         for (OrderStateEnum target: values()){
             if (target.value == value){
