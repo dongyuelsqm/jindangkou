@@ -58,7 +58,5 @@ public class AddressControllerTestFT {
     public void testDel() throws Exception {
         ResultActions result = mockMvc.perform(delete("/address").param("id", "3")).andDo(print());
         result.andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
-
-
     }
 }

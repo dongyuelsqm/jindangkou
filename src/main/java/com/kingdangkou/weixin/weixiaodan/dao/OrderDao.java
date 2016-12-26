@@ -25,7 +25,6 @@ public class OrderDao extends BaseDaoHibernate4<Order>{
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(entity);
-
         transaction.commit();
     }
 
