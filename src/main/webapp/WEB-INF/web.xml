@@ -13,6 +13,20 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>spitter</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -25,12 +39,12 @@
     </servlet-mapping>
 
     <!--<filter>-->
-        <!--<filter-name>login</filter-name>-->
-        <!--<filter-class>com.kingdangkou.weixin.weixiaodan.filter.LoginFilter</filter-class>-->
+    <!--<filter-name>login</filter-name>-->
+    <!--<filter-class>com.kingdangkou.weixin.weixiaodan.filter.LoginFilter</filter-class>-->
     <!--</filter>-->
 
     <!--<filter-mapping>-->
-        <!--<filter-name>login</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
+    <!--<filter-name>login</filter-name>-->
+    <!--<url-pattern>/*</url-pattern>-->
     <!--</filter-mapping>-->
 </web-app>
