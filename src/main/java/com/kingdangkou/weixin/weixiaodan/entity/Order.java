@@ -49,7 +49,7 @@ public class Order {
 
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     @ManyToOne(targetEntity = Address.class)
-    @JoinColumn(name = "adress_id", nullable = false)
+    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
     @Cascade(CascadeType.ALL)
     public Address getAddress() {
         return address;

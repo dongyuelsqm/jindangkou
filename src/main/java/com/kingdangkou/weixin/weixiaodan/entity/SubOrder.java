@@ -24,10 +24,10 @@ public class SubOrder {
     @Column(name = "number")
     private int number;
 
-    @Column(name = "size")
+    @Column(name = "size_id")
     private int size;
 
-    @Column(name = "color")
+    @Column(name = "color_id")
     private String color;
 
     public SubOrder() {

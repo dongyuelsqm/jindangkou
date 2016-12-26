@@ -17,7 +17,7 @@ public class OrderDao extends BaseDaoHibernate4<Order>{
     }
 
     public Order getOrder(String key){
-        return get(Order.class, key, "order_id");
+        return get(Order.class, key, "id");
     }
 
     @Override
