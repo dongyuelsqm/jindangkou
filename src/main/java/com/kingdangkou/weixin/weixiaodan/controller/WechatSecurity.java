@@ -36,6 +36,7 @@ public class WechatSecurity {
     @RequestMapping(method = RequestMethod.GET)
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        logger.info("received the security msg!");
         // 微信加密签名
         String signature = request.getParameter("signature");
         // 随机字符串

@@ -1,5 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.model;
 
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,6 +19,10 @@ public class Result {
         this.detail = detail;
     }
 
+    public Result(boolean isSuccess, int detail) {
+        this.detail = String.valueOf(detail);
+    }
+
     public boolean isSuccess() {
         return isSuccess;
     }
@@ -32,5 +37,10 @@ public class Result {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.fromObject(this).toString();
     }
 }

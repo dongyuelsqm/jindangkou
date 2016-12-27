@@ -20,12 +20,11 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by dongy on 2016-11-19.
+ * Created by dongy on 2016-12-27.
  */
 @Controller
-@RequestMapping("/product")
-public class ProductController {
-
+@RequestMapping("/website/product")
+public class WebSiteProductController {
     @Autowired
     private ProductJsonConfig productJsonConfig;
 
@@ -50,12 +49,50 @@ public class ProductController {
         response.getWriter().print(JSONArray.fromObject(products, productJsonConfig));
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/add")
+    public void register(@RequestParam("name") String name,
+                         @RequestParam("department") String department,
+                         @RequestParam("descriptive") String descriptive,
+                         @RequestParam("price") float price,
+                         @RequestParam("quantity") String quantity,
+                         @RequestParam("code") String code,
+                         @RequestParam("minimum") int minimum,
+                         @RequestParam("postal") String postal,
+                         @RequestParam("pictures") String pictures,
+                         @RequestParam("videos") String videos,
+                         HttpServletResponse response) throws IOException {
+        Result result = productService.save(name, descriptive, price, department, code, minimum, postal, pictures, videos, quantity);
+        returnOperationResult(response, result);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
+    public void save(@RequestParam("id") String id, @RequestParam("name") String name,
+                     @RequestParam("value") String value, HttpServletResponse response) throws IOException {
+        Result result = productService.update(id, name, value);
+        returnOperationResult(response, result);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "check")
     public void getNumber(@RequestParam("id") String id,
                           @RequestParam("color") String color,
                           @RequestParam("size") String size,
                           HttpServletResponse response) throws IOException {
         Result result = productService.getNumber(id, color, size);
+        returnOperationResult(response, result);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/number/update")
+    public void updateNumber(@RequestParam("id") String id,
+                             @RequestParam("color") String color,
+                             @RequestParam("size") String size,
+                             @RequestParam("number") int number, HttpServletResponse response) throws IOException {
+        Result result = productService.updateNumber(id, color, size, number);
+        returnOperationResult(response, result);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/remove")
+    public void remove(@RequestParam("id") String id, HttpServletResponse response) throws IOException {
+        Result result = productService.remove(id);
         returnOperationResult(response, result);
     }
 

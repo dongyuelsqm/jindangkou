@@ -14,20 +14,20 @@ public class SubOrder {
     private int id;
 
     @ManyToOne(targetEntity = Order.class)
-    @JoinColumn(name = "order_id", referencedColumnName = "order_id", nullable = false)
+    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     private Order order;
 
     @OneToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "product_id", unique = true)
+    @JoinColumn(name = "product_id",referencedColumnName = "id", unique = true)
     private Product product;
 
     @Column(name = "number")
     private int number;
 
-    @Column(name = "size")
+    @Column(name = "size_id")
     private int size;
 
-    @Column(name = "color")
+    @Column(name = "color_id")
     private String color;
 
     public SubOrder() {

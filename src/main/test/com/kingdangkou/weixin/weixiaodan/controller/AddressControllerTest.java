@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.contains;
@@ -67,6 +69,13 @@ public class AddressControllerTest {
         when(addressService.list(any(String.class))).thenReturn(addresses);
         ResultActions result = mockMvc.perform(get("/address/list").param("openID", "111")).andDo(print());
         result.andExpect(status().isOk()).andExpect(content().string(contains("shirt")));
+
+    }
+
+    @Test
+    public void testGetFromDB() throws Exception {
+        ResultActions result = mockMvc.perform(get("/address/list").param("openID", "111")).andDo(print());
+        result.andExpect(status().isOk()).andExpect(content().string(contains("city")));
 
     }
 }

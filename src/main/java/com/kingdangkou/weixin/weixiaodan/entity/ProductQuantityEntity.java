@@ -1,6 +1,13 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import static org.hibernate.annotations.CascadeType.ALL;
+
 
 /**
  * Created by dongy on 2016-12-12.
@@ -10,16 +17,16 @@ import javax.persistence.*;
 public class ProductQuantityEntity {
     private int id;
     private Product product;
-    private String color;
-    private String size;
+    private ColorEntity colorEntity;
+    private SizeEntity sizeEntity;
     private int number;
 
     public ProductQuantityEntity() {}
 
-    public ProductQuantityEntity(Product product, String color, String size, int number) {
+    public ProductQuantityEntity(Product product, ColorEntity colorEntity, SizeEntity sizeEntity, int number) {
         this.product = product;
-        this.color = color;
-        this.size = size;
+        this.colorEntity = colorEntity;
+        this.sizeEntity = sizeEntity;
         this.number = number;
     }
 
@@ -35,7 +42,7 @@ public class ProductQuantityEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
     public Product getProduct() {
         return product;
     }
@@ -53,21 +60,27 @@ public class ProductQuantityEntity {
         this.number = number;
     }
 
-    @Column(name = "color")
-    public String getColor() {
-        return color;
+    @ManyToOne(targetEntity = ColorEntity.class)
+    @JoinColumn(name = "color", referencedColumnName = "id",nullable = false)
+    @Cascade(value = ALL)
+    public ColorEntity getColorEntity() {
+        return colorEntity;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setColorEntity(ColorEntity colorEntity) {
+        this.colorEntity = colorEntity;
     }
 
-    @Column(name = "size")
-    public String getSize() {
-        return size;
+    @ManyToOne(targetEntity = SizeEntity.class)
+    @JoinColumn(name = "size", referencedColumnName = "id",nullable = false)
+    @Cascade(value = ALL)
+    public SizeEntity getSizeEntity() {
+        return sizeEntity;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void setSizeEntity(SizeEntity size) {
+        this.sizeEntity = size;
     }
+
+
 }
