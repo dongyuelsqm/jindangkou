@@ -15,19 +15,18 @@ import java.io.IOException;
 /**
  * Created by dongy on 2016-12-22.
  */
-@RequestMapping("/department")
 @Controller
 public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value = "/website/department")
     public void add(@RequestParam("name") String name, HttpServletResponse response) throws IOException {
         Result result = departmentService.add(name);
         response.getWriter().print(result);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE, value = "/website/department")
     public void del(@RequestParam("id") String id, HttpServletResponse response) throws IOException {
         Result result = departmentService.delete(id);
         response.getWriter().print(result);

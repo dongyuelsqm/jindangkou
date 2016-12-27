@@ -48,4 +48,6 @@ public class ShopingCartController {
     public void del(@RequestParam("id_list") List<String> id_list, HttpServletResponse response){
         shopingCartService.del(id_list);
     }
+
+
 }

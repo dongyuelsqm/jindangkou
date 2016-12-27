@@ -19,23 +19,22 @@ import java.util.List;
  * Created by dongy on 2016-12-16.
  */
 @Controller
-@RequestMapping("/website/color")
 public class ColorController {
     @Autowired
     private ColorService colorService;
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value = "/website/color")
     public void add(@RequestParam("name") String name, HttpServletResponse response) throws IOException {
         Result result = colorService.add(name);
         response.getWriter().print(result);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, value = "/website/color")
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<ColorEntity> colorEntities = colorService.list();
         response.getWriter().print(JSONArray.fromObject(colorEntities));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE, value = "/website/color")
     public void del(@RequestParam("id") String id, HttpServletResponse response) throws IOException {
         Result result = colorService.del(id);
         response.getWriter().print(result);

@@ -45,6 +45,6 @@
 
     <filter-mapping>
     <filter-name>login</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/website/*</url-pattern>
     </filter-mapping>
 </web-app>

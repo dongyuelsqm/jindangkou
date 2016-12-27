@@ -29,13 +29,13 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/list")
+    @RequestMapping(method = RequestMethod.GET, value = "/order/list")
     public void doGet(@RequestParam("openID") String openID, HttpServletResponse response) throws SQLException, IOException {
         ListResult result = orderService.find(openID);
         response.getWriter().print(JSONArray.fromObject(result, orderJsonConfig));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/add")
+    @RequestMapping(method = RequestMethod.POST, value = "/order/add")
     public void createOrder(@RequestParam("openID") String openID,
                             @RequestParam("sub_orders") String subOrders,
                             @RequestParam("address_id") String address_id,
@@ -44,19 +44,19 @@ public class OrderController {
         response.getWriter().print(result);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/order/update")
     public void update(@RequestParam("id") String id, @RequestParam("newState") String newState, HttpServletResponse response) throws IOException {
         Result result = orderService.updateState(id, newState);
         response.getWriter().print(result);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/list/state")
+    @RequestMapping(method = RequestMethod.GET, value = "/order/list/state")
     public void findSingleState(@RequestParam("state") String state, HttpServletResponse response) throws IOException {
         ListResult listResult = orderService.findState(state);
         response.getWriter().print(listResult);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/state")
+    @RequestMapping(method = RequestMethod.GET, value = "/website/state")
     public void listOrders(@RequestParam("openID") String openID,
                            @RequestParam("State") String state, HttpServletResponse response) throws IOException {
         List<Order> orders = orderService.find(openID, state);
