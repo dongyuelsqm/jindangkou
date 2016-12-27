@@ -7,162 +7,165 @@ define(function (require, exports, module) {
 
 	var menu = [{
         id: 1,
-        name: '服务中心',
-        url: 'member/service/service.action',
+        name: '店铺管理',
+        url: '',
         isParent: true,
         disabled: false,
-        icon: '&#xe63d;',
+        icon: '&#xe61e;',
         children: [{
             id: 1001,
-            name: '我的API',
-            url: 'member/service/api-invoke.action',
+            name: '店铺公告',
+            url: 'shopping-chart/notice.jsp',
             isParent: false,
             disabled: false,
             children: []
         },{
             id: 1002,
-            name: '我的报告',
-            url: 'member/service/report-load.action',
-            isParent: false,
-            disabled: false,
-            children: []
-        },{
-            id: 1003,
-            name: '我的应用',
-            url: 'member/service/application-purchase.action',
-            isParent: false,
-            disabled: false,
-            children: []
-        },{
-            id: 1004,
-            name: '购买订单',
-            url: 'member/service/trade-order.action',
+            name: '商户信息',
+            url: 'shopping-chart/customer.jsp',
             isParent: false,
             disabled: false,
             children: []
         }]
     },{
         id: 2,
-        name: '发布中心',
+        name: '商城管理',
         url: '',
         isParent: true,
-        disabled: true,
-        icon: '&#xe63e;',
+        disabled: false,
+        icon: '&#xe6f2;',
         children: [{
             id: 2001,
-            name: 'API发布',
-            url: '',
+            name: '添加商品',
+            url: 'product/add.jsp',
             isParent: false,
-            disabled: true,
+            disabled: false,
             children: []
         },{
             id: 2002,
-            name: '报告发布',
-            url: '',
+            name: '商品列表',
+            url: 'product/list.jsp',
             isParent: false,
-            disabled: true,
+            disabled: false,
             children: []
         },{
             id: 2003,
-            name: '应用发布',
+            name: '预览商城',
             url: '',
             isParent: false,
-            disabled: true,
-            children: []
-        },{
-            id: 2004,
-            name: '售出订单',
-            url: '',
-            isParent: false,
-            disabled: true,
-            children: []
-        },{
-            id: 2005,
-            name: '我要发布',
-            url: '',
-            isParent: false,
-            disabled: true,
+            disabled: false,
             children: []
         }]
     },{
         id: 3,
-        name: '财务中心',
-        url: 'member/account/finance-center.action',
+        name: '订单管理',
+        url: '',
         isParent: true,
-        disabled: true,
-        icon: '&#xe63f;',
+        disabled: false,
+        icon: '&#xe66c;',
         children: [{
             id: 3001,
-            name: '充值',
-            url: 'member/account/recharge.action',
+            name: '添加订单',
+            url: 'order/add.jsp',
             isParent: false,
-            disabled: true,
+            disabled: false,
             children: []
         },{
             id: 3002,
-            name: '提现',
-            url: '',
-            isParent: false,
-            disabled: true,
-            children: []
-        },{
-            id: 3003,
-            name: '充值记录',
-            url: 'member/account/recharge-rechargelist.action',
-            isParent: false,
-            disabled: true,
-            children: []
-        },{
-            id: 3004,
-            name: '提现记录',
-            url: '',
-            isParent: false,
-            disabled: true,
-            children: []
-        },{
-            id: 3005,
-            name: '消费记录',
-            url: 'member/account/cost.action',
-            isParent: false,
-            disabled: true,
-            children: []
-        },{
-            id: 3006,
-            name: '银行卡管理',
-            url: '',
-            isParent: false,
-            disabled: true,
-            children: []
-        },{
-            id: 3007,
-            name: '开具发票',
-            url: 'member/account/invoice.action',
+            name: '订单列表',
+            url: 'order/list.jsp',
             isParent: false,
             disabled: false,
             children: []
         }]
-    },{
+    }, {
         id: 4,
-        name: '个人资料',
-        url: 'member/personal/personal-data.action',
+        name: '统计报表',
+        url: '',
         isParent: true,
         disabled: false,
-        icon: '&#xe640;',
+        icon: '&#xe6f3;',
         children: [{
             id: 4001,
-            name: '密码修改',
-            url: 'member/personal/password.action',
+            name: '订单统计',
+            url: 'statistics/order.jsp',
             isParent: false,
             disabled: false,
             children: []
-        },{
+        }, {
             id: 4002,
-            name: '实名认证',
-            url: 'member/personal/identity-verification.action',
+            name: '商品统计',
+            url: 'statistics/product.jsp',
+            isParent: false,
+            disabled: false,
+            children: []
+        }, {
+            id: 4003,
+            name: '客户统计',
+            url: 'statistics/customer.jsp',
             isParent: false,
             disabled: false,
             children: []
         }]
+    }, {
+        id: 5,
+        name: '微信管理',
+        url: '',
+        isParent: true,
+        disabled: false,
+        icon: '&#xe63b;',
+        children: [{
+            id: 5001,
+            name: '微信群发',
+            url: 'wechat/wechat-group.jsp',
+            isParent: false,
+            disabled: false,
+            children: []
+        }, {
+            id: 5002,
+            name: '短信群发',
+            url: 'wechat/sms-group.jsp',
+            isParent: false,
+            disabled: false,
+            children: []
+        }, {
+            id: 5003,
+            name: '客户分析',
+            url: 'wechat/',
+            isParent: false,
+            disabled: false,
+            children: []
+        }, {
+            id: 5004,
+            name: '用户管理',
+            url: 'wechat/',
+            isParent: false,
+            disabled: false,
+            children: []
+        }, {
+            id: 5005,
+            name: '素材管理',
+            url: 'wechat/',
+            isParent: false,
+            disabled: false,
+            children: []
+        }]
+    }, {
+        id: 6,
+        name: '售后管理',
+        url: '',
+        isParent: false,
+        disabled: false,
+        icon: '&#xe615;',
+        children: []
+    }, {
+        id: 7,
+        name: '系统运维中心',
+        url: '',
+        isParent: false,
+        disabled: false,
+        icon: '&#xe611;',
+        children: []
     }];
 
 	return menu;

@@ -26,43 +26,43 @@ define(function (require, exports, module) {
         	    this.menuData = [];
         	}
             
-            var hash = location.hash.split('#')[1];
+            var href = location.href;
             _.each(this.menuData, function(item, index){
                 item.active = '';
-                item._url = '';
+                // item._url = '';
                 item.type = '';
                 item.disabled = item.disabled ? 'disabled' : '';
 	            
                 if(item.isParent && item.children.length > 0){
                     _.each(item.children, function(t, i){
                         t.active = '';
-                        t._url = '',
+                        // t._url = '',
                         t.type = '';
                         t.disabled = t.disabled ? 'disabled' : '';
                         
         	            if(t.url === ''){
-        	            	t._url = 'javascript:';
+        	            	t.url = 'javascript:';
         	            	t.type = 'select';
         	            }else{
-        	            	if(t.url === hash){
+        	            	if(href.indexOf(t.url) > -1){
                                 t.active = 'active';
                             }
-        	            	t._url = '\#' + t.url;
         	            	t.type = 'route';
+                            t.url = G.contextPath + 'website/' + t.url;
         	            }
                     });
                     
                 }
                 
                 if(item.url === ''){
-	            	item._url = 'javascript:';
+	            	item.url = 'javascript:';
 	            	item.type = 'select';
 	            }else{
-	            	if(item.url === hash){
+	            	if(href.indexOf(item.url) > -1){
                         item.active = 'active';
                     }
-	            	item._url = '\#' + item.url;
 	            	item.type = 'route';
+                    item.url = G.contextPath + 'website/'  + item.url;
 	            }
             });
             this.render();

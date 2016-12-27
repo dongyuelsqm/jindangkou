@@ -72,3 +72,12 @@ div.container{margin: 0 auto; position: relative; padding-left: 0; padding-right
 .content-title {background: #fbfafa; border-bottom: 1px solid #cbcbcb; font-size: 15px; height: 50px; line-height: 50px; padding: 0 10px;}
 	.content-title > .iconfont{color: #ea3527; font-size: 15px; margin-right: 10px;}
 .block-body{padding: 20px;}
+
+.statistics{}
+	.statistics > li{background-position: 20px center; background-repeat: no-repeat; border: 1px solid #cdcdcd; float: left; padding: 20px 15px 20px 80px; width: 20%;}
+	li.statistics-blue{background-image: url(./img/statistics-blue.png);}
+	li.statistics-green{background-image: url(./img/statistics-green.png);}
+	li.statistics-pink{background-image: url(./img/statistics-pink.png);}
+	li.statistics-purple{background-image: url(./img/statistics-purple.png);}
+	li.statistics-yellow{background-image: url(./img/statistics-yellow.png);}
+		.statistics-val{font-size: 14px; font-weight: bold;}

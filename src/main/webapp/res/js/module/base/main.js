@@ -78,9 +78,14 @@ define(function(require, exports, module){
 	    _ = require('underscore'),
 	    util = require('util/util'),
 	    dialog = require('util/dialog').cmccDialog;
-	
+
+    require('perfect-scrollbar');
+
 	$.ajaxSetup({
-        timeout: 30000
+        timeout: 30000,
+		error: function(xhr, status){
+        	alert('发生错误，请稍候重试！');
+		}
     });
     $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
         var data = originalOptions.data || {};
@@ -129,43 +134,58 @@ define(function(require, exports, module){
     /**
      * 重写对话框
      */
-    window.alert = function(content, callback, button) {
-    	var buttons = button ? [{
-			value: button.value || '确定',
-			width: 100, 
-			callback: function(){
-				return callback && callback();
-			}
-		}, {
-			value: '取消',
-			width: 100,
-			cssClass: 'btn-white',
-			callback: function(){
-				if(typeof button === 'function'){
-					return button && button();
-				}
-			}
-		}] : [{
-			value: '确定',
-			width: 150, 
-			callback: function(){
-				if(typeof callback === 'function'){
+    window.alert = function(content, callback, options) {
+    	var button = [{
+				value: '确定',
+				width: 150,
+				callback: function(){
 					return callback && callback();
 				}
-			}
-		}];
+			}],
+			default_options = {
+                title: '提示',
+                content: content,
+                width: 400,
+                padding: '20px 15px',
+                lock: true,
+                fixed: true,
+                zIndex: 1050,
+                button: button
+            };
 		
-		return new dialog({
-			title: '提示',
-			content: content,
-			width: 400,
-			padding: '20px 15px',
-			lock: true,
-			fixed: true,
-			zIndex: 1050,
-			button: buttons
-		});
+		return new dialog($.extend(true,{}, default_options, options));
 	};
+
+    window.confirm = function(content, callback, options) {
+        var buttons = [{
+				value: '确定',
+				width: 100,
+				callback: function(){
+					return callback && callback();
+				}
+			}, {
+				value: '取消',
+				width: 100,
+				cssClass: 'btn-white',
+				callback: function(){
+					// if(options.button && typeof options.button === 'function'){
+					// 	return button && button();
+					// }
+				}
+			}],
+            default_options = {
+                title: '提示',
+                content: content,
+                width: 400,
+                padding: '20px 15px',
+                lock: true,
+                fixed: true,
+                zIndex: 1050,
+                button: buttons
+            };
+
+        return new dialog($.extend(true,{}, default_options, options));
+    };
     
 	/**
 	 * 重新加载 
@@ -173,7 +193,16 @@ define(function(require, exports, module){
 	$(window).on('resize', function(e){
 		location.reload();
 	});
-	
+
+	/**
+	 * 添加滚动条
+	 */
+    // if(G.isOldIE8()){
+    //     $('#J_body').addClass('overflow-auto');
+    // }else{
+    //     $('#J_body').perfectScrollbar();
+    // }
+
 	/**
 	 * 公司信息
 	 */
@@ -185,5 +214,5 @@ define(function(require, exports, module){
 	    }
 	} catch (e){}
 	
-    require('module/base/router');
+    // require('module/base/router');
 });
