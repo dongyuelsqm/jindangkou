@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by dongy on 2016-11-30.
  */
-@RequestMapping("/login")
+@RequestMapping("/website/login")
 public class LoginController {
 
     @Autowired
