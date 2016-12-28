@@ -84,7 +84,6 @@ define(function (require, exports, module) {
             var href = $this.attr('href');
             if (href === 'javascript:' || $this.hasClass('disabled')) return false;
 
-            this.addPanelClass($this);
             location.href = href;
         },
         render: function(){

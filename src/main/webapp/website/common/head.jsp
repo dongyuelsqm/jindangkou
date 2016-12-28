@@ -46,16 +46,3 @@
 		G.contextPath = '${contextPath}/';
 	</script>
 </head>
-<body>
-	<div id="J_body" class="J_body">
-        <div id="J_main" class="J_main">
-        	<%@ include file="navigation.jsp" %>
-			<div class="main" id="main">
-				<div class="container">
-				    <div class="outer-content">
-						<div class="content-wrapper">
-					        <div class="content-offset-left">
-					        	<div class="content-top">
-									<%@ include file="./statistics.jsp"%>
-					        	</div>
-								<div class="content">

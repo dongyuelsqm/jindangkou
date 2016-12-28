@@ -1,6 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="../common/taglibs.jsp"%>
-<%@ include file="../common/head.jsp"%>
+<%@ include file="../common/upper-part.jsp"%>
 <style>
 	.table td img{height: 50px; margin-right: 10px; width: 50px;}
 </style>
@@ -8,7 +8,9 @@
 <div id="table-wrapper" class="table-wrapper block-body">
 	<div class="table-operation clearfix" id="search-box">
 		<div class="operation-left pull-left">
-			<a href="javascript:" data-val="0" class="active order-by" data-name="type"><i class="iconfont">&#xe653;</i>下架</a>
+			<div class="checkbox-inline"><input type="checkbox" class="checkbox checkbox-all" /></div>
+			<a class="btn btn-submit" href="javascript:" role="btn-delete-mul">删除</a>
+			<a href="javascript:" class="active order-by" data-name="type"><i class="iconfont">&#xe653;</i>下架</a>
 		</div>
 		<div class="operation-right pull-right">
 			<div class="input-group search-input">
@@ -41,7 +43,7 @@
 				<td>￥55</td>
 				<td>142</td>
 				<td>58</td>
-				<td>发布时间</td>
+				<td>2016-12-12 14:20:20</td>
 				<td>
 					<div><a href="javascript:" class="editor" role="editor">编辑</a></div>
 				</td>
@@ -50,7 +52,7 @@
 	</table>
 	<div id="pagination" class="pages"></div>
 </div>
-<%@include file="../common/footer.jsp"%>
+<%@include file="../common/lower-part.jsp"%>
 
 <script type="text/javascript">
     seajs.use('module/product/list', function(mod){

@@ -71,8 +71,8 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 		.content-menu .iconfont{color:#ea3527; margin-right:5px;}
 		.content-menu > ul > li > a{border-bottom:1px solid #cbcbcb; height:50px; line-height:50px; font-size:14px; font-weight:bold; padding-left: 70px;}
 		.content-menu .sub > li > a{height:40px; line-height:40px; font-size: 12px; padding-left: 50px;}
-			.content-menu li > a:hover, 
-            .content-menu li.active > a{background-color:#ea3527; color: #fff;}
+			.content-menu .sub > li > a:hover,
+            .content-menu .sub > li.active > a{background-color:#ea3527; color: #fff;}
 
 /* modal */
 .modal-content{border-radius: 0;}
@@ -137,6 +137,10 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 .table > tbody > tr > td a{color: #a94442;}
 	.table > tbody > tr > td a:hover{color: #ea3527;}
 
+th > .order{background-image: url(./img/order-arrow.png); background-repeat: no-repeat; background-position-y: center; background-position-x: 0; display: inline-block; height: 16px; vertical-align: middle; width: 10px;}
+	th > .order-desc{background-position-x: -10px;}
+	th > .order-asc{background-position-x: -20px;}
+
 /*  --- page ---  */
 .pages{font-size:12px; margin-bottom: 20px; padding: 10px 0; text-align: center;}
 	.pages span{margin:0 10px;}
@@ -176,3 +180,6 @@ ul.content-top > li{border-left: 1px solid #cbcbcb; float: left;  height: 50px; 
 	ul.content-top > li > p{padding-left: 30px;}
 	ul.content-top > li > p:first-child{color: #f00;}
 	ul.content-top > li > p:last-child{color: #888;}
+
+/* echarts */
+.ec{border-bottom: 1px solid #cdcdcd; width: 100%;}

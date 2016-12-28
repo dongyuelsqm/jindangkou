@@ -197,11 +197,11 @@ define(function(require, exports, module){
 	/**
 	 * 添加滚动条
 	 */
-    // if(G.isOldIE8()){
-    //     $('#J_body').addClass('overflow-auto');
-    // }else{
-    //     $('#J_body').perfectScrollbar();
-    // }
+    if(G.isOldIE8()){
+        $('#J_body').addClass('overflow-auto');
+    }else{
+        $('#J_body').perfectScrollbar();
+    }
 
 	/**
 	 * 公司信息
