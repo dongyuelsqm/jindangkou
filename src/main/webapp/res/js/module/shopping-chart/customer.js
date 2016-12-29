@@ -83,6 +83,7 @@ define(function(require, exports, module) {
             this.$checkboxs = [];
 
             this.initImgUpload();
+            this.$el.validate(validates);
         },
         initImgUpload: function(){
             var _this = this, uploader = {};
@@ -150,6 +151,7 @@ define(function(require, exports, module) {
             var $this = $(ev.currentTarget),
                 _this = this;
             console.log(_this.$el.serializeArray());
+            if(this.$el.validate()){}
             $.ajax({
                 url: G.contextPath + 'customer/add',
                 data: _this.$el.serializeArray(),

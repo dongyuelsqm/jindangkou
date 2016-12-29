@@ -48,6 +48,8 @@ define(function(require, exports, module) {
         initialize: function(opstions){
             this.$checkboxs = [];
             this.init();
+
+            this.$el.validate(validates);
         },
         init: function(){
             var _this = this;
@@ -61,7 +63,7 @@ define(function(require, exports, module) {
         'submit': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this;
-            console.log(_this.$el.serializeArray());
+            if(this.$el.validate()){}
             $.ajax({
                 url: G.contextPath + 'order/add',
                 data: _this.$el.serializeArray(),

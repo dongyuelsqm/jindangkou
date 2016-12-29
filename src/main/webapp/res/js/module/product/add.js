@@ -69,6 +69,8 @@ define(function(require, exports, module) {
             this.init();
             this.initImgUpload();
             this.initVideoUpload();
+
+            this.$el.validate(validates);
         },
         init: function(){
             var _this = this;
@@ -203,6 +205,7 @@ define(function(require, exports, module) {
             var $this = $(ev.currentTarget),
                 _this = this;
             console.log(_this.$el.serializeArray());
+            if(this.$el.validate()){}
             $.ajax({
                 url: G.contextPath + 'product/add',
                 data: _this.$el.serializeArray(),
