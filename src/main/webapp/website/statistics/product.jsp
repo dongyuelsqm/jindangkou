@@ -13,15 +13,15 @@
     </div>
     <table class="table" id="product-table">
         <thead>
-        <tr>
-            <th>商品名称</th>
-            <th>单价</th>
-            <th>销量<span class="order order-desc"></span></th>
-            <th>点击量<span class="order order-asc"></span></th>
-            <th>浏览量<span class="order"></span></th>
-            <th>收藏量<span class="order"></span></th>
-            <th>发布时间<span class="order"></span></th>
-        </tr>
+            <tr>
+                <th>商品名称</th>
+                <th>单价</th>
+                <th>销量<span class="order order-desc"></span></th>
+                <th>点击量<span class="order order-asc"></span></th>
+                <th>浏览量<span class="order"></span></th>
+                <th>收藏量<span class="order"></span></th>
+                <th>发布时间<span class="order"></span></th>
+            </tr>
         </thead>
         <tbody>
         <tr>
@@ -43,6 +43,21 @@
     <div id="pagination" class="pages"></div>
 </div>
 <%@include file="../common/lower-part.jsp"%>
+
+<script type="text/html" id="tmpl-product-row">
+    <td>
+        <div style="width: 100px;">
+            <img src="" alt="" />
+            维多利亚同款保暖呢大衣保暖呢大衣批发
+        </div>
+    </td>
+    <td>￥55</td>
+    <td>19</td>
+    <td>58</td>
+    <td>19</td>
+    <td>58</td>
+    <td>2016-12-12 14:20:20</td>
+</script>
 
 <script type="text/javascript">
     seajs.use('module/statistics/product', function(mod){

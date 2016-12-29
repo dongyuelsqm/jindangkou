@@ -7,8 +7,8 @@
         <label class="col-md-3 control-label">添加商品</label>
         <div class="col-md-5">
             <div class="input-group search-input">
-                <input type="text" class="form-control search-text" name="orderNo" placeholder="输入货号或商品名称进行搜索">
-                <span class="input-group-addon btn-search" >搜索</span>
+                <input type="text" class="form-control search-text" name="" placeholder="输入货号或商品名称进行搜索">
+                <span class="input-group-addon btn-search" role="btn-search">搜索</span>
             </div>
         </div>
     </div>

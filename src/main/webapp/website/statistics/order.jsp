@@ -23,25 +23,32 @@
     </div>
     <table class="table" id="order-table">
         <thead>
-        <tr>
-            <th>时间</th>
-            <th>交易数量<span class="order order-desc"></span></th>
-            <th>交易额度<span class="order"></span></th>
-            <th>客户数<span class="order"></span></th>
-        </tr>
+            <tr>
+                <th>时间</th>
+                <th>交易数量<span class="order order-desc"></span></th>
+                <th>交易额度<span class="order"></span></th>
+                <th>客户数<span class="order"></span></th>
+            </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>2016-12-12 14:20:20</td>
-            <td>100</td>
-            <td>19</td>
-            <td>88</td>
-        </tr>
+            <tr>
+                <td>2016-12-12 14:20:20</td>
+                <td>100</td>
+                <td>19</td>
+                <td>88</td>
+            </tr>
         </tbody>
     </table>
     <div id="pagination" class="pages"></div>
 </div>
 <%@include file="../common/lower-part.jsp"%>
+
+<script type="text/html" id="tmpl-order-row">
+    <td>2016-12-12 14:20:20</td>
+    <td>100</td>
+    <td>19</td>
+    <td>88</td>
+</script>
 
 <script type="text/javascript">
     seajs.use('module/statistics/order', function(mod){

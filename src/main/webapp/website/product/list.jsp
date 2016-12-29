@@ -10,7 +10,7 @@
 		<div class="operation-left pull-left">
 			<div class="checkbox-inline"><input type="checkbox" class="checkbox checkbox-all" /></div>
 			<a class="btn btn-submit" href="javascript:" role="btn-delete-mul">删除</a>
-			<a href="javascript:" class="active order-by" data-name="type"><i class="iconfont">&#xe653;</i>下架</a>
+			<a class="btn btn-submit" href="javascript:" role="btn-off-shelf">下架</a>
 		</div>
 		<div class="operation-right pull-right">
 			<div class="input-group search-input">

@@ -26,14 +26,13 @@ define(function(require, exports, module) {
      * 扩展行
      */
     var ProductRowView = CheckableRowView.extend({
-        _events: {
+        events: {
             'click .editor': 'editor'
         },
-        initialize: function (options) {},
-        render: function () {
-            this._super_invoke('render');
+        initialize: function(options){
+            this._super_initialize(options);
         },
-        editor: function(e){
+        editor: function(ev){
             location.href = G.contextPath + '/product/update/' + this.model.get('productId');
         }
     });
@@ -41,14 +40,30 @@ define(function(require, exports, module) {
     /**
      * 扩展searchbox
      */
-    var searchView = SearchBoxView.extend({
-        _events: {
+    var SearchView = SearchBoxView.extend({
+        events: {
+            'change input.checkbox-all': 'checkAll',
+            'click a[role="btn-delete-mul"]': 'batchDelete',
+            'click a[role="btn-off-shelf"]': 'offShelf'
         },
-        initialize: function (options) {
-
-            _.extend(this.events, this._events);
+        initialize: function(options){
             this._super_initialize(options);
+        },
+        'checkAll': function(ev){
+            this.table.checkAll(ev);
+        },
+        'batchDelete': function(ev){
+            alert('delete');
+        },
+        'offShelf': function(ev){
+            alert('offShelf');
+        },
+        bind: function(collectionview){
+            this._super_invoke('bind', collectionview);
 
+            this.table.$checkboxAll = new form.CheckboxView({
+                el: this.$('.checkbox-all').parent()
+            });
         }
     });
 
@@ -56,7 +71,7 @@ define(function(require, exports, module) {
         initialize: function (option) {
             this.table = new CheckableTableView(option.table);
             new PaginationView(option.pagination).bind(this.table);
-            new searchView(option.search).bind(this.table);
+            new SearchView(option.search).bind(this.table);
         }
     });
 
