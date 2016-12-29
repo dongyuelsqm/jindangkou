@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<access_token>
+    <grant_type>client_credential</grant_type>
+    <appId>wxb5d861c9e4558825</appId>
+    <secret>e6aaf6faf0442514c511f822c8f10ff8</secret>
+    <url>https://api.weixin.qq.com/cgi-bin/token</url>
+</access_token>
