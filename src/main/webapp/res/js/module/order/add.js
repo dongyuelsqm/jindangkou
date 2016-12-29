@@ -76,7 +76,7 @@ define(function(require, exports, module) {
 
     function run(){
         new FormView({
-            el: '#product-form'
+            el: '#order-form'
         });
     }
 

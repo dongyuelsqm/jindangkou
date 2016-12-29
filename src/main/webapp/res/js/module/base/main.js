@@ -156,21 +156,20 @@ define(function(require, exports, module){
 		return new dialog($.extend(true,{}, default_options, options));
 	};
 
-    window.confirm = function(content, callback, options) {
-        var buttons = [{
+    window.confirm = function(content, callback1, callback2, options) {
+        var opt = options ? options : (callback2 && _.isObject(callback2) ? callback2 : {}),
+			buttons = [{
 				value: '确定',
 				width: 100,
 				callback: function(){
-					return callback && callback();
+					return callback1 && callback1();
 				}
 			}, {
 				value: '取消',
 				width: 100,
 				cssClass: 'btn-white',
 				callback: function(){
-					// if(options.button && typeof options.button === 'function'){
-					// 	return button && button();
-					// }
+                    return callback2 && _.isFunction(callback2) && callback2();
 				}
 			}],
             default_options = {
@@ -184,7 +183,7 @@ define(function(require, exports, module){
                 button: buttons
             };
 
-        return new dialog($.extend(true,{}, default_options, options));
+        return new dialog($.extend(true,{}, default_options, opt));
     };
     
 	/**
