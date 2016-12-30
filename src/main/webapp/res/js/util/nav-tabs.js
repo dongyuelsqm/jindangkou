@@ -1,6 +1,6 @@
 /**
- *     tabs 导航
- *     cailuwei <cailuwei@chinamobile.com>
+ * 金档口 - tab 导航
+ * cailuwei<>
  */
 'use strict';
 define(function (require, exports, module) {

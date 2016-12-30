@@ -1,6 +1,6 @@
 /**
- *  模态框
- *  cailuwei <cailuwei@chinamobile.com>
+ * 金档口 - 模态框
+ * cailuwei<>
  */
 'use strict';
 define(function (require, exports, module) {

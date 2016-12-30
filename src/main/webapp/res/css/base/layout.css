@@ -4,12 +4,12 @@
 .J_body{bottom:0; left:0; position:absolute; right:0; top:0; overflow: hidden;}
 
 /* Header */
-.header{width: 100%;}
-.header a{color: #333; display: inline-block; font-size:16px; }
-.header ul > li{float:left; padding:0 20px; position: relative;}
-.header ul > li a:hover,
-.header ul > li.active > a{color: #ea3527; text-decoration: underline;}
-    /*.header>.title{background: #000; color: #fff; height:30px; }
+.navigation{width: 100%;}
+.navigation a{color: #333; display: inline-block; font-size:16px; }
+.navigation ul > li{float:left; padding:0 20px; position: relative;}
+.navigation ul > li a:hover,
+.navigation ul > li.active > a{color: #ea3527; text-decoration: underline;}
+    /*.navigation>.title{background: #000; color: #fff; height:30px; }
         .title .brand{float:left; line-height: 30px; }
 		.title .links{float: right;}
 			.title .links > li{line-height:30px;}
@@ -17,14 +17,14 @@
                 #login{padding-right: 5px;}
                 #logout,
                 #register{padding-left: 5px;}*/
-	.header > .navs-wrapper{background-color: #fff;}
+	.navigation > .navs-wrapper{background-color: #fff;}
         .navs-wrapper .brand{background:url(./img/brand-icon.png) no-repeat 0 center; height:80px; width: 176px;}
 		.navs{height: 80px; overflow: visible;}
             .navs > li{line-height: 80px;}
             .navs > li > a{}
             	 #message-count{font-size: 12px; vertical-align: super;}
 /*				.navs > li > .active-arrow{background: url(../base/img/header-arrow.png) center no-repeat; bottom: -7px; height: 7px; left: 0; position: absolute; width: 100%; z-index: 11;}
-    .header > .subnavs-wrapper{background: #fff; display: none; left:0; height: 70px; position:absolute; right: 0; z-index: 10;}
+    .navigation > .subnavs-wrapper{background: #fff; display: none; left:0; height: 70px; position:absolute; right: 0; z-index: 10;}
         .subnavs{position: absolute;}
         #subnavs-2{left: 300px;}
             .subnavs > li{ line-height: 70px;}
@@ -72,3 +72,12 @@ div.container{margin: 0 auto; position: relative; padding-left: 0; padding-right
 .content-title {background: #fbfafa; border-bottom: 1px solid #cbcbcb; font-size: 15px; height: 50px; line-height: 50px; padding: 0 10px;}
 	.content-title > .iconfont{color: #ea3527; font-size: 15px; margin-right: 10px;}
 .block-body{padding: 20px;}
+
+.statistics{}
+	.statistics > li{background-position: 20px center; background-repeat: no-repeat; border: 1px solid #cdcdcd; float: left; padding: 20px 15px 20px 80px; width: 20%;}
+	li.statistics-blue{background-image: url(./img/statistics-blue.png);}
+	li.statistics-green{background-image: url(./img/statistics-green.png);}
+	li.statistics-pink{background-image: url(./img/statistics-pink.png);}
+	li.statistics-purple{background-image: url(./img/statistics-purple.png);}
+	li.statistics-yellow{background-image: url(./img/statistics-yellow.png);}
+		.statistics-val{font-size: 14px; font-weight: bold;}

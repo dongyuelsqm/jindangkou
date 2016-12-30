@@ -142,7 +142,7 @@ define(function (require, exports, module) {
         _super_initialize: function (options) {
             var proto = this._super_invoke('initialize', [options]);
             if (proto.events) {
-                this.delegateEvents(proto.events);
+                this.delegateEvents(_.extend({}, this.events, proto.events));
             }
         },
         _super_invoke: function (superFn, params) {
