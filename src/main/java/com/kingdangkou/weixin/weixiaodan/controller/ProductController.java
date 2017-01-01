@@ -41,6 +41,7 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ListResult result = productService.list();
+        response.addHeader("Access-Control-Allow-Origin","*");
         response.getWriter().print(JSONObject.fromObject(result, productJsonConfig));
     }
 

@@ -43,15 +43,15 @@ public class LoginFilter implements Filter {
             return;
         }
 
-//        chain.doFilter(request, response);
+        chain.doFilter(request, response);
         // 判断如果没有取到员工信息,就跳转到登陆页面
-        if (empId == null || "".equals(empId)) {
-            // 跳转到登陆页面
-            servletResponse.sendRedirect("/weixin/website/login.jsp");
-        } else {
-            // 已经登陆,继续此次请求
-            chain.doFilter(request, response);
-        }
+//        if (empId == null || "".equals(empId)) {
+//            // 跳转到登陆页面
+//            servletResponse.sendRedirect("/weixin/website/login.jsp");
+//        } else {
+//            // 已经登陆,继续此次请求
+//            chain.doFilter(request, response);
+//        }
 
     }
 
