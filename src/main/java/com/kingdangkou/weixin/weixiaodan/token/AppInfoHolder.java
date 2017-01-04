@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 @Component
 public class AppInfoHolder {
-    private HashMap<String, String> params = new HashMap<>();
+    private HashMap<String, String> params = new HashMap<String, String>();
 
     public HashMap<String, String> reloadConfiguration() throws ParserConfigurationException, IOException, SAXException {
         File file = ResourceUtils.getFile("classpath:AccessToken.xml");
