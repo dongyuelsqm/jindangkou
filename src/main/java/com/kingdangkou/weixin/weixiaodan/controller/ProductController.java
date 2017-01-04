@@ -41,7 +41,8 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ListResult result = productService.list();
-        response.getWriter().print(JSONObject.fromObject(result, productJsonConfig));
+        String callback = request.getParameter("callback");
+        response.getWriter().print("callback(" + JSONObject.fromObject(result, productJsonConfig) + ")");
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/department")

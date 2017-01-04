@@ -52,7 +52,6 @@ public class LoginFilter implements Filter {
             // 已经登陆,继续此次请求
             chain.doFilter(request, response);
         }
-
     }
 
     @Override
