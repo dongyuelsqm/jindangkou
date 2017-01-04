@@ -16,7 +16,7 @@ import java.io.IOException;
  * Created by dongy on 2016-11-24.
  */
 @Controller
-@RequestMapping("/file")
+@RequestMapping("website/product/file")
 public class FileController{
     @Autowired
     private FileService fileService;

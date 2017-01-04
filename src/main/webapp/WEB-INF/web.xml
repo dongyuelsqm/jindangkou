@@ -51,8 +51,8 @@
     </servlet-mapping>
 
     <filter>
-    <filter-name>login</filter-name>
-    <filter-class>com.kingdangkou.weixin.weixiaodan.filter.LoginFilter</filter-class>
+        <filter-name>login</filter-name>
+        <filter-class>com.kingdangkou.weixin.weixiaodan.filter.LoginFilter</filter-class>
         <init-param>
             <param-name>isDebug</param-name>
             <param-value>true</param-value>
@@ -60,21 +60,21 @@
     </filter>
 
     <filter-mapping>
-    <filter-name>login</filter-name>
-    <url-pattern>/website/*</url-pattern>
+        <filter-name>login</filter-name>
+        <url-pattern>/website/*</url-pattern>
     </filter-mapping>
 
     <filter>
         <filter-name>response</filter-name>
         <filter-class>com.kingdangkou.weixin.weixiaodan.filter.ResponseFilter</filter-class>
         <init-param>
-            <param-name>isdebug</param-name>
-            <param-value>true</param-value>
+            <param-name>isDebug</param-name>
+            <param-value>false</param-value>
         </init-param>
     </filter>
 
     <filter-mapping>
         <filter-name>response</filter-name>
-        <url-pattern>/website/*</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 </web-app>
