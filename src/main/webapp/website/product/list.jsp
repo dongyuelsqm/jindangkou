@@ -22,7 +22,7 @@
 	<table class="table" id="product-table">
 		<thead>
 			<tr>
-				<th><span class="checkbox-inline"><input type="checkbox" class="checkbox checkbox-all" /></span></th>
+				<th></th>
 				<th>商品名称</th>
 				<th>单价</th>
 				<th>总库存</th>

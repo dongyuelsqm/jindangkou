@@ -10,6 +10,8 @@ define(function(require, exports, module) {
 		return this.constructor(config);
 	};
 
+	var $ = require('jquery');
+
 	/**
 	 * 构造器
 	 * @param {Object} config

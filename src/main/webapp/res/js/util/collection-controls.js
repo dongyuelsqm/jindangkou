@@ -146,6 +146,11 @@ define(function (require, exports, module) {
             }
         },
         _super_invoke: function (superFn, params) {
+            if(!params){
+                params = [];
+            }else if(!_.isArray(params)){
+                params = [params];
+            }
             if (!this._super_level) { this._super_level = {}; }
             if (!this._super_level[superFn]) { this._super_level[superFn] = 0; }
             var proto = this.constructor.__super__,

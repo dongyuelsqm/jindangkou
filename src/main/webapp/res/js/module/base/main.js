@@ -189,9 +189,9 @@ define(function(require, exports, module){
 	/**
 	 * 重新加载 
 	 */
-	$(window).on('resize', function(e){
-		location.reload();
-	});
+	// $(window).on('resize', function(e){
+	// 	location.reload();
+	// });
 
 	/**
 	 * 添加滚动条
