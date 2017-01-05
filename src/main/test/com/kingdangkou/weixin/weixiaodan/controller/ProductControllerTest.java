@@ -58,7 +58,7 @@ public class ProductControllerTest {
     @Test
     public void testAddProduct() throws Exception {
         when(service.save(any(Product.class))).thenReturn(new Success());
-        mockMvc.perform(post("/product/add").
+        mockMvc.perform(post("website/product/add").
                 param("name", "product").
                 param("price", "1.1").
                 param("quantity", "{quantity:\"1\", size:\"1\", color:\"1\", }").
