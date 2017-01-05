@@ -35,6 +35,12 @@
 </div>
 <%@include file="../common/lower-part.jsp"%>
 
+<script type="text/html" id="tmpl-notice-row">
+    <td>{{date}}</td>
+    <td>{{}}</td>
+    <td><div><a href="javascript:" class="editor" role="delete">删除</a></div></td>
+</script>
+
 <script type="text/javascript">
     seajs.use('module/shopping-chart/notice', function(mod){
         mod.run();

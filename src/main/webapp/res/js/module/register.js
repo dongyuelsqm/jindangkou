@@ -146,8 +146,6 @@ define(function(require, exports, module) {
                 
                 $.ajax({
                     url: urls.registerUrl,
-                    type: 'post',
-                    dataType: 'json',
                     data: param,
                     beforeSend: function(){
                         $this.prop('disabled', true);
@@ -222,8 +220,6 @@ define(function(require, exports, module) {
             if(this.validator.element($('#userMobile')) && remoteValid){
                 $.ajax({
                     url: urls.randomCodeUrl,
-                    type: 'post',
-                    dataType: 'json',
                     data: {
                         userMobile: userMobile
                     },

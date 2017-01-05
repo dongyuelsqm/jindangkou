@@ -19,7 +19,7 @@ define(function(require, exports, module) {
         BaseItemSetting = collectionExtension.BaseItemSetting;
 
     var urls = {
-        listUrl: G.contextPath + 'product/list'
+        listUrl: G.contextPath + 'website/product/list'
     };
 
     /**
@@ -87,11 +87,7 @@ define(function(require, exports, module) {
                     store: {
                         url: urls.listUrl,
                         pagination: {
-                            enable: true,
-                            extractPage: function (res) { return res.page; }
-                        },
-                        extractResult: function (res) {
-                            return res.page.result;
+                            enable: true
                         }
                     },
                     row: {

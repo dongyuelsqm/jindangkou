@@ -82,7 +82,9 @@ define(function(require, exports, module){
     require('perfect-scrollbar');
 
 	$.ajaxSetup({
-        timeout: 30000,
+        timeout: 0,
+		type: 'post',
+		dataType: 'json',
 		error: function(xhr, status){
         	alert('发生错误，请稍候重试！');
 		}

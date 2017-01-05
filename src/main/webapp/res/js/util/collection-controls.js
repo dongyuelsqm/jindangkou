@@ -20,10 +20,10 @@ define(function (require, exports, module) {
 		idAttribute: 'id',
 		initialize: function (options) {
             this.checkSuccess = options.checkSuccess || function (res) {
-                return res.successSign;
+                return res.result;
             };
             this.extractResult = options.extractResult || function (res) {
-                return res.result;
+                return res.objs;
             };
 		},
 		parse: function (response, options) {
@@ -55,7 +55,7 @@ define(function (require, exports, module) {
         initialize: function (options) {
             this.pageQuery = new Backbone.Model(options.defaults || this.defaults);
             this.extractPage = options.extractPage || function (res) {
-                return res.page;
+                return res;
             };
         },
         setPage: function (response) {

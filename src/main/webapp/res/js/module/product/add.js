@@ -207,10 +207,8 @@ define(function(require, exports, module) {
             console.log(_this.$el.serializeArray());
             if(this.$el.validate()){}
             $.ajax({
-                url: G.contextPath + 'product/add',
+                url: G.contextPath + 'website/product/add',
                 data: _this.$el.serializeArray(),
-                type: 'post',
-                dateType: 'json',
                 success: function(rsp){
                     console.log(rsp);
                 }
