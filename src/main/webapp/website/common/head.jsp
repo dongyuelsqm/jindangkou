@@ -25,17 +25,16 @@
                 'underscore': 'lib/underscore/1.8.3/underscore',
                 'backbone': 'lib/backbone/1.2.1/backbone',
 
-                'perfect-scrollbar': 'plugins/perfectscroll/perfect-scrollbar-debug',
-                'jquery-validate': 'plugins/jquery-validate/jquery-validate-debug',
+                'perfect-scrollbar': 'plugins/perfectscroll/perfect-scrollbar',
+                'jquery-validate': 'plugins/jquery-validate/jquery-validate',
                 'jquery-validate-add': 'util/jquery-validate-add',
                 'jquery-flexslider': 'plugins/jquery-flexslider/jquery-flexslider',
-                //'jquery-uploadify': 'plugins/jquery-uploadify/jquery-uploadify',
                 'jquery-md5': 'plugins/jquery-md5',
                 'rsa': 'plugins/rsa',
 
                 'bootstrap-modal': 'plugins/bootstrap/modal',
                 'plupload': 'plugins/plupload/plupload',
-                'pdf-object': 'plugins/pdf-object/pdf-object',
+//                'pdf-object': 'plugins/pdf-object/pdf-object',
                 'echarts': 'plugins/echarts/echarts-debug'
             }
         });

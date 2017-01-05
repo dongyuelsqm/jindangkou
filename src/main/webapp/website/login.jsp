@@ -1,9 +1,9 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="./common/taglibs.jsp"%>
-<%@ include file="common/head.jsp"%>
+<%@ include file="./common/head.jsp"%>
 <style>
-    .content{height: 642px;}
-    .form{height: 230px; margin-top: -115px; position: absolute; top: 50%; width: 100%;}
+    .content{background-color: #fff; height: 642px;}
+    .form{height: 230px; top: 50%; width: 100%;}
     a.register{color: #242424; text-decoration: underline;}
     .error{color: #4d4d4d; display: none; line-height: 25px; text-align: center; }
     .error .iconfont{color: #e11377;}
@@ -13,7 +13,7 @@
         <div id="J_main" class="J_main">
             <%@ include file="./common/navigation.jsp" %>
             <div class="main" id="main">
-                <div class="container">
+                <div class="container content">
                     <form role="form" class="form" id="form-login">
                         <div class="error text-center">
                             <i class="iconfont">&#xe635;</i>

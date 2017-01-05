@@ -54,7 +54,7 @@ public class OrderService {
     }
 
     private Set<SubOrder> convertToSubOrders(String items, Order order) {
-        Set<SubOrder> subOrders = new HashSet<>();
+        Set<SubOrder> subOrders = new HashSet<SubOrder>();
         JSONArray array = JSONArray.fromObject(items);
         for(Object obj: array){
             SubOrder entity = convertToEntity(order, (JSONObject) obj);

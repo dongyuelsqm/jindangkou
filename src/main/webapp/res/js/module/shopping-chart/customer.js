@@ -155,8 +155,6 @@ define(function(require, exports, module) {
             $.ajax({
                 url: G.contextPath + 'customer/add',
                 data: _this.$el.serializeArray(),
-                type: 'post',
-                dateType: 'json',
                 success: function(rsp){
                     console.log(rsp);
                 }

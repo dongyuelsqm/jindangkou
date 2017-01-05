@@ -125,7 +125,7 @@ public class ProductService {
     }
 
     public static void main(String[] args) {
-        List<String> strings = new ArrayList<>();
+        List<String> strings = new ArrayList<String>();
         strings.add("a");
         strings.add("b");
         System.out.println(JSONArray.fromObject(strings));

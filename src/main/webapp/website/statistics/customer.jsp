@@ -38,9 +38,7 @@
 <%@include file="../common/lower-part.jsp"%>
 
 <script type="text/html" id="tmpl-customer-row">
-    <td>
-        <div>维多利亚同款保暖呢大衣保暖</div>
-    </td>
+    <td><div>{{name}}</div></td>
     <td>100</td>
     <td>19</td>
     <td><span class="color-rect">$22</span></td>

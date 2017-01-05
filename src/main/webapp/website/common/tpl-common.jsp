@@ -7,7 +7,7 @@
 		while(item = items[i++]){
 	 #>
     <li id="item-{{item.id}}" class="item {{item.active}}">
-        <a href="{{item.url}}" class="{{item.type}} {{item.disabled}}" data-menuid="{{item.id}}"><i class="iconfont">{{item.icon}}</i>{{item.name}}</a>
+        <a href="{{item.url}}" class="{{item.type}} {{item.disabled}}" data-menuid="{{item.id}}"><i class="iconfont">{{{item.icon}}}</i>{{item.name}}</a>
         <# 
 			if(item.children && item.children.length > 0) { 
 				j = 0; 

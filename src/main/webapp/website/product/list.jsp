@@ -22,7 +22,7 @@
 	<table class="table" id="product-table">
 		<thead>
 			<tr>
-				<th><span class="checkbox-inline"><input type="checkbox" class="checkbox checkbox-all" /></span></th>
+				<th></th>
 				<th>商品名称</th>
 				<th>单价</th>
 				<th>总库存</th>
@@ -53,6 +53,21 @@
 	<div id="pagination" class="pages"></div>
 </div>
 <%@include file="../common/lower-part.jsp"%>
+
+<script type="text/html" id="tmpl-product-row">
+    <td><span class="checkbox-inline"><input type="checkbox" class="checkbox checkbox-all" /></span></td>
+	<td>
+        <div style="width: 100px;">
+        	<img src="{{pictures}}" alt="{{name}}" />
+			{{name}}
+        </div>
+	</td>
+	<td>{{price}}</td>
+	<td>总库存</td>
+	<td>总销量</td>
+	<td>{{date}}</td>
+    <td><div><a href="javascript:" class="editor" role="editor">编辑</a></div></td>
+</script>
 
 <script type="text/javascript">
     seajs.use('module/product/list', function(mod){

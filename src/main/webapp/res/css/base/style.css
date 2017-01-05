@@ -1,4 +1,19 @@
 @charset "utf-8";
+@font-face {
+	font-family: "iconfont";
+	src: url('./iconfont/iconfont.eot');
+	src: url('./iconfont/iconfont.eot?#iefix') format('embedded-opentype'),
+	url('./iconfont/iconfont.woff') format('woff'),
+	url('./iconfont/iconfont.ttf') format('truetype'),
+	url('./iconfont/iconfont.svg#iconfont') format('svg');
+}
+.iconfont {
+	font-family: "iconfont" !important;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	/*-webkit-text-stroke-width: 0.1px;*/
+	-moz-osx-font-smoothing: grayscale;
+}
 
 lable{margin-bottom: 0;}
 
@@ -29,7 +44,7 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 
 /* font-weight */
 .normal{font-weight: normal;}
-.small{font-weight: small;}
+.light{font-weight: lighter;}
 .bold{font-weight: bold;}
 
 /* float */
@@ -69,10 +84,12 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 	.content-menu a.disabled,
 	.content-menu a.disabled:hover{color: #7a7a7a; cursor: default;}
 		.content-menu .iconfont{color:#ea3527; margin-right:5px;}
-		.content-menu > ul > li > a{border-bottom:1px solid #cbcbcb; height:50px; line-height:50px; font-size:14px; font-weight:bold; padding-left: 70px;}
+		.content-menu > ul > li > a{border-bottom:1px solid #cbcbcb; height:50px; line-height:50px; font-size:14px; font-weight:bold; margin-bottom: 10px; padding-left: 50px;}
 		.content-menu .sub > li > a{height:40px; line-height:40px; font-size: 12px; padding-left: 50px;}
 			.content-menu .sub > li > a:hover,
-            .content-menu .sub > li.active > a{background-color:#ea3527; color: #fff;}
+            .content-menu .sub > li.active > a{background-color:#ea3527; border-radius: 20px; color: #fff; margin-left: 10%; padding-left: 30px; width: 80%;}
+				.content-menu .sub > li > a:hover > .iconfont,
+				.content-menu .sub > li.active > a > .iconfont{color: #fff;}
 
 /* modal */
 .modal-content{border-radius: 0;}
@@ -128,6 +145,8 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 		.table-operation a.active,
         .table-operation a:hover{color: #ea3527; /*border-bottom:1px solid #ea3527;*/}
         .table-operation a > .iconfont{color: #ea3527; margin: 0 5px; /*vertical-align: text-top;*/}
+	.table-operation .btn{background-color: #fff; border: 1px solid #cdcdcd;}
+			.table-operation .btn:hover{border-color: #ea3527;}
 		.table-operation span{color:#cbcbcb;}
         .table-operation span.separate { padding: 0 5px; }
         .table-operation label{margin-bottom: 0;}

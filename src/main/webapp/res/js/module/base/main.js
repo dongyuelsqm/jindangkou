@@ -82,29 +82,31 @@ define(function(require, exports, module){
     require('perfect-scrollbar');
 
 	$.ajaxSetup({
-        timeout: 30000,
+        timeout: 0,
+		type: 'post',
+		dataType: 'json',
 		error: function(xhr, status){
         	alert('发生错误，请稍候重试！');
 		}
     });
     $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
         var data = originalOptions.data || {};
-        if (_.isArray(data)) {
-        	$.each(data, function(index, item){
-        		if(item.name === 'tokenTime'){
-        			data.splice(index, 1);
-        			return false;
-        		}
-        	});
-            data.push({
-                name: 'tokenTime',
-                value: getTokenTime()
-            });
-        } else if (_.isObject(data)) {
-            data['tokenTime'] = getTokenTime();
-        } else if (_.isString(data)) {
-        	data += '&tokenTime=' + getTokenTime();
-        }
+        // if (_.isArray(data)) {
+        // 	$.each(data, function(index, item){
+        // 		if(item.name === 'tokenTime'){
+        // 			data.splice(index, 1);
+        // 			return false;
+        // 		}
+        // 	});
+        //     data.push({
+        //         name: 'tokenTime',
+        //         value: getTokenTime()
+        //     });
+        // } else if (_.isObject(data)) {
+        //     data['tokenTime'] = getTokenTime();
+        // } else if (_.isString(data)) {
+        // 	data += '&tokenTime=' + getTokenTime();
+        // }
 
         if (options.dataType === 'json') {
         	if(_.isString(data)){
@@ -189,9 +191,9 @@ define(function(require, exports, module){
 	/**
 	 * 重新加载 
 	 */
-	$(window).on('resize', function(e){
-		location.reload();
-	});
+	// $(window).on('resize', function(e){
+	// 	location.reload();
+	// });
 
 	/**
 	 * 添加滚动条
