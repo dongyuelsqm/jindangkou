@@ -91,22 +91,22 @@ define(function(require, exports, module){
     });
     $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
         var data = originalOptions.data || {};
-        if (_.isArray(data)) {
-        	$.each(data, function(index, item){
-        		if(item.name === 'tokenTime'){
-        			data.splice(index, 1);
-        			return false;
-        		}
-        	});
-            data.push({
-                name: 'tokenTime',
-                value: getTokenTime()
-            });
-        } else if (_.isObject(data)) {
-            data['tokenTime'] = getTokenTime();
-        } else if (_.isString(data)) {
-        	data += '&tokenTime=' + getTokenTime();
-        }
+        // if (_.isArray(data)) {
+        // 	$.each(data, function(index, item){
+        // 		if(item.name === 'tokenTime'){
+        // 			data.splice(index, 1);
+        // 			return false;
+        // 		}
+        // 	});
+        //     data.push({
+        //         name: 'tokenTime',
+        //         value: getTokenTime()
+        //     });
+        // } else if (_.isObject(data)) {
+        //     data['tokenTime'] = getTokenTime();
+        // } else if (_.isString(data)) {
+        // 	data += '&tokenTime=' + getTokenTime();
+        // }
 
         if (options.dataType === 'json') {
         	if(_.isString(data)){

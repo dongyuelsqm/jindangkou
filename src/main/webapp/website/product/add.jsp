@@ -102,7 +102,7 @@
     <div class="row">
         <label class="col-md-3 control-label">运费模板<span class="required">*</span></label>
         <div class="col-md-5">
-            <input type="text" name="" id="" placeholder="" value=""/>
+            <input type="text" name="postal" placeholder="" value=""/>
         </div>
     </div>
     <div class="row">
