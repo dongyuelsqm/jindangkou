@@ -29,6 +29,7 @@ public class Product {
     private Date date;
 
     private Set<ProductQuantityEntity> productQuantityEntitys = new HashSet<ProductQuantityEntity>();
+    private Set<LabelEntity> labelEntitySet = new HashSet<>();
 
     public Product() {}
 
@@ -169,6 +170,17 @@ public class Product {
             }
         }
         return null;
+    }
+
+    @ManyToMany(targetEntity = LabelEntity.class)
+    @JoinTable(name = "product_label_links", joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "label_id", referencedColumnName = "id"))
+    public Set<LabelEntity> getLabelEntitySet() {
+        return labelEntitySet;
+    }
+
+    public void setLabelEntitySet(Set<LabelEntity> labelEntitySet) {
+        this.labelEntitySet = labelEntitySet;
     }
 
     @Override

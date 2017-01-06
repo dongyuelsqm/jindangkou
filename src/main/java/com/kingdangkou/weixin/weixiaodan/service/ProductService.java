@@ -124,6 +124,10 @@ public class ProductService {
         this.productDao = productDao;
     }
 
+    public List<Product> getProductsByLabel(String label){
+        return productDao.findByLabels(label);
+    }
+
     public static void main(String[] args) {
         List<String> strings = new ArrayList<String>();
         strings.add("a");

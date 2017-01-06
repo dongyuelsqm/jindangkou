@@ -59,6 +59,13 @@ public class ProductController {
         returnOperationResult(response, result);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/label")
+    public void listProductsByLabel(@RequestParam("label_id") String label, HttpServletResponse response) throws IOException {
+        List<Product> products = productService.getProductsByLabel(label);
+        Result result = new Result(true, JSONArray.fromObject(products, productJsonConfig).toString());
+        response.getWriter().print(result);
+    }
+
     private void returnOperationResult(HttpServletResponse response, Result result) throws IOException {
         response.getWriter().print(result);
     }
