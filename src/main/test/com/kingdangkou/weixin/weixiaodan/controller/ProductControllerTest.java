@@ -1,5 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
+import com.kingdangkou.weixin.weixiaodan.entity.LabelEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.Product;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
@@ -17,6 +18,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.contains;

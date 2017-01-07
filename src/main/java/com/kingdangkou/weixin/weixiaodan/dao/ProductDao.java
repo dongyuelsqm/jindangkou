@@ -53,13 +53,11 @@ public class ProductDao extends BaseDaoHibernate4<Product>  {
     public List<Product> findByLabels(int labelId){
         List<Product> products = find();
         List<Product> productsWithLabel = new ArrayList<>();
-        LabelEntity labelEntity = new LabelEntity();
-        labelEntity.setId(labelId);
+        LabelEntity target = new LabelEntity();
+        target.setId(labelId);
         for (Product product: products){
-            for (LabelEntity label: product.getLabelEntitySet()){
-                if (label.getId() == labelId)
-                    productsWithLabel.add(product);
-            }
+            if (product.getLabelEntitySet().contains(target))
+                productsWithLabel.add(product);
         }
         return productsWithLabel;
     }

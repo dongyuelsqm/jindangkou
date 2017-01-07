@@ -126,7 +126,8 @@ public class ProductService {
 
     public List<Product> getProductsByLabel(String label){
         int id = Integer.valueOf(label);
-        return productDao.findByLabels(id);
+        List<Product> products = productDao.findByLabels(id);
+        return products;
     }
 
     public static void main(String[] args) {

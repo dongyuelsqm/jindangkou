@@ -194,4 +194,17 @@ public class Product {
 
         return true;
     }
+
+    public static void main(String[] args) {
+        Set<LabelEntity> entities = new HashSet<>();
+        LabelEntity entity = new LabelEntity();
+        entity.setId(1);
+        entity.setTitle("2");
+        entities.add(entity);
+
+        LabelEntity target = new LabelEntity();
+        target.setId(1);
+        System.out.println(entities.contains(target));
+
+    }
 }
