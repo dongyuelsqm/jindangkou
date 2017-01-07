@@ -1,14 +1,11 @@
 package com.kingdangkou.weixin.weixiaodan.dao;
 
-import com.kingdangkou.weixin.weixiaodan.entity.ColorEntity;
-import com.kingdangkou.weixin.weixiaodan.entity.Product;
-import com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity;
-import com.kingdangkou.weixin.weixiaodan.entity.SizeEntity;
+import com.kingdangkou.weixin.weixiaodan.entity.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,13 +50,17 @@ public class ProductDao extends BaseDaoHibernate4<Product>  {
         session.close();
     }
 
-    public List<Product> findByLabels(String label){
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        List title_id = session.createQuery("select distinct p from Product p join p.labelEntitySet where title = :title_id").setString("title_id", label).list();
-        transaction.commit();
-        session.close();
-        return title_id;
-
+    public List<Product> findByLabels(int labelId){
+        List<Product> products = find();
+        List<Product> productsWithLabel = new ArrayList<>();
+        LabelEntity labelEntity = new LabelEntity();
+        labelEntity.setId(labelId);
+        for (Product product: products){
+            for (LabelEntity label: product.getLabelEntitySet()){
+                if (label.getId() == labelId)
+                    productsWithLabel.add(product);
+            }
+        }
+        return productsWithLabel;
     }
 }

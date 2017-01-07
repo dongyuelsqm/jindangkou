@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -56,6 +57,14 @@ public class ProductControllerTestFT {
         JSONObject json = (JSONObject) jsonObject.get(0);
         assertEquals("jeans", json.getString("name"));
 
+    }
+
+    @Test
+    public void test_find_by_labels() throws Exception {
+        ResultActions result = mockMvc.perform(get("/product/label").param("label_id", "1")).andDo(print());
+        MvcResult mvcResult = result.andExpect(status().isOk()).andReturn();
+        String contentAsString = mvcResult.getResponse().getContentAsString();
+        assertTrue(contentAsString.contains("label"));
     }
 
     private ResultActions visit(String url) throws Exception {

@@ -21,12 +21,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")
-public class LabelControllerTest {
+public class WebSiteLabelControllerTest {
 
     private MockMvc mockMvc;
 
     @Autowired
-    private LabelController labelController;
+    private WebSiteLabelController labelController;
 
     @Before
     public void setUp() throws Exception {

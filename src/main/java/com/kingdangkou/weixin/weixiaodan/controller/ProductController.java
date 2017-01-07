@@ -22,8 +22,8 @@ import java.util.List;
 /**
  * Created by dongy on 2016-11-19.
  */
-@Controller
 @RequestMapping("/product")
+@Controller
 public class ProductController {
 
     @Autowired
