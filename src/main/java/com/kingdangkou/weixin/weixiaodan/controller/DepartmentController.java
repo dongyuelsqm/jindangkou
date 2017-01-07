@@ -32,7 +32,7 @@ public class DepartmentController {
         response.getWriter().print(result);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/list")
+    @RequestMapping(method = RequestMethod.GET, value = "/department/list")
     public void list(HttpServletResponse response) throws IOException {
         ListResult result = departmentService.list();
         response.getWriter().print(result);
