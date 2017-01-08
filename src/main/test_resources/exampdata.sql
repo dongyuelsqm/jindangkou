@@ -4,4 +4,6 @@ insert into colors (name) values ('red');
 insert product_quantity (product_id, color, size, number) values(1,1,1, 10);
 insert into departments (name) values ('treasures');
 insert INTO addresses(name, open_id, phone, province, city, district, detail) VALUE ('zhangsan', 'ssss', '15111111', 'zhejiang', 'hangzhou', 'xihu', 'xihu');
-INSERT INTO labels(title) VALUES ("热卖");
+INSERT INTO labels(title) VALUES ("hot");
+INSERT INTO product_label_links (product_id, label_id) VALUES (1, 1);
+INSERT INTO sub_orders (product_id, product_id, order_id, color_id, size_id, number) VALUES (1, 1, 1, 1, 1, 1);
