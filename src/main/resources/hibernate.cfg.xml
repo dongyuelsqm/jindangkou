@@ -15,7 +15,7 @@
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.CollectionEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.ColorEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Order"/>
-    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Product"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.ProductEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.SizeEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.SubOrder"/>

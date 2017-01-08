@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "collections")
 public class CollectionEntity {
     private int id;
-    private Product product;
+    private ProductEntity productEntity;
     private String openID;
 
 
@@ -24,14 +24,14 @@ public class CollectionEntity {
         this.id = id;
     }
 
-    @ManyToOne(targetEntity = Product.class)
+    @ManyToOne(targetEntity = ProductEntity.class)
     @JoinColumn(name = "product_id",referencedColumnName = "id", unique = true)
-    public Product getProduct() {
-        return product;
+    public ProductEntity getProductEntity() {
+        return productEntity;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductEntity(ProductEntity productEntity) {
+        this.productEntity = productEntity;
     }
 
     @Column(name = "open_id")

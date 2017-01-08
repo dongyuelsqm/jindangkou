@@ -16,15 +16,15 @@ import static org.hibernate.annotations.CascadeType.ALL;
 @Table(name = "product_quantity")
 public class ProductQuantityEntity {
     private int id;
-    private Product product;
+    private ProductEntity productEntity;
     private ColorEntity colorEntity;
     private SizeEntity sizeEntity;
     private int number;
 
     public ProductQuantityEntity() {}
 
-    public ProductQuantityEntity(Product product, ColorEntity colorEntity, SizeEntity sizeEntity, int number) {
-        this.product = product;
+    public ProductQuantityEntity(ProductEntity productEntity, ColorEntity colorEntity, SizeEntity sizeEntity, int number) {
+        this.productEntity = productEntity;
         this.colorEntity = colorEntity;
         this.sizeEntity = sizeEntity;
         this.number = number;
@@ -43,12 +43,12 @@ public class ProductQuantityEntity {
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-    public Product getProduct() {
-        return product;
+    public ProductEntity getProductEntity() {
+        return productEntity;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductEntity(ProductEntity productEntity) {
+        this.productEntity = productEntity;
     }
 
     @Column(name = "number")

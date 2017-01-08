@@ -1,7 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import com.kingdangkou.weixin.weixiaodan.entity.LabelEntity;
-import com.kingdangkou.weixin.weixiaodan.entity.Product;
+import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
 import net.sf.json.JSONArray;
@@ -14,12 +13,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.contains;
@@ -34,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")
 public class ProductControllerTest {
 
-    private Product product = new Product("name", "", 1.0f, "code", 10, "postal", "pictures", "videos");
+    private ProductEntity productEntity = new ProductEntity("name", "", 1.0f, "code", 10, "postal", "pictures", "videos");
 
     private MockMvc mockMvc;
     @Mock
@@ -46,21 +42,21 @@ public class ProductControllerTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-        product.setId("11");
+        productEntity.setId("11");
     }
 
     @Test
     public void testGet() throws Exception {
-        when(service.get(any(String.class))).thenReturn(product);
+        when(service.get(any(String.class))).thenReturn(productEntity);
         mockMvc.perform(
                 get("/product/detail")
-                        .param("id", String.valueOf(product.getId())))
+                        .param("id", String.valueOf(productEntity.getId())))
                 .andDo(print()).andExpect(status().isOk()).andExpect(content().string(contains("shirt")));
     }
 
     @Test
     public void testAddProduct() throws Exception {
-        when(service.save(any(Product.class))).thenReturn(new Success());
+        when(service.save(any(ProductEntity.class))).thenReturn(new Success());
         mockMvc.perform(post("website/product/add").
                 param("name", "product").
                 param("price", "1.1").

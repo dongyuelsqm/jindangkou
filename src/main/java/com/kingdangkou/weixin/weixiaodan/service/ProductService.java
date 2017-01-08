@@ -1,9 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
-import com.kingdangkou.weixin.weixiaodan.dao.ColorDao;
-import com.kingdangkou.weixin.weixiaodan.dao.DepartmentDao;
-import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
-import com.kingdangkou.weixin.weixiaodan.dao.SizeDao;
+import com.kingdangkou.weixin.weixiaodan.dao.*;
 import com.kingdangkou.weixin.weixiaodan.entity.*;
 import com.kingdangkou.weixin.weixiaodan.model.ListResult;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
@@ -15,10 +12,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by dongy on 2016-11-19.
@@ -39,25 +33,28 @@ public class ProductService {
     @Autowired
     private FileHandler fileHandler;
 
-    public Product get(String id){
-        return productDao.get(Product.class, id);
+    @Autowired
+    private LabelDao labelDao;
+
+    public ProductEntity get(String id){
+        return productDao.get(ProductEntity.class, id);
     }
 
     public ListResult list(){
-        List<Product> products = productDao.find();
-        ListResult result = new ListResult(true, products);
+        List<ProductEntity> productEntities = productDao.find();
+        ListResult result = new ListResult(true, productEntities);
         return result;
     }
 
-    public List<Product> list(String department){
-        List<Product> products = productDao.find("department", department, Product.class);
-        return products;
+    public List<ProductEntity> list(String department){
+        List<ProductEntity> productEntities = productDao.find("department", department, ProductEntity.class);
+        return productEntities;
     }
 
-    public Result save(Product product){
-        productDao.save(product);
-        moveFiles(product.getPictures(), product.getId());
-        moveFiles(product.getVideos(), product.getId());
+    public Result save(ProductEntity productEntity){
+        productDao.save(productEntity);
+        moveFiles(productEntity.getPictures(), productEntity.getId());
+        moveFiles(productEntity.getVideos(), productEntity.getId());
         return new Success();
     }
 
@@ -67,11 +64,11 @@ public class ProductService {
                        String videos,
                        String quantity){
         DepartmentEntity departmentEntity = departmentDao.get(department);
-        Product product = new Product(name, descriptive, price, code, minimum, postal, pictures, videos);
-        product.setDepartment(departmentEntity);
+        ProductEntity productEntity = new ProductEntity(name, descriptive, price, code, minimum, postal, pictures, videos);
+        productEntity.setDepartment(departmentEntity);
         Set<ProductQuantityEntity> productQuantityEntitySet = convertJsonToProductEntitySet(quantity);
-        product.setProductQuantityEntitys(productQuantityEntitySet);
-        productDao.save(product);
+        productEntity.setProductQuantityEntitys(productQuantityEntitySet);
+        productDao.save(productEntity);
         return new Success();
     }
 
@@ -94,7 +91,7 @@ public class ProductService {
     }
 
     public Result update(String id, String field, String value){
-        productDao.update("product_id", id, field, value, Product.class);
+        productDao.update("product_id", id, field, value, ProductEntity.class);
         return new Success();
     }
 
@@ -111,8 +108,8 @@ public class ProductService {
     }
 
     public Result remove(String id){
-        Product product = productDao.get(id);
-        productDao.delete(product);
+        ProductEntity productEntity = productDao.get(id);
+        productDao.delete(productEntity);
         return new Success();
     }
 
@@ -124,10 +121,21 @@ public class ProductService {
         this.productDao = productDao;
     }
 
-    public List<Product> getProductsByLabel(String label){
-        int id = Integer.valueOf(label);
-        List<Product> products = productDao.findByLabels(id);
-        return products;
+    public List<ProductEntity> getProductsByLabel(String label){
+        List<ProductEntity> productEntities = productDao.find();
+        LabelEntity entity = labelDao.get(label);
+        removeProductsNotHaveLabel(productEntities, entity);
+        return productEntities;
+    }
+
+    private void removeProductsNotHaveLabel(List<ProductEntity> productEntities, LabelEntity entity) {
+        Iterator<ProductEntity> iterator = productEntities.iterator();
+        while (iterator.hasNext()){
+            ProductEntity next = iterator.next();
+            if (!next.getLabelEntitySet().contains(entity)){
+                productEntities.remove(next);
+            }
+        }
     }
 
     public static void main(String[] args) {

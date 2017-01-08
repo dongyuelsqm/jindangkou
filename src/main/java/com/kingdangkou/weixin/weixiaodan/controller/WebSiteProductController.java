@@ -1,6 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import com.kingdangkou.weixin.weixiaodan.entity.Product;
+import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
 import com.kingdangkou.weixin.weixiaodan.model.ListResult;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
@@ -33,7 +33,7 @@ public class WebSiteProductController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/detail")
     public void get(@RequestParam("id") String id, HttpServletResponse response) throws IOException, FileUploadException {
-        Product result = productService.get(id);
+        ProductEntity result = productService.get(id);
         response.getWriter().print(JSONObject.fromObject(result, productJsonConfig));
     }
 
@@ -45,8 +45,8 @@ public class WebSiteProductController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/department")
     public void find(@RequestParam("department") String department, HttpServletResponse response) throws IOException {
-        List<Product> products = productService.list(department);
-        response.getWriter().print(JSONArray.fromObject(products, productJsonConfig));
+        List<ProductEntity> productEntities = productService.list(department);
+        response.getWriter().print(JSONArray.fromObject(productEntities, productJsonConfig));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/add")
