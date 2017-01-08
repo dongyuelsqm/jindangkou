@@ -6,10 +6,10 @@ import com.kingdangkou.weixin.weixiaodan.service.ProductService;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.ProductJsonConfig;
 import net.sf.json.JSONArray;
 import org.apache.commons.fileupload.FileUploadException;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;

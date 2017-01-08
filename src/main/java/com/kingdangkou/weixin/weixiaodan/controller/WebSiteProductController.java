@@ -55,8 +55,9 @@ public class WebSiteProductController {
                          @RequestParam("postal") String postal,
                          @RequestParam("pictures") String pictures,
                          @RequestParam("videos") String videos,
+                         @RequestParam("label") String label,
                          HttpServletResponse response) throws IOException {
-        Result result = productService.save(name, descriptive, price, department, code, minimum, postal, pictures, videos, quantity);
+        Result result = productService.save(name, descriptive, price, department, code, minimum, postal, pictures, videos, quantity, label);
         returnOperationResult(response, result);
     }
 

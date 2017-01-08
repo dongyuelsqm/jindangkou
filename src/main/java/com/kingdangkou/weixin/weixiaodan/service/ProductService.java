@@ -91,14 +91,32 @@ public class ProductService {
                        String postal,
                        String pictures,
                        String videos,
-                       String quantity){
+                       String quantity,
+                       String label){
         DepartmentEntity departmentEntity = departmentDao.get(department);
         ProductEntity productEntity = new ProductEntity(name, descriptive, price, code, minimum, postal, pictures, videos);
         productEntity.setDepartment(departmentEntity);
         Set<ProductQuantityEntity> productQuantityEntitySet = convertJsonToProductEntitySet(quantity);
         productEntity.setProductQuantityEntitys(productQuantityEntitySet);
+
+        Set<LabelEntity> labels = convertJsonToLabelEntitySet(label);
+        productEntity.setLabelEntitySet(labels);
         productDao.save(productEntity);
         return new Success();
+    }
+
+    private Set<LabelEntity> convertJsonToLabelEntitySet(String label) {
+        Set<LabelEntity> labels = new HashSet<>();
+        JSONArray jsonArray = JSONArray.fromObject(label);
+        List<LabelEntity> list = labelDao.list();
+        for (Object obj: jsonArray){
+            for (LabelEntity entity: list){
+                if (entity.getId() == Integer.valueOf(obj.toString())){
+                    labels.add(entity);
+                }
+            }
+        }
+        return labels;
     }
 
     private Set<ProductQuantityEntity> convertJsonToProductEntitySet(String quantity) {
