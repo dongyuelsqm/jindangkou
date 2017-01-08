@@ -2,12 +2,12 @@ package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.dao.*;
 import com.kingdangkou.weixin.weixiaodan.entity.*;
-import com.kingdangkou.weixin.weixiaodan.model.ListResult;
 import com.kingdangkou.weixin.weixiaodan.model.ProductModel;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
 import com.kingdangkou.weixin.weixiaodan.utils.JsonHandler;
+import com.kingdangkou.weixin.weixiaodan.utils.configs.ProductJsonConfig;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,8 @@ import java.util.*;
  */
 @Service
 public class ProductService {
+    @Autowired
+    private ProductJsonConfig productJsonConfig;
     @Autowired
     private DepartmentDao departmentDao;
     @Autowired
@@ -40,15 +42,25 @@ public class ProductService {
     @Autowired
     private SubOrderEntityDao subOrderEntityDao;
 
-    public ProductEntity get(String id){
-        return productDao.get(ProductEntity.class, id);
+    public Result get(String id){
+        HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
+        ProductEntity productEntity = productDao.get(ProductEntity.class, id);
+        ProductModel productModel = new ProductModel(productEntity, sellings.get(productEntity));
+        return new Result(true, JSONObject.fromObject(productModel, productJsonConfig));
     }
 
-    public ListResult list(){
+    public Result list(){
         HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
         List<ProductEntity> productEntities = productDao.find();
         ArrayList<ProductModel> productModels = convertToProductModelList(sellings, productEntities);
-        return new ListResult(true, productModels);
+        return new Result(true, JSONArray.fromObject(productModels, productJsonConfig));
+    }
+
+    public Result list(String department){
+        HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
+        List<ProductEntity> productEntities = productDao.find("department", department, ProductEntity.class);
+        ArrayList<ProductModel> productModels = convertToProductModelList(sellings, productEntities);
+        return new Result(true, JSONArray.fromObject(productModels, productJsonConfig));
     }
 
     private ArrayList<ProductModel> convertToProductModelList(HashMap<ProductEntity, Integer> sellings, List<ProductEntity> productEntities) {
@@ -66,11 +78,6 @@ public class ProductService {
             sellings.put((ProductEntity) object[0], Integer.valueOf(object[1].toString()));
         }
         return sellings;
-    }
-
-    public List<ProductEntity> list(String department){
-        List<ProductEntity> productEntities = productDao.find("department", department, ProductEntity.class);
-        return productEntities;
     }
 
     public Result save(ProductEntity productEntity){

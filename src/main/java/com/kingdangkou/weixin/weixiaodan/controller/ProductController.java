@@ -1,12 +1,10 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
 import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
-import com.kingdangkou.weixin.weixiaodan.model.ListResult;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.ProductJsonConfig;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,20 +32,20 @@ public class ProductController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/detail")
     public void get(@RequestParam("id") String id, HttpServletResponse response) throws IOException, FileUploadException {
-        ProductEntity result = productService.get(id);
-        response.getWriter().print(JSONObject.fromObject(result, productJsonConfig));
+        Result result = productService.get(id);
+        response.getWriter().print(result);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ListResult result = productService.list();
-        response.getWriter().print(JSONObject.fromObject(result, productJsonConfig));
+        Result result = productService.list();
+        response.getWriter().print(result);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/department")
-    public void find(@RequestParam("department") String department, HttpServletResponse response) throws IOException {
-        List<ProductEntity> productEntities = productService.list(department);
-        response.getWriter().print(JSONArray.fromObject(productEntities, productJsonConfig));
+    public void list(@RequestParam("department") String department, HttpServletResponse response) throws IOException {
+        Result result = productService.list(department);
+        response.getWriter().print(result);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "check")

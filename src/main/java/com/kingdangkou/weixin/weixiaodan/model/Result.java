@@ -14,6 +14,10 @@ public class Result {
     public Result() {
     }
 
+    public Result(boolean isSuccess, Object obj){
+        this.isSuccess = isSuccess;
+        this.detail = obj.toString();
+    }
     public Result(boolean isSuccess, String detail) {
         this.isSuccess = isSuccess;
         this.detail = detail;

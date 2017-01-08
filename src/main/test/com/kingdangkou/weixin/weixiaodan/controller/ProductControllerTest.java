@@ -1,19 +1,14 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
 import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
+import com.kingdangkou.weixin.weixiaodan.model.ProductModel;
+import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
 import net.sf.json.JSONArray;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 
@@ -26,28 +21,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")
-public class ProductControllerTest {
+public class ProductControllerTest extends TestBase<ProductController>{
 
     private ProductEntity productEntity = new ProductEntity("name", "", 1.0f, "code", 10, "postal", "pictures", "videos");
 
-    private MockMvc mockMvc;
     @Mock
     private ProductService service;
     @InjectMocks
     ProductController controller;
 
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-        productEntity.setId("11");
-    }
-
     @Test
     public void testGet() throws Exception {
-        when(service.get(any(String.class))).thenReturn(productEntity);
+        when(service.get(any(String.class))).thenReturn(new Result(true, new ProductModel(productEntity, 1)));
         mockMvc.perform(
                 get("/product/detail")
                         .param("id", String.valueOf(productEntity.getId())))
@@ -77,5 +62,10 @@ public class ProductControllerTest {
         pictures.add("ffff");
         System.out.println(JSONArray.fromObject(pictures));
 
+    }
+
+    @Override
+    protected ProductController getController() {
+        return controller;
     }
 }
