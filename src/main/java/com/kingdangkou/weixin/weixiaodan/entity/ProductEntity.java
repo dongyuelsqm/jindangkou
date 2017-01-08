@@ -186,11 +186,14 @@ public class ProductEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ProductEntity productEntity = (ProductEntity) o;
+        ProductEntity that = (ProductEntity) o;
 
-        if (id != productEntity.id) return false;
+        return id.equals(that.id);
+    }
 
-        return true;
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 
     public static void main(String[] args) {

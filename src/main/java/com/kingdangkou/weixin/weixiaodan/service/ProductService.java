@@ -3,6 +3,7 @@ package com.kingdangkou.weixin.weixiaodan.service;
 import com.kingdangkou.weixin.weixiaodan.dao.*;
 import com.kingdangkou.weixin.weixiaodan.entity.*;
 import com.kingdangkou.weixin.weixiaodan.model.ListResult;
+import com.kingdangkou.weixin.weixiaodan.model.ProductModel;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
@@ -36,14 +37,35 @@ public class ProductService {
     @Autowired
     private LabelDao labelDao;
 
+    @Autowired
+    private SubOrderEntityDao subOrderEntityDao;
+
     public ProductEntity get(String id){
         return productDao.get(ProductEntity.class, id);
     }
 
     public ListResult list(){
+        HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
         List<ProductEntity> productEntities = productDao.find();
-        ListResult result = new ListResult(true, productEntities);
-        return result;
+        ArrayList<ProductModel> productModels = convertToProductModelList(sellings, productEntities);
+        return new ListResult(true, productModels);
+    }
+
+    private ArrayList<ProductModel> convertToProductModelList(HashMap<ProductEntity, Integer> sellings, List<ProductEntity> productEntities) {
+        ArrayList<ProductModel> productModels = new ArrayList<>();
+        for (ProductEntity productEntity: productEntities){
+            productModels.add(new ProductModel(productEntity, sellings.get(productEntity)));
+        }
+        return productModels;
+    }
+
+    private HashMap<ProductEntity, Integer> getProductSellingQuantity() {
+        List<Object[]> objects = subOrderEntityDao.listSellingMsg();
+        HashMap<ProductEntity, Integer> sellings = new HashMap<>();
+        for (Object[] object: objects){
+            sellings.put((ProductEntity) object[0], Integer.valueOf(object[1].toString()));
+        }
+        return sellings;
     }
 
     public List<ProductEntity> list(String department){
