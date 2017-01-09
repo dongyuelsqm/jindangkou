@@ -93,16 +93,33 @@ public class ProductService {
                        String videos,
                        String quantity,
                        String label){
-        DepartmentEntity departmentEntity = departmentDao.get(department);
         ProductEntity productEntity = new ProductEntity(name, descriptive, price, code, minimum, postal, pictures, videos);
+
+        DepartmentEntity departmentEntity = departmentDao.get(department);
         productEntity.setDepartment(departmentEntity);
+
         Set<ProductQuantityEntity> productQuantityEntitySet = convertJsonToProductEntitySet(quantity);
         productEntity.setProductQuantityEntitys(productQuantityEntitySet);
 
         Set<LabelEntity> labels = convertJsonToLabelEntitySet(label);
         productEntity.setLabelEntitySet(labels);
+
+        productEntity.setPictures(parseToString(pictures));
+        productEntity.setVideos(parseToString(videos));
+
         productDao.save(productEntity);
+        moveFiles(productEntity.getPictures(), productEntity.getId());
+        moveFiles(productEntity.getVideos(), productEntity.getId());
         return new Success();
+    }
+
+    private String parseToString(String pictures) {
+        String pics = "";
+        ArrayList<String> strings = JsonHandler.toArrayList(pictures);
+        for (String pic: strings){
+            pics += pic + ";";
+        }
+        return pics;
     }
 
     private Set<LabelEntity> convertJsonToLabelEntitySet(String label) {

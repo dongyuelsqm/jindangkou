@@ -20,14 +20,31 @@ import java.util.List;
  */
 @Component
 public class FileHandler extends HttpServlet {
-    public ArrayList<String> saveFile(HttpServletRequest request) throws IOException, FileUploadException {
-        ArrayList<String> fileNames = new ArrayList<String>();
-        String realPath = getBaseFile(request) + "WEB-INF"+ File.separator + "upload" + File.separator;
-        String tmpPath = getBaseFile(request) + "WEB-INF"+ File.separator + "temp" + File.separator;
-        File tmpFile = new File(tmpPath);
+    String realPath;
+    String tempPath;
+    @Override
+    public void init() throws ServletException {
+        initFilePath();
+        super.init();
+    }
+
+    private void initFilePath() {
+        String basePath = getServletContext().getRealPath("/") + File.separator + "WEB-INF" + File.separator;
+        realPath = basePath + "upload" + File.separator;
+        tempPath = basePath + "temp" + File.separator;
+        initPath(realPath);
+        initPath(tempPath);
+    }
+
+    private void initPath(String path) {
+        File tmpFile = new File(path);
         if (!tmpFile.exists()){
             tmpFile.mkdir();
         }
+    }
+
+    public ArrayList<String> saveFile(HttpServletRequest request) throws IOException, FileUploadException {
+        File tmpFile = new File(tempPath);
 
         DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
         diskFileItemFactory.setSizeThreshold(1024 * 100);
@@ -36,12 +53,13 @@ public class FileHandler extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(diskFileItemFactory);
         upload.setHeaderEncoding("UTF-8");
         if (!ServletFileUpload.isMultipartContent(request)){
-            return fileNames;
+            return new ArrayList<>();
         }
         upload.setFileSizeMax(1024*1024);
         upload.setSizeMax(1024*1024 * 10);
 
         List<FileItem> fileItems = upload.parseRequest(request);
+        ArrayList<String> fileNames = new ArrayList<String>();
         for (FileItem item: fileItems){
             String inputFullName = item.getName();
             if (inputFullName == null || inputFullName.trim().equals("")){
@@ -51,7 +69,7 @@ public class FileHandler extends HttpServlet {
             InputStream stream = item.getInputStream();
             int fileName = RandomDataGenerator.generate();
             String storageName = String.valueOf(fileName) + extandName;
-            FileOutputStream fileOutputStream = new FileOutputStream(realPath + storageName);
+            FileOutputStream fileOutputStream = new FileOutputStream(realPath + "."+ storageName);
             byte buffer[] = new byte[1024];
             int len = 0;
             while ((len = stream.read(buffer)) >0){
