@@ -6,6 +6,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,28 +23,29 @@ import java.util.List;
 public class FileHandler extends HttpServlet {
     String realPath;
     String tempPath;
+    String basePath;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        basePath = getServletContext().getRealPath("/") + File.separator + "WEB-INF" + File.separator;
+    }
+
     @Override
     public void init() throws ServletException {
-        initFilePath();
         super.init();
+
     }
 
     private void initFilePath() {
-        String basePath = getServletContext().getRealPath("/") + File.separator + "WEB-INF" + File.separator;
         realPath = basePath + "upload" + File.separator;
         tempPath = basePath + "temp" + File.separator;
-        initPath(realPath);
-        initPath(tempPath);
     }
 
-    private void initPath(String path) {
-        File tmpFile = new File(path);
-        if (!tmpFile.exists()){
-            tmpFile.mkdir();
-        }
-    }
 
     public ArrayList<String> saveFile(HttpServletRequest request) throws IOException, FileUploadException {
+        basePath = getBaseFile(request) + File.separator + "WEB-INF" + File.separator;
+        initFilePath();
         File tmpFile = new File(tempPath);
 
         DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
@@ -68,8 +70,8 @@ public class FileHandler extends HttpServlet {
             String extandName = inputFullName.substring(inputFullName.lastIndexOf(".") + 1);
             InputStream stream = item.getInputStream();
             int fileName = RandomDataGenerator.generate();
-            String storageName = String.valueOf(fileName) + extandName;
-            FileOutputStream fileOutputStream = new FileOutputStream(realPath + "."+ storageName);
+            String storageName = String.valueOf(fileName) + "." + extandName;
+            FileOutputStream fileOutputStream = new FileOutputStream(realPath + storageName);
             byte buffer[] = new byte[1024];
             int len = 0;
             while ((len = stream.read(buffer)) >0){
