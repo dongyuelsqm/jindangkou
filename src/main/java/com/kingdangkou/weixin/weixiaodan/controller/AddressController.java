@@ -44,16 +44,16 @@ public class AddressController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public void update(@RequestParam("name") String name,
-                         @RequestParam("phone") String phone,
-                         @RequestParam("openID") String openID,
-                         @RequestParam("province") String province,
-                         @RequestParam("city") String city,
-                         @RequestParam("district") String district,
-                         @RequestParam("detail") String detail,
-                         HttpServletResponse response) throws IOException {
+    public void update(@RequestParam("id") String id,
+                       @RequestParam("name") String name,
+                       @RequestParam("phone") String phone,
+                       @RequestParam("openID") String openID,
+                       @RequestParam("province") String province,
+                       @RequestParam("city") String city,
+                       @RequestParam("district") String district,
+                       @RequestParam("detail") String detail, HttpServletResponse response) throws IOException {
 
-        Result result = addressService.update(new Address(name, phone, openID, province, city, district, detail));
+        Result result = addressService.update(new Address(id, name, phone, openID, province, city, district, detail));
         response.getWriter().print(JSONObject.fromObject(result).toString());
     }
 
