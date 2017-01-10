@@ -17,4 +17,10 @@ public class WebSiteNotificationControllerTest extends TestBase<WebSiteNotificat
         ResultActions resultActions = mockMvc.perform(post("/website/add").param("title", "打折优惠！")).andDo(print());
         resultActions.andExpect(status().isOk());
     }
+
+    @Test
+    public void remove() throws Exception {
+        ResultActions resultActions = mockMvc.perform(post("/website/remove").param("id", "2")).andDo(print());
+        resultActions.andExpect(status().isOk());
+    }
 }

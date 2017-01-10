@@ -7,6 +7,8 @@ import com.kingdangkou.weixin.weixiaodan.model.Success;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by dongy on 2017-01-10.
  */
@@ -17,5 +19,21 @@ public class NotificationService {
     public Result save(String title) {
         notificationDao.save(new NotificationEntity(title));
         return new Success();
+    }
+
+    public Result delete(String id) {
+        NotificationEntity entity = notificationDao.get(NotificationEntity.class, id);
+        notificationDao.delete(entity);
+        return new Success();
+    }
+
+    public Result list() {
+        List<NotificationEntity> list = notificationDao.list(NotificationEntity.class);
+        return new Result(true, list);
+    }
+
+    public Result getLatestNotification() {
+        NotificationEntity latest = notificationDao.getLatest();
+        return new Result(true, latest);
     }
 }

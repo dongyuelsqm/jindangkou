@@ -18,6 +18,8 @@ public class NotificationEntity {
     @Column(name = "created_at")
     private Date date;
 
+    public NotificationEntity() {}
+
     public NotificationEntity(String title) {
         this.title = title;
         this.date = new Date();

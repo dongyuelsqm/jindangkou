@@ -24,4 +24,9 @@ public class WebSiteNotificationController {
         Result result = notificationService.save(title);
         response.getWriter().print(result);
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/remove")
+    public void remove(@RequestParam("id") String id, HttpServletResponse response){
+        notificationService.delete(id);
+    }
 }
