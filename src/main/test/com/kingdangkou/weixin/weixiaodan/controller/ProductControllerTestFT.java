@@ -3,7 +3,6 @@ package com.kingdangkou.weixin.weixiaodan.controller;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
@@ -18,9 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by dongy on 2016-12-22.
  */
 public class ProductControllerTestFT extends TestBase<ProductController>{
-    @Autowired
-    private ProductController productController;
-
     @Test
     public void testList() throws Exception {
         String content = visit("/product/list").andReturn().getResponse().getContentAsString();
@@ -61,10 +57,5 @@ public class ProductControllerTestFT extends TestBase<ProductController>{
 
     private ResultActions visit(String url) throws Exception {
         return mockMvc.perform(get(url)).andDo(print()).andExpect(status().isOk());
-    }
-
-    @Override
-    protected ProductController getController() {
-        return productController;
     }
 }

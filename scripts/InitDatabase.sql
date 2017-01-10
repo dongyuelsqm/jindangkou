@@ -13,3 +13,4 @@ CREATE TABLE sizes(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100)) charact
 CREATE TABLE departments(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100)) character set = utf8;
 CREATE TABLE collections(id INT PRIMARY KEY AUTO_INCREMENT, product_id INT, open_id INT) character set = utf8;
 CREATE TABLE shoping_cart(id INT PRIMARY KEY AUTO_INCREMENT, product_id INT, open_id INT) character set = utf8;
+CREATE TABLE notifications(id int primary key AUTO_INCREMENT, title VARCHAR(100), created_at DATETIME) character set = utf8;

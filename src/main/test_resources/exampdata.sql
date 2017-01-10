@@ -7,3 +7,4 @@ insert INTO addresses(name, open_id, phone, province, city, district, detail) VA
 INSERT INTO labels(title) VALUES ("hot");
 INSERT INTO product_label_links (product_id, label_id) VALUES (1, 1);
 INSERT INTO sub_orders (product_id, product_id, order_id, color_id, size_id, number) VALUES (1, 1, 1, 1, 1, 1);
+insert into notifications (title, created_at) values ("打折打折打折", '2016-12-22 00:00:00');

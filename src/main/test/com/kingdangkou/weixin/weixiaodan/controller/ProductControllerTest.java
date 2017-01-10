@@ -63,9 +63,4 @@ public class ProductControllerTest extends TestBase<ProductController>{
         System.out.println(JSONArray.fromObject(pictures));
 
     }
-
-    @Override
-    protected ProductController getController() {
-        return controller;
-    }
 }
