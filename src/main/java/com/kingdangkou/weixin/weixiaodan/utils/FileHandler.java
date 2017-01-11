@@ -25,6 +25,17 @@ public class FileHandler extends HttpServlet {
     String tempPath;
     String basePath;
 
+    public FileHandler() {
+        basePath = getWebInfoPath();
+        realPath = basePath + "upload" + File.separator;
+        tempPath = basePath + "temp" + File.separator;
+        File real = new File(realPath);
+        if (!real.exists()) real.mkdir();
+
+        File temp = new File(tempPath);
+        if (!temp.exists()) real.mkdir();
+    }
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -115,11 +126,24 @@ public class FileHandler extends HttpServlet {
     }
 
     public void moveFile(ArrayList<String> files, String target){
-        String realPath = "WEB-INF"+ File.separator + "files" + File.separator + target + File.separator;
-        String originPath = "WEB-INF"+ File.separator + "upload" + File.separator;
+        basePath = getWebInfoPath();
+
+        String realPath = basePath + "files" + File.separator + target + File.separator;
+
+        File path = new File(realPath);
+        if (!path.exists()) path.mkdir();
+
+        String originPath = basePath + "upload" + File.separator;
         for (String fileName: files){
             File file = new File(originPath + fileName);
             file.renameTo(new File(realPath + fileName));
         }
+    }
+
+    public String getWebInfoPath(){
+        String path1 = this.getClass().getClassLoader().getResource("").getPath();
+        String substring = path1.substring(0, path1.lastIndexOf("classes"));
+        System.out.println(substring);
+        return substring;
     }
 }

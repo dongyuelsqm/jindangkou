@@ -27,5 +27,4 @@ public class WebSiteProductControllerTest extends TestBase<WebSiteProductControl
                 param("label", "[\"1\"]")).andDo(print());
         resultActions.andExpect(status().isOk());
     }
-
 }
