@@ -1,7 +1,5 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
-import org.hibernate.annotations.*;
-
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -15,7 +13,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "products")
-public class Product {
+public class ProductEntity {
     private String id;
     private String name;
     private String description;
@@ -29,10 +27,11 @@ public class Product {
     private Date date;
 
     private Set<ProductQuantityEntity> productQuantityEntitys = new HashSet<ProductQuantityEntity>();
+    private Set<LabelEntity> labelEntitySet = new HashSet<>();
 
-    public Product() {}
+    public ProductEntity() {}
 
-    public Product(String name, String description, float price, String code, int minimum, String postal, String pictures, String videos) {
+    public ProductEntity(String name, String description, float price, String code, int minimum, String postal, String pictures, String videos) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -45,8 +44,8 @@ public class Product {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public String getId() {
 
         return id;
@@ -132,7 +131,6 @@ public class Product {
     }
 
     @Column(name = "unit_price")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public float getPrice() {
         return price;
     }
@@ -150,7 +148,7 @@ public class Product {
         this.date = date;
     }
 
-    @OneToMany(targetEntity = ProductQuantityEntity.class, mappedBy = "product")
+    @OneToMany(targetEntity = ProductQuantityEntity.class, mappedBy = "productEntity")
     public Set<ProductQuantityEntity> getProductQuantityEntitys() {
         return productQuantityEntitys;
     }
@@ -171,15 +169,42 @@ public class Product {
         return null;
     }
 
+    @ManyToMany(targetEntity = LabelEntity.class)
+    @JoinTable(name = "product_label_links", joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "label_id", referencedColumnName = "id"))
+    public Set<LabelEntity> getLabelEntitySet() {
+        return labelEntitySet;
+    }
+
+    public void setLabelEntitySet(Set<LabelEntity> labelEntitySet) {
+        this.labelEntitySet = labelEntitySet;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Product product = (Product) o;
+        ProductEntity that = (ProductEntity) o;
 
-        if (id != product.id) return false;
+        return id.equals(that.id);
+    }
 
-        return true;
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    public static void main(String[] args) {
+        Set<LabelEntity> entities = new HashSet<>();
+        LabelEntity entity = new LabelEntity();
+        entity.setId(1);
+        entity.setTitle("2");
+        entities.add(entity);
+
+        LabelEntity target = new LabelEntity();
+        target.setId(1);
+        System.out.println(entities.contains(target));
+
     }
 }

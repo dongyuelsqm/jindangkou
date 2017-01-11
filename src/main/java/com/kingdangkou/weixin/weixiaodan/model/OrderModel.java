@@ -2,7 +2,7 @@ package com.kingdangkou.weixin.weixiaodan.model;
 
 import com.kingdangkou.weixin.weixiaodan.entity.Address;
 import com.kingdangkou.weixin.weixiaodan.entity.Order;
-import com.kingdangkou.weixin.weixiaodan.entity.Product;
+import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
 
 import javax.enterprise.inject.Model;
 import java.util.Date;
@@ -26,13 +26,13 @@ public class OrderModel {
 
     public OrderModel() {}
 
-    public OrderModel(Order order, Product product, Address address){
+    public OrderModel(Order order, ProductEntity productEntity, Address address){
         id = String.valueOf(order.getId());
         this.addressee = address.getName();
         this.contacts = address.getPhone();
-        this.productName = product.getName();
-        this.unitPrice = product.getPrice();
-        this.totalPrice = product.getPrice();
+        this.productName = productEntity.getName();
+        this.unitPrice = productEntity.getPrice();
+        this.totalPrice = productEntity.getPrice();
         this.address = getAddress(address);
         this.shipNumber = order.getShip_id();
         this.state = order.getState();

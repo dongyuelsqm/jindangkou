@@ -1,30 +1,27 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
-import com.kingdangkou.weixin.weixiaodan.dao.ColorDao;
-import com.kingdangkou.weixin.weixiaodan.dao.DepartmentDao;
-import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
-import com.kingdangkou.weixin.weixiaodan.dao.SizeDao;
+import com.kingdangkou.weixin.weixiaodan.dao.*;
 import com.kingdangkou.weixin.weixiaodan.entity.*;
-import com.kingdangkou.weixin.weixiaodan.model.ListResult;
+import com.kingdangkou.weixin.weixiaodan.model.ProductModel;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
 import com.kingdangkou.weixin.weixiaodan.utils.JsonHandler;
+import com.kingdangkou.weixin.weixiaodan.utils.configs.ProductJsonConfig;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by dongy on 2016-11-19.
  */
 @Service
 public class ProductService {
+    @Autowired
+    private ProductJsonConfig productJsonConfig;
     @Autowired
     private DepartmentDao departmentDao;
     @Autowired
@@ -39,25 +36,54 @@ public class ProductService {
     @Autowired
     private FileHandler fileHandler;
 
-    public Product get(String id){
-        return productDao.get(Product.class, id);
+    @Autowired
+    private LabelDao labelDao;
+
+    @Autowired
+    private SubOrderEntityDao subOrderEntityDao;
+
+    public Result get(String id){
+        HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
+        ProductEntity productEntity = productDao.get(ProductEntity.class, id);
+        ProductModel productModel = new ProductModel(productEntity, sellings.get(productEntity));
+        return new Result(true, JSONObject.fromObject(productModel, productJsonConfig));
     }
 
-    public ListResult list(){
-        List<Product> products = productDao.find();
-        ListResult result = new ListResult(true, products);
-        return result;
+    public Result list(){
+        HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
+        List<ProductEntity> productEntities = productDao.find();
+        ArrayList<ProductModel> productModels = convertToProductModelList(sellings, productEntities);
+        return new Result(true, JSONArray.fromObject(productModels, productJsonConfig));
     }
 
-    public List<Product> list(String department){
-        List<Product> products = productDao.find("department", department, Product.class);
-        return products;
+    public Result list(String department){
+        HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
+        List<ProductEntity> productEntities = productDao.find("department", department, ProductEntity.class);
+        ArrayList<ProductModel> productModels = convertToProductModelList(sellings, productEntities);
+        return new Result(true, JSONArray.fromObject(productModels, productJsonConfig));
     }
 
-    public Result save(Product product){
-        productDao.save(product);
-        moveFiles(product.getPictures(), product.getId());
-        moveFiles(product.getVideos(), product.getId());
+    private ArrayList<ProductModel> convertToProductModelList(HashMap<ProductEntity, Integer> sellings, List<ProductEntity> productEntities) {
+        ArrayList<ProductModel> productModels = new ArrayList<>();
+        for (ProductEntity productEntity: productEntities){
+            productModels.add(new ProductModel(productEntity, sellings.get(productEntity)));
+        }
+        return productModels;
+    }
+
+    private HashMap<ProductEntity, Integer> getProductSellingQuantity() {
+        List<Object[]> objects = subOrderEntityDao.listSellingMsg();
+        HashMap<ProductEntity, Integer> sellings = new HashMap<>();
+        for (Object[] object: objects){
+            sellings.put((ProductEntity) object[0], Integer.valueOf(object[1].toString()));
+        }
+        return sellings;
+    }
+
+    public Result save(ProductEntity productEntity){
+        productDao.save(productEntity);
+        moveFiles(productEntity.getPictures(), productEntity.getId());
+        moveFiles(productEntity.getVideos(), productEntity.getId());
         return new Success();
     }
 
@@ -65,14 +91,49 @@ public class ProductService {
                        String postal,
                        String pictures,
                        String videos,
-                       String quantity){
+                       String quantity,
+                       String label){
+        ProductEntity productEntity = new ProductEntity(name, descriptive, price, code, minimum, postal, pictures, videos);
+
         DepartmentEntity departmentEntity = departmentDao.get(department);
-        Product product = new Product(name, descriptive, price, code, minimum, postal, pictures, videos);
-        product.setDepartment(departmentEntity);
+        productEntity.setDepartment(departmentEntity);
+
         Set<ProductQuantityEntity> productQuantityEntitySet = convertJsonToProductEntitySet(quantity);
-        product.setProductQuantityEntitys(productQuantityEntitySet);
-        productDao.save(product);
+        productEntity.setProductQuantityEntitys(productQuantityEntitySet);
+
+        Set<LabelEntity> labels = convertJsonToLabelEntitySet(label);
+        productEntity.setLabelEntitySet(labels);
+
+        productEntity.setPictures(parseToString(pictures));
+        productEntity.setVideos(parseToString(videos));
+
+        productDao.save(productEntity);
+        moveFiles(pictures, productEntity.getId());
+        moveFiles(videos, productEntity.getId());
         return new Success();
+    }
+
+    private String parseToString(String pictures) {
+        String pics = "";
+        ArrayList<String> strings = JsonHandler.toArrayList(pictures);
+        for (String pic: strings){
+            pics += pic + ";";
+        }
+        return pics;
+    }
+
+    private Set<LabelEntity> convertJsonToLabelEntitySet(String label) {
+        Set<LabelEntity> labels = new HashSet<>();
+        JSONArray jsonArray = JSONArray.fromObject(label);
+        List<LabelEntity> list = labelDao.list();
+        for (Object obj: jsonArray){
+            for (LabelEntity entity: list){
+                if (entity.getId() == Integer.valueOf(obj.toString())){
+                    labels.add(entity);
+                }
+            }
+        }
+        return labels;
     }
 
     private Set<ProductQuantityEntity> convertJsonToProductEntitySet(String quantity) {
@@ -94,7 +155,7 @@ public class ProductService {
     }
 
     public Result update(String id, String field, String value){
-        productDao.update("product_id", id, field, value, Product.class);
+        productDao.update("product_id", id, field, value, ProductEntity.class);
         return new Success();
     }
 
@@ -111,8 +172,8 @@ public class ProductService {
     }
 
     public Result remove(String id){
-        Product product = productDao.get(id);
-        productDao.delete(product);
+        ProductEntity productEntity = productDao.get(id);
+        productDao.delete(productEntity);
         return new Success();
     }
 
@@ -122,6 +183,23 @@ public class ProductService {
 
     public void setProductDao(ProductDao productDao) {
         this.productDao = productDao;
+    }
+
+    public List<ProductEntity> getProductsByLabel(String label){
+        List<ProductEntity> productEntities = productDao.find();
+        LabelEntity entity = labelDao.get(label);
+        removeProductsNotHaveLabel(productEntities, entity);
+        return productEntities;
+    }
+
+    private void removeProductsNotHaveLabel(List<ProductEntity> productEntities, LabelEntity entity) {
+        Iterator<ProductEntity> iterator = productEntities.iterator();
+        while (iterator.hasNext()){
+            ProductEntity next = iterator.next();
+            if (!next.getLabelEntitySet().contains(entity)){
+                productEntities.remove(next);
+            }
+        }
     }
 
     public static void main(String[] args) {

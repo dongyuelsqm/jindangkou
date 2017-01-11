@@ -1,5 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
+import com.kingdangkou.weixin.weixiaodan.message.TextMessage;
+import com.kingdangkou.weixin.weixiaodan.utils.MsgUtil;
 import com.kingdangkou.weixin.weixiaodan.utils.SHA1;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by dongy on 2016-11-10.
@@ -57,5 +61,19 @@ public class WechatSecurity {
         if (digest.equals(signature)) {
             response.getWriter().print(echostr);
         }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/url")
+    public void postMsg(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Map<String, String> map = MsgUtil.parseXml(request);
+        String openid=map.get("FromUserName"); //用户 openid
+        String mpid=map.get("ToUserName");   //公众号原始 ID
+        TextMessage txtmsg=new TextMessage();
+        txtmsg.setToUserName(openid);
+        txtmsg.setFromUserName(mpid);
+        txtmsg.setCreateTime(new Date().getTime());
+        txtmsg.setMsgType("transfer_customer_service");
+        String xml = MsgUtil.textMessageToXml(txtmsg);
+        response.getWriter().print(xml);
     }
 }

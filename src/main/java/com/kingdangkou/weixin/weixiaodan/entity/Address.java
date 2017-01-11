@@ -26,6 +26,17 @@ public class Address {
 
     public Address() {}
 
+    public Address(String id, String name, String phone, String openID, String province, String city, String disctrict, String detail) {
+        this.id = Integer.valueOf(id);
+        this.openID = openID;
+        this.province = province;
+        this.city = city;
+        this.disctrict = disctrict;
+        this.detail = detail;
+        this.name = name;
+        this.phone = phone;
+    }
+
     public Address(String name, String phone, String openID, String province, String city, String disctrict, String detail) {
         this.name = name;
         this.phone = phone;
