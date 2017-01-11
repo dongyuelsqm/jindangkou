@@ -44,8 +44,8 @@ public class ProductEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public String getId() {
 
         return id;
@@ -131,7 +131,6 @@ public class ProductEntity {
     }
 
     @Column(name = "unit_price")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public float getPrice() {
         return price;
     }
@@ -193,7 +192,7 @@ public class ProductEntity {
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return super.hashCode();
     }
 
     public static void main(String[] args) {

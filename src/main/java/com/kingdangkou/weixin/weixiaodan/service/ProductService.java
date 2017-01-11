@@ -108,8 +108,8 @@ public class ProductService {
         productEntity.setVideos(parseToString(videos));
 
         productDao.save(productEntity);
-        moveFiles(productEntity.getPictures(), productEntity.getId());
-        moveFiles(productEntity.getVideos(), productEntity.getId());
+        moveFiles(pictures, productEntity.getId());
+        moveFiles(videos, productEntity.getId());
         return new Success();
     }
 

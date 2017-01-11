@@ -48,16 +48,16 @@ public class WebSiteProductController {
     public void register(@RequestParam("name") String name,
                          @RequestParam("department") String department,
                          @RequestParam("descriptive") String descriptive,
-                         @RequestParam("price") float price,
+                         @RequestParam("price") String price,
                          @RequestParam("quantity") String quantity,
                          @RequestParam("code") String code,
-                         @RequestParam("minimum") int minimum,
+                         @RequestParam("minimum") String minimum,
                          @RequestParam("postal") String postal,
                          @RequestParam("pictures") String pictures,
                          @RequestParam("videos") String videos,
                          @RequestParam("label") String label,
                          HttpServletResponse response) throws IOException {
-        Result result = productService.save(name, descriptive, price, department, code, minimum, postal, pictures, videos, quantity, label);
+        Result result = productService.save(name, descriptive, Float.valueOf(price), department, code, Integer.valueOf(minimum), postal, pictures, videos, quantity, label);
         returnOperationResult(response, result);
     }
 

@@ -62,7 +62,6 @@ public class ProductQuantityEntity {
 
     @ManyToOne(targetEntity = ColorEntity.class)
     @JoinColumn(name = "color", referencedColumnName = "id",nullable = false)
-    @Cascade(value = ALL)
     public ColorEntity getColorEntity() {
         return colorEntity;
     }
@@ -73,7 +72,6 @@ public class ProductQuantityEntity {
 
     @ManyToOne(targetEntity = SizeEntity.class)
     @JoinColumn(name = "size", referencedColumnName = "id",nullable = false)
-    @Cascade(value = ALL)
     public SizeEntity getSizeEntity() {
         return sizeEntity;
     }

@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -55,7 +56,26 @@ public class ProductControllerTestFT extends TestBase<ProductController>{
 
     }
 
+    @Test
+    public void add() throws Exception {
+        ResultActions resultActions = mockMvc.perform(post("/website/product/add").
+                param("name", "product").
+                param("department", "1").
+                param("descriptive", "good").
+                param("price", "1.1").
+                param("quantity", "[{quantity:\"1\", size:\"1\", color:\"1\"}]").
+                param("code", "code").
+                param("minimum", "10").
+                param("postal", "300000").
+                param("pictures", "[\"dddd\",\"ffff\"]").
+                param("videos", "[\"dddd\",\"ffff\"]").
+                param("label", "[\"1\"]")).andDo(print());
+        resultActions.andExpect(status().isOk());
+    }
+
     private ResultActions visit(String url) throws Exception {
         return mockMvc.perform(get(url)).andDo(print()).andExpect(status().isOk());
     }
+
+
 }
