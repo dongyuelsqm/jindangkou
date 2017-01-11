@@ -110,7 +110,7 @@
         <div class="col-md-5 inventory">
             <label class="col-md-2">黄色：</label>
             <div class="col-md-10">
-                SX: <input type="text" name="" class="input-icon input-icon-count" placeholder="" value=""/>
+                SX: <input type="text" name="quantity" class="input-icon input-icon-count" placeholder="" value=""/>
                 M: <input type="text" name="" class="input-icon input-icon-count" placeholder="" value=""/>
                 L: <input type="text" name="" class="input-icon input-icon-count" placeholder="" value=""/>
             </div>

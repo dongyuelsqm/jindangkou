@@ -204,11 +204,18 @@ define(function(require, exports, module) {
         'submit': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this;
-            console.log(_this.$el.serializeArray());
+            var array = _this.$el.serializeArray();
+            _.each(array, function(item, index){
+                if(item.name === 'price' || item.name === 'minimum'){
+                    item.value = 10;
+                }else{
+                    item.value = 'test';
+                }
+            });
             if(this.$el.validate()){}
             $.ajax({
                 url: G.contextPath + 'website/product/add',
-                data: _this.$el.serializeArray(),
+                data: array,
                 success: function(rsp){
                     console.log(rsp);
                 }
