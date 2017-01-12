@@ -24,6 +24,7 @@
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.DepartmentEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.LabelEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.NotificationEntity"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.CustomerEntity"/>
 
   </session-factory>
 </hibernate-configuration>
