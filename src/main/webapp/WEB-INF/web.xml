@@ -20,6 +20,18 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>default</servlet-name>
+        <url-pattern>*.png</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.woff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.ttf</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
         <url-pattern>*.js</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -39,12 +51,30 @@
     </servlet-mapping>
 
     <filter>
-    <filter-name>login</filter-name>
-    <filter-class>com.kingdangkou.weixin.weixiaodan.filter.LoginFilter</filter-class>
+        <filter-name>login</filter-name>
+        <filter-class>com.kingdangkou.weixin.weixiaodan.filter.LoginFilter</filter-class>
+        <init-param>
+            <param-name>isDebug</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </filter>
 
     <filter-mapping>
-    <filter-name>login</filter-name>
-    <url-pattern>/website/*</url-pattern>
+        <filter-name>login</filter-name>
+        <url-pattern>/website/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>response</filter-name>
+        <filter-class>com.kingdangkou.weixin.weixiaodan.filter.ResponseFilter</filter-class>
+        <init-param>
+            <param-name>isDebug</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>response</filter-name>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 </web-app>

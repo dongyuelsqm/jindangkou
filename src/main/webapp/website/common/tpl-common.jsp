@@ -7,7 +7,7 @@
 		while(item = items[i++]){
 	 #>
     <li id="item-{{item.id}}" class="item {{item.active}}">
-        <a href="{{item._url}}" class="{{item.type}} {{item.disabled}}" data-menuid="{{item.id}}">{{item.name}}</a>
+        <a href="{{item.url}}" class="{{item.type}} {{item.disabled}}" data-menuid="{{item.id}}"><i class="iconfont">{{{item.icon}}}</i>{{item.name}}</a>
         <# 
 			if(item.children && item.children.length > 0) { 
 				j = 0; 
@@ -17,7 +17,7 @@
 				while(child = item.children[j++]){ 
 			#>
             <li id="sub-item-{{child.id}}" class="sub-item {{child.active}}">
-				<a href="{{child._url}}" class="{{child.type}} {{child.disabled}}" data-menuid="{{child.id}}"><i class="iconfont">&#xe62a;</i>{{child.name}}</a>
+				<a href="{{child.url}}" class="{{child.type}} {{child.disabled}}" data-menuid="{{child.id}}"><i class="iconfont">&#xe617;</i>{{child.name}}</a>
 			</li>
 			<# } #>
         </ul>

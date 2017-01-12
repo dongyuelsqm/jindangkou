@@ -9,11 +9,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class Result {
     private boolean isSuccess;
-    private String detail;
+    private Object detail;
 
     public Result() {
     }
 
+    public Result(boolean isSuccess, Object obj){
+        this.isSuccess = isSuccess;
+        this.detail = obj;
+    }
     public Result(boolean isSuccess, String detail) {
         this.isSuccess = isSuccess;
         this.detail = detail;
@@ -31,11 +35,11 @@ public class Result {
         this.isSuccess = isSuccess;
     }
 
-    public String getDetail() {
+    public Object getDetail() {
         return detail;
     }
 
-    public void setDetail(String detail) {
+    public void setDetail(Object detail) {
         this.detail = detail;
     }
 

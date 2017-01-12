@@ -1,7 +1,7 @@
 /**
  * 工具函数
- * jinyongcheng <jinyongcheng@chinamobile.com>
- * cailuwei     <cailuwei@chinamobile.com> 
+ * jinyongcheng <>
+ * cailuwei     <>
  */
 'use strict';
 define(function(require, exports, module) {
@@ -227,8 +227,8 @@ define(function(require, exports, module) {
      */
     function uniqueArray(list) {
         list = list || [];
-        var temp = {}
-        data = [],
+        var temp = {},
+            data = [],
             num = list.length;
 
         _.each(list, function(element, index) {

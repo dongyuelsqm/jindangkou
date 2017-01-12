@@ -101,7 +101,7 @@ define(function (require, exports, module) {
     */
     var CheckableParentModel = {
         events: {
-            'change .checkbox-all': 'checkall'
+            'change .checkbox-all': 'checkAll'
         },
         initialize: function (options) {
             this._super_initialize(options);
@@ -136,7 +136,7 @@ define(function (require, exports, module) {
         	checked ? this.checkedList.add(item.model) : this.checkedList.remove(item.model);
             this.checkedList.trigger('change:all', formParent);
         },
-        checkall: function (e) {
+        checkAll: function (e) {
             var _this = this,
             	checked = this.$checkboxAll.getStatus();
             _.each(_this.items, function (item, index) {

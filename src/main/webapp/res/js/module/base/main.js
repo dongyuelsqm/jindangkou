@@ -1,6 +1,6 @@
 /**
- * main
- * cailuwei<cailuwei@chinamobile.com>
+ * 金档口 - main
+ * cailuwei<>
  */
 'use strict';
 /**
@@ -78,28 +78,35 @@ define(function(require, exports, module){
 	    _ = require('underscore'),
 	    util = require('util/util'),
 	    dialog = require('util/dialog').cmccDialog;
-	
+
+    require('perfect-scrollbar');
+
 	$.ajaxSetup({
-        timeout: 30000
+        timeout: 0,
+		type: 'post',
+		dataType: 'json',
+		error: function(xhr, status){
+        	alert('发生错误，请稍候重试！');
+		}
     });
     $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
         var data = originalOptions.data || {};
-        if (_.isArray(data)) {
-        	$.each(data, function(index, item){
-        		if(item.name === 'tokenTime'){
-        			data.splice(index, 1);
-        			return false;
-        		}
-        	});
-            data.push({
-                name: 'tokenTime',
-                value: getTokenTime()
-            });
-        } else if (_.isObject(data)) {
-            data['tokenTime'] = getTokenTime();
-        } else if (_.isString(data)) {
-        	data += '&tokenTime=' + getTokenTime();
-        }
+        // if (_.isArray(data)) {
+        // 	$.each(data, function(index, item){
+        // 		if(item.name === 'tokenTime'){
+        // 			data.splice(index, 1);
+        // 			return false;
+        // 		}
+        // 	});
+        //     data.push({
+        //         name: 'tokenTime',
+        //         value: getTokenTime()
+        //     });
+        // } else if (_.isObject(data)) {
+        //     data['tokenTime'] = getTokenTime();
+        // } else if (_.isString(data)) {
+        // 	data += '&tokenTime=' + getTokenTime();
+        // }
 
         if (options.dataType === 'json') {
         	if(_.isString(data)){
@@ -129,51 +136,74 @@ define(function(require, exports, module){
     /**
      * 重写对话框
      */
-    window.alert = function(content, callback, button) {
-    	var buttons = button ? [{
-			value: button.value || '确定',
-			width: 100, 
-			callback: function(){
-				return callback && callback();
-			}
-		}, {
-			value: '取消',
-			width: 100,
-			cssClass: 'btn-white',
-			callback: function(){
-				if(typeof button === 'function'){
-					return button && button();
-				}
-			}
-		}] : [{
-			value: '确定',
-			width: 150, 
-			callback: function(){
-				if(typeof callback === 'function'){
+    window.alert = function(content, callback, options) {
+    	var button = [{
+				value: '确定',
+				width: 150,
+				callback: function(){
 					return callback && callback();
 				}
-			}
-		}];
+			}],
+			default_options = {
+                title: '提示',
+                content: content,
+                width: 400,
+                padding: '20px 15px',
+                lock: true,
+                fixed: true,
+                zIndex: 1050,
+                button: button
+            };
 		
-		return new dialog({
-			title: '提示',
-			content: content,
-			width: 400,
-			padding: '20px 15px',
-			lock: true,
-			fixed: true,
-			zIndex: 1050,
-			button: buttons
-		});
+		return new dialog($.extend(true,{}, default_options, options));
 	};
+
+    window.confirm = function(content, callback1, callback2, options) {
+        var opt = options ? options : (callback2 && _.isObject(callback2) ? callback2 : {}),
+			buttons = [{
+				value: '确定',
+				width: 100,
+				callback: function(){
+					return callback1 && callback1();
+				}
+			}, {
+				value: '取消',
+				width: 100,
+				cssClass: 'btn-white',
+				callback: function(){
+                    return callback2 && _.isFunction(callback2) && callback2();
+				}
+			}],
+            default_options = {
+                title: '提示',
+                content: content,
+                width: 400,
+                padding: '20px 15px',
+                lock: true,
+                fixed: true,
+                zIndex: 1050,
+                button: buttons
+            };
+
+        return new dialog($.extend(true,{}, default_options, opt));
+    };
     
 	/**
 	 * 重新加载 
 	 */
-	$(window).on('resize', function(e){
-		location.reload();
-	});
-	
+	// $(window).on('resize', function(e){
+	// 	location.reload();
+	// });
+
+	/**
+	 * 添加滚动条
+	 */
+    if(G.isOldIE8()){
+        $('#J_body').addClass('overflow-auto');
+    }else{
+        $('#J_body').perfectScrollbar();
+    }
+
 	/**
 	 * 公司信息
 	 */
@@ -185,5 +215,5 @@ define(function(require, exports, module){
 	    }
 	} catch (e){}
 	
-    require('module/base/router');
+    // require('module/base/router');
 });

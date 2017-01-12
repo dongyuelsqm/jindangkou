@@ -1,6 +1,6 @@
 /**
- * 贯众锐数 - 注册
- * cailuwei<cailuwei@chinamobile.com>
+ * 金档口 - 注册
+ * cailuwei<>
  */
 'use strict';
 define(function(require, exports, module) {
@@ -146,8 +146,6 @@ define(function(require, exports, module) {
                 
                 $.ajax({
                     url: urls.registerUrl,
-                    type: 'post',
-                    dataType: 'json',
                     data: param,
                     beforeSend: function(){
                         $this.prop('disabled', true);
@@ -222,8 +220,6 @@ define(function(require, exports, module) {
             if(this.validator.element($('#userMobile')) && remoteValid){
                 $.ajax({
                     url: urls.randomCodeUrl,
-                    type: 'post',
-                    dataType: 'json',
                     data: {
                         userMobile: userMobile
                     },

@@ -20,10 +20,10 @@ define(function (require, exports, module) {
 		idAttribute: 'id',
 		initialize: function (options) {
             this.checkSuccess = options.checkSuccess || function (res) {
-                return res.successSign;
+                return res.result;
             };
             this.extractResult = options.extractResult || function (res) {
-                return res.result;
+                return res.objs;
             };
 		},
 		parse: function (response, options) {
@@ -55,7 +55,7 @@ define(function (require, exports, module) {
         initialize: function (options) {
             this.pageQuery = new Backbone.Model(options.defaults || this.defaults);
             this.extractPage = options.extractPage || function (res) {
-                return res.page;
+                return res;
             };
         },
         setPage: function (response) {
@@ -142,10 +142,15 @@ define(function (require, exports, module) {
         _super_initialize: function (options) {
             var proto = this._super_invoke('initialize', [options]);
             if (proto.events) {
-                this.delegateEvents(proto.events);
+                this.delegateEvents(_.extend({}, this.events, proto.events));
             }
         },
         _super_invoke: function (superFn, params) {
+            if(!params){
+                params = [];
+            }else if(!_.isArray(params)){
+                params = [params];
+            }
             if (!this._super_level) { this._super_level = {}; }
             if (!this._super_level[superFn]) { this._super_level[superFn] = 0; }
             var proto = this.constructor.__super__,

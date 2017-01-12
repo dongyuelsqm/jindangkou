@@ -11,8 +11,11 @@ import java.io.IOException;
 @Component
 public class LoginFilter implements Filter {
 
+    private boolean isDebug;
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {}
+    public void init(FilterConfig filterConfig) throws ServletException {
+        isDebug = Boolean.valueOf(filterConfig.getInitParameter("isDebug"));
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -43,7 +46,10 @@ public class LoginFilter implements Filter {
             return;
         }
 
-//        chain.doFilter(request, response);
+        if (isDebug){
+            chain.doFilter(request, response);
+            return;
+        }
         // 判断如果没有取到员工信息,就跳转到登陆页面
         if (empId == null || "".equals(empId)) {
             // 跳转到登陆页面
@@ -52,7 +58,6 @@ public class LoginFilter implements Filter {
             // 已经登陆,继续此次请求
             chain.doFilter(request, response);
         }
-
     }
 
     @Override

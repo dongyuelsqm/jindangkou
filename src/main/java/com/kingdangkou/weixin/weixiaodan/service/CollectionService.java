@@ -3,7 +3,7 @@ package com.kingdangkou.weixin.weixiaodan.service;
 import com.kingdangkou.weixin.weixiaodan.dao.CollectionDao;
 import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
 import com.kingdangkou.weixin.weixiaodan.entity.CollectionEntity;
-import com.kingdangkou.weixin.weixiaodan.entity.Product;
+import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,9 @@ public class CollectionService {
     @Autowired
     private ProductDao productDao;
     public Result add(String product_id, String openID) {
-        Product product = productDao.get(product_id);
+        ProductEntity productEntity = productDao.get(product_id);
         CollectionEntity entity = new CollectionEntity();
-        entity.setProduct(product);
+        entity.setProductEntity(productEntity);
         entity.setOpenID(openID);
         collectionDao.save(entity);
         return new Success();

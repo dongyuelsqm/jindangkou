@@ -19,7 +19,7 @@ public class SubOrder {
 
     @OneToOne
     @JoinColumn(name = "product_id",referencedColumnName = "id", unique = true)
-    private Product product;
+    private ProductEntity productEntity;
 
     @Column(name = "number")
     private int number;
@@ -61,12 +61,12 @@ public class SubOrder {
         this.order = order;
     }
 
-    public Product getProduct() {
-        return product;
+    public ProductEntity getProductEntity() {
+        return productEntity;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductEntity(ProductEntity productEntity) {
+        this.productEntity = productEntity;
     }
 
     public int getSize() {

@@ -2,7 +2,6 @@ package com.kingdangkou.weixin.weixiaodan.controller;
 
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.FileService;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +15,7 @@ import java.io.IOException;
  * Created by dongy on 2016-11-24.
  */
 @Controller
-@RequestMapping("/file")
+@RequestMapping("website/product/file")
 public class FileController{
     @Autowired
     private FileService fileService;
@@ -29,7 +28,7 @@ public class FileController{
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public void upload(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Result result = fileService.saveFile(request);
-        response.getWriter().print(JSONObject.fromObject(result));
+        response.getWriter().print(result);
     }
 
     public FileService getFileService() {

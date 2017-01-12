@@ -1,6 +1,6 @@
 /**
- * 贯众锐数 - 找回密码
- * cailuwei<cailuwei@chinamobile.com>
+ * 金档口 - 找回密码
+ * cailuwei<>
  */
 'use strict';
 define(function(require, exports, module) {
@@ -138,8 +138,6 @@ define(function(require, exports, module) {
                 
                 $.ajax({
                     url: './password!checkUserName.action',
-                    type: 'post',
-                    dataType: 'json',
                     data:{
                         userName: userName,
                         verifyCode: verifyCode                  
@@ -258,8 +256,6 @@ define(function(require, exports, module) {
                 
                 $.ajax({
                     url: './password!sendRandomCode.action',
-                    type: 'post',
-                    dataType: 'json',
                     data: param,
                     beforeSend: function(){
                         $this.prop('disabled', true);
@@ -321,8 +317,6 @@ define(function(require, exports, module) {
                 
                 $.ajax({
                     url: './password!verifyCode.action',
-                    type: 'post',
-                    dataType: 'json',
                     data: {
                         userName: _this.userName,
                         randomCode: randomCode
@@ -386,8 +380,6 @@ define(function(require, exports, module) {
                 
                 $.ajax({
                     url: './password!savePassword.action',
-                    type: 'post',
-                    dataType: 'json',
                     data: {
                         newPassword: newPassword,
                         confirmPassword: confirmPassword

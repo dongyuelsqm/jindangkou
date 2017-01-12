@@ -16,6 +16,7 @@ import java.util.List;
 public class AddressService {
     @Autowired
     private AddressDao addressDao;
+
     public Result save(Address address){
         addressDao.save(address);
         return new Success();

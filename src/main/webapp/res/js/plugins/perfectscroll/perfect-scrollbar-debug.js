@@ -33,7 +33,13 @@ function mountJQuery(jQuery) {
 if (typeof define === 'function' && define.amd) {
   // AMD. Register as an anonymous module.
   define(['jquery'], mountJQuery);
-} else {
+} else if (typeof define === 'function' && define.cmd) {
+    // CMD. Register as an anonymous module.
+    define(function(require, exports, module){
+        var jq = require('jquery');
+        mountJQuery(jq);
+    });
+} else{
   var jq = window.jQuery ? window.jQuery : window.$;
   if (typeof jq !== 'undefined') {
     mountJQuery(jq);

@@ -1,6 +1,6 @@
 /**
- * 贯众锐数 - 登录
- * cailuwei<cailuwei@chinamobile.com>
+ * 金档口 - 登录
+ * cailuwei<>
  */
 'use strict';
 define(function(require, exports, module) {
@@ -80,8 +80,6 @@ define(function(require, exports, module) {
 
                 $.ajax({
                     url: './login!isRepeatLogin.action',
-                    type: 'post',
-                    dataType: 'json',
                     data: {
                         'userName': _this.userName
                     },
@@ -117,8 +115,6 @@ define(function(require, exports, module) {
 
             $.ajax({
                 url: './login!login.action',
-                type: 'post',
-                dataType: 'json',
                 data: {
                     'userName': _this.userName,
                     'userPassword': _this.password,

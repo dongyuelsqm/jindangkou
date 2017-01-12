@@ -1,6 +1,6 @@
 /**
- * form 控件
- * cailuwei<cailuwei@chinamobile.com>
+ * 金档口 - form控件
+ * cailuwei<>
  */
 'use strict';
 define(function(require, exports, module){

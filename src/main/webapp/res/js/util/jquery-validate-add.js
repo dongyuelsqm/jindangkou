@@ -1,3 +1,7 @@
+/**
+ * 金档口 - validate - 自定义验证
+ * cailuwei<>
+ */
 'use strict';
 define(function(require) {
     require('jquery');

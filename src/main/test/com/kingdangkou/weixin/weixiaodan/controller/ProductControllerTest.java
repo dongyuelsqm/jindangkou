@@ -1,20 +1,14 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import com.kingdangkou.weixin.weixiaodan.entity.Product;
+import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
+import com.kingdangkou.weixin.weixiaodan.model.ProductModel;
+import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
 import net.sf.json.JSONArray;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 
@@ -27,38 +21,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")
-public class ProductControllerTest {
+public class ProductControllerTest extends TestBase<ProductController>{
 
-    private Product product = new Product("name", "", 1.0f, "code", 10, "postal", "pictures", "videos");
+    private ProductEntity productEntity = new ProductEntity("name", "", 1.0f, "code", 10, "postal", "pictures", "videos");
 
-    private MockMvc mockMvc;
     @Mock
     private ProductService service;
     @InjectMocks
     ProductController controller;
 
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-        product.setId("11");
-    }
-
     @Test
     public void testGet() throws Exception {
-        when(service.get(any(String.class))).thenReturn(product);
+        when(service.get(any(String.class))).thenReturn(new Result(true, new ProductModel(productEntity, 1)));
         mockMvc.perform(
                 get("/product/detail")
-                        .param("id", String.valueOf(product.getId())))
+                        .param("id", String.valueOf(productEntity.getId())))
                 .andDo(print()).andExpect(status().isOk()).andExpect(content().string(contains("shirt")));
     }
 
     @Test
     public void testAddProduct() throws Exception {
-        when(service.save(any(Product.class))).thenReturn(new Success());
-        mockMvc.perform(post("/product/add").
+        when(service.save(any(ProductEntity.class))).thenReturn(new Success());
+        mockMvc.perform(post("website/product/add").
                 param("name", "product").
                 param("price", "1.1").
                 param("quantity", "{quantity:\"1\", size:\"1\", color:\"1\", }").

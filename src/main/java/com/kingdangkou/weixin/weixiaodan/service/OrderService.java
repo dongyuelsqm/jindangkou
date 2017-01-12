@@ -54,7 +54,7 @@ public class OrderService {
     }
 
     private Set<SubOrder> convertToSubOrders(String items, Order order) {
-        Set<SubOrder> subOrders = new HashSet<>();
+        Set<SubOrder> subOrders = new HashSet<SubOrder>();
         JSONArray array = JSONArray.fromObject(items);
         for(Object obj: array){
             SubOrder entity = convertToEntity(order, (JSONObject) obj);
@@ -68,13 +68,13 @@ public class OrderService {
         subOrder.setNumber(Integer.valueOf(obj.get("number").toString()));
         subOrder.setColor(obj.get("color").toString());
         subOrder.setSize(Integer.valueOf(obj.get("size").toString()));
-        subOrder.setProduct(productDao.get(obj.get("product_id").toString()));
+        subOrder.setProductEntity(productDao.get(obj.get("product_id").toString()));
         return subOrder;
     }
 
     public void adjustProduct(Order obj){
         for (SubOrder subOrder: obj.getSubOrders()){
-            String product_id = subOrder.getProduct().getId();
+            String product_id = subOrder.getProductEntity().getId();
             String size = String.valueOf(subOrder.getSize());
             String color = subOrder.getColor();
             SizeEntity sizeEntity = sizeDao.get(size);

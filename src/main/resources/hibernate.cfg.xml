@@ -6,7 +6,7 @@
 
   <session-factory>
     <property name="hibernate.current_session_context_class">thread</property>
-    <property name="connection.url">jdbc:mysql://localhost/emp</property>
+    <property name="connection.url">jdbc:mysql://localhost:3306/emp?useUnicode=true&amp;characterEncoding=UTF8</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="connection.username">root</property>
     <property name="connection.password">root123456</property>
@@ -15,13 +15,16 @@
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.CollectionEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.ColorEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Order"/>
-    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Product"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.ProductEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.SizeEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.SubOrder"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.TobePurchasedProductEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.User"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.DepartmentEntity"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.LabelEntity"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.NotificationEntity"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.CustomerEntity"/>
 
   </session-factory>
 </hibernate-configuration>

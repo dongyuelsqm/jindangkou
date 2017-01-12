@@ -69,7 +69,7 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 	public List<T> list(Class<T> cls){
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		List list = session.createQuery("select * from" + cls.getSimpleName()).list();
+		List list = session.createQuery("from " + cls.getSimpleName()).list();
 		transaction.commit();
 		return list;
 	}

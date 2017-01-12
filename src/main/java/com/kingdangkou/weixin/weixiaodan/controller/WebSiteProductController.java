@@ -1,12 +1,8 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import com.kingdangkou.weixin.weixiaodan.entity.Product;
-import com.kingdangkou.weixin.weixiaodan.model.ListResult;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.ProductJsonConfig;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by dongy on 2016-12-27.
@@ -33,35 +28,36 @@ public class WebSiteProductController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/detail")
     public void get(@RequestParam("id") String id, HttpServletResponse response) throws IOException, FileUploadException {
-        Product result = productService.get(id);
-        response.getWriter().print(JSONObject.fromObject(result, productJsonConfig));
+        Result result = productService.get(id);
+        response.getWriter().print(result);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/list")
     public void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ListResult result = productService.list();
-        response.getWriter().print(JSONObject.fromObject(result, productJsonConfig));
+        Result result = productService.list();
+        response.getWriter().print(result);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/department")
     public void find(@RequestParam("department") String department, HttpServletResponse response) throws IOException {
-        List<Product> products = productService.list(department);
-        response.getWriter().print(JSONArray.fromObject(products, productJsonConfig));
+        Result result = productService.list(department);
+        response.getWriter().print(result);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/add")
     public void register(@RequestParam("name") String name,
                          @RequestParam("department") String department,
                          @RequestParam("descriptive") String descriptive,
-                         @RequestParam("price") float price,
+                         @RequestParam("price") String price,
                          @RequestParam("quantity") String quantity,
                          @RequestParam("code") String code,
-                         @RequestParam("minimum") int minimum,
+                         @RequestParam("minimum") String minimum,
                          @RequestParam("postal") String postal,
                          @RequestParam("pictures") String pictures,
                          @RequestParam("videos") String videos,
+                         @RequestParam("label") String label,
                          HttpServletResponse response) throws IOException {
-        Result result = productService.save(name, descriptive, price, department, code, minimum, postal, pictures, videos, quantity);
+        Result result = productService.save(name, descriptive, Float.valueOf(price), department, code, Integer.valueOf(minimum), postal, pictures, videos, quantity, label);
         returnOperationResult(response, result);
     }
 
