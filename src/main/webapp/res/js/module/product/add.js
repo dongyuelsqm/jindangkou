@@ -36,18 +36,26 @@ define(function(require, exports, module) {
                 price: {require: true},
                 department: {require: true},
                 minimum: {require: true},
+                descriptive: {require: true}
+                //size: {require: true},
+                //color: {require: true},
                 // pictures: {require: true},
                 // videos: {require: true},
-                descriptive: {require: true}
+                //postal: {require: true},
+                //quantity: {require: true}
             },
             messages: {
                 name: {require: '请输入商品名称'},
                 price: {require: '请输入售价'},
                 department: {require: '请选择商品分类'},
                 minimum: {require: '请输入起批件数'},
+                descriptive: {require: '请输入商品描述'}
+                //size: {require: true},
+                //color: {require: true},
                 // pictures: {require: true},
                 // videos: {require: true},
-                descriptive: {require: '请输入商品描述'}
+                //postal: {require: true},
+                //quantity: {require: true}
             },
             errorPlacement: function(error, element) {
                 error.appendTo(element.parent().parent());
@@ -118,10 +126,10 @@ define(function(require, exports, module) {
 
                     var result = $.parseJSON(response.response);
 
-                    if(result.successSign){
+                    if(result.success){
                         var finalName = result.url;
                     }else{
-                        alert(result.errorMessage || '上传出错');
+                        alert(result.detail || '上传出错');
                     }
                 });
 
@@ -173,11 +181,11 @@ define(function(require, exports, module) {
 
                 var result = $.parseJSON(response.response);
 
-                if(result.successSign){
+                if(result.success){
                     var finalName = result.url;
 
                 }else{
-                    alert(result.errorMessage || '上传出错');
+                    alert(result.detail || '上传出错');
                 }
             });
 
@@ -204,22 +212,27 @@ define(function(require, exports, module) {
         'submit': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this;
-            var array = _this.$el.serializeArray();
-            _.each(array, function(item, index){
-                if(item.name === 'price' || item.name === 'minimum'){
-                    item.value = 10;
-                }else{
-                    item.value = 'test';
-                }
-            });
-            if(this.$el.validate()){}
-            $.ajax({
-                url: G.contextPath + 'website/product/add',
-                data: array,
-                success: function(rsp){
-                    console.log(rsp);
-                }
-            });
+
+            // if(this.$el.valid()) {
+                var param = _this.$el.serializeObject();
+                _.each(param, function(val, key){
+                    if(key === 'pictures' || key === 'videos'){
+                        // param[key] =  _.isString(val) ? [val] : val;
+                        param[key] = ['a', 'b', 'c'];
+                    }else{
+                        param[key] = 'test';
+                    }
+                });
+                param.label = 'label';
+
+                $.ajax({
+                    url: G.contextPath + 'website/product/add',
+                    data: param,
+                    success: function (rsp) {
+                        console.log(rsp);
+                    }
+                });
+            // }
         }
     });
 

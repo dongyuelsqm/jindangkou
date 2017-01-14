@@ -28,7 +28,7 @@
     <div class="row">
         <label class="col-md-3 control-label">商品分类<span class="required">*</span></label>
         <div class="col-md-5">
-            <select name="department">
+            <select name="department" >
                 <option value="">羽绒服</option>
                 <option value="">呢大衣</option>
                 <option value="">毛衣</option>
@@ -111,8 +111,8 @@
             <label class="col-md-2">黄色：</label>
             <div class="col-md-10">
                 SX: <input type="text" name="quantity" class="input-icon input-icon-count" placeholder="" value=""/>
-                M: <input type="text" name="" class="input-icon input-icon-count" placeholder="" value=""/>
-                L: <input type="text" name="" class="input-icon input-icon-count" placeholder="" value=""/>
+                M: <input type="text" name="quantity" class="input-icon input-icon-count" placeholder="" value=""/>
+                L: <input type="text" name="quantity" class="input-icon input-icon-count" placeholder="" value=""/>
             </div>
         </div>
     </div>

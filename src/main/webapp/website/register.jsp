@@ -1,10 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="./common/taglibs.jsp"%>
-<script type="text/javascript">
-	G.tokenMark = '${tokenMark}';
-	G.exponent = '${exponent}';
-	G.modulus = '${modulus}';
-</script>
 <style>
 	.content{height: 642px;}
     .form{height: 350px; margin-top: -175px; position: absolute; top: 50%; width: 100%;}

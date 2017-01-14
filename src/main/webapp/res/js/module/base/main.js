@@ -81,6 +81,34 @@ define(function(require, exports, module){
 
     require('perfect-scrollbar');
 
+    /**
+     * 扩展 serializeObject jsong格式序列化form表单元素
+     */
+    $.fn.extend({
+        serializeObject: function () {
+            var data = {};
+            if (this.length > 0) {
+                var element = this[0];
+                var fields = $(element).serializeArray();
+                var data = {};
+                $.each(fields, function (index, field) {
+                    var name = field.name;
+                    var value = field.value;
+                    if (data[name]) {
+                        if ($.type(data[name]) == 'array') data[name].push(value);
+                        else data[name] = [data[name], value];
+                    } else {
+                        data[name] = value;
+                    }
+                });
+            }
+            return data;
+        }
+    });
+
+    /**
+     * 预处理 ajax
+     */
 	$.ajaxSetup({
         timeout: 0,
 		type: 'post',
@@ -91,22 +119,13 @@ define(function(require, exports, module){
     });
     $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
         var data = originalOptions.data || {};
-        // if (_.isArray(data)) {
-        // 	$.each(data, function(index, item){
-        // 		if(item.name === 'tokenTime'){
-        // 			data.splice(index, 1);
-        // 			return false;
-        // 		}
-        // 	});
-        //     data.push({
-        //         name: 'tokenTime',
-        //         value: getTokenTime()
-        //     });
-        // } else if (_.isObject(data)) {
-        //     data['tokenTime'] = getTokenTime();
-        // } else if (_.isString(data)) {
-        // 	data += '&tokenTime=' + getTokenTime();
-        // }
+        if (_.isObject(data)) {
+            _.each(data, function(val, key){
+                if(_.isArray(val)){
+                    data[key] = '[' + val.join(',') + ']';
+                }
+            });
+        }
 
         if (options.dataType === 'json') {
         	if(_.isString(data)){
@@ -200,20 +219,9 @@ define(function(require, exports, module){
 	 */
     if(G.isOldIE8()){
         $('#J_body').addClass('overflow-auto');
-    }else{
+    }else {
         $('#J_body').perfectScrollbar();
     }
-
-	/**
-	 * 公司信息
-	 */
-	try {
-	    if (window.console && window.console.log) {
-	        console.log('中移（杭研）信息技术有限公司');
-	        console.log('创新业务产品部 - 大数据团队');
-	        console.log('来加入我们吧  %c biubiubiu@chinamobile.com', 'color:red');
-	    }
-	} catch (e){}
 	
     // require('module/base/router');
 });
