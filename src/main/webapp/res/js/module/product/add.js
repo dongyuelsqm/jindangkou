@@ -214,16 +214,18 @@ define(function(require, exports, module) {
                 _this = this;
 
             // if(this.$el.valid()) {
-                var param = _this.$el.serializeObject();
-                _.each(param, function(val, key){
-                    if(key === 'pictures' || key === 'videos'){
-                        // param[key] =  _.isString(val) ? [val] : val;
-                        param[key] = ['a', 'b', 'c'];
-                    }else{
-                        param[key] = 'test';
-                    }
-                });
-                param.label = 'label';
+                var param = {};
+            param.name = 'product';
+            param.department = 1;
+            param.descriptive = 'good';
+            param.price = 1.1;
+            param.quantity = '[{quantity:"1", size:"1", color:"1"}]';
+            param.code = 'code';
+            param.minimum = 10;
+            param.postal = 300000;
+            param.pictures = '["dddd.gif","ffff.gif"]';
+            param.videos = '["dddd.mp4","ffff.mp4"]';
+            param.label = '["1"]';
 
                 $.ajax({
                     url: G.contextPath + 'website/product/add',
