@@ -10,6 +10,8 @@ import com.kingdangkou.weixin.weixiaodan.entity.SizeEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.TobePurchasedProductEntity;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
+import com.kingdangkou.weixin.weixiaodan.utils.configs.ProductStorageConfig;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import java.util.List;
  */
 @Service
 public class ShopingCartService {
+    @Autowired
+    private ProductStorageConfig productStorageConfig;
     @Autowired
     private TobePurchasedProductDao tobePurchasedProductDao;
 
@@ -50,5 +54,10 @@ public class ShopingCartService {
             tobePurchasedProductDao.delete(entity);
         }
         return new Result(true, "");
+    }
+
+    public Result list() {
+        List<TobePurchasedProductEntity> list = tobePurchasedProductDao.list(TobePurchasedProductEntity.class);
+        return new Result(true, JSONArray.fromObject(list, productStorageConfig));
     }
 }

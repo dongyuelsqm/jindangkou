@@ -41,8 +41,9 @@ public class ShopingCartController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public void get(HttpServletRequest request, HttpServletResponse response){
-
+    public void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Result result = shopingCartService.list();
+        response.getWriter().print(result);
     }
 
 

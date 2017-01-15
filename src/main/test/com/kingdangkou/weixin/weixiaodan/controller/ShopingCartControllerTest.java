@@ -1,27 +1,16 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import com.kingdangkou.weixin.weixiaodan.entity.TobePurchasedProductEntity;
-import com.kingdangkou.weixin.weixiaodan.model.Result;
-import com.kingdangkou.weixin.weixiaodan.service.ShopingCartService;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 /**
  * Created by dongy on 2016-12-06.
  */
@@ -41,6 +30,12 @@ public class ShopingCartControllerTest extends TestBase<ShopingCartController>{
                 param("size_id", "1")).
                 andDo(print());
         result.andExpect(status().isOk()).andExpect(content().string(EXPECT_CONTENT_SUCCESS));
+    }
+
+    @Test
+    public void list() throws Exception {
+        ResultActions resultActions = mockMvc.perform(get("/shopingcart/list")).andDo(print());
+        resultActions.andExpect(status().isOk());
     }
 
     @Test
