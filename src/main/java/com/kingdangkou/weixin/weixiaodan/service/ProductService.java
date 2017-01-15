@@ -87,7 +87,12 @@ public class ProductService {
         return new Success();
     }
 
-    public Result save(String name, String descriptive, float price, String department, String code, int minimum,
+    public Result save(String name,
+                       String descriptive,
+                       float price,
+                       String department,
+                       String code,
+                       int minimum,
                        String postal,
                        String pictures,
                        String videos,
