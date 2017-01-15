@@ -24,7 +24,7 @@ public class ProductDao extends BaseDaoHibernate4<ProductEntity>  {
     public int getQuantity(String id, String color, String size){
         ProductEntity productEntity = get(ProductEntity.class, id);
 
-        ProductQuantityEntity productQuantityEntity = productEntity.getProductQuantityEntity(Integer.valueOf(color), Integer.valueOf(size));
+        StorageEntity productQuantityEntity = productEntity.getProductQuantityEntity(Integer.valueOf(color), Integer.valueOf(size));
         return productQuantityEntity == null? 0:productQuantityEntity.getNumber();
     }
 
@@ -32,7 +32,7 @@ public class ProductDao extends BaseDaoHibernate4<ProductEntity>  {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         ProductEntity productEntity = get(ProductEntity.class, id);
-        ProductQuantityEntity entity = new ProductQuantityEntity(productEntity, color, size, number);
+        StorageEntity entity = new StorageEntity(productEntity, color, size, number);
         session.update(entity);
         transaction.commit();
         session.close();
@@ -42,7 +42,7 @@ public class ProductDao extends BaseDaoHibernate4<ProductEntity>  {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(productEntity);
-        for (ProductQuantityEntity quantity: productEntity.getProductQuantityEntitys()){
+        for (StorageEntity quantity: productEntity.getProductQuantityEntitys()){
             quantity.setProductEntity(productEntity);
             session.persist(quantity);
         }

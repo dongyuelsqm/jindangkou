@@ -43,41 +43,33 @@ public class ProductService {
     private SubOrderEntityDao subOrderEntityDao;
 
     public Result get(String id){
-        HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
         ProductEntity productEntity = productDao.get(ProductEntity.class, id);
-        ProductModel productModel = new ProductModel(productEntity, sellings.get(productEntity));
+        HashMap<String, Integer> sellings = subOrderEntityDao.listSoldMsg();
+        ProductModel productModel = new ProductModel(productEntity, sellings.get(productEntity.getId()));
         return new Result(true, JSONObject.fromObject(productModel, productJsonConfig));
     }
 
     public Result list(){
-        HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
+        HashMap<String, Integer> sellings = subOrderEntityDao.listSoldMsg();
         List<ProductEntity> productEntities = productDao.find();
         ArrayList<ProductModel> productModels = convertToProductModelList(sellings, productEntities);
         return new Result(true, JSONArray.fromObject(productModels, productJsonConfig));
     }
 
     public Result list(String department){
-        HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
+        HashMap<String, Integer> sellings = subOrderEntityDao.listSoldMsg();
         List<ProductEntity> productEntities = productDao.find("department", department, ProductEntity.class);
         ArrayList<ProductModel> productModels = convertToProductModelList(sellings, productEntities);
         return new Result(true, JSONArray.fromObject(productModels, productJsonConfig));
     }
 
-    private ArrayList<ProductModel> convertToProductModelList(HashMap<ProductEntity, Integer> sellings, List<ProductEntity> productEntities) {
+    private ArrayList<ProductModel> convertToProductModelList(HashMap<String, Integer> sellings, List<ProductEntity> productEntities) {
         ArrayList<ProductModel> productModels = new ArrayList<>();
         for (ProductEntity productEntity: productEntities){
-            productModels.add(new ProductModel(productEntity, sellings.get(productEntity)));
+            Integer sold = sellings.get(productEntity.getId());
+            productModels.add(new ProductModel(productEntity, sold));
         }
         return productModels;
-    }
-
-    private HashMap<ProductEntity, Integer> getProductSellingQuantity() {
-        List<Object[]> objects = subOrderEntityDao.listSellingMsg();
-        HashMap<ProductEntity, Integer> sellings = new HashMap<>();
-        for (Object[] object: objects){
-            sellings.put((ProductEntity) object[0], Integer.valueOf(object[1].toString()));
-        }
-        return sellings;
     }
 
     public Result save(ProductEntity productEntity){
@@ -103,7 +95,7 @@ public class ProductService {
         DepartmentEntity departmentEntity = departmentDao.get(department);
         productEntity.setDepartment(departmentEntity);
 
-        Set<ProductQuantityEntity> productQuantityEntitySet = convertJsonToProductEntitySet(quantity);
+        Set<StorageEntity> productQuantityEntitySet = convertJsonToProductEntitySet(quantity);
         productEntity.setProductQuantityEntitys(productQuantityEntitySet);
 
         Set<LabelEntity> labels = convertJsonToLabelEntitySet(label);
@@ -141,12 +133,12 @@ public class ProductService {
         return labels;
     }
 
-    private Set<ProductQuantityEntity> convertJsonToProductEntitySet(String quantity) {
-        Set<ProductQuantityEntity> productQuantityEntitySet = new HashSet<ProductQuantityEntity>();
+    private Set<StorageEntity> convertJsonToProductEntitySet(String quantity) {
+        Set<StorageEntity> productQuantityEntitySet = new HashSet<StorageEntity>();
         JSONArray jsonArray = JSONArray.fromObject(quantity);
         for (Object obj: jsonArray){
             JSONObject json = (JSONObject) obj;
-            ProductQuantityEntity productQuantityEntity = new ProductQuantityEntity();
+            StorageEntity productQuantityEntity = new StorageEntity();
             productQuantityEntity.setNumber(Integer.valueOf(json.get("quantity").toString()));
             productQuantityEntity.setColorEntity(colorDao.get(json.get("color").toString()));
             productQuantityEntity.setSizeEntity(sizeDao.get(json.get("size").toString()));

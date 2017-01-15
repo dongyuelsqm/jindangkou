@@ -2,7 +2,7 @@ package com.kingdangkou.weixin.weixiaodan.dao;
 
 import com.kingdangkou.weixin.weixiaodan.entity.ColorEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
-import com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity;
+import com.kingdangkou.weixin.weixiaodan.entity.StorageEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.SizeEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +28,7 @@ public class ProductEntityDaoTest {
     public void testSave() throws Exception {
         ProductEntity productEntity = new ProductEntity("name", "descriptive", 1.2f, "code", 10, "postal", "picture", "videos");
         productDao.save(productEntity);
-        productEntity.addProductQuantity(new ProductQuantityEntity(productEntity, new ColorEntity("green"), new SizeEntity("XXL"), 1));
+        productEntity.addProductQuantity(new StorageEntity(productEntity, new ColorEntity("green"), new SizeEntity("XXL"), 1));
         productDao.save(productEntity);
     }
 

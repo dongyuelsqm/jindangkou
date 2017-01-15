@@ -1,12 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
-import org.hibernate.annotations.*;
-
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-import static org.hibernate.annotations.CascadeType.ALL;
 
 
 /**
@@ -14,16 +8,16 @@ import static org.hibernate.annotations.CascadeType.ALL;
  */
 @Entity
 @Table(name = "product_quantity")
-public class ProductQuantityEntity {
+public class StorageEntity {
     private int id;
     private ProductEntity productEntity;
     private ColorEntity colorEntity;
     private SizeEntity sizeEntity;
     private int number;
 
-    public ProductQuantityEntity() {}
+    public StorageEntity() {}
 
-    public ProductQuantityEntity(ProductEntity productEntity, ColorEntity colorEntity, SizeEntity sizeEntity, int number) {
+    public StorageEntity(ProductEntity productEntity, ColorEntity colorEntity, SizeEntity sizeEntity, int number) {
         this.productEntity = productEntity;
         this.colorEntity = colorEntity;
         this.sizeEntity = sizeEntity;

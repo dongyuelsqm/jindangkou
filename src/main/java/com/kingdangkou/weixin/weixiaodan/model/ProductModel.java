@@ -3,7 +3,7 @@ package com.kingdangkou.weixin.weixiaodan.model;
 import com.kingdangkou.weixin.weixiaodan.entity.DepartmentEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.LabelEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
-import com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity;
+import com.kingdangkou.weixin.weixiaodan.entity.StorageEntity;
 
 import javax.enterprise.inject.Model;
 import java.text.SimpleDateFormat;
@@ -27,7 +27,7 @@ public class ProductModel {
     private String code;
     private String date;
     private int sellingQuantity;
-    private Set<ProductQuantityEntity> productQuantityEntitys = new HashSet<ProductQuantityEntity>();
+    private Set<StorageEntity> productQuantityEntitys = new HashSet<StorageEntity>();
     private Set<LabelEntity> labelEntitySet = new HashSet<>();
 
     private SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -147,11 +147,11 @@ public class ProductModel {
         this.sellingQuantity = sellingQuantity;
     }
 
-    public Set<ProductQuantityEntity> getProductQuantityEntitys() {
+    public Set<StorageEntity> getProductQuantityEntitys() {
         return productQuantityEntitys;
     }
 
-    public void setProductQuantityEntitys(Set<ProductQuantityEntity> productQuantityEntitys) {
+    public void setProductQuantityEntitys(Set<StorageEntity> productQuantityEntitys) {
         this.productQuantityEntitys = productQuantityEntitys;
     }
 
