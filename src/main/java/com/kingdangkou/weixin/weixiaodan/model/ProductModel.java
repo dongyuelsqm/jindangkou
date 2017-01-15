@@ -27,7 +27,7 @@ public class ProductModel {
     private String code;
     private String date;
     private int sellingQuantity;
-    private Set<StorageEntity> productQuantityEntitys = new HashSet<StorageEntity>();
+    private Set<StorageEntity> storages = new HashSet<StorageEntity>();
     private Set<LabelEntity> labelEntitySet = new HashSet<>();
 
     private SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -46,8 +46,8 @@ public class ProductModel {
         this.videos = entity.getVideos();
         this.code = entity.getCode();
         this.date = dateTimeFormatter.format(entity.getDate());
-        this.sellingQuantity = sellingQuantity;
-        this.productQuantityEntitys = entity.getProductQuantityEntitys();
+        this.sellingQuantity = sellingQuantity == null? 0: sellingQuantity;
+        this.storages = entity.getStorage();
         this.labelEntitySet = entity.getLabelEntitySet();
     }
 
@@ -147,12 +147,12 @@ public class ProductModel {
         this.sellingQuantity = sellingQuantity;
     }
 
-    public Set<StorageEntity> getProductQuantityEntitys() {
-        return productQuantityEntitys;
+    public Set<StorageEntity> getStorages() {
+        return storages;
     }
 
-    public void setProductQuantityEntitys(Set<StorageEntity> productQuantityEntitys) {
-        this.productQuantityEntitys = productQuantityEntitys;
+    public void setStorages(Set<StorageEntity> storages) {
+        this.storages = storages;
     }
 
     public Set<LabelEntity> getLabelEntitySet() {

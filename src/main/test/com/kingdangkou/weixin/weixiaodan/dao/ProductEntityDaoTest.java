@@ -28,7 +28,7 @@ public class ProductEntityDaoTest {
     public void testSave() throws Exception {
         ProductEntity productEntity = new ProductEntity("name", "descriptive", 1.2f, "code", 10, "postal", "picture", "videos");
         productDao.save(productEntity);
-        productEntity.addProductQuantity(new StorageEntity(productEntity, new ColorEntity("green"), new SizeEntity("XXL"), 1));
+        productEntity.addStorage(new StorageEntity(productEntity, new ColorEntity("green"), new SizeEntity("XXL"), 1));
         productDao.save(productEntity);
     }
 

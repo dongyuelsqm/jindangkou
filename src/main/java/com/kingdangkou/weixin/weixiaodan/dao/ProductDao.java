@@ -42,7 +42,7 @@ public class ProductDao extends BaseDaoHibernate4<ProductEntity>  {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.save(productEntity);
-        for (StorageEntity quantity: productEntity.getProductQuantityEntitys()){
+        for (StorageEntity quantity: productEntity.getStorage()){
             quantity.setProductEntity(productEntity);
             session.persist(quantity);
         }

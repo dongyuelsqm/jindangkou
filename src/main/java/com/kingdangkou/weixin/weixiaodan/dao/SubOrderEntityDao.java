@@ -21,7 +21,7 @@ public class SubOrderEntityDao extends BaseDaoHibernate4<SubOrder>{
     private List quaryFromDB() {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        String queryString = "select s.productEntity.id, sum(s.number) from SubOrder as s group by s.productEntity";
+        String queryString = "select s.productEntity.id, sum(s.number) from SubOrder as s group by s.productEntity.id";
         List list = session.createQuery(queryString).list();
         transaction.commit();
         session.close();

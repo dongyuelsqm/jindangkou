@@ -5,6 +5,7 @@ import com.kingdangkou.weixin.weixiaodan.entity.*;
 import com.kingdangkou.weixin.weixiaodan.model.ProductModel;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
+import com.kingdangkou.weixin.weixiaodan.service.utils.ProductStorageGenerator;
 import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
 import com.kingdangkou.weixin.weixiaodan.utils.JsonHandler;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.ProductJsonConfig;
@@ -20,6 +21,8 @@ import java.util.*;
  */
 @Service
 public class ProductService {
+    @Autowired
+    private ProductStorageGenerator storageGenerator;
     @Autowired
     private ProductJsonConfig productJsonConfig;
     @Autowired
@@ -88,15 +91,15 @@ public class ProductService {
                        String postal,
                        String pictures,
                        String videos,
-                       String quantity,
+                       String storageJson,
                        String label){
         ProductEntity productEntity = new ProductEntity(name, descriptive, price, code, minimum, postal, pictures, videos);
 
         DepartmentEntity departmentEntity = departmentDao.get(department);
         productEntity.setDepartment(departmentEntity);
 
-        Set<StorageEntity> productQuantityEntitySet = convertJsonToProductEntitySet(quantity);
-        productEntity.setProductQuantityEntitys(productQuantityEntitySet);
+        Set<StorageEntity> storageEntitySet = storageGenerator.parse2StorageSet(storageJson);
+        productEntity.setStorage(storageEntitySet);
 
         Set<LabelEntity> labels = convertJsonToLabelEntitySet(label);
         productEntity.setLabelEntitySet(labels);
@@ -131,20 +134,6 @@ public class ProductService {
             }
         }
         return labels;
-    }
-
-    private Set<StorageEntity> convertJsonToProductEntitySet(String quantity) {
-        Set<StorageEntity> productQuantityEntitySet = new HashSet<StorageEntity>();
-        JSONArray jsonArray = JSONArray.fromObject(quantity);
-        for (Object obj: jsonArray){
-            JSONObject json = (JSONObject) obj;
-            StorageEntity productQuantityEntity = new StorageEntity();
-            productQuantityEntity.setNumber(Integer.valueOf(json.get("quantity").toString()));
-            productQuantityEntity.setColorEntity(colorDao.get(json.get("color").toString()));
-            productQuantityEntity.setSizeEntity(sizeDao.get(json.get("size").toString()));
-            productQuantityEntitySet.add(productQuantityEntity);
-        }
-        return productQuantityEntitySet;
     }
 
     private void moveFiles(String fils, String id){

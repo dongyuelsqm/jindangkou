@@ -26,7 +26,7 @@ public class ProductEntity {
     private String code;
     private Date date;
 
-    private Set<StorageEntity> productQuantityEntitys = new HashSet<StorageEntity>();
+    private Set<StorageEntity> storage = new HashSet<StorageEntity>();
     private Set<LabelEntity> labelEntitySet = new HashSet<>();
 
     public ProductEntity() {}
@@ -149,19 +149,19 @@ public class ProductEntity {
     }
 
     @OneToMany(targetEntity = StorageEntity.class, mappedBy = "productEntity")
-    public Set<StorageEntity> getProductQuantityEntitys() {
-        return productQuantityEntitys;
+    public Set<StorageEntity> getStorage() {
+        return storage;
     }
 
-    public void addProductQuantity(StorageEntity quantity){
-        this.productQuantityEntitys.add(quantity);
+    public void setStorage(Set<StorageEntity> productQuantityEntitySet) {
+        this.storage = productQuantityEntitySet;
     }
-    public void setProductQuantityEntitys(Set<StorageEntity> productQuantityEntitySet) {
-        this.productQuantityEntitys = productQuantityEntitySet;
+    public void addStorage(StorageEntity quantity){
+        this.storage.add(quantity);
     }
 
     public StorageEntity getProductQuantityEntity(int color, int size){
-        for (StorageEntity entity: productQuantityEntitys){
+        for (StorageEntity entity: storage){
             if (entity.getColorEntity().getId() == color && entity.getSizeEntity().getId() == size){
                 return entity;
             }
