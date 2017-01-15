@@ -1,13 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="./common/taglibs.jsp"%>
 <%@ include file="./common/head.jsp"%>
-<style>
-    .content{background-color: #fff; height: 642px;}
-    .form{height: 230px; top: 50%; width: 100%;}
-    a.register{color: #242424; text-decoration: underline;}
-    .error{color: #4d4d4d; display: none; line-height: 25px; text-align: center; }
-    .error .iconfont{color: #e11377;}
-</style>
+<link rel="stylesheet" href="${contextPath}/res/css/module/login.css" />
 <body>
     <div id="J_body" class="J_body">
         <div id="J_main" class="J_main">

@@ -105,7 +105,7 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 	.dialog-title{border-bottom:1px solid #cbcbcb; height:40px; line-height:40px; padding-left:15px;}
 	.dialog-content{text-align:center;}
 	.dialog-buttons{background:#f5f8fa; text-align:center; padding:15px;}
-		.dialog-buttons button{background:#dc5957; border:none; border-radius:5px; -o-border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; color:#fff; margin: 0 5px; padding:5px; width:120px;}
+		.dialog-buttons button{background:#ea3527; border:none; border-radius:5px; -o-border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; color:#fff; margin: 0 5px; padding:5px; width:120px;}
 		.dialog-buttons button.btn-white{background:#fff; border: 1px solid #cbcbcb; color:#333;}
 	.dialog-close{cursor:pointer; font-size:22px; position:absolute; right:15px; top:0;}
 		
