@@ -12,6 +12,6 @@ CREATE TABLE colors(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100)) charac
 CREATE TABLE sizes(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100)) character set = utf8;
 CREATE TABLE departments(id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100)) character set = utf8;
 CREATE TABLE collections(id INT PRIMARY KEY AUTO_INCREMENT, product_id INT, open_id INT) character set = utf8;
-CREATE TABLE shoping_cart(id INT PRIMARY KEY AUTO_INCREMENT, product_id INT, open_id INT) character set = utf8;
+CREATE TABLE shoping_cart(id INT PRIMARY KEY AUTO_INCREMENT, product_id INT, open_id INT, color_id INT, size_id INT, number INT) character set = utf8;
 CREATE TABLE notifications(id int primary key AUTO_INCREMENT, title VARCHAR(100), created_at DATETIME) character set = utf8;
 CREATE TABLE customers(id int primary key AUTO_INCREMENT, open_id VARCHAR(100) NOT NULL , nickname VARCHAR(100), sex INTEGER, province VARCHAR(20), city VARCHAR(20), country VARCHAR(20), headimgurl VARCHAR(100), privilege VARCHAR(100), unionid VARCHAR(100), access_time DATETIME) CHARACTER SET = utf8;

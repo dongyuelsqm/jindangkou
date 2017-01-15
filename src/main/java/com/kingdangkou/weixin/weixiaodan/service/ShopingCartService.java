@@ -1,8 +1,15 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
+import com.kingdangkou.weixin.weixiaodan.dao.ColorDao;
+import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
+import com.kingdangkou.weixin.weixiaodan.dao.SizeDao;
 import com.kingdangkou.weixin.weixiaodan.dao.TobePurchasedProductDao;
+import com.kingdangkou.weixin.weixiaodan.entity.ColorEntity;
+import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
+import com.kingdangkou.weixin.weixiaodan.entity.SizeEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.TobePurchasedProductEntity;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
+import com.kingdangkou.weixin.weixiaodan.model.Success;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +23,25 @@ public class ShopingCartService {
     @Autowired
     private TobePurchasedProductDao tobePurchasedProductDao;
 
+    @Autowired
+    private ColorDao colorDao;
+    @Autowired
+    private SizeDao sizeDao;
+    @Autowired
+    private ProductDao productDao;
+
     public Result add(TobePurchasedProductEntity entity){
         tobePurchasedProductDao.save(entity);
         return new Result(true, "");
+    }
+
+    public Result add(String openId, String productId, String colorId, String sizeId, int number){
+        ColorEntity colorEntity = colorDao.get(colorId);
+        SizeEntity sizeEntity = sizeDao.get(sizeId);
+        ProductEntity productEntity = productDao.get(productId);
+        TobePurchasedProductEntity tobePurchasedProductEntity = new TobePurchasedProductEntity(openId, productEntity, colorEntity, sizeEntity, number);
+        tobePurchasedProductDao.save(tobePurchasedProductEntity);
+        return new Success();
     }
 
     public Result del(List<String> id_list) {

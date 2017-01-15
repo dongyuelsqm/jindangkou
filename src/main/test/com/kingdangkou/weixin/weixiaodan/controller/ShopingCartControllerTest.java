@@ -27,38 +27,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")
-public class ShopingCartControllerTest {
-    private final String EXPECT_CONTENT_SUCCESS = "{\"detail\":\"success\",\"success\":true}";
-    private final String EXPECT_CONTENT_FAIL = "{\"detail\":\"success\",\"success\":fail}";
-    private MockMvc mockMvc;
-    @InjectMocks
-    private ShopingCartController controller;
-
-    @Mock
-    private ShopingCartService service;
-
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-    }
+public class ShopingCartControllerTest extends TestBase<ShopingCartController>{
+    private final String EXPECT_CONTENT_SUCCESS = "{\"detail\":\"\",\"success\":true}";
+    private final String EXPECT_CONTENT_FAIL = "{\"detail\":\"\",\"success\":fail}";
 
     @Test
     public void addProducts() throws Exception {
-        when(service.add(any(TobePurchasedProductEntity.class))).thenReturn(new Result(true, "success"));
         ResultActions result = mockMvc.perform(post("/shopingcart/add").
                 param("openID", "11").
                 param("product_id", "1").
                 param("number", "1").
-                param("color", "blue").
-                param("size", "mx")).
+                param("color_id", "1").
+                param("size_id", "1")).
                 andDo(print());
         result.andExpect(status().isOk()).andExpect(content().string(EXPECT_CONTENT_SUCCESS));
     }
 
     @Test
     public void addProductsWithInvalidParameter() throws Exception {
-        when(service.add(any(TobePurchasedProductEntity.class))).thenReturn(new Result(true, "success"));
         ResultActions result = mockMvc.perform(post("/shopingcart/add").
                 param("openID", "11").
                 param("product_id", "***").

@@ -8,26 +8,38 @@ import javax.persistence.*;
 @Entity
 @Table(name = "shoping_cart")
 public class TobePurchasedProductEntity {
-    private int id;
-
-    private String openID;
-    private String product_id;
-    private String color;
-    private String number;
-    private String size;
-    public TobePurchasedProductEntity() {}
-
-    public TobePurchasedProductEntity(String openID, String product_id, String color, String number, String size) {
-        this.openID = openID;
-        this.product_id = product_id;
-        this.color = color;
-        this.number = number;
-        this.size = size;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    private int id;
+
+    @Column(name = "open_id")
+    private String openID;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id",referencedColumnName = "id", unique = true)
+    private ProductEntity productEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "color_id",referencedColumnName = "id", unique = true)
+    private ColorEntity color;
+
+    @ManyToOne
+    @JoinColumn(name = "size_id",referencedColumnName = "id", unique = true)
+    private SizeEntity size;
+
+    @Column(name = "number")
+    private int number;
+    public TobePurchasedProductEntity() {}
+
+    public TobePurchasedProductEntity(String openID, ProductEntity productEntity, ColorEntity color, SizeEntity size, int number) {
+        this.openID = openID;
+        this.productEntity = productEntity;
+        this.color = color;
+        this.size = size;
+        this.number = number;
+    }
+
     public int getId() {
         return id;
     }
@@ -36,8 +48,6 @@ public class TobePurchasedProductEntity {
         this.id = id;
     }
 
-
-    @Column(name = "open_id")
     public String getOpenID() {
         return openID;
     }
@@ -45,36 +55,38 @@ public class TobePurchasedProductEntity {
     public void setOpenID(String openID) {
         this.openID = openID;
     }
-    @Column(name = "product_id")
-    public String getProduct_id() {
-        return product_id;
+
+    public ProductEntity getProductEntity() {
+        return productEntity;
     }
 
-    public void setProduct_id(String product_id) {
-        this.product_id = product_id;
+    public void setProductEntity(ProductEntity productEntity) {
+        this.productEntity = productEntity;
     }
 
-    public String getColor() {
+
+    public ColorEntity getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(ColorEntity color) {
         this.color = color;
     }
 
-    public String getNumber() {
-        return number;
-    }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getSize() {
+    public SizeEntity getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(SizeEntity size) {
         this.size = size;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }
