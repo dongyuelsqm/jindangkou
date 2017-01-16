@@ -15,23 +15,23 @@ define(function(require, exports, module) {
 
     var validates = {
         rules: {
-            // code: {require: true},
-            name: {require: true},
-            price: {require: true},
-            department: {require: true},
-            minimum: {require: true},
-            // pictures: {require: true},
-            // videos: {require: true},
-            descriptive: {require: true}
+            // code: {required: true},
+            name: {required: true},
+            price: {required: true},
+            department: {required: true},
+            minimum: {required: true},
+            // pictures: {required: true},
+            // videos: {required: true},
+            descriptive: {required: true}
         },
         messages: {
-            name: {require: '请输入商品名称'},
-            price: {require: '请输入售价'},
-            department: {require: '请选择商品分类'},
-            minimum: {require: '请输入起批件数'},
-            // pictures: {require: true},
-            // videos: {require: true},
-            descriptive: {require: '请输入商品描述'}
+            name: {required: '请输入商品名称'},
+            price: {required: '请输入售价'},
+            department: {required: '请选择商品分类'},
+            minimum: {required: '请输入起批件数'},
+            // pictures: {required: true},
+            // videos: {required: true},
+            descriptive: {required: '请输入商品描述'}
         },
         errorPlacement: function(error, element) {
             error.appendTo(element.parent().parent());

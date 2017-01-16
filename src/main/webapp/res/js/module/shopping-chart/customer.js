@@ -30,40 +30,40 @@ define(function(require, exports, module) {
 
     var validates = {
         rules: {
-            userName: {require: true},
+            userName: {required: true},
             userMobile: {
-                require: true,
+                required: true,
                 mobile: true
             },
-            qq: {require: true},
+            qq: {required: true},
             userEmail: {
-                require: true,
+                required: true,
                 email: true
             },
-            shopName: {require: true},
-            // pictures: {require: true},
-            address: {require: true},
+            shopName: {required: true},
+            // pictures: {required: true},
+            address: {required: true},
             telephone: {
-                require: true,
+                required: true,
                 contactNum: true
             }
         },
         messages: {
-            userName: {require: '请输入用户名'},
+            userName: {required: '请输入用户名'},
             userMobile: {
-                require: '请输入手机号码',
+                required: '请输入手机号码',
                 mobile: '请输入正确格式的手机号码'
             },
-            qq: {require: '请选择qq号码'},
+            qq: {required: '请选择qq号码'},
             userEmail: {
-                require: '请输入常用邮箱',
+                required: '请输入常用邮箱',
                 mobile: '请输入正确格式的电子邮箱'
             },
-            shopName: {require: '请输入店铺名称'},
-            // pictures: {require: true},
-            address: {require: '请输入发货地址'},
+            shopName: {required: '请输入店铺名称'},
+            // pictures: {required: true},
+            address: {required: '请输入发货地址'},
             telephone: {
-                require: '请输入服务电话',
+                required: '请输入服务电话',
                 contactNum: '请输入正确格式的服务电话'
             }
         },

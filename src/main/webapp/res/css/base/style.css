@@ -110,12 +110,16 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 	.dialog-close{cursor:pointer; font-size:22px; position:absolute; right:15px; top:0;}
 		
 /* checkbox & radio */
+.checkbox-inline+.checkbox-inline,
+.radio-inline+.radio-inline{
+	margin-left: 0;
+}
 .checkLabel{background:#fff url(img/checkbox.png) no-repeat -16px 0; cursor:pointer; display:inline-block; height:16px; margin-right:5px; vertical-align:text-top; width:16px;}
 	.checkLabel.checked{background-position: 0 0;}
-	.checkbox-inline{display: inline; font-size: 12px; padding:0;}
+	.checkbox-inline{display: inline; font-size: 12px; margin-right: 10px; padding:0;}
 .radioLabel{background:url(img/radio.png) no-repeat -16px 0; cursor:pointer; display:inline-block; height:16px; margin-right:5px; vertical-align:text-top; width:16px;}
 	.radioLabel.selected{background-position: 0 0;}
-    .radio-inline{display: inline; font-size: 12px; padding:0;}
+    .radio-inline{display: inline; font-size: 12px; margin-right: 10px; padding:0;}
 
 /* select */
 /*.select::-ms-expand{display: none;}*/
