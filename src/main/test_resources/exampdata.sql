@@ -1,10 +1,17 @@
+/* 2017-1-16 create */
 insert into products (name, department_id, unit_price, description, pictures, videos, minimum, postal, code, input_date) values('jeans', 1, 1.11, 'good','pic', 'videos', 10, '1', 'code', '2016-12-22 00:00:00');
 insert into sizes (name) values('avg');
 insert into colors (name) values ('red');
-insert product_quantity (product_id, color, size, number) values(1,1,1, 10);
+insert into product_quantity (product_id, color, size, number) values(1,1,1, 10);
 insert into departments (name) values ('treasures');
-insert INTO addresses(name, open_id, phone, province, city, district, detail) VALUE ('zhangsan', 'ssss', '15111111', 'zhejiang', 'hangzhou', 'xihu', 'xihu');
-INSERT INTO labels(title) VALUES ("hot");
-INSERT INTO product_label_links (product_id, label_id) VALUES (1, 1);
-INSERT INTO sub_orders (product_id, product_id, order_id, color_id, size_id, number) VALUES (1, 1, 1, 1, 1, 1);
+insert into addresses(name, open_id, phone, province, city, district, detail) values ('zhangsan', 'ssss', '15111111', 'zhejiang', 'hangzhou', 'xihu', 'xihu');
+insert into labels(title) values ("hot");
+/*insert into product_label_links (product_id, label) values (1, 1);  --label改成label_id */
+/*insert into sub_orders (product_id, product_id, order_id, color_id, size_id, number) values (1, 1, 1, 1, 1, 1);--多了一个字段 */
 insert into notifications (title, created_at) values ("打折打折打折", '2016-12-22 00:00:00');
+
+/* 2017-1-16 update */
+alter table product_label_links add column label_id int;
+alter table product_label_links drop column label;
+insert into product_label_links (product_id, label_id) values (1, 1);
+insert into sub_orders (product_id, order_id, color_id, size_id, number) values (1, 1, 1, 1, 1);

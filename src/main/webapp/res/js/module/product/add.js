@@ -10,6 +10,9 @@ define(function(require, exports, module) {
         form = require('util/form'),
         util = require('util/util');
 
+    var template = util.template,
+        colorMap = require('module/default/colors').colorMap;
+
     require('plupload');
     require('jquery-validate');
     require('jquery-validate-add');
@@ -31,31 +34,43 @@ define(function(require, exports, module) {
                     '<input type="hidden" value="" name="pictures"/>';
     var validates = {
             rules: {
-                // code: {require: true},
-                name: {require: true},
-                price: {require: true},
-                department: {require: true},
-                minimum: {require: true},
-                descriptive: {require: true}
-                //size: {require: true},
-                //color: {require: true},
-                // pictures: {require: true},
-                // videos: {require: true},
-                //postal: {require: true},
-                //quantity: {require: true}
+                name: {required: true},
+                price: {
+                    required: true,
+                    number: true
+                },
+                department: {required: true},
+                minimum: {
+                    required: true,
+                    number: true
+                },
+                color: {required: true},
+                postal: {required: true},
+                descriptive: {required: true}
+                //size: {required: true},
+                // pictures: {required: true},
+                // videos: {required: true},
+                //postal: {required: true},
+                //quantity: {required: true}
             },
             messages: {
-                name: {require: '请输入商品名称'},
-                price: {require: '请输入售价'},
-                department: {require: '请选择商品分类'},
-                minimum: {require: '请输入起批件数'},
-                descriptive: {require: '请输入商品描述'}
-                //size: {require: true},
-                //color: {require: true},
-                // pictures: {require: true},
-                // videos: {require: true},
-                //postal: {require: true},
-                //quantity: {require: true}
+                name: {required: '请输入商品名称'},
+                price: {
+                    required: '请输入售价',
+                    number: '请输入数字'
+                },
+                department: {required: '请选择商品分类'},
+                minimum: {
+                    required: '请输入起批件数',
+                    number: '请输入数字'
+                },
+                color: {required: '请选择颜色'},
+                postal: {required: '请选择运费模版'},
+                descriptive: {required: '请输入商品描述'}
+                //size: {required: true},
+                // pictures: {required: true},
+                // videos: {required: true},
+                //quantity: {required: true}
             },
             errorPlacement: function(error, element) {
                 error.appendTo(element.parent().parent());
@@ -66,13 +81,17 @@ define(function(require, exports, module) {
 
     var FormView = Backbone.View.extend({
         events: {
-            'click button[role="btn-submit"]': 'submit',
             'click img[role="upload-img"]': 'uploadImage',
-            'click video[role="upload-video"]': 'uploadVideo'
+            'click [role="upload-video"]': 'uploadVideo',
+            // 'click img[role="upload-video"]': 'uploadVideo',
+            'change input[role="color"]': 'toggleInventory',
+            'click button[role="btn-submit"]': 'submit'
         },
         initialize: function(opstions){
             this.$checkboxs = [];
             this.uploaders_store = [];
+            this.$inventory = this.$('#inventory');
+            this.inventoryItemTmpl = template('inventoryItem');
 
             this.init();
             this.initImgUpload();
@@ -85,6 +104,14 @@ define(function(require, exports, module) {
             _.each(this.$('.checkbox-inline'), function(item, index){
                 _this.$checkboxs.push(new form.CheckboxView({el: $(item)}));
             });
+
+            this.videos = [];
+            this.pictures = [];
+            if(this.$('#video').attr('src') !== ''){
+                this.$('#video').show();
+            }else{
+                this.$('#video-default').show();
+            }
         },
         initImgUpload: function(){
             var _this = this, uploader = {};
@@ -127,7 +154,8 @@ define(function(require, exports, module) {
                     var result = $.parseJSON(response.response);
 
                     if(result.success){
-                        var finalName = result.url;
+                        // var finalName = result.url;
+                        _this.pictures.push(result.detail);
                     }else{
                         alert(result.detail || '上传出错');
                     }
@@ -182,8 +210,9 @@ define(function(require, exports, module) {
                 var result = $.parseJSON(response.response);
 
                 if(result.success){
-                    var finalName = result.url;
-
+                    // this.$('#video').show();
+                    // this.$('#video-default').hide();
+                    _this.videos.push(result.detail);
                 }else{
                     alert(result.detail || '上传出错');
                 }
@@ -209,32 +238,60 @@ define(function(require, exports, module) {
 
             this.$('#btn-video').trigger('click');
         },
+        'toggleInventory': function(ev){
+            var $this = $(ev.currentTarget),
+                _this = this,
+                color = $this.val();
+
+            if($this.prop('checked')){
+                if(this.$inventory.find('#inventory-' + color).length < 1){
+                    this.$inventory.append(this.inventoryItemTmpl({'colorCode': color, 'colorName': colorMap[color]}));
+                }
+            }else{
+                if(this.$inventory.find('#inventory-' + color).length > 0) {
+                    this.$inventory.find('#inventory-' + color).remove();
+                }
+            }
+        },
+        getQuantity: function(){
+            /*
+             * 获取库存数据
+             */
+            var _this = this,
+                $inventorys = this.$('ul.inventory>li'),
+                array = [];
+            _.each($inventorys, function(item, index){
+                $(item).find('input[role="quantity"]').each(function(i, input){
+                    if($(input).val() !== ''){
+                        array.push('{color: "' +  $(item).data('color') + '",size: "' +  $(input).data('size') + '",quantity: "' +  $(input).val() + '"}');
+                    }
+                });
+            });
+            return array;
+        },
         'submit': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this;
 
-            // if(this.$el.valid()) {
-                var param = {};
-            param.name = 'product';
-            param.department = 1;
-            param.descriptive = 'good';
-            param.price = 1.1;
-            param.quantity = '[{quantity:"1", size:"1", color:"1"}]';
-            param.code = 'code';
-            param.minimum = 10;
-            param.postal = 300000;
-            param.pictures = '["dddd.gif","ffff.gif"]';
-            param.videos = '["dddd.mp4","ffff.mp4"]';
-            param.label = '["1"]';
+            if(this.$el.valid()) {
+                var param = this.$el.serializeObject();
+                param.pictures = '["dddd.gif","ffff.gif"]';
+                param.videos = '["dddd.mp4","ffff.mp4"]';
+                param.quantity = '[' + this.getQuantity().join(',')  + ']';
+                // param.pictures = '[' + this.pictures.join(',') + ']';
+                // param.videos =  '[' + this.videos.join(',') + ']';
+                param.label = '["1"]';
 
                 $.ajax({
                     url: G.contextPath + 'website/product/add',
                     data: param,
                     success: function (rsp) {
-                        console.log(rsp);
+                        if(rsp.success){
+                            alert('商品添加成功！');
+                        }
                     }
                 });
-            // }
+            }
         }
     });
 
