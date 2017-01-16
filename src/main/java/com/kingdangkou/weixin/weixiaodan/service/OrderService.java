@@ -22,6 +22,8 @@ import java.util.Set;
 @Service
 public class OrderService {
     @Autowired
+    private StorageDao storageDao;
+    @Autowired
     private OrderDao orderDao;
 
     @Autowired
@@ -29,12 +31,6 @@ public class OrderService {
 
     @Autowired
     private ProductDao productDao;
-
-    @Autowired
-    private ColorDao colorDao;
-
-    @Autowired
-    private SizeDao sizeDao;
 
     public OrderService() {}
 
@@ -48,8 +44,8 @@ public class OrderService {
         order.setAddress(addressDao.get(address_id));
         order.setSubOrders(convertToSubOrders(items, order));
 
-        adjustProduct(order);
         orderDao.save(order);
+        adjustProduct(order);
         return new Success();
     }
 
@@ -77,12 +73,8 @@ public class OrderService {
             String product_id = subOrder.getProductEntity().getId();
             String size = String.valueOf(subOrder.getSize());
             String color = subOrder.getColor();
-            SizeEntity sizeEntity = sizeDao.get(size);
-            ColorEntity colorEntity = colorDao.get(color);
             int sold = subOrder.getNumber();
-            int current = productDao.getQuantity(product_id, color, size);
-            current = current - sold;
-            productDao.updateQuantity(product_id, colorEntity, sizeEntity, current);
+            storageDao.update(product_id, color, size, sold);
         }
     }
 
