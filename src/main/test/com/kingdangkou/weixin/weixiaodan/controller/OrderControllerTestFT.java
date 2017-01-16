@@ -1,35 +1,14 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")
-public class OrderControllerTestFT {
-
-    @Autowired
-    private OrderController orderController;
-
-    private MockMvc mockMvc;
-
-    @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(orderController).build();
-    }
+public class OrderControllerTestFT extends TestBase<OrderController> {
 
     @Test
     public void testDoGet() throws Exception {
@@ -40,7 +19,11 @@ public class OrderControllerTestFT {
 
     @Test
     public void testCreateOrder() throws Exception {
-
+        ResultActions resultActions = mockMvc.perform(post("/order/add").
+                param("openID", "1").
+                param("sub_orders", "[{number:1, color:1, size:1, product_id:1}]").
+                param("address_id", "1")).andDo(print());
+        resultActions.andExpect(status().isOk());
     }
 
     @Test

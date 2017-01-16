@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by dongy on 2016-12-06.
@@ -36,13 +34,13 @@ public class ShopingCartController {
     }
 
     @RequestMapping(value = "/del", method = RequestMethod.POST)
-    public void del(@RequestParam("id_list") List<String> id_list, HttpServletResponse response){
-        shopingCartService.del(id_list);
+    public void del(@RequestParam("ids") String ids, @RequestParam("open_id") String openId, HttpServletResponse response){
+        shopingCartService.del(ids, openId);
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Result result = shopingCartService.list();
+    public void get(@RequestParam("open_id") String openId, HttpServletResponse response) throws IOException {
+        Result result = shopingCartService.list(openId);
         response.getWriter().print(result);
     }
 

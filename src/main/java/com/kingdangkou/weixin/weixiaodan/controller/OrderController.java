@@ -35,7 +35,7 @@ public class OrderController {
         response.getWriter().print(JSONArray.fromObject(result, orderJsonConfig));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/order/add")
+    @RequestMapping(method = RequestMethod.POST, value = "/add")
     public void createOrder(@RequestParam("openID") String openID,
                             @RequestParam("sub_orders") String subOrders,
                             @RequestParam("address_id") String address_id,
