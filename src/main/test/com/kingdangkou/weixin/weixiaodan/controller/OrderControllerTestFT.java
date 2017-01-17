@@ -43,6 +43,16 @@ public class OrderControllerTestFT extends TestBase<OrderController> {
 
     @Test
     public void testListOrders() throws Exception {
+        ResultActions resultActions = mockMvc.perform(get("/order/list/").
+                param("openID", "1")).andDo(print());
+        resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    public void listMyOrdersOfState() throws Exception {
+        ResultActions resultActions = mockMvc.perform(get("/order/list/state").
+                param("state", "2").param("openID", "1")).andDo(print());
+        resultActions.andExpect(status().isOk());
 
     }
 }

@@ -1,10 +1,13 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
-import com.kingdangkou.weixin.weixiaodan.dao.*;
-import com.kingdangkou.weixin.weixiaodan.entity.*;
+import com.kingdangkou.weixin.weixiaodan.dao.AddressDao;
+import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
+import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
+import com.kingdangkou.weixin.weixiaodan.dao.StorageDao;
+import com.kingdangkou.weixin.weixiaodan.entity.Order;
+import com.kingdangkou.weixin.weixiaodan.entity.SubOrder;
 import com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum;
 import com.kingdangkou.weixin.weixiaodan.model.Failure;
-import com.kingdangkou.weixin.weixiaodan.model.ListResult;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.OrderJsonConfig;
@@ -86,9 +89,9 @@ public class OrderService {
         return orderDao.getOrder(id);
     }
 
-    public ListResult find(String openID){
+    public Result find(String openID){
         List<Order> orders = orderDao.findAllOrders(openID);
-        return new ListResult(true, orders);
+        return new Result(true, JSONArray.fromObject(orders, orderJsonConfig));
     }
 
     public Result findState(String state){
@@ -96,8 +99,9 @@ public class OrderService {
         return new Result(true, JSONArray.fromObject(orders, orderJsonConfig));
     }
 
-    public List<Order> find(String openID, String state){
-        return orderDao.find(openID, "state", state, Order.class);
+    public Result find(String openID, String state){
+        List<Order> orders = orderDao.find(openID, "state", state, Order.class);
+        return new Result(true, JSONArray.fromObject(orders, orderJsonConfig));
     }
 
     public OrderDao getOrderDao() {
