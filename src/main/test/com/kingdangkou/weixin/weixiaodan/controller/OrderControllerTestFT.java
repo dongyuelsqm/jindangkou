@@ -36,7 +36,9 @@ public class OrderControllerTestFT extends TestBase<OrderController> {
 
     @Test
     public void testFindSingleState() throws Exception {
-
+        ResultActions resultActions = mockMvc.perform(get("/website/list/state").
+                param("state", "2")).andDo(print());
+        resultActions.andExpect(status().isOk());
     }
 
     @Test

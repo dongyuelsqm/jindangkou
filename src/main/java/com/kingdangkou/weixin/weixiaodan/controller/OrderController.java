@@ -21,7 +21,6 @@ import java.util.List;
  * Created by dongy on 2016-11-13.
  */
 @Controller
-@RequestMapping("/order")
 public class OrderController {
 
     @Autowired
@@ -35,7 +34,7 @@ public class OrderController {
         response.getWriter().print(JSONArray.fromObject(result, orderJsonConfig));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/add")
+    @RequestMapping(method = RequestMethod.POST, value = "/order/add")
     public void createOrder(@RequestParam("openID") String openID,
                             @RequestParam("sub_orders") String subOrders,
                             @RequestParam("address_id") String address_id,
@@ -44,19 +43,19 @@ public class OrderController {
         response.getWriter().print(result);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/update")
+    @RequestMapping(method = RequestMethod.POST, value = "/order/update")
     public void update(@RequestParam("id") int id, @RequestParam("newState") String newState, HttpServletResponse response) throws IOException {
         Result result = orderService.updateState(id, newState);
         response.getWriter().print(result);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/order/list/state")
+    @RequestMapping(method = RequestMethod.GET, value = "/website/list/state")
     public void findSingleState(@RequestParam("state") String state, HttpServletResponse response) throws IOException {
-        ListResult listResult = orderService.findState(state);
-        response.getWriter().print(listResult);
+        Result result = orderService.findState(state);
+        response.getWriter().print(result);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/website/state")
+    @RequestMapping(method = RequestMethod.GET, value = "/list/state")
     public void listOrders(@RequestParam("openID") String openID,
                            @RequestParam("State") String state, HttpServletResponse response) throws IOException {
         List<Order> orders = orderService.find(openID, state);

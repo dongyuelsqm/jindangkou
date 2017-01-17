@@ -7,6 +7,7 @@ import com.kingdangkou.weixin.weixiaodan.model.Failure;
 import com.kingdangkou.weixin.weixiaodan.model.ListResult;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
+import com.kingdangkou.weixin.weixiaodan.utils.configs.OrderJsonConfig;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.util.Set;
  */
 @Service
 public class OrderService {
+    @Autowired
+    private OrderJsonConfig orderJsonConfig;
     @Autowired
     private StorageDao storageDao;
     @Autowired
@@ -88,9 +91,9 @@ public class OrderService {
         return new ListResult(true, orders);
     }
 
-    public ListResult findState(String state){
+    public Result findState(String state){
         List<Order> orders = orderDao.listOrdersByState(state);
-        return new ListResult(true, orders);
+        return new Result(true, JSONArray.fromObject(orders, orderJsonConfig));
     }
 
     public List<Order> find(String openID, String state){
