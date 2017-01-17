@@ -28,7 +28,10 @@ public class OrderControllerTestFT extends TestBase<OrderController> {
 
     @Test
     public void testUpdate() throws Exception {
-
+        ResultActions resultActions = mockMvc.perform(post("/order/update").
+                param("id", "2").
+                param("newState", "2")).andDo(print());
+        resultActions.andExpect(status().isOk());
     }
 
     @Test

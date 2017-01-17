@@ -105,15 +105,14 @@ public class OrderService {
         this.orderDao = orderDao;
     }
 
-    public Result updateState(String id, String newState){
+    public Result updateState(int id, String newState){
         if (OrderStateEnum.getEnum(Integer.valueOf(newState)) == null) return new Failure("badValue");
         updatePersistence(id, Integer.valueOf(newState));
         return new Success();
     }
 
-    private void updatePersistence(String id, int newState) {
-        Order order = orderDao.getOrder(id);
-        order.setState(newState);
-        orderDao.update(order);
+    private Result updatePersistence(int id, int newState) {
+        orderDao.updateState(id, newState);
+        return new Success();
     }
 }
