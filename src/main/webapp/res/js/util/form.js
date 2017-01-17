@@ -68,8 +68,11 @@ define(function(require, exports, module){
 			
 			return this;
 		},
+		getDom: function(){
+            return this.$box;
+		},
 		getStatus: function(){
-			return this.$('.checkbox').prop('checked');
+			return this.$box.prop('checked');
 		}
 	});
     

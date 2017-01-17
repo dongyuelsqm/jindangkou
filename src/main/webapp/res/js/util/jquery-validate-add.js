@@ -20,7 +20,7 @@ define(function(require) {
         return this.optional(element) || patt.test(value);
     }, '手机号码格式不正确');
     jQuery.validator.addMethod('contactNum', function(value, element) {
-        var patt = /\d{11}|^\d{7,8}$|^\d{7,8}-\d{3,4}$|^\d{3,4}-\d{7,8}-\d{3,4}$|^\d{3,4}-\d{7,8}$/;
+        var patt = /^[1][3,4,5,7,8][0-9]{9}$|^\d{7,8}$|^\d{7,8}-\d{3,4}$|^\d{3,4}-\d{7,8}-\d{3,4}$|^\d{3,4}-\d{7,8}$/;
         return this.optional(element) || patt.test(value);
     }, '联系号码格式不正确');
     jQuery.validator.addMethod('illegalCharacter', function(value, element) {

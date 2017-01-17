@@ -1,9 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="../common/taglibs.jsp"%>
 <%@ include file="../common/upper-part.jsp"%>
-<style>
-	.table td img{height: 50px; margin-right: 10px; width: 50px;}
-</style>
 <h1 class="content-title">商品列表</h1>
 <div id="table-wrapper" class="table-wrapper block-body">
 	<div class="table-operation clearfix" id="search-box">

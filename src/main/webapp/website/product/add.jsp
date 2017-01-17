@@ -38,25 +38,6 @@
             </select>
         </div>
     </div>
-    <!--
-    <div class="row">
-        <label class="col-md-3 control-label">尺码</label>
-        <div class="col-md-5">
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" value="xs"/> xs
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" value="s"/> s
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" value="m"/> m
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" value="x"/> x
-            </span>
-        </div>
-    </div>
-    -->
     <div class="row">
         <label class="col-md-3 control-label">颜色<span class="required">*</span></label>
         <div class="col-md-5">
@@ -80,6 +61,32 @@
             </span>
             <span class="checkbox-inline">
                 <input type="checkbox" name="color" role="color" value="purple"/> 紫色
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <label class="col-md-3 control-label">尺码</label>
+        <div class="col-md-5">
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="xs"/> xs
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="s"/> s
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="m"/> m
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="x"/> x
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="xl"/> xl
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="xxl"/> xxl
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="xxxl"/> xxxl
             </span>
         </div>
     </div>
@@ -139,17 +146,16 @@
 <script type="text/html" id="tmpl-inventoryItem">
     <li data-color="blue" id="inventory-{{colorCode}}">
         <label class="col-md-2">{{colorName}}：</label>
-        <div class="col-md-10">
-            <div class="col-md-3">SX: <input type="text" role="quantity" data-size="sx" class="input-icon input-icon-count" placeholder="" value=""/></div>
-            <div class="col-md-3">S: <input type="text" role="quantity" data-size="s" class="input-icon input-icon-count" placeholder="" value=""/></div>
-            <div class="col-md-3">M: <input type="text" role="quantity"  data-size="m" class="input-icon input-icon-count" placeholder="" value=""/></div>
-            <div class="col-md-3">L: <input type="text" role="quantity"  data-size="l" class="input-icon input-icon-count" placeholder="" value=""/></div>
-            <div class="col-md-3">XL: <input type="text" role="quantity" data-size="xl" class="input-icon input-icon-count" placeholder="" value=""/></div>
-            <div class="col-md-3">XXL: <input type="text" role="quantity" data-size="xxl" class="input-icon input-icon-count" placeholder="" value=""/></div>
-            <div class="col-md-3">XXXL: <input type="text" role="quantity" data-size="xxxl" class="input-icon input-icon-count" placeholder="" value=""/></div>
-        </div>
+        <div class="col-md-10 inventory-size"></div>
     </li>
 </script>
+
+<script type="text/html" id="tmpl-sizeItem">
+    <div class="col-md-3 inventory-{{sizeCode}}">
+        {{sizeCode}}: <input type="text" role="quantity" data-size="{{sizeCode}}" class="input-icon input-icon-count" placeholder="" value=""/>
+    </div>
+</script>
+
 <script type="text/javascript">
     seajs.use('module/product/add', function(mod){
         mod.run();

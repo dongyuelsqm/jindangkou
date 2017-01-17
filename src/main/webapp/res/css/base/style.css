@@ -157,8 +157,9 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 
 .table > tbody > tr > td{vertical-align: middle;}        
 .table > tbody > tr > td > div{cursor: pointer; overflow: hidden; text-overflow: ellipsis; vertical-align: text-top; white-space: nowrap;}
-.table > tbody > tr > td a{color: #a94442;}
-	.table > tbody > tr > td a:hover{color: #ea3527;}
+.table > tbody > tr > td a{color: #ea3527;}
+	.table > tbody > tr > td a:hover{color: #a94442;}
+.table > tbody > tr > td img{height: 50px; margin-right: 10px; width: 50px;}
 
 th > .order{background-image: url(./img/order-arrow.png); background-repeat: no-repeat; background-position-y: center; background-position-x: 0; display: inline-block; height: 16px; vertical-align: middle; width: 10px;}
 	th > .order-desc{background-position-x: -10px;}
@@ -178,7 +179,7 @@ th > .order{background-image: url(./img/order-arrow.png); background-repeat: no-
 .form > .row { line-height: 30px; margin-bottom: 10px; margin-top: 10px; position: relative;}
     .form .control-label{font-weight: normal; line-height: 30px; text-align: right;}
     	.form .form-control-static{padding-top: 0; padding-bottom: 0;}
-	    .form .input-group-addon{background: #fff; border-radius: 0; font-size: 15px;}
+	    /*.form .input-group-addon{background: #fff; border-radius: 0; font-size: 15px;}*/
 	    .form .form-control{background: #fff; border-radius: 0; display: inline-block;}
 	    .form .form-control.error{border-color: #ea3527; color: #ea3527;}
         .form .verify-img{height: 30px; vertical-align: middle; }
