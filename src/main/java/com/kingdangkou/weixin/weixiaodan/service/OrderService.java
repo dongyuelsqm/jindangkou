@@ -1,11 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
-import com.kingdangkou.weixin.weixiaodan.dao.AddressDao;
-import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
-import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
-import com.kingdangkou.weixin.weixiaodan.dao.StorageDao;
-import com.kingdangkou.weixin.weixiaodan.entity.Order;
-import com.kingdangkou.weixin.weixiaodan.entity.SubOrder;
+import com.kingdangkou.weixin.weixiaodan.dao.*;
+import com.kingdangkou.weixin.weixiaodan.entity.*;
 import com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum;
 import com.kingdangkou.weixin.weixiaodan.model.Failure;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
@@ -16,6 +12,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,6 +34,10 @@ public class OrderService {
 
     @Autowired
     private ProductDao productDao;
+    @Autowired
+    private ColorDao colorDao;
+    @Autowired
+    private SizeDao sizeDao;
 
     public OrderService() {}
 
@@ -58,29 +59,26 @@ public class OrderService {
     private Set<SubOrder> convertToSubOrders(String items, Order order) {
         Set<SubOrder> subOrders = new HashSet<SubOrder>();
         JSONArray array = JSONArray.fromObject(items);
+        HashMap<Integer, ColorEntity> colors = colorDao.getColorMaps();
+        HashMap<Integer, SizeEntity> sizes = sizeDao.getMap();
         for(Object obj: array){
-            SubOrder entity = convertToEntity(order, (JSONObject) obj);
-            subOrders.add(entity);
+            int color_id = Integer.valueOf(((JSONObject) obj).get("color").toString());
+            int size_id = Integer.valueOf(((JSONObject) obj).get("size").toString());
+            Integer number = Integer.valueOf(((JSONObject) obj).get("number").toString());
+            SubOrder subOrder = new SubOrder(order, colors.get(color_id), sizes.get(size_id), number);
+            subOrders.add(subOrder);
         }
         return subOrders;
     }
 
-    private SubOrder convertToEntity(Order order, JSONObject obj) {
-        SubOrder subOrder = new SubOrder(order);
-        subOrder.setNumber(Integer.valueOf(obj.get("number").toString()));
-        subOrder.setColor(obj.get("color").toString());
-        subOrder.setSize(Integer.valueOf(obj.get("size").toString()));
-        subOrder.setProductEntity(productDao.get(obj.get("product_id").toString()));
-        return subOrder;
-    }
-
     public void adjustProduct(Order obj){
         for (SubOrder subOrder: obj.getSubOrders()){
-            String product_id = subOrder.getProductEntity().getId();
-            String size = String.valueOf(subOrder.getSize());
-            String color = subOrder.getColor();
             int sold = subOrder.getNumber();
-            storageDao.update(product_id, color, size, sold);
+            ProductEntity productEntity = subOrder.getProductEntity();
+            ColorEntity color = subOrder.getColor();
+            SizeEntity size = subOrder.getSize();
+
+            storageDao.update(productEntity.getId(), color.getId(), size.getId(), sold);
         }
     }
 

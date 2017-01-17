@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "products")
 public class ProductEntity {
-    private String id;
+    private int id;
     private String name;
     private String description;
     private float price;
@@ -46,12 +46,12 @@ public class ProductEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public String getId() {
+    public int getId() {
 
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -187,7 +187,7 @@ public class ProductEntity {
 
         ProductEntity that = (ProductEntity) o;
 
-        return id.equals(that.id);
+        return id == that.id;
     }
 
     @Override

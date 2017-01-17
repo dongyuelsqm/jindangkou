@@ -24,13 +24,21 @@ public class SubOrder {
     @Column(name = "number")
     private int number;
 
-    @Column(name = "size_id")
-    private int size;
+    @ManyToOne(targetEntity = SizeEntity.class)
+    @JoinColumn(name = "size_id", referencedColumnName = "id", nullable = false)
+    private SizeEntity size;
 
-    @Column(name = "color_id")
-    private String color;
+    @ManyToOne(targetEntity = ColorEntity.class)
+    @JoinColumn(name = "color_id", referencedColumnName = "id", nullable = false)
+    private ColorEntity color;
 
-    public SubOrder() {
+    public SubOrder() {}
+
+    public SubOrder(Order order, ColorEntity colorEntity, SizeEntity sizeEntity, Integer number) {
+        this.order = order;
+        this.color = colorEntity;
+        this.size = sizeEntity;
+        this.number = number;
     }
 
     public SubOrder(Order order) {
@@ -69,19 +77,19 @@ public class SubOrder {
         this.productEntity = productEntity;
     }
 
-    public int getSize() {
+    public SizeEntity getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(SizeEntity size) {
         this.size = size;
     }
 
-    public String getColor() {
+    public ColorEntity getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(ColorEntity color) {
         this.color = color;
     }
 }
