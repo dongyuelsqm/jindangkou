@@ -27,7 +27,9 @@ public class Order {
 
     private Set<SubOrder> subOrders = new HashSet<SubOrder>();
 
-    public Order() {}
+    public Order() {
+        date = new Date();
+    }
 
     public Order(String openID) {
         this.openID = openID;
@@ -105,6 +107,7 @@ public class Order {
     }
 
     @OneToMany(targetEntity = SubOrder.class, mappedBy = "order")
+
     public Set<SubOrder> getSubOrders() {
         return subOrders;
     }

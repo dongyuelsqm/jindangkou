@@ -13,7 +13,7 @@ public class SubOrder {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne(targetEntity = Order.class)
+    @ManyToOne(targetEntity = Order.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     private Order order;
 
@@ -32,10 +32,9 @@ public class SubOrder {
     @JoinColumn(name = "color_id", referencedColumnName = "id", nullable = false)
     private ColorEntity color;
 
-    public SubOrder() {}
-
-    public SubOrder(Order order, ColorEntity colorEntity, SizeEntity sizeEntity, Integer number) {
+    public SubOrder(Order order, ProductEntity productEntity, ColorEntity colorEntity, SizeEntity sizeEntity, Integer number) {
         this.order = order;
+        this.productEntity = productEntity;
         this.color = colorEntity;
         this.size = sizeEntity;
         this.number = number;

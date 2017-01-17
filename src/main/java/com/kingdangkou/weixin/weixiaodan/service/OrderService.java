@@ -38,6 +38,8 @@ public class OrderService {
     private ColorDao colorDao;
     @Autowired
     private SizeDao sizeDao;
+    @Autowired
+    private SubOrderEntityDao subOrderEntityDao;
 
     public OrderService() {}
 
@@ -52,7 +54,7 @@ public class OrderService {
         order.setSubOrders(convertToSubOrders(items, order));
 
         orderDao.save(order);
-        adjustProduct(order);
+        adjustProduct(order.getSubOrders());
         return new Success();
     }
 
@@ -62,17 +64,19 @@ public class OrderService {
         HashMap<Integer, ColorEntity> colors = colorDao.getColorMaps();
         HashMap<Integer, SizeEntity> sizes = sizeDao.getMap();
         for(Object obj: array){
+            ProductEntity productEntity = productDao.get(((JSONObject) obj).get("product_id").toString());
             int color_id = Integer.valueOf(((JSONObject) obj).get("color").toString());
             int size_id = Integer.valueOf(((JSONObject) obj).get("size").toString());
             Integer number = Integer.valueOf(((JSONObject) obj).get("number").toString());
-            SubOrder subOrder = new SubOrder(order, colors.get(color_id), sizes.get(size_id), number);
+            SubOrder subOrder = new SubOrder(order, productEntity, colors.get(color_id), sizes.get(size_id), number);
+            subOrderEntityDao.save(subOrder);
             subOrders.add(subOrder);
         }
         return subOrders;
     }
 
-    public void adjustProduct(Order obj){
-        for (SubOrder subOrder: obj.getSubOrders()){
+    public void adjustProduct(Set<SubOrder> subOrders){
+        for (SubOrder subOrder: subOrders){
             int sold = subOrder.getNumber();
             ProductEntity productEntity = subOrder.getProductEntity();
             ColorEntity color = subOrder.getColor();
