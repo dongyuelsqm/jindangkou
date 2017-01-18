@@ -29,9 +29,7 @@ public class FileHandler extends HttpServlet {
     @Autowired
     private PathHandler pathHandler;
     public FileHandler() {
-//        basePath = pathHandler.getWebInfoPath();
-//        realPath = basePath + "upload" + File.separator;
-//        tempPath = basePath + "temp" + File.separator;
+
     }
 
     public void makeDir(String path){
@@ -42,6 +40,9 @@ public class FileHandler extends HttpServlet {
 
 
     public ArrayList<String> saveFile(HttpServletRequest request) throws IOException, FileUploadException {
+        basePath = pathHandler.getWebInfoPath();
+        realPath = basePath + "upload" + File.separator;
+        tempPath = basePath + "temp" + File.separator;
         DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
         diskFileItemFactory.setSizeThreshold(1024 * 100);
         diskFileItemFactory.setRepository(new File(tempPath));
@@ -109,6 +110,10 @@ public class FileHandler extends HttpServlet {
     }
 
     public void moveFile(ArrayList<String> files, String target){
+        basePath = pathHandler.getWebInfoPath();
+        realPath = basePath + "upload" + File.separator;
+        tempPath = basePath + "temp" + File.separator;
+
         String realPath = basePath + "files" + File.separator + target + File.separator;
 
         File path = new File(realPath);
