@@ -8,29 +8,23 @@ import javax.persistence.*;
 @Entity
 @Table(name = "sub_orders")
 public class SubOrder {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     private int id;
 
-    @ManyToOne(targetEntity = Order.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     private Order order;
 
-    @OneToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "id", unique = true)
+
     private ProductEntity productEntity;
 
-    @Column(name = "number")
+
     private int number;
 
-    @ManyToOne(targetEntity = SizeEntity.class)
-    @JoinColumn(name = "size_id", referencedColumnName = "id", nullable = false)
     private SizeEntity size;
 
-    @ManyToOne(targetEntity = ColorEntity.class)
-    @JoinColumn(name = "color_id", referencedColumnName = "id", nullable = false)
+
     private ColorEntity color;
+
+    public SubOrder() {}
 
     public SubOrder(Order order, ProductEntity productEntity, ColorEntity colorEntity, SizeEntity sizeEntity, Integer number) {
         this.order = order;
@@ -44,6 +38,9 @@ public class SubOrder {
         this.order = order;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -52,6 +49,7 @@ public class SubOrder {
         this.id = id;
     }
 
+    @Column(name = "number")
     public int getNumber() {
         return number;
     }
@@ -60,6 +58,8 @@ public class SubOrder {
         this.number = number;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     public Order getOrder() {
         return order;
     }
@@ -68,6 +68,8 @@ public class SubOrder {
         this.order = order;
     }
 
+    @OneToOne
+    @JoinColumn(name = "product_id",referencedColumnName = "id", unique = true)
     public ProductEntity getProductEntity() {
         return productEntity;
     }
@@ -76,6 +78,8 @@ public class SubOrder {
         this.productEntity = productEntity;
     }
 
+    @ManyToOne(targetEntity = SizeEntity.class)
+    @JoinColumn(name = "size_id", referencedColumnName = "id", nullable = false)
     public SizeEntity getSize() {
         return size;
     }
@@ -84,6 +88,8 @@ public class SubOrder {
         this.size = size;
     }
 
+    @ManyToOne(targetEntity = ColorEntity.class)
+    @JoinColumn(name = "color_id", referencedColumnName = "id", nullable = false)
     public ColorEntity getColor() {
         return color;
     }

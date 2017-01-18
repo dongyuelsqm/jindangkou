@@ -97,7 +97,7 @@ public class OrderService {
     }
 
     public Result findState(String state){
-        List<Order> orders = orderDao.listOrdersByState(state);
+        List<Order> orders = orderDao.find("state", state, Order.class);
         return new Result(true, JSONArray.fromObject(orders, orderJsonConfig));
     }
 

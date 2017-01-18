@@ -24,7 +24,7 @@ public class Order {
     private String ship_id;
     private int state = NOT_PAY.getValue();
     private Address address;
-
+    private String expressNumber;
     private Set<SubOrder> subOrders = new HashSet<SubOrder>();
 
     public Order() {
@@ -107,12 +107,20 @@ public class Order {
     }
 
     @OneToMany(targetEntity = SubOrder.class, mappedBy = "order")
-
     public Set<SubOrder> getSubOrders() {
         return subOrders;
     }
 
     public void setSubOrders(Set<SubOrder> subOrders) {
         this.subOrders = subOrders;
+    }
+
+    @Column(name = "express_number")
+    public String getExpressNumber() {
+        return expressNumber;
+    }
+
+    public void setExpressNumber(String expressNumber) {
+        this.expressNumber = expressNumber;
     }
 }
