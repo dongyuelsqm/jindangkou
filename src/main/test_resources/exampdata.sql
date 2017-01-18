@@ -15,3 +15,4 @@ alter table product_label_links add column label_id int;
 alter table product_label_links drop column label;
 insert into product_label_links (product_id, label_id) values (1, 1);
 insert into sub_orders (product_id, order_id, color_id, size_id, number) values (1, 1, 1, 1, 1);
+INSERT INTO customers(open_id, nickname, sex, province, city, country, headimgurl, privilege , unionid, access_time)VALUES (1, 'nickname', 'hebei', 'cangzhou', 'China', 'd', 'ddd', '2016-1-1 00:00:00');

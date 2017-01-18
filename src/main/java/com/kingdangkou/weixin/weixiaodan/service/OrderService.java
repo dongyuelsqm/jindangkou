@@ -41,6 +41,8 @@ public class OrderService {
     @Autowired
     private SubOrderEntityDao subOrderEntityDao;
 
+    @Autowired
+    private CustomerDao customerDao;
     public OrderService() {}
 
     public OrderService(OrderDao orderDao) {
@@ -49,7 +51,8 @@ public class OrderService {
 
     public Result save(String openID, String items, String address_id){
         Order order = new Order();
-        order.setOpenID(openID);
+        CustomerEntity customer = customerDao.get(CustomerEntity.class, openID, "openID");
+        order.setCustomerEntity(customer);
         order.setAddress(addressDao.get(address_id));
         order.setSubOrders(convertToSubOrders(items, order));
         float total = calculateMethodPrice(order);

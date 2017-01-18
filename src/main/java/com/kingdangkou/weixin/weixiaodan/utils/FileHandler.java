@@ -29,9 +29,9 @@ public class FileHandler extends HttpServlet {
     @Autowired
     private PathHandler pathHandler;
     public FileHandler() {
-        basePath = pathHandler.getWebInfoPath();
-        realPath = basePath + "upload" + File.separator;
-        tempPath = basePath + "temp" + File.separator;
+//        basePath = pathHandler.getWebInfoPath();
+//        realPath = basePath + "upload" + File.separator;
+//        tempPath = basePath + "temp" + File.separator;
     }
 
     public void makeDir(String path){

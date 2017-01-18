@@ -13,9 +13,4 @@ public class PathHandler {
         System.out.println(substring);
         return substring;
     }
-
-    public static void main(String[] args) {
-        PathHandler pathHandler = new PathHandler();
-        System.out.println(pathHandler.getWebInfoPath());
-    }
 }

@@ -21,7 +21,7 @@ public class Order {
     private float discount;
     private float method_price;
     private float actural_price;
-    private String openID;
+    private CustomerEntity customerEntity;
     private Date date;
     private String ship_id;
     private int state = NOT_PAY.getValue();
@@ -31,12 +31,6 @@ public class Order {
 
     public Order() {
         date = new Date();
-    }
-
-    public Order(String openID) {
-        this.openID = openID;
-        date = new Date();
-        state = 0;
     }
 
     @Id
@@ -88,14 +82,14 @@ public class Order {
         this.discount = discount;
     }
 
-    @Column(name = "open_id")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public String getOpenID() {
-        return openID;
+    @ManyToOne(targetEntity = CustomerEntity.class)
+    @JoinColumn(name = "open_id", referencedColumnName = "open_id", nullable = false)
+    public CustomerEntity getCustomerEntity() {
+        return customerEntity;
     }
 
-    public void setOpenID(String openID) {
-        this.openID = openID;
+    public void setCustomerEntity(CustomerEntity customerEntity) {
+        this.customerEntity = customerEntity;
     }
 
     @Column(name = "deal_date")
