@@ -40,4 +40,13 @@ public class OrderDao extends BaseDaoHibernate4<Order>{
     public List<Order> listOrdersByState(String state){
         return find("state", state, Order.class);
     }
+
+    public List<Order> getOrdersByDate(String begin, String end) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        List list = session.createQuery("from Order where date between :startDate and :endDate").
+                setString("startDate", begin).setString("endDate", end).list();
+        transaction.commit();
+        return list;
+    }
 }

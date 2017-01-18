@@ -133,4 +133,9 @@ public class OrderService {
         orderDao.updateState(id, newState);
         return new Success();
     }
+
+    public Result getOrderByDate(String begin, String end) {
+        List<Order> ordersByDate = orderDao.getOrdersByDate(begin, end);
+        return new Result(true, JSONArray.fromObject(ordersByDate, orderJsonConfig));
+    }
 }
