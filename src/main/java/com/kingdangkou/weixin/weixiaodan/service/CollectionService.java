@@ -6,6 +6,8 @@ import com.kingdangkou.weixin.weixiaodan.entity.CollectionEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
+import com.kingdangkou.weixin.weixiaodan.utils.configs.ProductStorageConfig;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import java.util.List;
  */
 @Service
 public class CollectionService {
+    @Autowired
+    private ProductStorageConfig config;
     @Autowired
     private CollectionDao collectionDao;
 
@@ -30,8 +34,9 @@ public class CollectionService {
         return new Success();
     }
 
-    public List<CollectionEntity> get(String openID) {
-        return collectionDao.find(openID);
+    public Result get(String openID) {
+        List<CollectionEntity> collectionEntities = collectionDao.find(openID);
+        return new Result(true, JSONArray.fromObject(collectionEntities, config));
     }
 
     public Result del(String id) {

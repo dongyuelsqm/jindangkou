@@ -54,11 +54,11 @@ public class OrderService {
         CustomerEntity customer = customerDao.get(CustomerEntity.class, openID, "openID");
         order.setCustomerEntity(customer);
         order.setAddress(addressDao.get(address_id));
+        orderDao.save(order);
         order.setSubOrders(convertToSubOrders(items, order));
         float total = calculateMethodPrice(order);
         order.setMethod_price(total);
         order.setActural_price(total);
-        orderDao.save(order);
         adjustStorage(order.getSubOrders());
         return new Success();
     }
