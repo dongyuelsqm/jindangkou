@@ -52,10 +52,20 @@ public class OrderService {
         order.setOpenID(openID);
         order.setAddress(addressDao.get(address_id));
         order.setSubOrders(convertToSubOrders(items, order));
-
+        float total = calculateMethodPrice(order);
+        order.setMethod_price(total);
+        order.setActural_price(total);
         orderDao.save(order);
-        adjustProduct(order.getSubOrders());
+        adjustStorage(order.getSubOrders());
         return new Success();
+    }
+
+    private float calculateMethodPrice(Order order) {
+        float total = 0;
+        for (SubOrder subOrder: order.getSubOrders()){
+            total += subOrder.getNumber() * subOrder.getProductEntity().getPrice();
+        }
+        return total;
     }
 
     private Set<SubOrder> convertToSubOrders(String items, Order order) {
@@ -75,13 +85,12 @@ public class OrderService {
         return subOrders;
     }
 
-    public void adjustProduct(Set<SubOrder> subOrders){
+    public void adjustStorage(Set<SubOrder> subOrders){
         for (SubOrder subOrder: subOrders){
             int sold = subOrder.getNumber();
             ProductEntity productEntity = subOrder.getProductEntity();
             ColorEntity color = subOrder.getColor();
             SizeEntity size = subOrder.getSize();
-
             storageDao.update(productEntity.getId(), color.getId(), size.getId(), sold);
         }
     }

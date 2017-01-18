@@ -19,6 +19,8 @@ import static com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum.NOT_PAY;
 public class Order {
     private int id;
     private float discount;
+    private float method_price;
+    private float actural_price;
     private String openID;
     private Date date;
     private String ship_id;
@@ -57,6 +59,24 @@ public class Order {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    @Column(name = "method_price")
+    public float getMethod_price() {
+        return method_price;
+    }
+
+    public void setMethod_price(float method_price) {
+        this.method_price = method_price;
+    }
+
+    @Column(name = "actural_price")
+    public float getActural_price() {
+        return actural_price;
+    }
+
+    public void setActural_price(float actural_price) {
+        this.actural_price = actural_price;
     }
 
     @Column(name = "discount")
