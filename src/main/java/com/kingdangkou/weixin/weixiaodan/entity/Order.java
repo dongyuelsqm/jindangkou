@@ -19,20 +19,18 @@ import static com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum.NOT_PAY;
 public class Order {
     private int id;
     private float discount;
-    private String openID;
+    private float method_price;
+    private float actural_price;
+    private CustomerEntity customerEntity;
     private Date date;
     private String ship_id;
     private int state = NOT_PAY.getValue();
     private Address address;
-
+    private String expressNumber;
     private Set<SubOrder> subOrders = new HashSet<SubOrder>();
 
-    public Order() {}
-
-    public Order(String openID) {
-        this.openID = openID;
+    public Order() {
         date = new Date();
-        state = 0;
     }
 
     @Id
@@ -57,6 +55,24 @@ public class Order {
         this.address = address;
     }
 
+    @Column(name = "method_price")
+    public float getMethod_price() {
+        return method_price;
+    }
+
+    public void setMethod_price(float method_price) {
+        this.method_price = method_price;
+    }
+
+    @Column(name = "actural_price")
+    public float getActural_price() {
+        return actural_price;
+    }
+
+    public void setActural_price(float actural_price) {
+        this.actural_price = actural_price;
+    }
+
     @Column(name = "discount")
     public float getDiscount() {
         return discount;
@@ -66,14 +82,14 @@ public class Order {
         this.discount = discount;
     }
 
-    @Column(name = "open_id")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public String getOpenID() {
-        return openID;
+    @ManyToOne(targetEntity = CustomerEntity.class)
+    @JoinColumn(name = "open_id", referencedColumnName = "open_id", nullable = false)
+    public CustomerEntity getCustomerEntity() {
+        return customerEntity;
     }
 
-    public void setOpenID(String openID) {
-        this.openID = openID;
+    public void setCustomerEntity(CustomerEntity customerEntity) {
+        this.customerEntity = customerEntity;
     }
 
     @Column(name = "deal_date")
@@ -111,5 +127,14 @@ public class Order {
 
     public void setSubOrders(Set<SubOrder> subOrders) {
         this.subOrders = subOrders;
+    }
+
+    @Column(name = "express_number")
+    public String getExpressNumber() {
+        return expressNumber;
+    }
+
+    public void setExpressNumber(String expressNumber) {
+        this.expressNumber = expressNumber;
     }
 }

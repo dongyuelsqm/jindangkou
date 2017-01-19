@@ -77,8 +77,9 @@ public class ProductService {
 
     public Result save(ProductEntity productEntity){
         productDao.save(productEntity);
-        moveFiles(productEntity.getPictures(), productEntity.getId());
-        moveFiles(productEntity.getVideos(), productEntity.getId());
+        String id = String.valueOf(productEntity.getId());
+        moveFiles(productEntity.getPictures(), id);
+        moveFiles(productEntity.getVideos(), id);
         return new Success();
     }
 
@@ -108,8 +109,9 @@ public class ProductService {
         productEntity.setVideos(parseToString(videos));
 
         productDao.save(productEntity);
-        moveFiles(pictures, productEntity.getId());
-        moveFiles(videos, productEntity.getId());
+        String id = String.valueOf(productEntity.getId());
+        moveFiles(pictures, id);
+        moveFiles(videos, id);
         return new Success();
     }
 

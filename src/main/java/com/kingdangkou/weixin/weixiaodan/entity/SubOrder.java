@@ -8,35 +8,39 @@ import javax.persistence.*;
 @Entity
 @Table(name = "sub_orders")
 public class SubOrder {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
     private int id;
 
-    @ManyToOne(targetEntity = Order.class)
-    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     private Order order;
 
-    @OneToOne
-    @JoinColumn(name = "product_id",referencedColumnName = "id", unique = true)
+
     private ProductEntity productEntity;
 
-    @Column(name = "number")
+
     private int number;
 
-    @Column(name = "size_id")
-    private int size;
+    private SizeEntity size;
 
-    @Column(name = "color_id")
-    private String color;
 
-    public SubOrder() {
+    private ColorEntity color;
+
+    public SubOrder() {}
+
+    public SubOrder(Order order, ProductEntity productEntity, ColorEntity colorEntity, SizeEntity sizeEntity, Integer number) {
+        this.order = order;
+        this.productEntity = productEntity;
+        this.color = colorEntity;
+        this.size = sizeEntity;
+        this.number = number;
     }
 
     public SubOrder(Order order) {
         this.order = order;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -45,6 +49,7 @@ public class SubOrder {
         this.id = id;
     }
 
+    @Column(name = "number")
     public int getNumber() {
         return number;
     }
@@ -53,6 +58,8 @@ public class SubOrder {
         this.number = number;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id", nullable = false)
     public Order getOrder() {
         return order;
     }
@@ -61,6 +68,8 @@ public class SubOrder {
         this.order = order;
     }
 
+    @OneToOne
+    @JoinColumn(name = "product_id",referencedColumnName = "id", unique = true)
     public ProductEntity getProductEntity() {
         return productEntity;
     }
@@ -69,19 +78,23 @@ public class SubOrder {
         this.productEntity = productEntity;
     }
 
-    public int getSize() {
+    @ManyToOne(targetEntity = SizeEntity.class)
+    @JoinColumn(name = "size_id", referencedColumnName = "id", nullable = false)
+    public SizeEntity getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(SizeEntity size) {
         this.size = size;
     }
 
-    public String getColor() {
+    @ManyToOne(targetEntity = ColorEntity.class)
+    @JoinColumn(name = "color_id", referencedColumnName = "id", nullable = false)
+    public ColorEntity getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(ColorEntity color) {
         this.color = color;
     }
 }

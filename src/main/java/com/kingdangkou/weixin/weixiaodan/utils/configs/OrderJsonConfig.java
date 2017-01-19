@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderJsonConfig extends JsonConfig{
     public OrderJsonConfig() {
-        setExcludes(new String[]{"order", "product"});
+        setExcludes(new String[]{"order", "storage"});
     }
 }

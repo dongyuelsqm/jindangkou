@@ -1,12 +1,13 @@
 package com.kingdangkou.weixin.weixiaodan.utils;
 
+import com.kingdangkou.weixin.weixiaodan.utils.file.PathHandler;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,43 +26,26 @@ public class FileHandler extends HttpServlet {
     String tempPath;
     String basePath;
 
+    @Autowired
+    private PathHandler pathHandler;
     public FileHandler() {
-        basePath = getWebInfoPath();
-        realPath = basePath + "upload" + File.separator;
-        tempPath = basePath + "temp" + File.separator;
-        File real = new File(realPath);
+
+    }
+
+    public void makeDir(String path){
+        File real = new File(path);
         if (!real.exists()) real.mkdir();
-
-        File temp = new File(tempPath);
-        if (!temp.exists()) real.mkdir();
     }
 
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        basePath = getServletContext().getRealPath("/") + File.separator + "WEB-INF" + File.separator;
-    }
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-
-    }
-
-    private void initFilePath() {
-        realPath = basePath + "upload" + File.separator;
-        tempPath = basePath + "temp" + File.separator;
-    }
 
 
     public ArrayList<String> saveFile(HttpServletRequest request) throws IOException, FileUploadException {
-        basePath = getBaseFile(request) + File.separator + "WEB-INF" + File.separator;
-        initFilePath();
-        File tmpFile = new File(tempPath);
-
+        basePath = pathHandler.getWebInfoPath();
+        realPath = basePath + "upload" + File.separator;
+        tempPath = basePath + "temp" + File.separator;
         DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
         diskFileItemFactory.setSizeThreshold(1024 * 100);
-        diskFileItemFactory.setRepository(tmpFile);
+        diskFileItemFactory.setRepository(new File(tempPath));
 
         ServletFileUpload upload = new ServletFileUpload(diskFileItemFactory);
         upload.setHeaderEncoding("UTF-8");
@@ -126,7 +110,9 @@ public class FileHandler extends HttpServlet {
     }
 
     public void moveFile(ArrayList<String> files, String target){
-        basePath = getWebInfoPath();
+        basePath = pathHandler.getWebInfoPath();
+        realPath = basePath + "upload" + File.separator;
+        tempPath = basePath + "temp" + File.separator;
 
         String realPath = basePath + "files" + File.separator + target + File.separator;
 
@@ -138,12 +124,5 @@ public class FileHandler extends HttpServlet {
             File file = new File(originPath + fileName);
             file.renameTo(new File(realPath + fileName));
         }
-    }
-
-    public String getWebInfoPath(){
-        String path1 = this.getClass().getClassLoader().getResource("").getPath();
-        String substring = path1.substring(0, path1.lastIndexOf("classes"));
-        System.out.println(substring);
-        return substring;
     }
 }
