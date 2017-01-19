@@ -2,7 +2,6 @@ package com.kingdangkou.weixin.weixiaodan.listener;
 
 import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
 import com.kingdangkou.weixin.weixiaodan.utils.file.PathHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -13,10 +12,9 @@ import java.io.File;
  */
 public class InitListener implements ServletContextListener {
 
-    @Autowired
-    private PathHandler pathHandler;
-    @Autowired
-    private FileHandler fileHandler;
+    private PathHandler pathHandler = new PathHandler();
+
+    private FileHandler fileHandler = new FileHandler();
 
     private static final String upload = "upload";
     private static final String files = "files";
