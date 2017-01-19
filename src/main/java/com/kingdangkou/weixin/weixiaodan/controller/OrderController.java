@@ -2,7 +2,6 @@ package com.kingdangkou.weixin.weixiaodan.controller;
 
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.OrderService;
-import com.kingdangkou.weixin.weixiaodan.utils.configs.OrderJsonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +18,6 @@ import java.sql.SQLException;
 @Controller
 public class OrderController {
 
-    @Autowired
-    private OrderJsonConfig orderJsonConfig;
     @Autowired
     private OrderService orderService;
 

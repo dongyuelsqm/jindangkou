@@ -1,9 +1,12 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.dao.CollectionDao;
+import com.kingdangkou.weixin.weixiaodan.dao.CustomerDao;
 import com.kingdangkou.weixin.weixiaodan.dao.ProductDao;
 import com.kingdangkou.weixin.weixiaodan.entity.CollectionEntity;
+import com.kingdangkou.weixin.weixiaodan.entity.CustomerEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
+import com.kingdangkou.weixin.weixiaodan.model.Failure;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.ProductStorageConfig;
@@ -24,6 +27,9 @@ public class CollectionService {
     private CollectionDao collectionDao;
 
     @Autowired
+    private CustomerDao customerDao;
+
+    @Autowired
     private ProductDao productDao;
     public Result add(String product_id, String openID) {
         ProductEntity productEntity = productDao.get(product_id);
@@ -39,7 +45,12 @@ public class CollectionService {
         return new Result(true, JSONArray.fromObject(collectionEntities, config));
     }
 
-    public Result del(String id) {
-        return del(id);
+    public Result del(String id, String openId) {
+        CustomerEntity customerEntity = customerDao.get(CustomerEntity.class, "openID", openId);
+        if (customerEntity == null)
+            return new Failure("bad openId");
+        Object[] ids = JSONArray.fromObject(id).toArray();
+        collectionDao.batchDelete(ids, "CollectionEntity");
+        return new Success();
     }
 }

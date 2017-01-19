@@ -99,4 +99,16 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 		transaction.commit();
 		session.close();
 	}
+
+	public void batchDelete(Object[] ids, String entity){
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "delete from " + entity +" where id = " + ids[0];
+		for (Object id: ids){
+			hql += " or id = " + id;
+		}
+		session.createQuery(hql).executeUpdate();
+		transaction.commit();
+		session.close();
+	}
 }
