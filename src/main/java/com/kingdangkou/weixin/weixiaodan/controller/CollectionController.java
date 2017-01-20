@@ -35,8 +35,8 @@ public class CollectionController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public void del(@RequestParam("ids") String ids, HttpServletResponse response) throws IOException {
-        Result result = collectionService.del(ids);
+    public void del(@RequestParam("ids") String ids, @RequestParam("openID") String openId,  HttpServletResponse response) throws IOException {
+        Result result = collectionService.del(ids, openId);
         response.getWriter().print(JSONObject.fromObject(result));
     }
 

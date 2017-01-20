@@ -2,9 +2,10 @@ package com.kingdangkou.weixin.weixiaodan.controller;
 
 import org.junit.Test;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,16 +21,16 @@ public class CollectionControllerTest extends TestBase<CollectionController>{
     }
 
     @Test
-    public void get() throws Exception {
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/collection/").
+    public void testGet() throws Exception {
+        ResultActions result = mockMvc.perform(get("/collection/").
                 param("openID", "1")).andDo(print());
         result.andExpect(status().isOk());
     }
 
     @Test
     public void del() throws Exception {
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/collection/").
-                param("openID", "1")).andDo(print());
+        ResultActions result = mockMvc.perform(delete("/collection/").
+                param("ids", "[1]").param("openID", "1")).andDo(print());
         result.andExpect(status().isOk());
     }
 
