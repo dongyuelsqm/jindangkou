@@ -20,7 +20,7 @@ public class Order {
     private int id;
     private float discount;
     private float method_price;
-    private float actural_price;
+    private float actual_price;
     private CustomerEntity customerEntity;
     private Date date;
     private String ship_id;
@@ -64,13 +64,13 @@ public class Order {
         this.method_price = method_price;
     }
 
-    @Column(name = "actural_price")
-    public float getActural_price() {
-        return actural_price;
+    @Column(name = "actual_price")
+    public float getActual_price() {
+        return actual_price;
     }
 
-    public void setActural_price(float actural_price) {
-        this.actural_price = actural_price;
+    public void setActual_price(float actural_price) {
+        this.actual_price = actural_price;
     }
 
     @Column(name = "discount")
