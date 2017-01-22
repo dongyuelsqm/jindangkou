@@ -6,8 +6,8 @@
             &copy; 2014-2015 jindangkou 京ICP备05002571号
         </div>
         <div class="link pull-right">
-            <a href="mailto:" title="联系我们"><i class="iconfont">&#xe677;</i></a>
-            <a href="javascript:" title="关注我们" class="attention"><i class="iconfont">&#xe63b;</i></a>
+            <a href="mailto:" title="联系我们"><i class="iconfont icon-faxin-copy"></i></a>
+            <a href="javascript:" title="关注我们" class="attention"><i class="iconfont icon-weixin"></i></a>
         </div>
     </div>
 </div>

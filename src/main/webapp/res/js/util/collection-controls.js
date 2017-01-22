@@ -7,7 +7,10 @@ define(function (require, exports, module) {
     var $ = require('jquery'),
         _ = require('underscore'),
         Backbone = require('backbone'),
-        util = require('util/util');
+        util = require('util/util'),
+        form = require('util/form');
+
+    var SelectView = form.SelectView;
 
     //数据
     /**
@@ -133,7 +136,7 @@ define(function (require, exports, module) {
     //基础视图
     var noDataTemplate = '<span class="no-data">暂无数据</span>',
     	loadingDataTemplate = '<span class="loading">正在请求数据...</span>',
-    	errorDataTemplate = '<span class="error-data">发生错误，请稍后重试</span>';
+    	errorDataTemplate = '<span class="error-data">{{errorMessage}}</span>';
     
     /**
      * 基础视图,提供子类调用基类override的同名方法的方法
@@ -177,6 +180,9 @@ define(function (require, exports, module) {
      * @param {object} options: 配置项
      *  {object} store: CollectionStore 配置项
      *  {string | DOMElement | Sizzle} appendTo: 将视图元素添加到的父元素
+     *  {template} noDataTemplate: 无数据时的模板,不配置时使用默认模板
+     *  {template} errorDataTemplate: 请求出错模板,不配置时使用默认模板
+     *  {template} loadingDataTemplate: loading时的模板,不配置时使用默认模板
      *  {object} itemOption: 该视图子项的配置
     */
     var CollectionView = BaseView.extend({
@@ -187,6 +193,7 @@ define(function (require, exports, module) {
 
             this.errorDataTemplate = options.errorDataTemplate || this.errorDataTemplate || util.render(errorDataTemplate);
             this.loadingDataTemplate = options.loadingDataTemplate || this.loadingDataTemplate || util.render(loadingDataTemplate);
+            this.noDataTemplate = options.noDataTemplate || this.noDataTemplate || util.render(noDataTemplate);
 
             this.$content = this.$el;
             if (options.appendTo) {
@@ -216,11 +223,7 @@ define(function (require, exports, module) {
                 _this.$content.append(elItems);
             }
             else {
-                if (_this.items.length === 0) {
-                    _this.items[0] = new _this.ItemView(_this.itemOption);
-                }
-                _this.items[0].noData(_this.noDataModel || {});
-                _this.$content.append(_this.items[0].el);
+                _this.setTemplateHtml(_this.noDataTemplate(_this.noDataModel));
             }
         },
         setData: function (data) {
@@ -231,7 +234,7 @@ define(function (require, exports, module) {
         	this.store.update();
         },
         loading: function(model, rsp, options){
-        	this.setTemplate(this.loadingDataTemplate(this.noDataModel));
+            this.setTemplateHtml(this.loadingDataTemplate(this.noDataModel));
         	
         	//滚动条 - updata
         	if(!G.isOldIE8()){
@@ -239,27 +242,26 @@ define(function (require, exports, module) {
             }
         },
         error: function(model, rsp, options){
-        	this.setTemplate(this.errorDataTemplate(this.noDataModel));
+            this.setTemplateHtml(this.errorDataTemplate(_.extend({}, {errorMessage: '发生错误，请稍后重试'}, this.noDataModel)));
         },
-        setTemplate: function(html){
-        	var item = new this.ItemView(this.itemOption),
-	    		tmpl = util.render(html);
-	    	item.$el.html(tmpl());
-	    	this.$content.html(item.$el);
+        setTemplateHtml: function(html){
+            if (this.items.length === 0) {
+                this.items[0] = new this.ItemView(this.itemOption);
+            }
+            this.items[0].$el.html(html);
+            this.$content.html(this.items[0].$el);
         }
     });
     /**
      * 集合类子项基础视图
      * @param {object} options: 配置项
      *  {template} template: 模板
-     *  {template} noDataTemplate: 无数据时的模板,不配置时使用默认模板
      *  {object} defaultSetting: 默认设置,render时合并于model
     */
     var ItemView = BaseView.extend({
         initialize: function (options) {
             this._super_initialize(options);
             this.template = options.template;
-            this.noDataTemplate = options.noDataTemplate || this.noDataTemplate || util.render(noDataTemplate);
             this.defaultSetting = options.defaultSetting || {};
         },
         bind: function (model) {

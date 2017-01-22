@@ -114,16 +114,22 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 .radio-inline+.radio-inline{
 	margin-left: 0;
 }
-.checkLabel{background:#fff url(img/checkbox.png) no-repeat -16px 0; cursor:pointer; display:inline-block; height:16px; margin-right:5px; vertical-align:text-top; width:16px;}
-	.checkLabel.checked{background-position: 0 0;}
+.check-label{background:#fff url(img/checkbox.png) no-repeat -16px 0; cursor:pointer; display:inline-block; height:16px; margin-right:5px; vertical-align:text-top; width:16px;}
+	.check-label.checked{background-position: 0 0;}
 	.checkbox-inline{display: inline; font-size: 12px; margin-right: 10px; padding:0;}
-.radioLabel{background:url(img/radio.png) no-repeat -16px 0; cursor:pointer; display:inline-block; height:16px; margin-right:5px; vertical-align:text-top; width:16px;}
-	.radioLabel.selected{background-position: 0 0;}
+.radio-label{background:url(img/radio.png) no-repeat -16px 0; cursor:pointer; display:inline-block; height:16px; margin-right:5px; vertical-align:text-top; width:16px;}
+	.radio-label.selected{background-position: 0 0;}
     .radio-inline{display: inline; font-size: 12px; margin-right: 10px; padding:0;}
 
 /* select */
 /*.select::-ms-expand{display: none;}*/
-.select{height: 26px; width: 125px;}
+.dropdown{display: inline-block; vertical-align: top; width: 150px;}
+	.dropdown .form-control,
+	.dropdown .input-group-addon{background: #fff;}
+	.dropdown .input-group-addon{padding-left: 5px; padding-right: 5px; }
+	.dropdown ul{background: #fff; border: 1px solid #e4e4e4; border-radius: 3px; -webkit-border-radius: 3px; display: none; position: absolute; z-index: 10; }
+		.dropdown ul > li > a{color: #999; cursor: pointer; display: block; font-size: 14px; height: 38px; line-height: 28px; padding: 5px 25px; width: 150px; }
+			.dropdown ul > li > a:hover{background: #f7f7f7;}
 
 /* justify */
 .justify { font-size: 0; text-align: justify; /* ie */ text-align-last: justify; }

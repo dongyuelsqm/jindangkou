@@ -86,20 +86,34 @@
     <div class="row">
         <label class="col-md-3 control-label">运费<span class="required">*</span></label>
         <div class="col-md-5">
-            <select name="postal">
-                <option value="300000">包邮</option>
-                <option value="300001">不包邮</option>
-            </select>
+            <div class="dropdown">
+                <div class="input-group">
+                    <input type="text" id="" readonly class="form-control"  placeholder="" />
+                    <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
+                </div>
+                <input type="hidden" id="" name="postal" />
+                <ul class="ul-dropdown">
+                    <li class="selected"><a href="javascript:" data-val="300000">包邮</a></li>
+                    <li><a href="javascript:" data-val="300001">不包邮</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="row">
         <label class="col-md-3 control-label">交易状态<span class="required">*</span></label>
         <div class="col-md-5">
-            <select name="status">
-                <option value="0">待付款</option>
-                <option value="1">交易成功</option>
-                <option value="2">交易关闭</option>
-            </select>
+            <div class="dropdown">
+                <div class="input-group">
+                    <input type="text" id="" readonly class="form-control"  placeholder="" />
+                    <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
+                </div>
+                <input type="hidden" id="" name="status" />
+                <ul class="ul-dropdown">
+                    <li class="selected"><a href="javascript:" data-val="0">待付款</a></li>
+                    <li><a href="javascript:" data-val="1">交易成功</a></li>
+                    <li><a href="javascript:" data-val="2">交易关闭</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="row">

@@ -31,11 +31,18 @@
     <div class="row">
         <label class="col-md-3 control-label">商品分类<span class="required">*</span></label>
         <div class="col-md-5">
-            <select name="department" >
-                <option value="1">羽绒服</option>
-                <option value="2">呢大衣</option>
-                <option value="3">毛衣</option>
-            </select>
+            <div class="dropdown">
+                <div class="input-group">
+                    <input type="text" id="" readonly class="form-control"  placeholder="" />
+                    <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
+                </div>
+                <input type="hidden" id="" name="department" />
+                <ul class="ul-dropdown">
+                    <li class="selected"><a href="javascript:" data-val="1">羽绒服</a></li>
+                    <li><a href="javascript:" data-val="2">呢大衣</a></li>
+                    <li><a href="javascript:" data-val="3">毛衣</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -123,10 +130,17 @@
     <div class="row">
         <label class="col-md-3 control-label">运费模板<span class="required">*</span></label>
         <div class="col-md-5">
-            <select name="postal" >
-                <option value="300000">包邮</option>
-                <option value="300001">不包邮</option>
-            </select>
+            <div class="dropdown">
+                <div class="input-group">
+                    <input type="text" id="" readonly class="form-control"  placeholder="" />
+                    <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
+                </div>
+                <input type="hidden" id="" name="postal" />
+                <ul class="ul-dropdown">
+                    <li class="selected"><a href="javascript:" data-val="300000">包邮</a></li>
+                    <li><a href="javascript:" data-val="300001">不包邮</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="row">
