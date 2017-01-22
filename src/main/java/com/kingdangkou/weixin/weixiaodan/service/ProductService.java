@@ -2,6 +2,7 @@ package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.dao.*;
 import com.kingdangkou.weixin.weixiaodan.entity.*;
+import com.kingdangkou.weixin.weixiaodan.model.Failure;
 import com.kingdangkou.weixin.weixiaodan.model.ProductModel;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
@@ -97,6 +98,7 @@ public class ProductService {
         ProductEntity productEntity = new ProductEntity(name, descriptive, price, code, minimum, postal, pictures, videos);
 
         DepartmentEntity departmentEntity = departmentDao.get(department);
+        if (departmentEntity == null) return new Failure("invalid department!");
         productEntity.setDepartment(departmentEntity);
 
         Set<StorageEntity> storageEntitySet = storageGenerator.parse2StorageSet(storageJson);
