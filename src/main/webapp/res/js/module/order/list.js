@@ -23,6 +23,10 @@ define(function(require, exports, module) {
     var urls = {
         listUrl: G.contextPath + 'order/list'
     };
+    //基础视图
+    var noDataTemplate = '<span class="no-data">暂无数据</span>',
+        loadingDataTemplate = '<span class="loading">正在请求数据...</span>',
+        errorDataTemplate = '<span class="error-data">发生错误，请稍后重试</span>';
 
     /**
      * 每个订单子内容
@@ -45,6 +49,7 @@ define(function(require, exports, module) {
      */
     var OrderRowView = CheckableRowView.extend({
         tagName: 'tbody',
+        noDataTemplate: util.render('<tr><td colspan="{{colCount}}">' + noDataTemplate + '</td></tr>'),
         events: {
             'click .editor': 'editor'
         },
@@ -77,6 +82,8 @@ define(function(require, exports, module) {
      */
     var TableView= CheckableTableView.extend({
         tagName: 'div',
+        errorDataTemplate: util.render('<tr><td colspan="{{colCount}}">' + errorDataTemplate + '</td></tr>'),
+        loadingDataTemplate: util.render('<tr><td colspan="{{colCount}}">' + loadingDataTemplate + '</td></tr>'),
         initialize: function(options) {
             this._super_initialize(options);
             this.$content = this.$tbody = this.$('#order-table-detail');

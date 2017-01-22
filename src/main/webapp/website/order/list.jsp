@@ -2,9 +2,9 @@
 <%@ include file="../common/taglibs.jsp"%>
 <%@ include file="../common/upper-part.jsp"%>
 <style>
-	.table tbody{margin-bottom: 20px;}
-	tr.order-title{background-color: #f7f7f7;}
-
+	.table{margin-bottom: 0;}
+		.table tbody{margin-bottom: 20px;}
+			tr.order-title{background-color: #f7f7f7;}
 </style>
 <h1 class="content-title">订单列表</h1>
 <div id="table-wrapper" class="table-wrapper block-body">
@@ -36,6 +36,7 @@
 			</thead>
 		</table>
 		<table class="table" id="order-table-detail">
+			<!--
 			<tbody class="order-0">
 				<tr class="order-title">
 					<td>
@@ -64,14 +65,11 @@
 					<td>
 						<p><strong>￥55</strong></p>
 						<p>(含快递0.00)</p>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="7">
-						<a href="javascript:" role="check-express">查看物流</a>
+						<p><a href="javascript:" role="check-express">查看物流</a></p>
 					</td>
 				</tr>
 			</tbody>
+			-->
 		</table>
 	</div>
 	<div id="pagination" class="pages"></div>
@@ -86,11 +84,6 @@
 		</td>
 		<td colspan="6">
 			成交时间：{{}}
-		</td>
-	</tr>
-	<tr>
-		<td colspan="7">
-			<a href="javascript:" role="check-express">查看物流</a>
 		</td>
 	</tr>
 </script>
@@ -115,6 +108,7 @@
 	<td rowspan="{{list_length}}">
 		<p><strong>￥55</strong></p>
 		<p>(含快递0.00)</p>
+		<p><a href="javascript:" role="check-express">查看物流</a></p>
 	</td>
 	<# } #>
 </script>

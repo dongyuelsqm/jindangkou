@@ -32,9 +32,9 @@
         <label class="col-md-3 control-label">商品分类<span class="required">*</span></label>
         <div class="col-md-5">
             <select name="department" >
-                <option value="0">羽绒服</option>
-                <option value="1">呢大衣</option>
-                <option value="2">毛衣</option>
+                <option value="1">羽绒服</option>
+                <option value="2">呢大衣</option>
+                <option value="3">毛衣</option>
             </select>
         </div>
     </div>

@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <head>
 	<title>金档口</title>
-	<link href="${contextPath}/res/css/base/img/favicon.ico" rel="shortcut icon" />
 	<link rel="stylesheet" href="${contextPath}/res/css/base/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="${contextPath}/res/css/plugins/perfectscroll/perfect-scrollbar.min.css" />
 	<link rel="stylesheet" href="${contextPath}/res/css/base/layout.css" />

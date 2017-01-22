@@ -185,11 +185,14 @@ define(function (require, exports, module) {
             this.data = this.store.data;
             this.items = [];
 
+            this.errorDataTemplate = options.errorDataTemplate || this.errorDataTemplate || util.render(errorDataTemplate);
+            this.loadingDataTemplate = options.loadingDataTemplate || this.loadingDataTemplate || util.render(loadingDataTemplate);
+
             this.$content = this.$el;
             if (options.appendTo) {
                 $(options.appendTo).append(this.el);
             }
-            
+
             this.listenTo(this.store, 'sync', this.render);
             this.listenTo(this.data, 'update', this.update);
             this.listenTo(this.data, 'request', this.loading);
@@ -228,7 +231,7 @@ define(function (require, exports, module) {
         	this.store.update();
         },
         loading: function(model, rsp, options){
-        	this.setTemplate(loadingDataTemplate);
+        	this.setTemplate(this.loadingDataTemplate(this.noDataModel));
         	
         	//滚动条 - updata
         	if(!G.isOldIE8()){
@@ -236,7 +239,7 @@ define(function (require, exports, module) {
             }
         },
         error: function(model, rsp, options){
-        	this.setTemplate(errorDataTemplate);
+        	this.setTemplate(this.errorDataTemplate(this.noDataModel));
         },
         setTemplate: function(html){
         	var item = new this.ItemView(this.itemOption),
@@ -324,6 +327,8 @@ define(function (require, exports, module) {
     var TableView = CollectionView.extend({
         tagName: 'table',
         ItemView: TableRowView,
+        errorDataTemplate: util.render('<td colspan="{{colCount}}">' + errorDataTemplate + '</td>'),
+        loadingDataTemplate: util.render('<td colspan="{{colCount}}">' + loadingDataTemplate + '</td>'),
         initialize: function (options) {
             this._super_initialize(options);
             this.ItemView = options.rowView || this.ItemView;

@@ -21,7 +21,10 @@ define(function(require, exports, module) {
             postal: {required: true},
             status: {required: true},
             username: {required: true},
-            price: {required: true},
+            price: {
+                required: true,
+                number: true
+            },
             receiver: {required: true},
             phone: {
                 required: true,
@@ -33,7 +36,10 @@ define(function(require, exports, module) {
             postal: {required: '请选择运费模式'},
             status: {required: '请选择交易状态'},
             username: {required: '请输入买家用户名'},
-            price: {required: '请输入应收款数'},
+            price: {
+                required: '请输入应收款数',
+                number: '请输入数字'
+            },
             receiver: {required: '请输入收货人'},
             phone: {
                 required: '请输入联系方式',
