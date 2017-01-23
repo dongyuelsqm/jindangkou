@@ -11,7 +11,8 @@ define(function (require, exports, module) {
         url: '',
         isParent: true,
         disabled: false,
-        icon: '&#xe61e;',
+        // icon: '&#xe61e;',
+        icon: 'cf-c14',
         children: [{
             id: 1001,
             name: '店铺公告',
@@ -33,7 +34,8 @@ define(function (require, exports, module) {
         url: '',
         isParent: true,
         disabled: false,
-        icon: '&#xe6f2;',
+        // icon: '&#xe6f2;',
+        icon: 'shouji',
         children: [{
             id: 2001,
             name: '添加商品',
@@ -62,7 +64,8 @@ define(function (require, exports, module) {
         url: '',
         isParent: true,
         disabled: false,
-        icon: '&#xe66c;',
+        // icon: '&#xe66c;',
+        icon: 'dingdan',
         children: [{
             id: 3001,
             name: '添加订单',
@@ -84,7 +87,8 @@ define(function (require, exports, module) {
         url: '',
         isParent: true,
         disabled: false,
-        icon: '&#xe6f3;',
+        // icon: '&#xe6f3;',
+        icon: 'tongji',
         children: [{
             id: 4001,
             name: '订单统计',
@@ -113,7 +117,7 @@ define(function (require, exports, module) {
         url: '',
         isParent: true,
         disabled: false,
-        icon: '&#xe63b;',
+        icon: 'weixin',
         children: [{
             id: 5001,
             name: '微信群发',
@@ -156,7 +160,7 @@ define(function (require, exports, module) {
         url: '',
         isParent: false,
         disabled: false,
-        icon: '&#xe615;',
+        icon: 'anquan',
         children: []
     }, {
         id: 7,
@@ -164,7 +168,7 @@ define(function (require, exports, module) {
         url: '',
         isParent: false,
         disabled: false,
-        icon: '&#xe611;',
+        icon: 'tongzhi',
         children: []
     }];
 

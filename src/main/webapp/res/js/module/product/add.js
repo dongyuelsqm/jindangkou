@@ -85,19 +85,21 @@ define(function(require, exports, module) {
             'click [role="upload-video"]': 'uploadVideo',
             // 'click img[role="upload-video"]': 'uploadVideo',
             'change input[role="color"]': 'toggleInventory',
+            'change input[role="size"]': 'addSize',
             'click button[role="btn-submit"]': 'submit'
         },
-        initialize: function(opstions){
+        initialize: function(options){
             this.$checkboxs = [];
             this.uploaders_store = [];
             this.$inventory = this.$('#inventory');
             this.inventoryItemTmpl = template('inventoryItem');
+            this.sizeItemTmpl = template('sizeItem');
 
             this.init();
             this.initImgUpload();
             this.initVideoUpload();
 
-            this.$el.validate(validates);
+            this.validator = this.$el.validate(validates);
         },
         init: function(){
             var _this = this;
@@ -244,14 +246,38 @@ define(function(require, exports, module) {
                 color = $this.val();
 
             if($this.prop('checked')){
-                if(this.$inventory.find('#inventory-' + color).length < 1){
+                if(this.$('#inventory-' + color).length < 1){
                     this.$inventory.append(this.inventoryItemTmpl({'colorCode': color, 'colorName': colorMap[color]}));
+
+                    _.each(this.$('input[role="size"]'), function(item, index){
+                        if($(item).prop('checked')){
+                            var size = $(item).val();
+                            _this.$('#inventory-' + color).find('.inventory-size').append(_this.sizeItemTmpl({'sizeCode': size}));
+                        }
+                    });
                 }
             }else{
-                if(this.$inventory.find('#inventory-' + color).length > 0) {
-                    this.$inventory.find('#inventory-' + color).remove();
+                if(this.$('#inventory-' + color).length > 0) {
+                    this.$('#inventory-' + color).remove();
                 }
             }
+        },
+        'addSize': function(ev){
+            var $this = $(ev.currentTarget),
+                _this = this,
+                size = $this.val();
+            // if(this.validator.element(this.$('input[name="color"]'))){
+                if($this.prop('checked')){
+                    var $inventory_size = this.$inventory.find('.inventory-size')
+                    if($inventory_size.length > 0){
+                        $inventory_size.append(this.sizeItemTmpl({'sizeCode': size}));
+                    }
+                }else{
+                    if(this.$inventory.find('.inventory-' + size).length > 0) {
+                        this.$inventory.find('.inventory-' + size).remove();
+                    }
+                }
+            // }
         },
         getQuantity: function(){
             /*
@@ -273,7 +299,7 @@ define(function(require, exports, module) {
             var $this = $(ev.currentTarget),
                 _this = this;
 
-            if(this.$el.valid()) {
+            if(this.validator.form()) {
                 var param = this.$el.serializeObject();
                 param.pictures = '["dddd.gif","ffff.gif"]';
                 param.videos = '["dddd.mp4","ffff.mp4"]';

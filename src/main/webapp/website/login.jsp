@@ -10,13 +10,13 @@
                 <div class="container content">
                     <form role="form" class="form" id="form-login">
                         <div class="error text-center">
-                            <i class="iconfont">&#xe635;</i>
+                            <i class="iconfont icon-info"></i>
                             <span class="error-msg"></span>
                         </div>
                         <div class="row">
                             <div class="col-sm-offset-4 col-sm-4">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="iconfont">&#xe656;</i></span>
+                                    <span class="input-group-addon"><i class="iconfont icon-user"></i></span>
                                     <input type="text" class="form-control" name="userName" id="userName" value="" placeholder="请输入您的用户名/邮箱/手机号码"/>
                                 </div>
                             </div>
@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-sm-offset-4 col-sm-4">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="iconfont">&#xe660;</i></span>
+                                    <span class="input-group-addon"><i class="iconfont icon-mima"></i></span>
                                     <input type="password" class="form-control" name="userPassword" id="userPassword" value="" placeholder="请输入您的密码"/>
                                 </div>
                             </div>

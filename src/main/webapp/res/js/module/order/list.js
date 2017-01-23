@@ -10,10 +10,12 @@ define(function(require, exports, module) {
         form = require('util/form'),
         util = require('util/util');
 
+    var template = util.template;
     var collectionControls = require('util/collection-controls'),
         collectionExtension = require('util/collection-extension'),
         CheckableTableView  = collectionExtension.CheckableTableView,
         CheckableRowView = collectionExtension.CheckableRowView,
+        TableRowView = collectionControls.TableRowView,
         PaginationView = collectionControls.PaginationView,
         SearchBoxView = collectionControls.SearchBoxView,
         BaseItemSetting = collectionExtension.BaseItemSetting;
@@ -21,19 +23,71 @@ define(function(require, exports, module) {
     var urls = {
         listUrl: G.contextPath + 'order/list'
     };
+    //基础视图
+    var noDataTemplate = '<span class="no-data">暂无数据</span>',
+        loadingDataTemplate = '<span class="loading">正在请求数据...</span>',
+        errorDataTemplate = '<span class="error-data">发生错误，请稍后重试</span>';
+
+    /**
+     * 每个订单子内容
+     */
+    var OrderSubRowView = Backbone.View.extend({
+        tagName: 'tr',
+        className: 'order-sub-list',
+        template: template('order-sub-row'),
+        initialize: function(options){
+            this.model = options.model;
+        },
+        render: function(){
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        }
+    });
 
     /**
      * 扩展行
      */
     var OrderRowView = CheckableRowView.extend({
+        tagName: 'tbody',
+        noDataTemplate: util.render('<tr><td colspan="{{colCount}}">' + noDataTemplate + '</td></tr>'),
         events: {
             'click .editor': 'editor'
         },
         initialize: function(options){
             this._super_initialize(options);
+            this.items = [];
         },
         editor: function(ev){
             location.href = G.contextPath + '/order/update/' + this.model.get('orderId');
+        },
+        render: function(param){
+            this._super_invoke('render', param);
+            var _this = this;
+            var collection_sub_orders = new Backbone.Collection(this.model.get('sub_orders'));
+            collection_sub_orders.map(function(item, index, list){
+                item.set({'index': index});
+                item.set({'list_length': list.length});
+                _this.items[index] = new OrderSubRowView({
+                    model: item
+                });
+                return _this.items[index].el;
+            });
+
+            _this.$('tr[role="order-info"]').next(collection_sub_orders);
+        }
+    });
+
+    /**
+     * 扩展tableView
+     */
+    var TableView= CheckableTableView.extend({
+        tagName: 'div',
+        errorDataTemplate: util.render('<tr><td colspan="{{colCount}}">' + errorDataTemplate + '</td></tr>'),
+        loadingDataTemplate: util.render('<tr><td colspan="{{colCount}}">' + loadingDataTemplate + '</td></tr>'),
+        initialize: function(options) {
+            this._super_initialize(options);
+            this.$content = this.$tbody = this.$('#order-table-detail');
+            this.store.update();
         }
     });
 
@@ -67,9 +121,9 @@ define(function(require, exports, module) {
         }
     });
 
-    var OrderListView =  Backbone.View.extend({
+    var OrderTableView =  Backbone.View.extend({
         initialize: function (option) {
-            this.table = new CheckableTableView(option.table);
+            this.table = new TableView(option.table);
             new PaginationView(option.pagination).bind(this.table);
             new SearchView(option.search).bind(this.table);
         }
@@ -80,7 +134,7 @@ define(function(require, exports, module) {
         initialize: function(options){
 
             //初始化我的消息列表
-            new OrderListView({
+            new OrderTableView({
                 el: '#table-wrapper',
                 table: {
                     el: '#order-table',
@@ -95,7 +149,6 @@ define(function(require, exports, module) {
                         defaultSetting: BaseItemSetting
                     },
                     rowView: OrderRowView,
-                    sync: true,
                     idAttribute: 'orderId'
                 },
                 pagination: {
