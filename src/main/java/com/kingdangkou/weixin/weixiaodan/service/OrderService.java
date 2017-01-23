@@ -58,7 +58,7 @@ public class OrderService {
         order.setSubOrders(convertToSubOrders(items, order));
         float total = calculateMethodPrice(order);
         order.setMethod_price(total);
-        order.setActural_price(total);
+        order.setActual_price(total);
         adjustStorage(order.getSubOrders());
         return new Success();
     }
@@ -104,7 +104,7 @@ public class OrderService {
     }
 
     public Result find(String openID){
-        List<Order> orders = orderDao.findAllOrders(openID);
+        List<Order> orders = orderDao.findAllMyOrders(openID);
         return new Result(true, JSONArray.fromObject(orders, orderJsonConfig));
     }
 
@@ -114,7 +114,7 @@ public class OrderService {
     }
 
     public Result find(String openID, String state){
-        List<Order> orders = orderDao.find(openID, "state", state, Order.class);
+        List<Order> orders = orderDao.find(openID, "state", state);
         return new Result(true, JSONArray.fromObject(orders, orderJsonConfig));
     }
 
