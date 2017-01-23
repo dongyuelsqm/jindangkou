@@ -7,9 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class ProductControllerTest extends TestBase<ProductController>{
@@ -22,21 +20,6 @@ public class ProductControllerTest extends TestBase<ProductController>{
                 get("/product/detail")
                         .param("id", "1"))
                 .andDo(print()).andExpect(status().isOk());
-    }
-
-    @Test
-    public void testAddProduct() throws Exception {
-        mockMvc.perform(post("website/product/add").
-                param("name", "product").
-                param("price", "1.1").
-                param("quantity", "{quantity:\"1\", size:\"1\", color:\"1\", }").
-                param("department", "shirt").
-                param("code", "code").
-                param("minimum", "10").
-                param("postal", "300000").
-                param("pictures", "[\"dddd\",\"ffff\"]").
-                param("videos", "[\"dddd\",\"ffff\"]").
-                param("descriptive", "good")).andDo(print()).andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
     }
 
     @Test
