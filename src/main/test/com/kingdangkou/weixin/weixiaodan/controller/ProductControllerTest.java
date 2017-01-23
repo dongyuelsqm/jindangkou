@@ -1,20 +1,11 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
 import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
-import com.kingdangkou.weixin.weixiaodan.model.ProductModel;
-import com.kingdangkou.weixin.weixiaodan.model.Result;
-import com.kingdangkou.weixin.weixiaodan.model.Success;
-import com.kingdangkou.weixin.weixiaodan.service.ProductService;
 import net.sf.json.JSONArray;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 
 import java.util.ArrayList;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.contains;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -25,23 +16,16 @@ public class ProductControllerTest extends TestBase<ProductController>{
 
     private ProductEntity productEntity = new ProductEntity("name", "", 1.0f, "code", 10, "postal", "pictures", "videos");
 
-    @Mock
-    private ProductService service;
-    @InjectMocks
-    ProductController controller;
-
     @Test
     public void testGet() throws Exception {
-        when(service.get(any(String.class))).thenReturn(new Result(true, new ProductModel(productEntity, 1)));
         mockMvc.perform(
                 get("/product/detail")
-                        .param("id", String.valueOf(productEntity.getId())))
-                .andDo(print()).andExpect(status().isOk()).andExpect(content().string(contains("shirt")));
+                        .param("id", "1"))
+                .andDo(print()).andExpect(status().isOk());
     }
 
     @Test
     public void testAddProduct() throws Exception {
-        when(service.save(any(ProductEntity.class))).thenReturn(new Success());
         mockMvc.perform(post("website/product/add").
                 param("name", "product").
                 param("price", "1.1").
