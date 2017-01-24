@@ -1,13 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="./common/taglibs.jsp"%>
 <%@ include file="./common/head.jsp"%>
-<style>
-    .content{background-color: #fff; height: 642px;}
-    .form{height: 230px; top: 50%; width: 100%;}
-    a.register{color: #242424; text-decoration: underline;}
-    .error{color: #4d4d4d; display: none; line-height: 25px; text-align: center; }
-    .error .iconfont{color: #e11377;}
-</style>
+<link rel="stylesheet" href="${contextPath}/res/css/module/login.css" />
 <body>
     <div id="J_body" class="J_body">
         <div id="J_main" class="J_main">
@@ -16,13 +10,13 @@
                 <div class="container content">
                     <form role="form" class="form" id="form-login">
                         <div class="error text-center">
-                            <i class="iconfont">&#xe635;</i>
+                            <i class="iconfont icon-info"></i>
                             <span class="error-msg"></span>
                         </div>
                         <div class="row">
                             <div class="col-sm-offset-4 col-sm-4">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="iconfont">&#xe656;</i></span>
+                                    <span class="input-group-addon"><i class="iconfont icon-user"></i></span>
                                     <input type="text" class="form-control" name="userName" id="userName" value="" placeholder="请输入您的用户名/邮箱/手机号码"/>
                                 </div>
                             </div>
@@ -30,7 +24,7 @@
                         <div class="row">
                             <div class="col-sm-offset-4 col-sm-4">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="iconfont">&#xe660;</i></span>
+                                    <span class="input-group-addon"><i class="iconfont icon-mima"></i></span>
                                     <input type="password" class="form-control" name="userPassword" id="userPassword" value="" placeholder="请输入您的密码"/>
                                 </div>
                             </div>

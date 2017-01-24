@@ -105,21 +105,31 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 	.dialog-title{border-bottom:1px solid #cbcbcb; height:40px; line-height:40px; padding-left:15px;}
 	.dialog-content{text-align:center;}
 	.dialog-buttons{background:#f5f8fa; text-align:center; padding:15px;}
-		.dialog-buttons button{background:#dc5957; border:none; border-radius:5px; -o-border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; color:#fff; margin: 0 5px; padding:5px; width:120px;}
+		.dialog-buttons button{background:#ea3527; border:none; border-radius:5px; -o-border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; color:#fff; margin: 0 5px; padding:5px; width:120px;}
 		.dialog-buttons button.btn-white{background:#fff; border: 1px solid #cbcbcb; color:#333;}
 	.dialog-close{cursor:pointer; font-size:22px; position:absolute; right:15px; top:0;}
 		
 /* checkbox & radio */
-.checkLabel{background:#fff url(img/checkbox.png) no-repeat -16px 0; cursor:pointer; display:inline-block; height:16px; margin-right:5px; vertical-align:text-top; width:16px;}
-	.checkLabel.checked{background-position: 0 0;}
-	.checkbox-inline{display: inline; font-size: 12px; padding:0;}
-.radioLabel{background:url(img/radio.png) no-repeat -16px 0; cursor:pointer; display:inline-block; height:16px; margin-right:5px; vertical-align:text-top; width:16px;}
-	.radioLabel.selected{background-position: 0 0;}
-    .radio-inline{display: inline; font-size: 12px; padding:0;}
+.checkbox-inline+.checkbox-inline,
+.radio-inline+.radio-inline{
+	margin-left: 0;
+}
+.check-label{background:#fff url(img/checkbox.png) no-repeat -16px 0; cursor:pointer; display:inline-block; height:16px; margin-right:5px; vertical-align:text-top; width:16px;}
+	.check-label.checked{background-position: 0 0;}
+	.checkbox-inline{display: inline; font-size: 12px; margin-right: 10px; padding:0;}
+.radio-label{background:url(img/radio.png) no-repeat -16px 0; cursor:pointer; display:inline-block; height:16px; margin-right:5px; vertical-align:text-top; width:16px;}
+	.radio-label.selected{background-position: 0 0;}
+    .radio-inline{display: inline; font-size: 12px; margin-right: 10px; padding:0;}
 
 /* select */
 /*.select::-ms-expand{display: none;}*/
-.select{height: 26px; width: 125px;}
+.dropdown{display: inline-block; vertical-align: top; width: 150px;}
+	.dropdown .form-control,
+	.dropdown .input-group-addon{background: #fff;}
+	.dropdown .input-group-addon{padding-left: 5px; padding-right: 5px; }
+	.dropdown ul{background: #fff; border: 1px solid #e4e4e4; border-radius: 3px; -webkit-border-radius: 3px; display: none; position: absolute; z-index: 10; }
+		.dropdown ul > li > a{color: #999; cursor: pointer; display: block; font-size: 14px; height: 38px; line-height: 28px; padding: 5px 25px; width: 150px; }
+			.dropdown ul > li > a:hover{background: #f7f7f7;}
 
 /* justify */
 .justify { font-size: 0; text-align: justify; /* ie */ text-align-last: justify; }
@@ -153,8 +163,9 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 
 .table > tbody > tr > td{vertical-align: middle;}        
 .table > tbody > tr > td > div{cursor: pointer; overflow: hidden; text-overflow: ellipsis; vertical-align: text-top; white-space: nowrap;}
-.table > tbody > tr > td a{color: #a94442;}
-	.table > tbody > tr > td a:hover{color: #ea3527;}
+.table > tbody > tr > td a{color: #ea3527;}
+	.table > tbody > tr > td a:hover{color: #a94442;}
+.table > tbody > tr > td img{height: 50px; margin-right: 10px; width: 50px;}
 
 th > .order{background-image: url(./img/order-arrow.png); background-repeat: no-repeat; background-position-y: center; background-position-x: 0; display: inline-block; height: 16px; vertical-align: middle; width: 10px;}
 	th > .order-desc{background-position-x: -10px;}
@@ -174,7 +185,7 @@ th > .order{background-image: url(./img/order-arrow.png); background-repeat: no-
 .form > .row { line-height: 30px; margin-bottom: 10px; margin-top: 10px; position: relative;}
     .form .control-label{font-weight: normal; line-height: 30px; text-align: right;}
     	.form .form-control-static{padding-top: 0; padding-bottom: 0;}
-	    .form .input-group-addon{background: #fff; border-radius: 0; font-size: 15px;}
+	    /*.form .input-group-addon{background: #fff; border-radius: 0; font-size: 15px;}*/
 	    .form .form-control{background: #fff; border-radius: 0; display: inline-block;}
 	    .form .form-control.error{border-color: #ea3527; color: #ea3527;}
         .form .verify-img{height: 30px; vertical-align: middle; }

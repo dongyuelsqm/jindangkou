@@ -2,9 +2,11 @@ package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.dao.*;
 import com.kingdangkou.weixin.weixiaodan.entity.*;
+import com.kingdangkou.weixin.weixiaodan.model.Failure;
 import com.kingdangkou.weixin.weixiaodan.model.ProductModel;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
+import com.kingdangkou.weixin.weixiaodan.service.utils.ProductStorageGenerator;
 import com.kingdangkou.weixin.weixiaodan.utils.FileHandler;
 import com.kingdangkou.weixin.weixiaodan.utils.JsonHandler;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.ProductJsonConfig;
@@ -20,6 +22,8 @@ import java.util.*;
  */
 @Service
 public class ProductService {
+    @Autowired
+    private ProductStorageGenerator storageGenerator;
     @Autowired
     private ProductJsonConfig productJsonConfig;
     @Autowired
@@ -43,63 +47,62 @@ public class ProductService {
     private SubOrderEntityDao subOrderEntityDao;
 
     public Result get(String id){
-        HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
         ProductEntity productEntity = productDao.get(ProductEntity.class, id);
-        ProductModel productModel = new ProductModel(productEntity, sellings.get(productEntity));
+        HashMap<String, Integer> sellings = subOrderEntityDao.listSoldMsg();
+        ProductModel productModel = new ProductModel(productEntity, sellings.get(productEntity.getId()));
         return new Result(true, JSONObject.fromObject(productModel, productJsonConfig));
     }
 
     public Result list(){
-        HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
+        HashMap<String, Integer> sellings = subOrderEntityDao.listSoldMsg();
         List<ProductEntity> productEntities = productDao.find();
         ArrayList<ProductModel> productModels = convertToProductModelList(sellings, productEntities);
         return new Result(true, JSONArray.fromObject(productModels, productJsonConfig));
     }
 
     public Result list(String department){
-        HashMap<ProductEntity, Integer> sellings = getProductSellingQuantity();
+        HashMap<String, Integer> sellings = subOrderEntityDao.listSoldMsg();
         List<ProductEntity> productEntities = productDao.find("department", department, ProductEntity.class);
         ArrayList<ProductModel> productModels = convertToProductModelList(sellings, productEntities);
         return new Result(true, JSONArray.fromObject(productModels, productJsonConfig));
     }
 
-    private ArrayList<ProductModel> convertToProductModelList(HashMap<ProductEntity, Integer> sellings, List<ProductEntity> productEntities) {
+    private ArrayList<ProductModel> convertToProductModelList(HashMap<String, Integer> sellings, List<ProductEntity> productEntities) {
         ArrayList<ProductModel> productModels = new ArrayList<>();
         for (ProductEntity productEntity: productEntities){
-            productModels.add(new ProductModel(productEntity, sellings.get(productEntity)));
+            Integer sold = sellings.get(productEntity.getId());
+            productModels.add(new ProductModel(productEntity, sold));
         }
         return productModels;
     }
 
-    private HashMap<ProductEntity, Integer> getProductSellingQuantity() {
-        List<Object[]> objects = subOrderEntityDao.listSellingMsg();
-        HashMap<ProductEntity, Integer> sellings = new HashMap<>();
-        for (Object[] object: objects){
-            sellings.put((ProductEntity) object[0], Integer.valueOf(object[1].toString()));
-        }
-        return sellings;
-    }
-
     public Result save(ProductEntity productEntity){
         productDao.save(productEntity);
-        moveFiles(productEntity.getPictures(), productEntity.getId());
-        moveFiles(productEntity.getVideos(), productEntity.getId());
+        String id = String.valueOf(productEntity.getId());
+        moveFiles(productEntity.getPictures(), id);
+        moveFiles(productEntity.getVideos(), id);
         return new Success();
     }
 
-    public Result save(String name, String descriptive, float price, String department, String code, int minimum,
+    public Result save(String name,
+                       String descriptive,
+                       float price,
+                       String department,
+                       String code,
+                       int minimum,
                        String postal,
                        String pictures,
                        String videos,
-                       String quantity,
+                       String storageJson,
                        String label){
         ProductEntity productEntity = new ProductEntity(name, descriptive, price, code, minimum, postal, pictures, videos);
 
         DepartmentEntity departmentEntity = departmentDao.get(department);
+        if (departmentEntity == null) return new Failure("invalid department!");
         productEntity.setDepartment(departmentEntity);
 
-        Set<ProductQuantityEntity> productQuantityEntitySet = convertJsonToProductEntitySet(quantity);
-        productEntity.setProductQuantityEntitys(productQuantityEntitySet);
+        Set<StorageEntity> storageEntitySet = storageGenerator.parse2StorageSet(storageJson);
+        productEntity.setStorage(storageEntitySet);
 
         Set<LabelEntity> labels = convertJsonToLabelEntitySet(label);
         productEntity.setLabelEntitySet(labels);
@@ -108,8 +111,9 @@ public class ProductService {
         productEntity.setVideos(parseToString(videos));
 
         productDao.save(productEntity);
-        moveFiles(pictures, productEntity.getId());
-        moveFiles(videos, productEntity.getId());
+        String id = String.valueOf(productEntity.getId());
+        moveFiles(pictures, id);
+        moveFiles(videos, id);
         return new Success();
     }
 
@@ -134,20 +138,6 @@ public class ProductService {
             }
         }
         return labels;
-    }
-
-    private Set<ProductQuantityEntity> convertJsonToProductEntitySet(String quantity) {
-        Set<ProductQuantityEntity> productQuantityEntitySet = new HashSet<ProductQuantityEntity>();
-        JSONArray jsonArray = JSONArray.fromObject(quantity);
-        for (Object obj: jsonArray){
-            JSONObject json = (JSONObject) obj;
-            ProductQuantityEntity productQuantityEntity = new ProductQuantityEntity();
-            productQuantityEntity.setNumber(Integer.valueOf(json.get("quantity").toString()));
-            productQuantityEntity.setColorEntity(colorDao.get(json.get("color").toString()));
-            productQuantityEntity.setSizeEntity(sizeDao.get(json.get("size").toString()));
-            productQuantityEntitySet.add(productQuantityEntity);
-        }
-        return productQuantityEntitySet;
     }
 
     private void moveFiles(String fils, String id){

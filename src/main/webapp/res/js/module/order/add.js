@@ -10,28 +10,42 @@ define(function(require, exports, module) {
         form = require('util/form'),
         util = require('util/util');
 
+    var template = util.template,
+        colorMap = require('module/default/colors').colorMap;
+
     require('jquery-validate');
     require('jquery-validate-add');
 
     var validates = {
         rules: {
-            // code: {require: true},
-            name: {require: true},
-            price: {require: true},
-            department: {require: true},
-            minimum: {require: true},
-            // pictures: {require: true},
-            // videos: {require: true},
-            descriptive: {require: true}
+            postal: {required: true},
+            status: {required: true},
+            username: {required: true},
+            price: {
+                required: true,
+                number: true
+            },
+            receiver: {required: true},
+            phone: {
+                required: true,
+                contactNum: true
+            },
+            address: {required: true}
         },
         messages: {
-            name: {require: '请输入商品名称'},
-            price: {require: '请输入售价'},
-            department: {require: '请选择商品分类'},
-            minimum: {require: '请输入起批件数'},
-            // pictures: {require: true},
-            // videos: {require: true},
-            descriptive: {require: '请输入商品描述'}
+            postal: {required: '请选择运费模式'},
+            status: {required: '请选择交易状态'},
+            username: {required: '请输入买家用户名'},
+            price: {
+                required: '请输入应收款数',
+                number: '请输入数字'
+            },
+            receiver: {required: '请输入收货人'},
+            phone: {
+                required: '请输入联系方式',
+                contactNum: '请输入正确格式联系方式'
+            },
+            address: {required: '请输入收货地址'}
         },
         errorPlacement: function(error, element) {
             error.appendTo(element.parent().parent());
@@ -40,37 +54,127 @@ define(function(require, exports, module) {
         wrapper: 'div'
     };
 
-    var FormView = Backbone.View.extend({
+    /**
+     * 商品详情 RowView
+     */
+    var OrderRowView = Backbone.View.extend({
+        tagName: 'tr',
         events: {
-            'click button[role="btn-submit"]': 'submit',
-            'click spen[role="btn-search"]': 'searchProducts'
+            'change input[role="color"]': 'toggleInventory',
+            'change input[role="size"]': 'addSize'
         },
-        initialize: function(opstions){
+        initialize: function(options) {
             this.$checkboxs = [];
+            this.$inventory = this.$('#inventory');
+            this.inventoryItemTmpl = template('inventoryItem');
+            this.sizeItemTmpl = template('sizeItem');
+
             this.init();
 
-            this.$el.validate(validates);
         },
         init: function(){
             var _this = this;
+
             _.each(this.$('.checkbox-inline'), function(item, index){
                 _this.$checkboxs.push(new form.CheckboxView({el: $(item)}));
             });
         },
+        'toggleInventory': function(ev){
+            var $this = $(ev.currentTarget),
+                _this = this,
+                color = $this.val();
+
+            if($this.prop('checked')){
+                if(this.$('#inventory-' + color).length < 1){
+                    this.$inventory.append(this.inventoryItemTmpl({'colorCode': color, 'colorName': colorMap[color]}));
+                }
+
+                _.each(this.$('input[role="size"]'), function(item, index){
+                    if($(item).prop('checked')){
+                        var size = $(item).val();
+                        _this.$('#inventory-' + color).find('.inventory-size').append(_this.sizeItemTmpl({'sizeCode': size}));
+                    }
+                });
+            }else{
+                if(this.$('#inventory-' + color).length > 0) {
+                    this.$('#inventory-' + color).remove();
+                }
+            }
+        },
+        'addSize': function(ev){
+            var $this = $(ev.currentTarget),
+                _this = this,
+                size = $this.val();
+            // if(this.validator.element(this.$('input[name="color"]'))){
+                if($this.prop('checked')){
+                    var $inventory_size = this.$inventory.find('.inventory-size')
+                    if($inventory_size.length > 0){
+                        $inventory_size.append(this.sizeItemTmpl({'sizeCode': size}));
+                    }
+                }else{
+                    if(this.$inventory.find('.inventory-' + size).length > 0) {
+                        this.$inventory.find('.inventory-' + size).remove();
+                    }
+                }
+            // }
+        },
+        render: function(){
+            return this;
+        }
+    });
+
+    /**
+     * 商品详情 TableView
+     */
+    var OrderTableView = Backbone.View.extend({
+        initialize: function(options) {
+            new OrderRowView({
+                el: this.$('tbody>tr')
+            });
+        }
+    });
+
+    /**
+     * 商品列表 ListView
+     */
+    var OrderListView = Backbone.View.extend({});
+
+    /**
+     * 表单
+     */
+    var FormView = Backbone.View.extend({
+        events: {
+            'click button[role="btn-submit"]': 'submit',
+            'click span[role="btn-search"]': 'searchProducts'
+        },
+        initialize: function(options){
+            this.init();
+
+            this.validator = this.$el.validate(validates);
+        },
+        init: function(){
+            var _this = this;
+
+            new OrderTableView({
+                el: '#order-table'
+            });
+        },
         'searchProducts': function(ev){
+            alert('搜索商品');
 
         },
         'submit': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this;
-            if(this.$el.validate()){}
-            $.ajax({
-                url: G.contextPath + 'order/add',
-                data: _this.$el.serializeArray(),
-                success: function(rsp){
-                    console.log(rsp);
-                }
-            });
+            if(this.validator.form()) {
+                $.ajax({
+                    url: G.contextPath + 'order/add',
+                    data: _this.$el.serializeArray(),
+                    success: function (rsp) {
+                        console.log(rsp);
+                    }
+                });
+            }
         }
     });
 

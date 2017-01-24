@@ -1,6 +1,8 @@
 package com.kingdangkou.weixin.weixiaodan.dao;
 
 import com.kingdangkou.weixin.weixiaodan.entity.Address;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,7 +14,11 @@ import java.util.List;
 public class AddressDao extends BaseDaoHibernate4<Address> {
     public AddressDao() {}
     public List<Address> findAddresses(String customerID){
-        return find("From Address where openID = " + customerID);
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        List orders = session.createQuery("from Address where openID = :open_id").setString("open_id", customerID).list();
+        transaction.commit();
+        return orders;
     }
     public Address get(String addressID){
         return get(Address.class,addressID);

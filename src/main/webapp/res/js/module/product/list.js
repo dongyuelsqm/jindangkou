@@ -68,10 +68,10 @@ define(function(require, exports, module) {
     });
 
     var ProductListView =  Backbone.View.extend({
-        initialize: function (option) {
-            this.table = new CheckableTableView(option.table);
-            new PaginationView(option.pagination).bind(this.table);
-            new SearchView(option.search).bind(this.table);
+        initialize: function (options) {
+            this.table = new CheckableTableView(options.table);
+            new PaginationView(options.pagination).bind(this.table);
+            new SearchView(options.search).bind(this.table);
         }
     });
 

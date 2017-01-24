@@ -1,9 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="../common/taglibs.jsp"%>
 <%@ include file="../common/upper-part.jsp"%>
-<style>
-	.table td img{height: 50px; margin-right: 10px; width: 50px;}
-</style>
 <h1 class="content-title">商品列表</h1>
 <div id="table-wrapper" class="table-wrapper block-body">
 	<div class="table-operation clearfix" id="search-box">
@@ -31,24 +28,7 @@
 				<th>操作</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr>
-				<td><span class="checkbox-inline"><input type="checkbox" class="checkbox checkbox-all" /></span></td>
-				<td>
-					<div style="width: 100px;">
-						<img src="" alt="" />
-						维多利亚同款保暖呢大衣保暖呢大衣批发
-					</div>
-				</td>
-				<td>￥55</td>
-				<td>142</td>
-				<td>58</td>
-				<td>2016-12-12 14:20:20</td>
-				<td>
-					<div><a href="javascript:" class="editor" role="editor">编辑</a></div>
-				</td>
-			</tr>
-		</tbody>
+		<tbody></tbody>
 	</table>
 	<div id="pagination" class="pages"></div>
 </div>

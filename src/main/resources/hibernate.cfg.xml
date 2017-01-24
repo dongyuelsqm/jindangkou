@@ -8,15 +8,24 @@
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="connection.url">jdbc:mysql://localhost:3306/emp?useUnicode=true&amp;characterEncoding=UTF8</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="c3p0.timeout">30000</property>
+    <!-- 最大可缓存数据库语句对象 -->
+    <property name="c3p0.max_statements">50</property>
+    <!-- 每隔28000s测试连接是否可用 -->
+    <property name="c3p0.idle_test_period">28000</property>
+    <property name="c3p0.acquire_increment">1</property>
     <property name="connection.username">root</property>
     <property name="connection.password">root123456</property>
+    <property name="hibernate.c3p0.max_size">20</property>
+    <!--最小连接数-->
+    <property name="hibernate.c3p0.min_size">5</property>
     <!-- DB schema will be updated if needed -->
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Address"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.CollectionEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.ColorEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Order"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.ProductEntity"/>
-    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity"/>
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.StorageEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.SizeEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.SubOrder"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.TobePurchasedProductEntity"/>

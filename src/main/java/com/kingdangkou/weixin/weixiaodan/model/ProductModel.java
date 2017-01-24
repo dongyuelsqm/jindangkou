@@ -3,7 +3,7 @@ package com.kingdangkou.weixin.weixiaodan.model;
 import com.kingdangkou.weixin.weixiaodan.entity.DepartmentEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.LabelEntity;
 import com.kingdangkou.weixin.weixiaodan.entity.ProductEntity;
-import com.kingdangkou.weixin.weixiaodan.entity.ProductQuantityEntity;
+import com.kingdangkou.weixin.weixiaodan.entity.StorageEntity;
 
 import javax.enterprise.inject.Model;
 import java.text.SimpleDateFormat;
@@ -15,7 +15,7 @@ import java.util.Set;
  */
 @Model
 public class ProductModel {
-    private String id;
+    private int id;
     private String name;
     private String description;
     private float price;
@@ -27,7 +27,7 @@ public class ProductModel {
     private String code;
     private String date;
     private int sellingQuantity;
-    private Set<ProductQuantityEntity> productQuantityEntitys = new HashSet<ProductQuantityEntity>();
+    private Set<StorageEntity> storages = new HashSet<StorageEntity>();
     private Set<LabelEntity> labelEntitySet = new HashSet<>();
 
     private SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -46,16 +46,16 @@ public class ProductModel {
         this.videos = entity.getVideos();
         this.code = entity.getCode();
         this.date = dateTimeFormatter.format(entity.getDate());
-        this.sellingQuantity = sellingQuantity;
-        this.productQuantityEntitys = entity.getProductQuantityEntitys();
+        this.sellingQuantity = sellingQuantity == null? 0: sellingQuantity;
+        this.storages = entity.getStorage();
         this.labelEntitySet = entity.getLabelEntitySet();
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -147,12 +147,12 @@ public class ProductModel {
         this.sellingQuantity = sellingQuantity;
     }
 
-    public Set<ProductQuantityEntity> getProductQuantityEntitys() {
-        return productQuantityEntitys;
+    public Set<StorageEntity> getStorages() {
+        return storages;
     }
 
-    public void setProductQuantityEntitys(Set<ProductQuantityEntity> productQuantityEntitys) {
-        this.productQuantityEntitys = productQuantityEntitys;
+    public void setStorages(Set<StorageEntity> storages) {
+        this.storages = storages;
     }
 
     public Set<LabelEntity> getLabelEntitySet() {

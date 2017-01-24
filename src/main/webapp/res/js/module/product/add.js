@@ -10,6 +10,9 @@ define(function(require, exports, module) {
         form = require('util/form'),
         util = require('util/util');
 
+    var template = util.template,
+        colorMap = require('module/default/colors').colorMap;
+
     require('plupload');
     require('jquery-validate');
     require('jquery-validate-add');
@@ -31,23 +34,43 @@ define(function(require, exports, module) {
                     '<input type="hidden" value="" name="pictures"/>';
     var validates = {
             rules: {
-                // code: {require: true},
-                name: {require: true},
-                price: {require: true},
-                department: {require: true},
-                minimum: {require: true},
-                // pictures: {require: true},
-                // videos: {require: true},
-                descriptive: {require: true}
+                name: {required: true},
+                price: {
+                    required: true,
+                    number: true
+                },
+                department: {required: true},
+                minimum: {
+                    required: true,
+                    number: true
+                },
+                color: {required: true},
+                postal: {required: true},
+                descriptive: {required: true}
+                //size: {required: true},
+                // pictures: {required: true},
+                // videos: {required: true},
+                //postal: {required: true},
+                //quantity: {required: true}
             },
             messages: {
-                name: {require: '请输入商品名称'},
-                price: {require: '请输入售价'},
-                department: {require: '请选择商品分类'},
-                minimum: {require: '请输入起批件数'},
-                // pictures: {require: true},
-                // videos: {require: true},
-                descriptive: {require: '请输入商品描述'}
+                name: {required: '请输入商品名称'},
+                price: {
+                    required: '请输入售价',
+                    number: '请输入数字'
+                },
+                department: {required: '请选择商品分类'},
+                minimum: {
+                    required: '请输入起批件数',
+                    number: '请输入数字'
+                },
+                color: {required: '请选择颜色'},
+                postal: {required: '请选择运费模版'},
+                descriptive: {required: '请输入商品描述'}
+                //size: {required: true},
+                // pictures: {required: true},
+                // videos: {required: true},
+                //quantity: {required: true}
             },
             errorPlacement: function(error, element) {
                 error.appendTo(element.parent().parent());
@@ -58,25 +81,39 @@ define(function(require, exports, module) {
 
     var FormView = Backbone.View.extend({
         events: {
-            'click button[role="btn-submit"]': 'submit',
             'click img[role="upload-img"]': 'uploadImage',
-            'click video[role="upload-video"]': 'uploadVideo'
+            'click [role="upload-video"]': 'uploadVideo',
+            // 'click img[role="upload-video"]': 'uploadVideo',
+            'change input[role="color"]': 'toggleInventory',
+            'change input[role="size"]': 'addSize',
+            'click button[role="btn-submit"]': 'submit'
         },
-        initialize: function(opstions){
+        initialize: function(options){
             this.$checkboxs = [];
             this.uploaders_store = [];
+            this.$inventory = this.$('#inventory');
+            this.inventoryItemTmpl = template('inventoryItem');
+            this.sizeItemTmpl = template('sizeItem');
 
             this.init();
             this.initImgUpload();
             this.initVideoUpload();
 
-            this.$el.validate(validates);
+            this.validator = this.$el.validate(validates);
         },
         init: function(){
             var _this = this;
             _.each(this.$('.checkbox-inline'), function(item, index){
                 _this.$checkboxs.push(new form.CheckboxView({el: $(item)}));
             });
+
+            this.videos = [];
+            this.pictures = [];
+            if(this.$('#video').attr('src') !== ''){
+                this.$('#video').show();
+            }else{
+                this.$('#video-default').show();
+            }
         },
         initImgUpload: function(){
             var _this = this, uploader = {};
@@ -118,10 +155,11 @@ define(function(require, exports, module) {
 
                     var result = $.parseJSON(response.response);
 
-                    if(result.successSign){
-                        var finalName = result.url;
+                    if(result.success){
+                        // var finalName = result.url;
+                        _this.pictures.push(result.detail);
                     }else{
-                        alert(result.errorMessage || '上传出错');
+                        alert(result.detail || '上传出错');
                     }
                 });
 
@@ -173,11 +211,12 @@ define(function(require, exports, module) {
 
                 var result = $.parseJSON(response.response);
 
-                if(result.successSign){
-                    var finalName = result.url;
-
+                if(result.success){
+                    // this.$('#video').show();
+                    // this.$('#video-default').hide();
+                    _this.videos.push(result.detail);
                 }else{
-                    alert(result.errorMessage || '上传出错');
+                    alert(result.detail || '上传出错');
                 }
             });
 
@@ -201,25 +240,84 @@ define(function(require, exports, module) {
 
             this.$('#btn-video').trigger('click');
         },
+        'toggleInventory': function(ev){
+            var $this = $(ev.currentTarget),
+                _this = this,
+                color = $this.val();
+
+            if($this.prop('checked')){
+                if(this.$('#inventory-' + color).length < 1){
+                    this.$inventory.append(this.inventoryItemTmpl({'colorCode': color, 'colorName': colorMap[color]}));
+
+                    _.each(this.$('input[role="size"]'), function(item, index){
+                        if($(item).prop('checked')){
+                            var size = $(item).val();
+                            _this.$('#inventory-' + color).find('.inventory-size').append(_this.sizeItemTmpl({'sizeCode': size}));
+                        }
+                    });
+                }
+            }else{
+                if(this.$('#inventory-' + color).length > 0) {
+                    this.$('#inventory-' + color).remove();
+                }
+            }
+        },
+        'addSize': function(ev){
+            var $this = $(ev.currentTarget),
+                _this = this,
+                size = $this.val();
+            // if(this.validator.element(this.$('input[name="color"]'))){
+                if($this.prop('checked')){
+                    var $inventory_size = this.$inventory.find('.inventory-size')
+                    if($inventory_size.length > 0){
+                        $inventory_size.append(this.sizeItemTmpl({'sizeCode': size}));
+                    }
+                }else{
+                    if(this.$inventory.find('.inventory-' + size).length > 0) {
+                        this.$inventory.find('.inventory-' + size).remove();
+                    }
+                }
+            // }
+        },
+        getQuantity: function(){
+            /*
+             * 获取库存数据
+             */
+            var _this = this,
+                $inventorys = this.$('ul.inventory>li'),
+                array = [];
+            _.each($inventorys, function(item, index){
+                $(item).find('input[role="quantity"]').each(function(i, input){
+                    if($(input).val() !== ''){
+                        array.push('{color: "' +  $(item).data('color') + '",size: "' +  $(input).data('size') + '",quantity: "' +  $(input).val() + '"}');
+                    }
+                });
+            });
+            return array;
+        },
         'submit': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this;
-            var array = _this.$el.serializeArray();
-            _.each(array, function(item, index){
-                if(item.name === 'price' || item.name === 'minimum'){
-                    item.value = 10;
-                }else{
-                    item.value = 'test';
-                }
-            });
-            if(this.$el.validate()){}
-            $.ajax({
-                url: G.contextPath + 'website/product/add',
-                data: array,
-                success: function(rsp){
-                    console.log(rsp);
-                }
-            });
+
+            if(this.validator.form()) {
+                var param = this.$el.serializeObject();
+                param.pictures = '["dddd.gif","ffff.gif"]';
+                param.videos = '["dddd.mp4","ffff.mp4"]';
+                param.quantity = '[' + this.getQuantity().join(',')  + ']';
+                // param.pictures = '[' + this.pictures.join(',') + ']';
+                // param.videos =  '[' + this.videos.join(',') + ']';
+                param.label = '["1"]';
+
+                $.ajax({
+                    url: G.contextPath + 'website/product/add',
+                    data: param,
+                    success: function (rsp) {
+                        if(rsp.success){
+                            alert('商品添加成功！');
+                        }
+                    }
+                });
+            }
         }
     });
 

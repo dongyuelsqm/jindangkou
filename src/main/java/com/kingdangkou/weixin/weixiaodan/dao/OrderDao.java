@@ -12,8 +12,12 @@ import java.util.List;
  */
 @Component
 public class OrderDao extends BaseDaoHibernate4<Order>{
-    public List<Order> findAllOrders(String openID){
-        return find("openID", openID, Order.class);
+    public List<Order> findAllMyOrders(String openID){
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        List orders = session.createQuery("from Order where customerEntity.openID = " + openID).list();
+        transaction.commit();
+        return orders;
     }
 
     public Order getOrder(String key){
@@ -28,7 +32,33 @@ public class OrderDao extends BaseDaoHibernate4<Order>{
         transaction.commit();
     }
 
+    public void updateState(int id, int newSate){
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Order order = session.get(Order.class, id);
+        order.setState(newSate);
+        session.update(order);
+        transaction.commit();
+    }
+
     public List<Order> listOrdersByState(String state){
         return find("state", state, Order.class);
+    }
+
+    public List<Order> getOrdersByDate(String begin, String end) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        List list = session.createQuery("from Order where date between :startDate and :endDate").
+                setString("startDate", begin).setString("endDate", end).list();
+        transaction.commit();
+        return list;
+    }
+
+    public List<Order> find(String openID, String name, String value){
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        List list = session.createQuery("from Order where " + name + " = " + value + " and customerEntity.openID = " + openID).list();
+        transaction.commit();
+        return list;
     }
 }

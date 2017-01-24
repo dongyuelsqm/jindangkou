@@ -2,7 +2,6 @@ package com.kingdangkou.weixin.weixiaodan.controller;
 
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.ProductService;
-import com.kingdangkou.weixin.weixiaodan.utils.configs.ProductJsonConfig;
 import org.apache.commons.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,10 +17,8 @@ import java.io.IOException;
  * Created by dongy on 2016-12-27.
  */
 @Controller
-@RequestMapping("/website/product")
+@RequestMapping("/website/product/")
 public class WebSiteProductController {
-    @Autowired
-    private ProductJsonConfig productJsonConfig;
 
     @Autowired
     private ProductService productService;

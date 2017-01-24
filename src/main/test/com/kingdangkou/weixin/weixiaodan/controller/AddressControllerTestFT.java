@@ -24,8 +24,8 @@ public class AddressControllerTestFT extends TestBase<AddressController> {
 
     @Test
     public void testGetFromDB() throws Exception {
-        ResultActions result = mockMvc.perform(get("/address/list").param("openID", "111")).andDo(print());
-        result.andExpect(status().isOk()).andExpect(content().string("[{\"city\":\"hangzhou\",\"detail\":\"\",\"disctrict\":\"\",\"id\":1,\"name\":\"\",\"openID\":\"111\",\"phone\":\"\",\"province\":\"zhejiang\"},{\"city\":\"hangzhou\",\"detail\":\"\",\"disctrict\":\"\",\"id\":2,\"name\":\"\",\"openID\":\"111\",\"phone\":\"\",\"province\":\"zhejiang\"}]"));
+        ResultActions result = mockMvc.perform(get("/address/list").param("openID", "ssss")).andDo(print());
+        result.andExpect(status().isOk());
 
     }
 
@@ -44,7 +44,7 @@ public class AddressControllerTestFT extends TestBase<AddressController> {
 
     @Test
     public void testDel() throws Exception {
-        ResultActions result = mockMvc.perform(delete("/address").param("id", "3")).andDo(print());
+        ResultActions result = mockMvc.perform(delete("/address").param("id", "2")).andDo(print());
         result.andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
     }
 }

@@ -19,26 +19,23 @@ import static com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum.NOT_PAY;
 public class Order {
     private int id;
     private float discount;
-    private String openID;
+    private float method_price;
+    private float actual_price;
+    private CustomerEntity customerEntity;
     private Date date;
     private String ship_id;
     private int state = NOT_PAY.getValue();
     private Address address;
-
+    private String expressNumber;
     private Set<SubOrder> subOrders = new HashSet<SubOrder>();
 
-    public Order() {}
-
-    public Order(String openID) {
-        this.openID = openID;
+    public Order() {
         date = new Date();
-        state = 0;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public int getId() {
         return id;
     }
@@ -47,7 +44,6 @@ public class Order {
         this.id = id;
     }
 
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     @ManyToOne(targetEntity = Address.class)
     @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
     @Cascade(CascadeType.ALL)
@@ -59,8 +55,25 @@ public class Order {
         this.address = address;
     }
 
+    @Column(name = "method_price")
+    public float getMethod_price() {
+        return method_price;
+    }
+
+    public void setMethod_price(float method_price) {
+        this.method_price = method_price;
+    }
+
+    @Column(name = "actual_price")
+    public float getActual_price() {
+        return actual_price;
+    }
+
+    public void setActual_price(float actural_price) {
+        this.actual_price = actural_price;
+    }
+
     @Column(name = "discount")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public float getDiscount() {
         return discount;
     }
@@ -69,18 +82,17 @@ public class Order {
         this.discount = discount;
     }
 
-    @Column(name = "open_id")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public String getOpenID() {
-        return openID;
+    @ManyToOne(targetEntity = CustomerEntity.class)
+    @JoinColumn(name = "open_id", referencedColumnName = "open_id", nullable = false)
+    public CustomerEntity getCustomerEntity() {
+        return customerEntity;
     }
 
-    public void setOpenID(String openID) {
-        this.openID = openID;
+    public void setCustomerEntity(CustomerEntity customerEntity) {
+        this.customerEntity = customerEntity;
     }
 
     @Column(name = "deal_date")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public Date getDate() {
         return date;
     }
@@ -100,7 +112,6 @@ public class Order {
     }
 
     @Column(name = "state")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public int getState() {
         return state;
     }
@@ -110,12 +121,20 @@ public class Order {
     }
 
     @OneToMany(targetEntity = SubOrder.class, mappedBy = "order")
-    @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public Set<SubOrder> getSubOrders() {
         return subOrders;
     }
 
     public void setSubOrders(Set<SubOrder> subOrders) {
         this.subOrders = subOrders;
+    }
+
+    @Column(name = "express_number")
+    public String getExpressNumber() {
+        return expressNumber;
+    }
+
+    public void setExpressNumber(String expressNumber) {
+        this.expressNumber = expressNumber;
     }
 }

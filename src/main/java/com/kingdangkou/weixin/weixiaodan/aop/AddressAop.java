@@ -1,7 +1,10 @@
 package com.kingdangkou.weixin.weixiaodan.aop;
 
+import com.kingdangkou.weixin.weixiaodan.dao.AddressDao;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,7 +13,12 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class AddressAop {
-    @Pointcut("execution(* com.kingdangkou.weixin.weixiaodan.controller.AddressController(..))")
-    public void register(){}
+    @Autowired
+    private AddressDao addressDao;
+    @Around("execution(* com.kingdangkou.weixin.weixiaodan.controller.AddressController.delete(..))")
+    public void deleteChecking(ProceedingJoinPoint jp){
+        Object[] args = jp.getArgs();
+
+    }
 
 }

@@ -1,0 +1,6 @@
+@charset "UTF-8";
+.content{background-color: #fff; height: 642px;}
+    .form{height: 230px; margin-top: -110px; position: absolute; top: 50%; width: 100%;}
+        a.register{color: #242424; text-decoration: underline;}
+.error{color: #4d4d4d; display: none; line-height: 25px; text-align: center; }
+    .error .iconfont{color: #e11377;}

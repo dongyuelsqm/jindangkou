@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "products")
 public class ProductEntity {
-    private String id;
+    private int id;
     private String name;
     private String description;
     private float price;
@@ -26,7 +26,7 @@ public class ProductEntity {
     private String code;
     private Date date;
 
-    private Set<ProductQuantityEntity> productQuantityEntitys = new HashSet<ProductQuantityEntity>();
+    private Set<StorageEntity> storage = new HashSet<StorageEntity>();
     private Set<LabelEntity> labelEntitySet = new HashSet<>();
 
     public ProductEntity() {}
@@ -46,12 +46,12 @@ public class ProductEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public String getId() {
+    public int getId() {
 
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -148,20 +148,20 @@ public class ProductEntity {
         this.date = date;
     }
 
-    @OneToMany(targetEntity = ProductQuantityEntity.class, mappedBy = "productEntity")
-    public Set<ProductQuantityEntity> getProductQuantityEntitys() {
-        return productQuantityEntitys;
+    @OneToMany(targetEntity = StorageEntity.class, mappedBy = "productEntity")
+    public Set<StorageEntity> getStorage() {
+        return storage;
     }
 
-    public void addProductQuantity(ProductQuantityEntity quantity){
-        this.productQuantityEntitys.add(quantity);
+    public void setStorage(Set<StorageEntity> productQuantityEntitySet) {
+        this.storage = productQuantityEntitySet;
     }
-    public void setProductQuantityEntitys(Set<ProductQuantityEntity> productQuantityEntitySet) {
-        this.productQuantityEntitys = productQuantityEntitySet;
+    public void addStorage(StorageEntity quantity){
+        this.storage.add(quantity);
     }
 
-    public ProductQuantityEntity getProductQuantityEntity(int color, int size){
-        for (ProductQuantityEntity entity: productQuantityEntitys){
+    public StorageEntity getProductQuantityEntity(int color, int size){
+        for (StorageEntity entity: storage){
             if (entity.getColorEntity().getId() == color && entity.getSizeEntity().getId() == size){
                 return entity;
             }
@@ -187,7 +187,7 @@ public class ProductEntity {
 
         ProductEntity that = (ProductEntity) o;
 
-        return id.equals(that.id);
+        return id == that.id;
     }
 
     @Override

@@ -2,8 +2,11 @@
 <%@ include file="../common/taglibs.jsp"%>
 <%@ include file="../common/upper-part.jsp"%>
 <style>
-    .inventory > label{padding-right: 0;}
-    .inventory > div input{margin-right: 20px; width: 40px;}
+    ul.inventory > li{margin-bottom: 5px; overflow: hidden;}
+    ul.inventory > li > label,
+    ul.inventory > li div{padding-left: 0; padding-right: 0;}
+    ul.inventory > li > div > div{float: left; margin-bottom: 5px;}
+        ul.inventory > li > div input{padding-left: 5px; width: 40px;}
 </style>
 <h1 class="content-title">添加商品</h1>
 <form class="block-body form" id="product-form">
@@ -28,41 +31,69 @@
     <div class="row">
         <label class="col-md-3 control-label">商品分类<span class="required">*</span></label>
         <div class="col-md-5">
-            <select name="department">
-                <option value="">羽绒服</option>
-                <option value="">呢大衣</option>
-                <option value="">毛衣</option>
-            </select>
-        </div>
-    </div>
-    <div class="row">
-        <label class="col-md-3 control-label">尺码</label>
-        <div class="col-md-5">
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" value="xs"/> xs
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" value="s"/> s
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" value="m"/> m
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" value="x"/> x
-            </span>
+            <div class="dropdown">
+                <div class="input-group">
+                    <input type="text" id="" readonly class="form-control"  placeholder="" />
+                    <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
+                </div>
+                <input type="hidden" id="" name="department" />
+                <ul class="ul-dropdown">
+                    <li class="selected"><a href="javascript:" data-val="1">羽绒服</a></li>
+                    <li><a href="javascript:" data-val="2">呢大衣</a></li>
+                    <li><a href="javascript:" data-val="3">毛衣</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="row">
         <label class="col-md-3 control-label">颜色<span class="required">*</span></label>
         <div class="col-md-5">
             <span class="checkbox-inline">
-                <input type="checkbox" name="color" value="red"/> 红色
+                <input type="checkbox" name="color" role="color" value="red"/> 红色
             </span>
             <span class="checkbox-inline">
-                <input type="checkbox" name="color" value="coffee"/> 咖啡色
+                <input type="checkbox" name="color" role="color" value="coffee"/> 咖啡色
             </span>
             <span class="checkbox-inline">
-                <input type="checkbox" name="color" value="blue"/> 蓝色
+                <input type="checkbox" name="color" role="color" value="blue"/> 蓝色
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="color" role="color" value="yellow"/> 黄色
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="color" role="color" value="pink"/> 粉色
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="color" role="color" value="oringe"/> 橙色
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="color" role="color" value="purple"/> 紫色
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <label class="col-md-3 control-label">尺码</label>
+        <div class="col-md-5">
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="xs"/> xs
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="s"/> s
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="m"/> m
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="x"/> x
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="xl"/> xl
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="xxl"/> xxl
+            </span>
+            <span class="checkbox-inline">
+                <input type="checkbox" name="size" role="size" value="xxxl"/> xxxl
             </span>
         </div>
     </div>
@@ -78,8 +109,7 @@
         <div class="col-md-9 comment">尺寸750*750像素以上，大小2M以下，默认显示第1张，最多5张(可拖拽图片调整显示顺序)</div>
         <div class="col-md-5 col-md-offset-3">
             <button type="button" id="btn-img" style="display: none;"></button>
-            <img src="${contextPath}/res/css/base/img/upload-default.png" alt="" class="upload-default" role="upload-img" />
-            <input type="hidden" value="" name="pictures" role="upload"/>
+            <img src="${contextPath}/res/css/base/img/upload-default.png" alt="上传文件" class="upload-default" role="upload-img" />
         </div>
     </div>
     <div class="row">
@@ -87,10 +117,8 @@
         <div class="col-md-9 comment">请保证视频大小为20M以下</div>
         <div class="col-md-5 col-md-offset-3" >
             <button type="button" id="btn-video" style="display: none;"></button>
-            <video loop="loop" src="" autoplay="autoplay" id="video" role="upload-video">
-                <img src="${contextPath}/res/css/base/img/upload-default.png" alt="" class="upload-default"/>
-            </video>
-            <input type="hidden" value="" name="videos" role="upload"/>
+            <video loop="loop" src="" autoplay="autoplay" id="video" role="upload-video" style="display: none;" ></video>
+            <img src="${contextPath}/res/css/base/img/upload-default.png" alt="上传视频" style="display: none;" role="upload-video" id="video-default" class="upload-default" />
         </div>
     </div>
     <div class="row">
@@ -102,18 +130,23 @@
     <div class="row">
         <label class="col-md-3 control-label">运费模板<span class="required">*</span></label>
         <div class="col-md-5">
-            <input type="text" name="postal" placeholder="" value=""/>
+            <div class="dropdown">
+                <div class="input-group">
+                    <input type="text" id="" readonly class="form-control"  placeholder="" />
+                    <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
+                </div>
+                <input type="hidden" id="" name="postal" />
+                <ul class="ul-dropdown">
+                    <li class="selected"><a href="javascript:" data-val="300000">包邮</a></li>
+                    <li><a href="javascript:" data-val="300001">不包邮</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="row">
         <label class="col-md-3 control-label">库存<span class="required">*</span></label>
-        <div class="col-md-5 inventory">
-            <label class="col-md-2">黄色：</label>
-            <div class="col-md-10">
-                SX: <input type="text" name="quantity" class="input-icon input-icon-count" placeholder="" value=""/>
-                M: <input type="text" name="" class="input-icon input-icon-count" placeholder="" value=""/>
-                L: <input type="text" name="" class="input-icon input-icon-count" placeholder="" value=""/>
-            </div>
+        <div class="col-md-5">
+            <ul class="inventory" id="inventory"></ul>
         </div>
     </div>
     <div class="row">
@@ -123,6 +156,19 @@
     </div>
 </form>
 <%@include file="../common/lower-part.jsp"%>
+
+<script type="text/html" id="tmpl-inventoryItem">
+    <li data-color="blue" id="inventory-{{colorCode}}">
+        <label class="col-md-2">{{colorName}}：</label>
+        <div class="col-md-10 inventory-size"></div>
+    </li>
+</script>
+
+<script type="text/html" id="tmpl-sizeItem">
+    <div class="col-md-3 inventory-{{sizeCode}}">
+        {{sizeCode}}: <input type="text" role="quantity" data-size="{{sizeCode}}" class="input-icon input-icon-count" placeholder="" value=""/>
+    </div>
+</script>
 
 <script type="text/javascript">
     seajs.use('module/product/add', function(mod){

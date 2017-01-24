@@ -61,7 +61,7 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 	public List<T> find(String openID, String name, String value, Class<T> cls){
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		List list = session.createQuery("select from " + cls.getSimpleName() + " where " + name + " = " + value + " and openID = " + openID).list();
+		List list = session.createQuery("from " + cls.getSimpleName() + " where " + name + " = " + value + " and openID = " + openID).list();
 		transaction.commit();
 		return list;
 	}
@@ -96,6 +96,18 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		session.delete(entity);
+		transaction.commit();
+		session.close();
+	}
+
+	public void batchDelete(Object[] ids, String entity){
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		String hql = "delete from " + entity +" where id = " + ids[0];
+		for (Object id: ids){
+			hql += " or id = " + id;
+		}
+		session.createQuery(hql).executeUpdate();
 		transaction.commit();
 		session.close();
 	}

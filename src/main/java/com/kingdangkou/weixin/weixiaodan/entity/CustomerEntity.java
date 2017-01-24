@@ -3,6 +3,7 @@ package com.kingdangkou.weixin.weixiaodan.entity;
 import net.sf.json.JSONObject;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "customers")
-public class CustomerEntity {
+public class CustomerEntity implements Serializable{
 
     @Column(name = "id")
     @Id
