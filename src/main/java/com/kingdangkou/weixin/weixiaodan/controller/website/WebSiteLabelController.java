@@ -22,7 +22,7 @@ public class WebSiteLabelController {
     @Autowired
     private LabelService labelService;
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public void add(@RequestParam("label") String label, HttpServletResponse response) throws IOException {
+    public void add(@RequestParam("title") String label, HttpServletResponse response) throws IOException {
         Result result = labelService.add(label);
         response.getWriter().print(result);
     }

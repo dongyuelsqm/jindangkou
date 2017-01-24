@@ -1,6 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.token;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -8,6 +9,7 @@ import java.util.TimerTask;
 /**
  * Created by dongy on 2016-12-28.
  */
+@Component
 public class AccessTokenHolder {
     private int period = 3600 * 1000;
     private String Access_Token;
