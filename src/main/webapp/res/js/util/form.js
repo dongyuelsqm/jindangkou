@@ -6,7 +6,10 @@
 define(function(require, exports, module){
     var $ = require('jquery'),
         _ = require('underscore'),
-        Backbone = require('backbone');
+        Backbone = require('backbone'),
+        util = require('util/util');
+
+    var template = util.template;
     
     /**
      * 模拟checkbox 
@@ -132,25 +135,21 @@ define(function(require, exports, module){
     /**
      * 模拟select SelectCollection
      */
-    var li = '<li class="selected"><a href="javascript:" data-val="{{val}}" >{{name}}</a></li>',
+    var li = '<li class="selected"><a href="javascript:" data-val="{{id}}" >{{name}}</a></li>',
         text = {val: 1, name: 'text1'};
         
     var SelectCollection = Backbone.Collection.extend({
         idAttribute: 'id',
         initialize: function(model, options){
-            
             if(options.url){
                 this.url = options.url;
             }
-            
             if(options.sync){
-                this.update();
+                this.fetch();
             }
-            
             this.extractResult = options.extractResult || function (res) {
                 return res;
             };
-            
         },
         parse: function(rsp){
             return this.extractResult(rsp);
@@ -180,23 +179,27 @@ define(function(require, exports, module){
             'click input[type=text]': 'hideSelect'
         },
         initialize: function(options){
+            this.cacheEls();
+
+            if(options.template) {
+                this.template = util.render(options.template) || util.render(li);
+            }
 
             if(options.store){
                 this.store = new SelectCollection(null, options.store);
 
 //              this.listenTo(this.store, 'add', this.renderUl);
                 this.listenTo(this.store, 'reset', this.setData);
+                this.listenTo(this.store, 'sync', this.setData);
                 this.listenTo(this.store, 'error', this.error);
-//              this.listenTo(this.store, 'sync', this.sync);
-            }
-            
-            if(options.data){
-                this.setData(options.data);
-            }
-            
-            this.cacheEls();
-            this.render();
 
+                this.store.fetch();
+            }else{
+                if(options.data){
+                    this.setData(new Backbone.Collection(options.data));
+                }
+                this.addCurrentClass();
+            }
         },
         cacheEls: function(){
             this.$ul = this.$('.ul-dropdown');
@@ -205,15 +208,23 @@ define(function(require, exports, module){
             this.$addon = this.$('.input-group-addon');
             this.$i = this.$addon.children();
         },
-        renderUl: function(model){          
-            var tmpl = template(li);
-            this.$ul.append(tmpl(model.toJSON()));
+        _set: function(data){
+            this.store.fetch({
+                data: data,
+                reset: true
+            });
         },
-        render: function(){
-            var $selected = this.$('li.selected>a');
-            
-            this.$text.val($selected.html());
-            this.$val.val($selected.data('val'));
+        setData: function(collection, opt){
+            var _this = this;
+            this.$ul.empty();
+            collection.map(function(item, index, list){
+                _this.render(item);
+            });
+        },
+        render: function(model){
+            this.$ul.append(this.template(model.toJSON()));
+            this.addCurrentClass();
+            return this;
         },
         'select': function(ev){
             var $this = $(ev.currentTarget),
@@ -253,18 +264,15 @@ define(function(require, exports, module){
         error: function(col, rsp, opt){
             console.log('发生错误，请稍后再试');
         },
-        _set: function(data){
-            this.store.fetch({
-                data: data,
-                reset: true
-            });
-        },
-        setData: function(collection, opt){
-            var _this = this;
-            this.$ul.empty();
-            collection.map(function(item, index, list){
-                _this.renderUl(item);
-            });
+        addCurrentClass: function(){
+            var $selected = {};
+            if(this.$('li.selected').length < 1){
+                $selected = this.$('li').eq(0).find('a');
+            }else{
+                $selected = this.$('li.selected>a');
+            }
+            this.$text.val($selected.html());
+            this.$val.val($selected.data('val'));
         }
     });
     

@@ -192,7 +192,9 @@ th > .order{background-image: url(./img/order-arrow.png); background-repeat: no-
         .form .comment {color: #cdcdcd; line-height: 20px; margin-bottom: 5px; margin-top: 5px;}
         	.form .comment a{padding: 0 5px; vertical-align: baseline;}
         .form .agreement { color: #aaa; }
-		.form .upload-default{cursor: pointer; height: 100px; width: 100px;}
+		.form .upload-img,
+		.form .upload-video {cursor: pointer; height: 100px; margin-right: 5px; width: 100px;}
+			.form .upload-video {width: 200px;}
     .form a{color: #242424; vertical-align: middle; text-decoration: underline;}
         .form a.forget-pwd{color: #ea3527; padding-top: 8px;}
 .form label.error{background: url(./img/error-icon.png) no-repeat left center; color: #4d4d4d; font-weight: normal; line-height: 30px; padding-left: 20px; text-align: left; min-width: 150px;}
