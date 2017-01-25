@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -29,6 +30,12 @@ public class SizeController {
     @RequestMapping(value = "/del", method = RequestMethod.POST)
     public void del(@RequestParam("id") int id, HttpServletResponse response) throws IOException {
         Result result = sizeService.del(String.valueOf(id));
+        response.getWriter().print(result);
+    }
+
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    public void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Result result = sizeService.list();
         response.getWriter().print(result);
     }
 
