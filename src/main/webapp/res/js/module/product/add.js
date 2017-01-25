@@ -171,6 +171,7 @@ define(function(require, exports, module) {
             new SelectView({
                 el: this.$('#department-dropdown'),
                 template: '<li><a href="javascript:" data-val="{{id}}" >{{name}}</a></li>',
+                sync: true,
                 store:{
                     url: G.contextPath + 'department/list',
                     extractResult: function(rsp){
@@ -229,7 +230,7 @@ define(function(require, exports, module) {
                             if(_this.$imgWrapper.find('img').length > 4 && _this.$imgDefault.css('display') === 'block'){
                                 _this.$imgDefault.hide();
                             }
-                            _this.$imgDefault.before('<img src="' + url + '" alt="" role="upload-img" class="upload-default"/>/');
+                            _this.$imgDefault.before('<img src="' + url + '" alt="" role="upload-img" class="upload-img" />');
                         }
                         _this.pictures.push(result.detail[0]);
                     }else{
