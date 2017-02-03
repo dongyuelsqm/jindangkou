@@ -42,9 +42,14 @@ public class AddressControllerTestFT extends TestBase<AddressController> {
         result.andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void testDel() throws Exception {
-        ResultActions result = mockMvc.perform(delete("/address").param("id", "2")).andDo(print());
-        result.andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
+        try {
+            ResultActions result = mockMvc.perform(delete("/address").param("id", "2")).andDo(print());
+            result.andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"invalid address id\",\"success\":false}"));
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

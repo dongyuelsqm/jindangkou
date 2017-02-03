@@ -54,8 +54,8 @@ public class OrderService {
         CustomerEntity customer = customerDao.get(CustomerEntity.class, openID, "openID");
         order.setCustomerEntity(customer);
         order.setAddress(addressDao.get(address_id));
-        orderDao.save(order);
         order.setSubOrders(convertToSubOrders(items, order));
+        orderDao.save(order);
         float total = calculateMethodPrice(order);
         order.setMethod_price(total);
         order.setActual_price(total);
@@ -81,8 +81,9 @@ public class OrderService {
             int color_id = Integer.valueOf(((JSONObject) obj).get("color").toString());
             int size_id = Integer.valueOf(((JSONObject) obj).get("size").toString());
             Integer number = Integer.valueOf(((JSONObject) obj).get("number").toString());
+
             SubOrder subOrder = new SubOrder(order, productEntity, colors.get(color_id), sizes.get(size_id), number);
-            subOrderEntityDao.save(subOrder);
+            //subOrderEntityDao.save(subOrder);
             subOrders.add(subOrder);
         }
         return subOrders;

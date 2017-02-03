@@ -155,6 +155,9 @@ public class ProductEntity {
 
     public void setStorage(Set<StorageEntity> productQuantityEntitySet) {
         this.storage = productQuantityEntitySet;
+        for (StorageEntity entity: productQuantityEntitySet){
+            entity.setProductEntity(this);
+        }
     }
     public void addStorage(StorageEntity quantity){
         this.storage.add(quantity);
