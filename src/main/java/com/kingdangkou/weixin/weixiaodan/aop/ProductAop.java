@@ -2,7 +2,6 @@ package com.kingdangkou.weixin.weixiaodan.aop;
 
 import com.kingdangkou.weixin.weixiaodan.dao.DepartmentDao;
 import com.kingdangkou.weixin.weixiaodan.entity.DepartmentEntity;
-import com.kingdangkou.weixin.weixiaodan.exception.ParaInValidException;
 import com.kingdangkou.weixin.weixiaodan.model.Failure;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

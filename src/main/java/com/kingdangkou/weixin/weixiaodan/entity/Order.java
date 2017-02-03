@@ -127,6 +127,9 @@ public class Order {
     }
 
     public void setSubOrders(Set<SubOrder> subOrders) {
+        for (SubOrder subOrder: subOrders){
+            subOrder.setOrder(this);
+        }
         this.subOrders = subOrders;
     }
 
