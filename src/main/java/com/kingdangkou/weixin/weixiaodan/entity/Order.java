@@ -121,11 +121,15 @@ public class Order {
     }
 
     @OneToMany(targetEntity = SubOrder.class, mappedBy = "order")
+    @Cascade(CascadeType.ALL)
     public Set<SubOrder> getSubOrders() {
         return subOrders;
     }
 
     public void setSubOrders(Set<SubOrder> subOrders) {
+        for (SubOrder subOrder: subOrders){
+            subOrder.setOrder(this);
+        }
         this.subOrders = subOrders;
     }
 

@@ -33,13 +33,7 @@ public class OrderService {
     private AddressDao addressDao;
 
     @Autowired
-    private ProductDao productDao;
-    @Autowired
-    private ColorDao colorDao;
-    @Autowired
-    private SizeDao sizeDao;
-    @Autowired
-    private SubOrderEntityDao subOrderEntityDao;
+    private SubOrderService subOrderService;
 
     @Autowired
     private CustomerDao customerDao;
@@ -54,8 +48,12 @@ public class OrderService {
         CustomerEntity customer = customerDao.get(CustomerEntity.class, openID, "openID");
         order.setCustomerEntity(customer);
         order.setAddress(addressDao.get(address_id));
+        try {
+            order.setSubOrders(subOrderService.convertToSubOrders(items));
+        }catch (Exception ex){
+            return new Failure(ex.getMessage());
+        }
         orderDao.save(order);
-        order.setSubOrders(convertToSubOrders(items, order));
         float total = calculateMethodPrice(order);
         order.setMethod_price(total);
         order.setActual_price(total);
@@ -69,23 +67,6 @@ public class OrderService {
             total += subOrder.getNumber() * subOrder.getProductEntity().getPrice();
         }
         return total;
-    }
-
-    private Set<SubOrder> convertToSubOrders(String items, Order order) {
-        Set<SubOrder> subOrders = new HashSet<SubOrder>();
-        JSONArray array = JSONArray.fromObject(items);
-        HashMap<Integer, ColorEntity> colors = colorDao.getColorMaps();
-        HashMap<Integer, SizeEntity> sizes = sizeDao.getMap();
-        for(Object obj: array){
-            ProductEntity productEntity = productDao.get(((JSONObject) obj).get("product_id").toString());
-            int color_id = Integer.valueOf(((JSONObject) obj).get("color").toString());
-            int size_id = Integer.valueOf(((JSONObject) obj).get("size").toString());
-            Integer number = Integer.valueOf(((JSONObject) obj).get("number").toString());
-            SubOrder subOrder = new SubOrder(order, productEntity, colors.get(color_id), sizes.get(size_id), number);
-            subOrderEntityDao.save(subOrder);
-            subOrders.add(subOrder);
-        }
-        return subOrders;
     }
 
     public void adjustStorage(Set<SubOrder> subOrders){

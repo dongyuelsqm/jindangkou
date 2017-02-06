@@ -98,7 +98,6 @@ public class ProductService {
         ProductEntity productEntity = new ProductEntity(name, descriptive, price, code, minimum, postal, pictures, videos);
 
         DepartmentEntity departmentEntity = departmentDao.get(department);
-        if (departmentEntity == null) return new Failure("invalid department!");
         productEntity.setDepartment(departmentEntity);
 
         Set<StorageEntity> storageEntitySet = storageGenerator.parse2StorageSet(storageJson);

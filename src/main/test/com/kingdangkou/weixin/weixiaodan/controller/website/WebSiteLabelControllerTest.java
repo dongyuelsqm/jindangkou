@@ -43,8 +43,6 @@ public class WebSiteLabelControllerTest {
     public void add() throws Exception {
         ResultActions resultActions = mockMvc.perform(post("/website/label/add").param("title", "hot")).andDo(print());
         resultActions.andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
-
-
     }
 
 }
