@@ -16,7 +16,7 @@ import java.io.IOException;
  * Created by dongy on 2016-12-20.
  */
 @Controller
-@RequestMapping("/size")
+@RequestMapping("/website/size")
 public class SizeController {
     @Autowired
     private SizeService sizeService;
