@@ -33,7 +33,7 @@ public class SizeController {
         response.getWriter().print(result);
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public void list(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Result result = sizeService.list();
         response.getWriter().print(result);
