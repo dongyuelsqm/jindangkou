@@ -4,6 +4,7 @@ import com.kingdangkou.weixin.weixiaodan.model.Success;
 import org.junit.Test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,7 +31,7 @@ public class SizeControllerTest extends TestBase<SizeController>{
 
     @Test
     public void list() throws Exception {
-        mockMvc.perform(post("/website/size/list")).
+        mockMvc.perform(get("/website/size/list")).
                 andDo(print()).
                 andExpect(status().isOk());
     }
