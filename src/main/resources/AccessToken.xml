@@ -4,4 +4,7 @@
     <appId>wxb5d861c9e4558825</appId>
     <secret>e6aaf6faf0442514c511f822c8f10ff8</secret>
     <url>https://api.weixin.qq.com/cgi-bin/token</url>
+    <mch_id>1230000109</mch_id>
+    <key>keykeykeykey</key>
+    <notify_url>https://pay.weixin.qq.com/wxpay/pay.action</notify_url>
 </access_token>

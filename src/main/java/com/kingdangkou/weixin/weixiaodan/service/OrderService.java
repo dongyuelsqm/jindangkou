@@ -1,6 +1,9 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
-import com.kingdangkou.weixin.weixiaodan.dao.*;
+import com.kingdangkou.weixin.weixiaodan.dao.AddressDao;
+import com.kingdangkou.weixin.weixiaodan.dao.CustomerDao;
+import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
+import com.kingdangkou.weixin.weixiaodan.dao.StorageDao;
 import com.kingdangkou.weixin.weixiaodan.entity.*;
 import com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum;
 import com.kingdangkou.weixin.weixiaodan.model.Failure;
@@ -8,12 +11,9 @@ import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.OrderJsonConfig;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -37,13 +37,16 @@ public class OrderService {
 
     @Autowired
     private CustomerDao customerDao;
+    @Autowired
+    private UnifiedOrderService unifiedOrderService;
+
     public OrderService() {}
 
     public OrderService(OrderDao orderDao) {
         this.orderDao = orderDao;
     }
 
-    public Result save(String openID, String items, String address_id){
+    public Result save(String openID, String items, String address_id) throws Exception {
         Order order = new Order();
         CustomerEntity customer = customerDao.get(CustomerEntity.class, openID, "openID");
         order.setCustomerEntity(customer);
@@ -58,7 +61,10 @@ public class OrderService {
         order.setMethod_price(total);
         order.setActual_price(total);
         adjustStorage(order.getSubOrders());
-        return new Success();
+
+        String s = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), order.getActual_price());
+        JsAPIConfig payConfig = unifiedOrderService.createPayConfig(s);
+        return new Result(true, payConfig);
     }
 
     private float calculateMethodPrice(Order order) {
