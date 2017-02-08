@@ -1,7 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by dongy on 2017-02-06.
@@ -9,62 +8,88 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "unified_order")
 public class UnifiedOrder {
+
+    @Id
+    @Column("id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     /**
      * 公众账号ID
      */
+    @Column(name = "app_id")
     private String appid;
     /**
      * 商户号
      */
+    @Column(name = "mch_id")
     private String mch_id;
     /**
      * 附加数据(说明)
      */
+    @Column(name = "attach")
     private String attach;
     /**
      * 商品描述
      */
+    @Column(name = "body")
     private String body;
     /**
      * 随机串
      */
+    @Column(name = "nonce_str")
     private String nonce_str;
     /**
      * 通知地址
      */
+    @Column(name = "notify_url")
     private String notify_url;
     /**
      * 用户标识
      */
+    @Column(name = "openid")
     private String openid;
     /**
      * 商户订单号
      */
+    @Column(name = "out_trade_no")
     private String out_trade_no;
     /**
      * 终端IP（用户）
      */
+    @Column(name = "spbill_create_ip")
     private String spbill_create_ip;
     /**
      * 总金额
      */
+    @Column(name = "total_fee")
     private float total_fee;
     /**
      * 交易类型
      */
+    @Column(name = "trade_type")
     private String trade_type;
     /**
      * 签名
      */
+    @Column(name = "sign")
     private String sign;
     /**
      * WEB
      */
+    @Column(name = "device_info")
     private String device_info;
 
     public UnifiedOrder(){
         this.trade_type = "JSAPI";
         this.device_info = "WEB";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getAppid() {

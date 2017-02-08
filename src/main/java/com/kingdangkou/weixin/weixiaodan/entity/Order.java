@@ -27,6 +27,7 @@ public class Order {
     private int state = NOT_PAY.getValue();
     private Address address;
     private String expressNumber;
+    private UnifiedOrder unifiedOrder;
     private Set<SubOrder> subOrders = new HashSet<SubOrder>();
 
     public Order() {
@@ -140,5 +141,16 @@ public class Order {
 
     public void setExpressNumber(String expressNumber) {
         this.expressNumber = expressNumber;
+    }
+
+    @OneToOne(targetEntity = UnifiedOrder.class)
+
+    @Cascade(CascadeType.ALL)
+    public UnifiedOrder getUnifiedOrder() {
+        return unifiedOrder;
+    }
+
+    public void setUnifiedOrder(UnifiedOrder unifiedOrder) {
+        this.unifiedOrder = unifiedOrder;
     }
 }

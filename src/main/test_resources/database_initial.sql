@@ -15,6 +15,7 @@ drop table collections;
 drop table shoping_cart;
 drop table notifications;
 drop table customers;
+DROP TABLE unified_order;
 
 create table products(id int primary key AUTO_INCREMENT, name varchar(100) not null, department_id int not null, unit_price float not null, description varchar(500), pictures varchar(200), videos varchar(200),  minimum int, postal varchar(10), code varchar(20), input_date datetime) character set = utf8;
 create table product_quantity(id int primary key AUTO_INCREMENT, product_id int, color varchar(10), size varchar(10), number int) character set = utf8;
@@ -32,6 +33,7 @@ create table collections(id int primary key AUTO_INCREMENT, product_id int, open
 create table shoping_cart(id int primary key AUTO_INCREMENT, product_id int, open_id int) character set = utf8;
 create table notifications(id int primary key AUTO_INCREMENT, title varchar(100), created_at DATETIME) character set = utf8;
 create table customers(id int primary key AUTO_INCREMENT, open_id varchar(100) NOT NULL , nickname varchar(100), sex integer, province varchar(20), city varchar(20), country varchar(20), headimgurl varchar(100), privilege varchar(100), unionid varchar(100), access_time DATETIME) character set = utf8;
+CREATE TABLE unified_order(id int primary key AUTO_INCREMENT, app_id INT, mch_id INT, attach INT, body VARCHAR(1000), nonce_str VARCHAR(200), notify_url VARCHAR (200), openid VARCHAR(200), out_trade_no VARCHAR(200), spbill_create_ip VARCHAR(200), total_fee FLOAT, trade_type VARCHAR(200), sign VARCHAR(200), device_info VARCHAR(200));
 
 insert into products (name, department_id, unit_price, description, pictures, videos, minimum, postal, code, input_date) values('jeans', 1, 1.11, 'good','pic', 'videos', 10, '1', 'code', '2016-12-22 00:00:00');
 insert into sizes (name) values('avg');
@@ -44,3 +46,4 @@ insert into orders (discount, open_id, address_id, deal_date, ship_id, state, ex
 insert into product_label_links (product_id, label_id) values (1, 1);
 insert into sub_orders (product_id, order_id, color_id, size_id, number) values (1, 1, 1, 1, 1);
 INSERT INTO customers(open_id, nickname, sex, province, city, country, headimgurl, privilege , unionid, access_time)VALUES (1, 'nickname', '1', 'hebei', 'cangzhou', 'China', '2', 'd', 'ddd', '2016-1-1 00:00:00');
+INSERT INTO unified_order(id, app_id, mch_id, attach, body, nonce_str, notify_url, openid, out_trade_no, spbill_create_ip, total_fee, trade_type, sign, device_info) VALUES (1, 'openid', 'mch_id', 'attach', 'body', 'nonce_str', 'notify_url', 'openid', 'out_trade_no', 'spbill_create_ip', 1.1, 'trade_type', 'sign', 'device_info');
