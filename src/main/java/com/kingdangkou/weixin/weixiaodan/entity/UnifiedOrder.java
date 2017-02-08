@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class UnifiedOrder {
 
     @Id
-    @Column("id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     /**

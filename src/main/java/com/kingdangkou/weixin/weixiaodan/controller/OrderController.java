@@ -33,7 +33,7 @@ public class OrderController {
     public void createOrder(@RequestParam("openID") String openID,
                             @RequestParam("sub_orders") String subOrders,
                             @RequestParam("address_id") String address_id,
-                            HttpServletResponse response) throws IOException {
+                            HttpServletResponse response) throws Exception {
         Result result = orderService.save(openID, subOrders, address_id);
         response.getWriter().print(result);
     }
