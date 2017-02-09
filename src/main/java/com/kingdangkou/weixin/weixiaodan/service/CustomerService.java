@@ -6,10 +6,12 @@ import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.token.AccessTokenHolder;
 import com.kingdangkou.weixin.weixiaodan.token.CustomerInfoGetter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by dongy on 2017-01-12.
  */
+@Service
 public class CustomerService {
     @Autowired
     private CustomerDao customerDao;

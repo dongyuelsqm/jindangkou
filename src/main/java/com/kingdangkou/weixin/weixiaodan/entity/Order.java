@@ -144,7 +144,6 @@ public class Order {
     }
 
     @OneToOne(targetEntity = UnifiedOrder.class)
-
     @Cascade(CascadeType.ALL)
     public UnifiedOrder getUnifiedOrder() {
         return unifiedOrder;

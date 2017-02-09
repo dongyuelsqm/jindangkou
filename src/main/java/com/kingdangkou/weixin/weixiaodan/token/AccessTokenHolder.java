@@ -21,7 +21,7 @@ public class AccessTokenHolder {
 
     public AccessTokenHolder(){
         Timer timer = new Timer(true);
-        timer.schedule(timerTask, 0, period);
+        timer.schedule(timerTask, 1000, period);
     }
 
     private TimerTask timerTask = new TimerTask() {
