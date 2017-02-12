@@ -21,8 +21,8 @@ import java.util.HashMap;
 public class AppInfoHolder {
     private HashMap<String, String> params = new HashMap<String, String>();
 
-    public HashMap<String, String> reloadConfiguration() throws ParserConfigurationException, IOException, SAXException {
-        File file = ResourceUtils.getFile("classpath:AccessToken.xml");
+    public AppInfoHolder() throws IOException, ParserConfigurationException, SAXException {
+        File file = ResourceUtils.getFile("classpath:AppInfo.xml");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(file);
@@ -37,7 +37,6 @@ public class AppInfoHolder {
         params.put("appId", appId);
         params.put("secret", secret);
         params.put("url", url);
-        return params;
     }
 
     public HashMap<String, String> getParams() {

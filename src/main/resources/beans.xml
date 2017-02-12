@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+    <bean id="appid" class="com.kingdangkou.weixin.weixiaodan.entity.AppInfo">
+        <property name="appid" value="wx94e43e5190dbb1e1"></property>
+        <property name="secret" value="0b3a8e030bdcb6260aa44480049b8e6d"></property>
+    </bean>
+</beans>

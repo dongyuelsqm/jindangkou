@@ -18,7 +18,7 @@ import java.util.zip.GZIPInputStream;
  * Created by dongy on 2016-12-28.
  */
 @Component
-public class AccessTakenGetter {
+public class WeixinMsgSsender {
 
     @SuppressWarnings("resource")
     public String sendGet(Map<String, String> params)throws Exception {
@@ -34,7 +34,7 @@ public class AccessTakenGetter {
             HttpResponse response = client.execute(request);
 
             inputStream = response.getEntity().getContent();
-           String result = getJsonStringFromGZIP(inputStream);
+            String result = getJsonStringFromGZIP(inputStream);
             return result;
         } finally {
             if (inputStream != null) {
@@ -90,6 +90,7 @@ public class AccessTakenGetter {
 
     public String buildUrl(Map<String, String> params) {
         String reqUrl = params.get("url");
+        params.remove("url");
         StringBuilder query = new StringBuilder();
         Set<String> set = params.keySet();
         for (String key : set) {

@@ -25,13 +25,12 @@ public class AccesController {
     @RequestMapping("/openID")
     public void getOpenID(@RequestParam("code") String code, HttpServletResponse response) throws Exception {
         Result result = accessService.getOpenID(code);
-        response.getWriter().print(result);
+        response.getWriter().print(result);// TODO: 2017-02-11 the null pointer
     }
 
     @RequestMapping("/customer_info")
     public void getCustomerInfo(@RequestParam("code") String code, HttpServletResponse response) throws Exception {
-        Result result = accessService.getOpenID(code);
-        Result customer = customerService.get((String) result.getDetail());
+        Result customer = customerService.get(code);
         response.getWriter().print(customer);
     }
 

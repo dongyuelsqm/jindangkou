@@ -14,13 +14,13 @@ public class AccesControllerTest extends TestBase<AccesController> {
 
     @Test
     public void getOpenID() throws Exception {
-        ResultActions result = mockMvc.perform(get("/access/openID").param("code", "0310TRia0SsgBu15vxka0YsCia00TRiP")).andDo(print());
+        ResultActions result = mockMvc.perform(get("/access/openID").param("code", "041ba4e510xn4P1HqGd51bFYd51ba4ec")).andDo(print());
         result.andExpect(status().isOk());
     }
 
     @Test
     public void getCustomerInfo() throws Exception {
-        ResultActions result = mockMvc.perform(get("/access/customer_info").param("code", "0310TRia0SsgBu15vxka0YsCia00TRiP")).andDo(print());
+        ResultActions result = mockMvc.perform(get("/access/customer_info").param("code", "051AvI1R05Hk4a23di4R0prI1R0AvI1j")).andDo(print());
         result.andExpect(status().isOk());
     }
 
