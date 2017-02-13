@@ -34,7 +34,7 @@ public class CustomerService {
 
     public Result get(String code) throws Exception {
         JSONObject jsonObject = sendGetAccessToken(code);
-        if (jsonObject.getString("access_token") == null) return new Failure("invalie code");
+        if (!jsonObject.containsKey("access_token")) return new Failure("invalie code");
         String json = sendGetCustomerInfo(jsonObject.getString("access_token"), jsonObject.getString("openid"));
         return new Result(true, json);
     }

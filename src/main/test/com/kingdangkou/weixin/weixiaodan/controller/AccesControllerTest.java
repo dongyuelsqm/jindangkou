@@ -20,7 +20,7 @@ public class AccesControllerTest extends TestBase<AccesController> {
 
     @Test
     public void getCustomerInfo() throws Exception {
-        ResultActions result = mockMvc.perform(get("/access/customer_info").param("code", "051AvI1R05Hk4a23di4R0prI1R0AvI1j")).andDo(print());
+        ResultActions result = mockMvc.perform(get("/access/customer_info").param("code", "021b7ZIJ1GWf670423KJ11UcJJ1b7ZIq")).andDo(print());
         result.andExpect(status().isOk());
     }
 
