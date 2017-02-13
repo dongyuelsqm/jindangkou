@@ -137,9 +137,9 @@ define(function(require, exports, module) {
                 url: G.contextPath + 'website/color',
                 type: 'get',
                 success: function(rsp){
-                    console.log(rsp);
+                    console.log(rsp.detail);
                     _this.$colorsWrapper.empty();
-                    _.each(rsp, function(item, index){
+                    _.each(rsp.detail, function(item, index){
                         _this.$colorsWrapper.append(_this.colorTmpl(item));
                     });
 
@@ -152,7 +152,7 @@ define(function(require, exports, module) {
         initSizes: function(){
             var _this = this;
             $.ajax({
-                url: G.contextPath + 'website/size',
+                url: G.contextPath + 'website/size/list',
                 type: 'get',
                 success: function(rsp){
                     console.log(rsp);
