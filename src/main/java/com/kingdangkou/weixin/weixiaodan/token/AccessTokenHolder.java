@@ -19,7 +19,7 @@ public class AccessTokenHolder {
     AppInfoHolder appInfoHolder;
 
     @Autowired
-    private WeixinMsgSsender weixinMsgSsender;
+    private WeixinMsgSender weixinMsgSender;
 
     public AccessTokenHolder(){
         Timer timer = new Timer(true);
@@ -31,7 +31,7 @@ public class AccessTokenHolder {
         public void run() {
             try {
                 HashMap<String, String> params = appInfoHolder.getParams();
-                String s = weixinMsgSsender.sendGet(params);
+                String s = weixinMsgSender.sendGet(params);
                 accessToken = JSONObject.fromObject(s).getString("access_token");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -63,12 +63,12 @@ public class AccessTokenHolder {
         this.appInfoHolder = appInfoHolder;
     }
 
-    public WeixinMsgSsender getWeixinMsgSsender() {
-        return weixinMsgSsender;
+    public WeixinMsgSender getWeixinMsgSender() {
+        return weixinMsgSender;
     }
 
-    public void setWeixinMsgSsender(WeixinMsgSsender weixinMsgSsender) {
-        this.weixinMsgSsender = weixinMsgSsender;
+    public void setWeixinMsgSender(WeixinMsgSender weixinMsgSender) {
+        this.weixinMsgSender = weixinMsgSender;
     }
 
     public TimerTask getTimerTask() {
