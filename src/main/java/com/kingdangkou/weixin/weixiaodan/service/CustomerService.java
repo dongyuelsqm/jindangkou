@@ -4,7 +4,7 @@ import com.kingdangkou.weixin.weixiaodan.dao.CustomerDao;
 import com.kingdangkou.weixin.weixiaodan.entity.AppInfo;
 import com.kingdangkou.weixin.weixiaodan.model.Failure;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
-import com.kingdangkou.weixin.weixiaodan.token.WeixinMsgSsender;
+import com.kingdangkou.weixin.weixiaodan.token.WeixinMsgSender;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.ConfigFileReader;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class CustomerService {
     @Autowired
     private CustomerDao customerDao;
     @Autowired
-    private WeixinMsgSsender weixinMsgSsender;
+    private WeixinMsgSender weixinMsgSender;
 
     private AppInfo appInfo;
 
@@ -45,7 +45,7 @@ public class CustomerService {
         map.put("openid", openid);
         map.put("lang", "zh_CN");
         map.put("url", USER_INFO_URL);
-        return weixinMsgSsender.sendGet(map);
+        return weixinMsgSender.sendGet(map);
     }
 
     private JSONObject sendGetAccessToken(String code) throws Exception {
@@ -55,7 +55,7 @@ public class CustomerService {
         params.put("url", ACCESS_TOKEN_URL);
         params.put("appId", appInfo.getAppid());
         params.put("secret", appInfo.getSecret());
-        String json = weixinMsgSsender.sendGet(params);
+        String json = weixinMsgSender.sendGet(params);
         return JSONObject.fromObject(json);
     }
 

@@ -18,7 +18,7 @@ import java.util.zip.GZIPInputStream;
  * Created by dongy on 2016-12-28.
  */
 @Component
-public class WeixinMsgSsender {
+public class WeixinMsgSender {
 
     @SuppressWarnings("resource")
     public String sendGet(Map<String, String> params)throws Exception {

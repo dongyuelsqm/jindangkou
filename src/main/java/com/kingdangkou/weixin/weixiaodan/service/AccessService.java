@@ -2,7 +2,7 @@ package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.entity.AppInfo;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
-import com.kingdangkou.weixin.weixiaodan.token.WeixinMsgSsender;
+import com.kingdangkou.weixin.weixiaodan.token.WeixinMsgSender;
 import com.kingdangkou.weixin.weixiaodan.token.AppInfoHolder;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 @Service
 public class AccessService {
     @Autowired
-    private WeixinMsgSsender weixinMsgSsender;
+    private WeixinMsgSender weixinMsgSender;
 
     private AppInfo appInfo;
 
@@ -33,17 +33,17 @@ public class AccessService {
         params.put("url", url);
         params.put("appId", "wx94e43e5190dbb1e1");
         params.put("secret", "0b3a8e030bdcb6260aa44480049b8e6d");
-        String json = weixinMsgSsender.sendGet(params);
+        String json = weixinMsgSender.sendGet(params);
         JSONObject jsonObject = JSONObject.fromObject(json);
         return new Result(true, jsonObject.get("openid").toString());
     }
 
-    public WeixinMsgSsender getWeixinMsgSsender() {
-        return weixinMsgSsender;
+    public WeixinMsgSender getWeixinMsgSender() {
+        return weixinMsgSender;
     }
 
-    public void setWeixinMsgSsender(WeixinMsgSsender weixinMsgSsender) {
-        this.weixinMsgSsender = weixinMsgSsender;
+    public void setWeixinMsgSender(WeixinMsgSender weixinMsgSender) {
+        this.weixinMsgSender = weixinMsgSender;
     }
 
     public AppInfo getAppInfo() {
