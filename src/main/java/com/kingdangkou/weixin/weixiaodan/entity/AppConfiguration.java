@@ -1,50 +1,42 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
+import com.kingdangkou.weixin.weixiaodan.utils.configs.ConfigFileReader;
 import org.springframework.stereotype.Component;
+
+import java.io.FileNotFoundException;
 
 /**
  * Created by dongy on 2017-02-07.
  */
 @Component
 public class AppConfiguration {
-    public String grant_type;
-    public String appId;
-    public String secret;
-    public String url;
-    public String mch_id;
-    public String key;
-    public String notifyUrl;
+    private AppInfo appInfo;
+    private String mch_id;
+    private String key;
+    private String notifyUrl;
 
-    public String getGrant_type() {
-        return grant_type;
-    }
-
-    public void setGrant_type(String grant_type) {
-        this.grant_type = grant_type;
+    public AppConfiguration() throws FileNotFoundException {
+        appInfo = (AppInfo) ConfigFileReader.getConfigurationData("app_info.xml");
+        AppConfiguration appConfiguration = (AppConfiguration) ConfigFileReader.getConfigurationData("PaymentInfo.xml");
+        this.mch_id = appConfiguration.mch_id;
+        this.key = appConfiguration.key;
+        this.notifyUrl = appConfiguration.notifyUrl;
     }
 
     public String getAppId() {
-        return appId;
+        return appInfo.getAppid();
     }
 
     public void setAppId(String appId) {
-        this.appId = appId;
+        this.appInfo.setAppid(appId);
     }
 
     public String getSecret() {
-        return secret;
+        return appInfo.getSecret();
     }
 
     public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+        this.appInfo.setSecret(secret);
     }
 
     public String getMch_id() {

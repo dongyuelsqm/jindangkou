@@ -20,12 +20,14 @@ import java.util.Set;
  */
 @Service
 public class SubOrderService {
+
     @Autowired
     private ColorDao colorDao;
     @Autowired
     private SizeDao sizeDao;
     @Autowired
     private ProductDao productDao;
+
     public Set<SubOrder> convertToSubOrders(String items) throws ParaInValidException {
         Set<SubOrder> subOrders = new HashSet<SubOrder>();
         JSONArray array = JSONArray.fromObject(items);
@@ -33,10 +35,11 @@ public class SubOrderService {
         HashMap<Integer, SizeEntity> sizes = sizeDao.getMap();
         for(Object obj: array){
 
-            String product_id = ((JSONObject) obj).get("product_id").toString();
-            int color_id = Integer.valueOf(((JSONObject) obj).get("color").toString());
-            int size_id = Integer.valueOf(((JSONObject) obj).get("size").toString());
-            Integer number = Integer.valueOf(((JSONObject) obj).get("number").toString());
+            String product_id = ((JSONObject) obj).getString("product_id");
+            int color_id = ((JSONObject) obj).getInt("color");
+            int size_id = ((JSONObject) obj).getInt("size");
+            Integer number = ((JSONObject) obj).getInt("number");
+
             ProductEntity productEntity = productDao.get(product_id);
             ColorEntity colorEntity = colors.get(color_id);
             SizeEntity sizeEntity = sizes.get(size_id);

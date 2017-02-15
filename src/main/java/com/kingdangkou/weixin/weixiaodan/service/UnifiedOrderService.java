@@ -5,10 +5,12 @@ import com.kingdangkou.weixin.weixiaodan.entity.JsAPIConfig;
 import com.kingdangkou.weixin.weixiaodan.entity.UnifiedOrder;
 import com.kingdangkou.weixin.weixiaodan.service.utils.XmlUtil;
 import com.kingdangkou.weixin.weixiaodan.utils.HttpConnection;
+import com.kingdangkou.weixin.weixiaodan.utils.configs.ConfigFileReader;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.UUID;
 
@@ -27,6 +29,11 @@ public class UnifiedOrderService {
 
     @Autowired
     private AppConfiguration config;
+
+    public UnifiedOrderService() throws FileNotFoundException {
+        config = (AppConfiguration) ConfigFileReader.getConfigurationData("PaymentInfo.xml");
+
+    }
 
     public String unifiedOrder(String openId, String orderId, float money) throws Exception{
         UnifiedOrder unifiedOrder = new UnifiedOrder();
@@ -68,7 +75,7 @@ public class UnifiedOrderService {
         String timestamp = Long.toString(System.currentTimeMillis() / 1000);
         String packageName = "prepay_id="+prepayId;
         StringBuffer sign = new StringBuffer();
-        sign.append("appId=").append(jsAPIConfig.getAppId());
+        sign.append("appId=").append(config.getAppId());
         sign.append("&nonceStr=").append(nonce);
         sign.append("&package=").append(packageName);
         sign.append("&signType=").append(jsAPIConfig.getSignType());

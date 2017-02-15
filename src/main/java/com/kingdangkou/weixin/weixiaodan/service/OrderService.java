@@ -33,9 +33,6 @@ public class OrderService {
     private AddressDao addressDao;
 
     @Autowired
-    private CustomerService customerService;
-
-    @Autowired
     private SubOrderService subOrderService;
 
     @Autowired
@@ -53,15 +50,18 @@ public class OrderService {
         Order order = new Order();
         order.setCustomerEntity(customerDao.get(openID));
         order.setAddress(addressDao.get(address_id));
+
         try {
             order.setSubOrders(subOrderService.convertToSubOrders(items));
         }catch (Exception ex){
             return new Failure(ex.getMessage());
         }
+
         float total = calculateMethodPrice(order);
         order.setMethod_price(total);
         order.setActual_price(total);
         orderDao.save(order);
+
         adjustStorage(order.getSubOrders());
 
         String s = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), order.getActual_price());
