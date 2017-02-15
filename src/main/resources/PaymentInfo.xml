@@ -2,5 +2,5 @@
 <com.kingdangkou.weixin.weixiaodan.entity.AppConfiguration>
     <mch_id>1230000109</mch_id>
     <key>keykeykeykey</key>
-    <notify_url>https://pay.weixin.qq.com/wxpay/pay.action</notify_url>
+    <notifyUrl>https://pay.weixin.qq.com/wxpay/pay.action</notifyUrl>
 </com.kingdangkou.weixin.weixiaodan.entity.AppConfiguration>

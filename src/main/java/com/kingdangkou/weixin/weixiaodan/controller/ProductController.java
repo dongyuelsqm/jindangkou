@@ -64,6 +64,11 @@ public class ProductController {
         response.getWriter().print(result);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/search")
+    public void searchBy(@RequestParam("name") String name, HttpServletResponse response){
+        productService.searchBy(name);
+    }
+
     private void returnOperationResult(HttpServletResponse response, Result result) throws IOException {
         response.getWriter().print(result);
     }

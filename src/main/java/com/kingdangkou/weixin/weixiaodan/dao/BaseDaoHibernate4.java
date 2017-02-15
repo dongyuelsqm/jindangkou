@@ -109,6 +109,6 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 		}
 		session.createQuery(hql).executeUpdate();
 		transaction.commit();
-		session.close();
+		//session.close();
 	}
 }

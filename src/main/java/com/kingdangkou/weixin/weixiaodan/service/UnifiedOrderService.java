@@ -5,7 +5,6 @@ import com.kingdangkou.weixin.weixiaodan.entity.JsAPIConfig;
 import com.kingdangkou.weixin.weixiaodan.entity.UnifiedOrder;
 import com.kingdangkou.weixin.weixiaodan.service.utils.XmlUtil;
 import com.kingdangkou.weixin.weixiaodan.utils.HttpConnection;
-import com.kingdangkou.weixin.weixiaodan.utils.configs.ConfigFileReader;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,7 +30,7 @@ public class UnifiedOrderService {
     private AppConfiguration config;
 
     public UnifiedOrderService() throws FileNotFoundException {
-        config = (AppConfiguration) ConfigFileReader.getConfigurationData("PaymentInfo.xml");
+        //config = (AppConfiguration) ConfigFileReader.getConfigurationData("PaymentInfo.xml");
 
     }
 
