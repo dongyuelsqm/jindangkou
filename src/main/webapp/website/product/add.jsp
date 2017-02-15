@@ -31,71 +31,23 @@
     <div class="row">
         <label class="col-md-3 control-label">商品分类<span class="required">*</span></label>
         <div class="col-md-5">
-            <div class="dropdown">
+            <div class="dropdown" id="department-dropdown">
                 <div class="input-group">
-                    <input type="text" id="" readonly class="form-control"  placeholder="" />
+                    <input type="text" readonly class="form-control"  placeholder="" />
                     <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                 </div>
-                <input type="hidden" id="" name="department" />
-                <ul class="ul-dropdown">
-                    <li class="selected"><a href="javascript:" data-val="1">羽绒服</a></li>
-                    <li><a href="javascript:" data-val="2">呢大衣</a></li>
-                    <li><a href="javascript:" data-val="3">毛衣</a></li>
-                </ul>
+                <input type="hidden" name="department" />
+                <ul class="ul-dropdown"></ul>
             </div>
         </div>
     </div>
     <div class="row">
         <label class="col-md-3 control-label">颜色<span class="required">*</span></label>
-        <div class="col-md-5">
-            <span class="checkbox-inline">
-                <input type="checkbox" name="color" role="color" value="red"/> 红色
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="color" role="color" value="coffee"/> 咖啡色
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="color" role="color" value="blue"/> 蓝色
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="color" role="color" value="yellow"/> 黄色
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="color" role="color" value="pink"/> 粉色
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="color" role="color" value="oringe"/> 橙色
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="color" role="color" value="purple"/> 紫色
-            </span>
-        </div>
+        <div class="col-md-5" id="color-wrapper"></div>
     </div>
     <div class="row">
         <label class="col-md-3 control-label">尺码</label>
-        <div class="col-md-5">
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" role="size" value="xs"/> xs
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" role="size" value="s"/> s
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" role="size" value="m"/> m
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" role="size" value="x"/> x
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" role="size" value="xl"/> xl
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" role="size" value="xxl"/> xxl
-            </span>
-            <span class="checkbox-inline">
-                <input type="checkbox" name="size" role="size" value="xxxl"/> xxxl
-            </span>
-        </div>
+        <div class="col-md-5" id="size-wrapper"></div>
     </div>
     <div class="row">
         <label class="col-md-3 control-label">起批件数<span class="required">*</span></label>
@@ -108,18 +60,18 @@
         <label class="col-md-3 control-label">宝贝图片<span class="required">*</span></label>
         <div class="col-md-9 comment">尺寸750*750像素以上，大小2M以下，默认显示第1张，最多5张(可拖拽图片调整显示顺序)</div>
         <div class="col-md-5 col-md-offset-3">
-            <button type="button" id="btn-img" style="display: none;"></button>
-            <img src="${contextPath}/res/css/base/img/upload-default.png" alt="上传文件" class="upload-default" role="upload-img" />
+            <img src="${contextPath}/res/css/base/img/upload-default.png" alt="上传文件" class="upload-default upload-img" role="upload-img" />
         </div>
+        <button type="button" id="btn-img" style="display: none;"></button>
     </div>
     <div class="row">
         <label class="col-md-3 control-label">宝贝视频<span class="required">*</span></label>
         <div class="col-md-9 comment">请保证视频大小为20M以下</div>
         <div class="col-md-5 col-md-offset-3" >
-            <button type="button" id="btn-video" style="display: none;"></button>
-            <video loop="loop" src="" autoplay="autoplay" id="video" role="upload-video" style="display: none;" ></video>
-            <img src="${contextPath}/res/css/base/img/upload-default.png" alt="上传视频" style="display: none;" role="upload-video" id="video-default" class="upload-default" />
+            <video loop="loop" src="" autoplay="autoplay" id="video" role="upload-video" style="display: none;" class="upload-video"></video>
+            <img src="${contextPath}/res/css/base/img/upload-default.png" alt="上传视频" role="upload-video" class="upload-img upload-default" />
         </div>
+        <button type="button" id="btn-video" style="display: none;"></button>
     </div>
     <div class="row">
         <label class="col-md-3 control-label">商品描述<span class="required">*</span></label>
@@ -130,12 +82,12 @@
     <div class="row">
         <label class="col-md-3 control-label">运费模板<span class="required">*</span></label>
         <div class="col-md-5">
-            <div class="dropdown">
+            <div class="dropdown" id="postal-dropdown">
                 <div class="input-group">
-                    <input type="text" id="" readonly class="form-control"  placeholder="" />
+                    <input type="text" readonly class="form-control"  placeholder="" />
                     <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                 </div>
-                <input type="hidden" id="" name="postal" />
+                <input type="hidden" name="postal" />
                 <ul class="ul-dropdown">
                     <li class="selected"><a href="javascript:" data-val="300000">包邮</a></li>
                     <li><a href="javascript:" data-val="300001">不包邮</a></li>
@@ -158,7 +110,7 @@
 <%@include file="../common/lower-part.jsp"%>
 
 <script type="text/html" id="tmpl-inventoryItem">
-    <li data-color="blue" id="inventory-{{colorCode}}">
+    <li data-color="{{colorCode}}" id="inventory-{{colorCode}}">
         <label class="col-md-2">{{colorName}}：</label>
         <div class="col-md-10 inventory-size"></div>
     </li>
@@ -166,8 +118,20 @@
 
 <script type="text/html" id="tmpl-sizeItem">
     <div class="col-md-3 inventory-{{sizeCode}}">
-        {{sizeCode}}: <input type="text" role="quantity" data-size="{{sizeCode}}" class="input-icon input-icon-count" placeholder="" value=""/>
+        {{sizeName}}: <input type="text" role="quantity" data-size="{{sizeCode}}" class="input-icon input-icon-count" placeholder="" value=""/>
     </div>
+</script>
+
+<script type="text/html" id="tmpl-color">
+    <span class="checkbox-inline">
+        <input type="checkbox" role="color" value="1" data-name="{{name}}" /> {{name}}
+    </span>
+</script>
+
+<script type="text/html" id="tmpl-size">
+    <span class="checkbox-inline">
+        <input type="checkbox" role="size" value="1" data-name="{{name}}" /> {{name}}
+    </span>
 </script>
 
 <script type="text/javascript">
