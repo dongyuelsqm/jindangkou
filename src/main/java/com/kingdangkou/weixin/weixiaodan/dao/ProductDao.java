@@ -81,7 +81,6 @@ public class ProductDao extends BaseDaoHibernate4<ProductEntity>  {
         query.setString("code", name);
         List list = query.list();
         transaction.commit();
-        session.close();
         return list;
     }
 }
