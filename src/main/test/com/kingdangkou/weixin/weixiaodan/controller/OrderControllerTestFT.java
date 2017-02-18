@@ -20,8 +20,8 @@ public class OrderControllerTestFT extends TestBase<OrderController> {
     @Test
     public void testCreateOrder() throws Exception {
         ResultActions resultActions = mockMvc.perform(post("/order/add").
-                param("openID", "1").
-                param("sub_orders", "[{number:1, color:1, size:1, product_id:1}]").
+                param("openID", "o3Y_kw4pEFSXdVbieWfmGYBJO-bU").
+                param("sub_orders", "[{number:1, color:2, size:1, product_id:1}]").
                 param("address_id", "1")).andDo(print());
         resultActions.andExpect(status().isOk());
     }
