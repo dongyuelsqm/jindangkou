@@ -48,11 +48,16 @@ public class OrderService {
 
     public Result save(String openID, String items, String address_id) throws Exception {
         Order order = new Order();
-        order.setCustomerEntity(customerDao.get(openID));
-        order.setAddress(addressDao.get(address_id));
+        CustomerEntity customerEntity = customerDao.get(openID);
+        Address address = addressDao.get(address_id);
+
+
+        order.setCustomerEntity(customerEntity);
+        order.setAddress(address);
 
         try {
-            order.setSubOrders(subOrderService.convertToSubOrders(items));
+            Set<SubOrder> subOrderSet = subOrderService.convertToSubOrders(items);
+            order.setSubOrders(subOrderSet);
         }catch (Exception ex){
             return new Failure(ex.getMessage());
         }
@@ -129,5 +134,10 @@ public class OrderService {
     public Result getOrderByDate(String begin, String end) {
         List<Order> ordersByDate = orderDao.getOrdersByDate(begin, end);
         return new Result(true, JSONArray.fromObject(ordersByDate, orderJsonConfig));
+    }
+
+    public Result list(){
+        List<Order> list = orderDao.list(Order.class);
+        return new Result(true, JSONArray.fromObject(list, orderJsonConfig));
     }
 }
