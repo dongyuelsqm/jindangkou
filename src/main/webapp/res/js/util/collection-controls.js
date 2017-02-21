@@ -273,9 +273,9 @@ define(function (require, exports, module) {
             
             this.render();
         },
-        noData: function (noDataModel) {
-            this.$el.html(this.noDataTemplate(noDataModel));
-        },
+        // noData: function (noDataModel) {
+        //     this.$el.html(this.noDataTemplate(noDataModel));
+        // },
         render: function () {
             var model = _.extend({}, this.defaultSetting, this.model.toJSON());
             this.$el.html(this.template(model));
@@ -299,7 +299,7 @@ define(function (require, exports, module) {
         initialize: function (options) {
             this._super_initialize(options);
         },
-        noDataTemplate: util.render('<td colspan="{{colCount}}">' + noDataTemplate + '</td>')
+        // noDataTemplate: util.render('<td colspan="{{colCount}}">' + noDataTemplate + '</td>')
     });
     
     var tableViewTemplate = '\
@@ -331,6 +331,7 @@ define(function (require, exports, module) {
         ItemView: TableRowView,
         errorDataTemplate: util.render('<td colspan="{{colCount}}">' + errorDataTemplate + '</td>'),
         loadingDataTemplate: util.render('<td colspan="{{colCount}}">' + loadingDataTemplate + '</td>'),
+        noDataTemplate: util.render('<td colspan="{{colCount}}">' + noDataTemplate + '</td>'),
         initialize: function (options) {
             this._super_initialize(options);
             this.ItemView = options.rowView || this.ItemView;

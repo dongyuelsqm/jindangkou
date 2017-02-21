@@ -11,6 +11,8 @@ define(function(require, exports, module) {
         util = require('util/util');
 
     var template = util.template,
+        SelectView = form.SelectView,
+        CheckboxView = form.CheckboxView,
         colorMap = require('module/default/colors').colorMap;
 
     require('jquery-validate');
@@ -54,6 +56,13 @@ define(function(require, exports, module) {
         wrapper: 'div'
     };
 
+    var urls = {
+        save: G.contextPath + 'order/add',
+        sizes: G.contextPath + 'website/size/list',
+        colors: G.contextPath + 'website/color',
+        search: G.contextPath + 'product/list'
+    };
+
     /**
      * 商品详情 RowView
      */
@@ -64,20 +73,27 @@ define(function(require, exports, module) {
             'change input[role="size"]': 'addSize'
         },
         initialize: function(options) {
-            this.$checkboxs = [];
-            this.$inventory = this.$('#inventory');
-            this.inventoryItemTmpl = template('inventoryItem');
-            this.sizeItemTmpl = template('sizeItem');
-
             this.init();
-
         },
         init: function(){
             var _this = this;
 
+            this.cacheEls();
+
             _.each(this.$('.checkbox-inline'), function(item, index){
                 _this.$checkboxs.push(new form.CheckboxView({el: $(item)}));
             });
+        },
+        cacheEls: function(){
+            this.$checkboxs = [];
+            this.$inventory = this.$('.inventory');
+            this.$colorsWrapper = this.$('.color-wrapper');
+            this.$sizesWrapper = this.$('.size-wrapper');
+
+            this.inventoryItemTmpl = template('inventoryItem');
+            this.sizeItemTmpl = template('sizeItem');
+            this.colorTmpl = template('color');
+            this.sizeTmpl = template('size');
         },
         'toggleInventory': function(ev){
             var $this = $(ev.currentTarget),
@@ -135,9 +151,71 @@ define(function(require, exports, module) {
     });
 
     /**
+     * 商品collection
+     */
+    var ProductCollection = Backbone.Collection.extend({
+        url: urls.search,
+        parse: function(rsp){
+            return rsp.detail;
+        }
+    });
+
+    /**
      * 商品列表 ListView
      */
-    var OrderListView = Backbone.View.extend({});
+    var noDataTemplate = '<li class="no-data">暂无数据</li>',
+        loadingDataTemplate = '<li class="loading">正在请求数据...</li>',
+        errorDataTemplate = '<li class="error-data">{{errorMessage}}</li>';
+
+    var ProductListView = Backbone.View.extend({
+        tagName: 'ul',
+        el: '#product-list',
+        template: template('orderItem'),
+        events: {
+            'change input[role="product"]': 'addProduct'
+        },
+        initialize: function(options){
+            this.collection = new ProductCollection();
+
+            this.listenTo(this.collection, 'request', this.loading);
+            this.listenTo(this.collection, 'error', this.error);
+            // this.listenTo(this.collection, 'reset', this.render);
+            this.listenTo(this.collection, 'sync', this.render);
+        },
+        'addProduct': function(ev){
+            var _this = this,
+                $this = $(ev.currentTarget),
+                id = $this.data('productid'),
+                model = this.collection.get(id);
+        },
+        update: function(data){
+            this.collection.fetch(data, {reset: true});
+        },
+        loading: function(){
+            this.$el.html(loadingDataTemplate);
+        },
+        error: function(){
+            this.$el.html(errorDataTemplate);
+        },
+        render: function(){
+            var _this = this;
+            this.$el.empty();
+
+            if(_this.collection.length > 0) {
+                _this.collection.map(function (item, index, list) {
+                    _this.$el.append(_this.template(item.toJSON()));
+                });
+
+                _.each(_this.$('input[type=checkbox]'), function(item, index){
+                    new CheckboxView({el: $(item).parent()});
+                });
+
+            }else{
+                _this.$el.append('<li>无结果</li>');
+            }
+            return this;
+        }
+    });
 
     /**
      * 表单
@@ -155,20 +233,26 @@ define(function(require, exports, module) {
         init: function(){
             var _this = this;
 
-            new OrderTableView({
+            _.each(this.$('.dropdown'), function(item, index){
+                new SelectView({el: $(item)});
+            });
+
+            this.orderTable = new OrderTableView({
                 el: '#order-table'
             });
+
+            this.productList = new ProductListView();
         },
         'searchProducts': function(ev){
-            alert('搜索商品');
-
+            var _this = this;
+            this.productList.update(this.$('.search-text').val());
         },
         'submit': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this;
             if(this.validator.form()) {
                 $.ajax({
-                    url: G.contextPath + 'order/add',
+                    url: urls.save,
                     data: _this.$el.serializeArray(),
                     success: function (rsp) {
                         console.log(rsp);
