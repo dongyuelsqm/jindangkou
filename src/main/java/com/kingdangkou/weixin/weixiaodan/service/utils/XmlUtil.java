@@ -1,14 +1,16 @@
 package com.kingdangkou.weixin.weixiaodan.service.utils;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.core.util.QuickWriter;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.naming.NoNameCoder;
-import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 import org.springframework.stereotype.Component;
 
-import java.io.Writer;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,39 +18,7 @@ import java.util.Map;
  */
 @Component
 public class XmlUtil {
-    XStream stream = new XStream(new XppDriver(new NoNameCoder()) {
-
-        @Override
-        public HierarchicalStreamWriter createWriter(Writer out) {
-            return new PrettyPrintWriter(out) {
-                // 对所有xml节点的转换都增加CDATA标记
-                boolean cdata = true;
-
-                @Override
-                @SuppressWarnings("rawtypes")
-                public void startNode(String name, Class clazz) {
-                    super.startNode(name, clazz);
-                }
-
-                @Override
-                public String encodeNode(String name) {
-                    return name;
-                }
-
-
-                @Override
-                protected void writeText(QuickWriter writer, String text) {
-                    if (cdata) {
-                        writer.write("<![CDATA[");
-                        writer.write(text);
-                        writer.write("]]>");
-                    } else {
-                        writer.write(text);
-                    }
-                }
-            };
-        }
-    });
+    XStream stream = new XStream(new XppDriver(new NoNameCoder()));
 
     public String toXML(String alias, Object obj){
 
@@ -59,5 +29,21 @@ public class XmlUtil {
     public Map<String, String> parseXml(String response) {
 
         return (Map<String, String>) stream.fromXML(response);
+    }
+
+    public Map<String,String> xml2Map(String xml){
+        try {
+            Map<String,String> maps = new HashMap<String, String>();
+            Document document = DocumentHelper.parseText(xml);
+            Element root = document.getRootElement();
+            List<Element> eles = root.elements();
+            for(Element e:eles) {
+                maps.put(e.getName(), e.getTextTrim());
+            }
+            return maps;
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

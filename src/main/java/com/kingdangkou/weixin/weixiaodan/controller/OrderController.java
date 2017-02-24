@@ -39,7 +39,7 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/order/update")
-    public void update(@RequestParam("id") int id, @RequestParam("newState") String newState, HttpServletResponse response) throws IOException {
+    public void update(@RequestParam("id") String id, @RequestParam("newState") String newState, HttpServletResponse response) throws IOException {
         Result result = orderService.updateState(id, newState);
         response.getWriter().print(result);
     }

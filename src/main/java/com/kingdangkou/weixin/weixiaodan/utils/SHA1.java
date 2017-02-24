@@ -181,7 +181,7 @@ public class SHA1 {
 	}
 
 	// 将字节数组转换为十六进制字符串
-	private static String byteArrayToHexString(byte[] bytearray) {
+	public static String byteArrayToHexString(byte[] bytearray) {
 		String strDigest = "";
 		for (int i = 0; i < bytearray.length; i++) {
 			strDigest += byteToHexString(bytearray[i]);

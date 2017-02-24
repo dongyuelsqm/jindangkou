@@ -65,11 +65,12 @@ public class OrderService {
         float total = calculateMethodPrice(order);
         order.setMethod_price(total);
         order.setActual_price(total);
-        orderDao.save(order);
 
         adjustStorage(order.getSubOrders());
 
-        String s = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), order.getActual_price());
+        orderDao.save(order);
+        String s = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), (int)(order.getActual_price()*100), items);
+        //order.setWeixinTransactionId(s);
         JsAPIConfig payConfig = unifiedOrderService.createPayConfig(s);
         return new Result(true, payConfig);
     }
@@ -120,14 +121,20 @@ public class OrderService {
         this.orderDao = orderDao;
     }
 
-    public Result updateState(int id, String newState){
+    public Result updateStateAndTransactionId(String id, String newState, String weixinTransactionId){
+        Order order = orderDao.getOrder(id);
         if (OrderStateEnum.getEnum(Integer.valueOf(newState)) == null) return new Failure("badValue");
-        updatePersistence(id, Integer.valueOf(newState));
+        order.setWeixinTransactionId(weixinTransactionId);
+        order.setState(Integer.valueOf(newState));
+        orderDao.update(order);
         return new Success();
     }
 
-    private Result updatePersistence(int id, int newState) {
-        orderDao.updateState(id, newState);
+    public Result updateState(String id, String newState){
+        Order order = orderDao.getOrder(id);
+        if (OrderStateEnum.getEnum(Integer.valueOf(newState)) == null) return new Failure("badValue");
+        order.setState(Integer.valueOf(newState));
+        orderDao.update(order);
         return new Success();
     }
 

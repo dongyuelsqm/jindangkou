@@ -8,14 +8,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "unified_order")
 public class UnifiedOrder {
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     /**
      * 公众账号ID
      */
+    @Id
     @Column(name = "app_id")
     private String appid;
     /**
@@ -62,7 +58,7 @@ public class UnifiedOrder {
      * 总金额
      */
     @Column(name = "total_fee")
-    private float total_fee;
+    private int total_fee;
     /**
      * 交易类型
      */
@@ -84,13 +80,6 @@ public class UnifiedOrder {
         this.device_info = "WEB";
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getAppid() {
         return appid;
@@ -164,11 +153,11 @@ public class UnifiedOrder {
         this.spbill_create_ip = spbill_create_ip;
     }
 
-    public float getTotal_fee() {
+    public int getTotal_fee() {
         return total_fee;
     }
 
-    public void setTotal_fee(float total_fee) {
+    public void setTotal_fee(int total_fee) {
         this.total_fee = total_fee;
     }
 
