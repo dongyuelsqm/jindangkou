@@ -5,16 +5,10 @@
 'use strict';
 define(function (require, exports, module) {
     var colorMap ={
-            'red':     '红色',
-            'coffee': '咖啡色',
-            'blue':   '蓝色',
-            'yellow': '黄色',
-            'pink':   '粉色',
-            'oringe': '橙色',
-            'purple': '紫色',
-            'green':  '绿色'
+            '1': '红色',
+            '2': '咖啡色'
         },
-        colorList = ['red', 'coffee', 'blue', 'yellow', 'pink', 'oringe', 'purple', 'green'];
+        colorList = ['1', '2'];
 
     module.exports = {
         colorMap: colorMap,

@@ -506,11 +506,11 @@ define(function (require, exports, module) {
     var order_config = {
         'asc': {
             key: '1',
-            icon: '&#xe620;'
+            icon: 'unfold'
         },
         'desc': {
             key: '2',
-            icon: '&#xe623;'
+            icon: 'fold'
         }
     };
     var SearchBoxView = BaseView.extend({
@@ -589,13 +589,14 @@ define(function (require, exports, module) {
             if($this.hasClass('order-asc')){
                 $this.removeClass('order-asc');
                 type = 'desc';
+                $iconfont.removeClass('icon-fold').addClass('icon-unfold');
             }else{
                 $this.removeClass('order-desc');
                 type = 'asc';
+                $iconfont.removeClass('icon-unfold').addClass('icon-fold');
             }
             
             $this.addClass('order-' + type)
-            $iconfont.html(order_config[type].icon);
             attr.orderBy = order_config[type].key;
             
             this.model.set(attr); 

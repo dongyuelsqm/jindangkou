@@ -60,12 +60,16 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 
 /* btn */
 .btn{border: 0; border-radius: 5px; vertical-align: top;}
+.btn > .iconfont{vertical-align: middle;}
 .btn-default,
 .btn-default:focus,
 .btn-default:hover{background-color: #e6e6e6; color: #242424;}
 .btn-submit,
 .btn-submit:hover,
 .btn-submit:focus{background-color: #ea3527; color: #fff;}
+.btn-white,
+.btn-white:hover,
+.btn-white:focus{background:#fff; border: 1px solid #cbcbcb; color: #cda34d;}
 
 .content-title .btn{margin-top: 9px;}
 
@@ -106,7 +110,7 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 	.dialog-content{text-align:center;}
 	.dialog-buttons{background:#f5f8fa; text-align:center; padding:15px;}
 		.dialog-buttons button{background:#ea3527; border:none; border-radius:5px; -o-border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; color:#fff; margin: 0 5px; padding:5px; width:120px;}
-		.dialog-buttons button.btn-white{background:#fff; border: 1px solid #cbcbcb; color:#333;}
+		.dialog-buttons button.btn-white{color:#333;}
 	.dialog-close{cursor:pointer; font-size:22px; position:absolute; right:15px; top:0;}
 		
 /* checkbox & radio */
@@ -192,7 +196,9 @@ th > .order{background-image: url(./img/order-arrow.png); background-repeat: no-
         .form .comment {color: #cdcdcd; line-height: 20px; margin-bottom: 5px; margin-top: 5px;}
         	.form .comment a{padding: 0 5px; vertical-align: baseline;}
         .form .agreement { color: #aaa; }
-		.form .upload-default{cursor: pointer; height: 100px; width: 100px;}
+		.form .upload-img,
+		.form .upload-video {cursor: pointer; height: 100px; margin-right: 5px; width: 100px;}
+			.form .upload-video {width: 200px;}
     .form a{color: #242424; vertical-align: middle; text-decoration: underline;}
         .form a.forget-pwd{color: #ea3527; padding-top: 8px;}
 .form label.error{background: url(./img/error-icon.png) no-repeat left center; color: #4d4d4d; font-weight: normal; line-height: 30px; padding-left: 20px; text-align: left; min-width: 150px;}

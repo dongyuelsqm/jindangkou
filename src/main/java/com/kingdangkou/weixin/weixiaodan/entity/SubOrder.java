@@ -26,8 +26,7 @@ public class SubOrder {
 
     public SubOrder() {}
 
-    public SubOrder(Order order, ProductEntity productEntity, ColorEntity colorEntity, SizeEntity sizeEntity, Integer number) {
-        this.order = order;
+    public SubOrder(ProductEntity productEntity, ColorEntity colorEntity, SizeEntity sizeEntity, Integer number) {
         this.productEntity = productEntity;
         this.color = colorEntity;
         this.size = sizeEntity;

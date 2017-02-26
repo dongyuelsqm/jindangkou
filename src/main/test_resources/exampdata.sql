@@ -18,4 +18,4 @@ insert into sub_orders (product_id, order_id, color_id, size_id, number) values 
 INSERT INTO customers(open_id, nickname, sex, province, city, country, headimgurl, privilege , unionid, access_time)VALUES (1, 'nickname', '1', 'hebei', 'cangzhou', 'China', '2', 'd', 'ddd', '2016-1-1 00:00:00');
 
 /* 2017-1-22 update */
-insert into orders (discount, open_id, address_id, deal_date, ship_id, state, express_number, method_price, actural_price) values (1.1, 1, 1, '2012-1-1', 'd', 1, 'dd', 1.1, 1.1);
+insert into orders (discount, open_id, address_id, deal_date, ship_id, state, express_number, method_price, actual_price) values (1.1, 1, 1, '2012-1-1', 'd', 1, 'dd', 1.1, 1.1);

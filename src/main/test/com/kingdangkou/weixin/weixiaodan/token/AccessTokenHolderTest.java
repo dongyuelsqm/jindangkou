@@ -17,7 +17,7 @@ public class AccessTokenHolderTest {
     @Test
     public void testGetAccess_Token() throws Exception {
         Thread.sleep(10 * 1000);
-        String access_token = accessTokenHolder.getAccess_Token();
+        String access_token = accessTokenHolder.getAccessToken();
         assertNotNull(access_token);
     }
 }

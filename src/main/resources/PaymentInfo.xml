@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.kingdangkou.weixin.weixiaodan.entity.AppConfiguration>
+    <mch_id>1441527302</mch_id>
+    <key>adfjinfsnoijdnvoijoanfdngh39smdn</key>
+    <notifyUrl>http://112.124.115.74/weixin-1.0-SNAPSHOT/wxpay/pay.action/wechat_notify/</notifyUrl>
+</com.kingdangkou.weixin.weixiaodan.entity.AppConfiguration>

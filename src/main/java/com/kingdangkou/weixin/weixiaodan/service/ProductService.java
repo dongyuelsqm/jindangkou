@@ -2,7 +2,6 @@ package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.dao.*;
 import com.kingdangkou.weixin.weixiaodan.entity.*;
-import com.kingdangkou.weixin.weixiaodan.model.Failure;
 import com.kingdangkou.weixin.weixiaodan.model.ProductModel;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
@@ -98,7 +97,6 @@ public class ProductService {
         ProductEntity productEntity = new ProductEntity(name, descriptive, price, code, minimum, postal, pictures, videos);
 
         DepartmentEntity departmentEntity = departmentDao.get(department);
-        if (departmentEntity == null) return new Failure("invalid department!");
         productEntity.setDepartment(departmentEntity);
 
         Set<StorageEntity> storageEntitySet = storageGenerator.parse2StorageSet(storageJson);
@@ -197,5 +195,12 @@ public class ProductService {
         strings.add("a");
         strings.add("b");
         System.out.println(JSONArray.fromObject(strings));
+    }
+
+    public Result searchBy(String name) {// TODO: 2017-02-16 with bug :failed to lazily initialize a collection of role:
+        List<ProductEntity> productEntities = productDao.searchBy(name);
+        HashMap<String, Integer> sellings = subOrderEntityDao.listSoldMsg();
+        ArrayList<ProductModel> productModels = convertToProductModelList(sellings, productEntities);
+        return new Result(true, JSONArray.fromObject(productModels, productJsonConfig));
     }
 }

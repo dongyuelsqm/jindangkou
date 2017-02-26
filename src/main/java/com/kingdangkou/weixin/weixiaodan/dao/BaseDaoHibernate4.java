@@ -26,7 +26,7 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 	public T get(Class<T> entityClazz, String value, String key){
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		String hql = "From " + entityClazz.getSimpleName() + " where " + key +" = " + value;
+		String hql = "From " + entityClazz.getSimpleName() + " where " + key +"=\'" + value + "\'";
 		T obj = session.createQuery(hql, entityClazz).uniqueResult();
 		transaction.commit();
 		return obj;
@@ -109,6 +109,6 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 		}
 		session.createQuery(hql).executeUpdate();
 		transaction.commit();
-		session.close();
+		//session.close();
 	}
 }

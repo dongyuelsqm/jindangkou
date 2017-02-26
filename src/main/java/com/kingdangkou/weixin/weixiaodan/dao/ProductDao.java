@@ -3,6 +3,7 @@ package com.kingdangkou.weixin.weixiaodan.dao;
 import com.kingdangkou.weixin.weixiaodan.entity.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -70,5 +71,16 @@ public class ProductDao extends BaseDaoHibernate4<ProductEntity>  {
         session.close();
         return title_id;
 
+    }
+
+    public List<ProductEntity> searchBy(String name) {
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("from ProductEntity where name like :name or code like :code");
+        query.setString("name", name);
+        query.setString("code", name);
+        List list = query.list();
+        transaction.commit();
+        return list;
     }
 }

@@ -58,5 +58,9 @@ public class ProductControllerTestFT extends TestBase<ProductController>{
         return mockMvc.perform(get(url)).andDo(print()).andExpect(status().isOk());
     }
 
-
+    @Test
+    public void search() throws Exception {
+        ResultActions resultActions = mockMvc.perform(get("/product/search").param("name", "jeans")).andDo(print());
+        resultActions.andExpect(status().isOk());
+    }
 }

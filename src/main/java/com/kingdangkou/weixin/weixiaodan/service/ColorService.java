@@ -4,6 +4,7 @@ import com.kingdangkou.weixin.weixiaodan.dao.ColorDao;
 import com.kingdangkou.weixin.weixiaodan.entity.ColorEntity;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +23,9 @@ public class ColorService {
         return new Success();
     }
 
-    public List<ColorEntity> list() {
-        return colorDao.list();
+    public Result list() {
+        List<ColorEntity> list = colorDao.list();
+        return new Result(true, JSONArray.fromObject(list));
     }
 
     public Result del(String id) {

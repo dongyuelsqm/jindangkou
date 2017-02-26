@@ -1,8 +1,10 @@
 package com.kingdangkou.weixin.weixiaodan.token;
 
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,30 +14,30 @@ import java.util.TimerTask;
 @Component
 public class AccessTokenHolder {
     private int period = 3600 * 1000;
-    private String Access_Token;
+    private String accessToken;
     @Autowired
     AppInfoHolder appInfoHolder;
 
     @Autowired
-    private AccessTakenGetter accessTakenGetter;
+    private WeixinMsgSender weixinMsgSender;
 
     public AccessTokenHolder(){
         Timer timer = new Timer(true);
-        timer.schedule(timerTask, 0, period);
+        timer.schedule(timerTask, 1000, period);
     }
 
     private TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
             try {
-                appInfoHolder.reloadConfiguration();
-                Access_Token = accessTakenGetter.sendGet(appInfoHolder.getParams());
+                HashMap<String, String> params = appInfoHolder.getParams();
+                String s = weixinMsgSender.sendGet(params);
+                accessToken = JSONObject.fromObject(s).getString("access_token");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     };
-
 
     public int getPeriod() {
         return period;
@@ -45,12 +47,12 @@ public class AccessTokenHolder {
         this.period = period;
     }
 
-    public String getAccess_Token() {
-        return Access_Token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setAccess_Token(String access_Token) {
-        Access_Token = access_Token;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public AppInfoHolder getAppInfoHolder() {
@@ -61,12 +63,12 @@ public class AccessTokenHolder {
         this.appInfoHolder = appInfoHolder;
     }
 
-    public AccessTakenGetter getAccessTakenGetter() {
-        return accessTakenGetter;
+    public WeixinMsgSender getWeixinMsgSender() {
+        return weixinMsgSender;
     }
 
-    public void setAccessTakenGetter(AccessTakenGetter accessTakenGetter) {
-        this.accessTakenGetter = accessTakenGetter;
+    public void setWeixinMsgSender(WeixinMsgSender weixinMsgSender) {
+        this.weixinMsgSender = weixinMsgSender;
     }
 
     public TimerTask getTimerTask() {

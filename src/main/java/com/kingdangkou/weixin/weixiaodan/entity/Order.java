@@ -17,7 +17,7 @@ import static com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum.NOT_PAY;
 @Entity
 @Table(name = "orders")
 public class Order {
-    private int id;
+    private long id;
     private float discount;
     private float method_price;
     private float actual_price;
@@ -27,20 +27,21 @@ public class Order {
     private int state = NOT_PAY.getValue();
     private Address address;
     private String expressNumber;
+    private String weixinTransactionId;
     private Set<SubOrder> subOrders = new HashSet<SubOrder>();
 
     public Order() {
-        date = new Date();
+        this.id = System.currentTimeMillis();
+        this.date = new Date();
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -121,11 +122,15 @@ public class Order {
     }
 
     @OneToMany(targetEntity = SubOrder.class, mappedBy = "order")
+    @Cascade(CascadeType.ALL)
     public Set<SubOrder> getSubOrders() {
         return subOrders;
     }
 
     public void setSubOrders(Set<SubOrder> subOrders) {
+        for (SubOrder subOrder: subOrders){
+            subOrder.setOrder(this);
+        }
         this.subOrders = subOrders;
     }
 
@@ -136,5 +141,14 @@ public class Order {
 
     public void setExpressNumber(String expressNumber) {
         this.expressNumber = expressNumber;
+    }
+
+    @Column(name = "weixin_order_id")
+    public String getWeixinTransactionId() {
+        return weixinTransactionId;
+    }
+
+    public void setWeixinTransactionId(String weixinTransaction_id) {
+        this.weixinTransactionId = weixinTransaction_id;
     }
 }

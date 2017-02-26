@@ -17,7 +17,7 @@
 				while(child = item.children[j++]){ 
 			#>
             <li id="sub-item-{{child.id}}" class="sub-item {{child.active}}">
-				<a href="{{child.url}}" class="{{child.type}} {{child.disabled}}" data-menuid="{{child.id}}"><i class="iconfont icon-yuan"></i>{{child.name}}</a>
+				<a href="{{child.url}}" class="{{child.type}} {{child.disabled}}" data-menuid="{{child.id}}"><i class="iconfont icon-yuan-s"></i>{{child.name}}</a>
 			</li>
 			<# } #>
         </ul>

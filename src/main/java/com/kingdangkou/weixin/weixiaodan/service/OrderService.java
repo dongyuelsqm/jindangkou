@@ -1,6 +1,9 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
-import com.kingdangkou.weixin.weixiaodan.dao.*;
+import com.kingdangkou.weixin.weixiaodan.dao.AddressDao;
+import com.kingdangkou.weixin.weixiaodan.dao.CustomerDao;
+import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
+import com.kingdangkou.weixin.weixiaodan.dao.StorageDao;
 import com.kingdangkou.weixin.weixiaodan.entity.*;
 import com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum;
 import com.kingdangkou.weixin.weixiaodan.model.Failure;
@@ -8,12 +11,9 @@ import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.OrderJsonConfig;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,34 +33,44 @@ public class OrderService {
     private AddressDao addressDao;
 
     @Autowired
-    private ProductDao productDao;
-    @Autowired
-    private ColorDao colorDao;
-    @Autowired
-    private SizeDao sizeDao;
-    @Autowired
-    private SubOrderEntityDao subOrderEntityDao;
+    private SubOrderService subOrderService;
 
     @Autowired
     private CustomerDao customerDao;
+    @Autowired
+    private UnifiedOrderService unifiedOrderService;
+
     public OrderService() {}
 
     public OrderService(OrderDao orderDao) {
         this.orderDao = orderDao;
     }
 
-    public Result save(String openID, String items, String address_id){
+    public Result save(String openID, String items, String address_id) throws Exception {
         Order order = new Order();
-        CustomerEntity customer = customerDao.get(CustomerEntity.class, openID, "openID");
-        order.setCustomerEntity(customer);
-        order.setAddress(addressDao.get(address_id));
-        orderDao.save(order);
-        order.setSubOrders(convertToSubOrders(items, order));
+        CustomerEntity customerEntity = customerDao.get(openID);
+        Address address = addressDao.get(address_id);
+
+
+        order.setCustomerEntity(customerEntity);
+        order.setAddress(address);
+
+        try {
+            Set<SubOrder> subOrderSet = subOrderService.convertToSubOrders(items);
+            order.setSubOrders(subOrderSet);
+        }catch (Exception ex){
+            return new Failure(ex.getMessage());
+        }
+
         float total = calculateMethodPrice(order);
         order.setMethod_price(total);
         order.setActual_price(total);
+
         adjustStorage(order.getSubOrders());
-        return new Success();
+
+        orderDao.save(order);
+        JsAPIConfig jsAPIConfig = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), (int) (order.getActual_price() * 100), items);
+        return new Result(true, jsAPIConfig);
     }
 
     private float calculateMethodPrice(Order order) {
@@ -69,23 +79,6 @@ public class OrderService {
             total += subOrder.getNumber() * subOrder.getProductEntity().getPrice();
         }
         return total;
-    }
-
-    private Set<SubOrder> convertToSubOrders(String items, Order order) {
-        Set<SubOrder> subOrders = new HashSet<SubOrder>();
-        JSONArray array = JSONArray.fromObject(items);
-        HashMap<Integer, ColorEntity> colors = colorDao.getColorMaps();
-        HashMap<Integer, SizeEntity> sizes = sizeDao.getMap();
-        for(Object obj: array){
-            ProductEntity productEntity = productDao.get(((JSONObject) obj).get("product_id").toString());
-            int color_id = Integer.valueOf(((JSONObject) obj).get("color").toString());
-            int size_id = Integer.valueOf(((JSONObject) obj).get("size").toString());
-            Integer number = Integer.valueOf(((JSONObject) obj).get("number").toString());
-            SubOrder subOrder = new SubOrder(order, productEntity, colors.get(color_id), sizes.get(size_id), number);
-            subOrderEntityDao.save(subOrder);
-            subOrders.add(subOrder);
-        }
-        return subOrders;
     }
 
     public void adjustStorage(Set<SubOrder> subOrders){
@@ -126,19 +119,30 @@ public class OrderService {
         this.orderDao = orderDao;
     }
 
-    public Result updateState(int id, String newState){
+    public Result updateStateAndTransactionId(String id, String newState, String weixinTransactionId){
+        Order order = orderDao.getOrder(id);
         if (OrderStateEnum.getEnum(Integer.valueOf(newState)) == null) return new Failure("badValue");
-        updatePersistence(id, Integer.valueOf(newState));
+        order.setWeixinTransactionId(weixinTransactionId);
+        order.setState(Integer.valueOf(newState));
+        orderDao.update(order);
         return new Success();
     }
 
-    private Result updatePersistence(int id, int newState) {
-        orderDao.updateState(id, newState);
+    public Result updateState(String id, String newState){
+        Order order = orderDao.getOrder(id);
+        if (OrderStateEnum.getEnum(Integer.valueOf(newState)) == null) return new Failure("badValue");
+        order.setState(Integer.valueOf(newState));
+        orderDao.update(order);
         return new Success();
     }
 
     public Result getOrderByDate(String begin, String end) {
         List<Order> ordersByDate = orderDao.getOrdersByDate(begin, end);
         return new Result(true, JSONArray.fromObject(ordersByDate, orderJsonConfig));
+    }
+
+    public Result list(){
+        List<Order> list = orderDao.list(Order.class);
+        return new Result(true, JSONArray.fromObject(list, orderJsonConfig));
     }
 }

@@ -33,13 +33,13 @@ public class OrderController {
     public void createOrder(@RequestParam("openID") String openID,
                             @RequestParam("sub_orders") String subOrders,
                             @RequestParam("address_id") String address_id,
-                            HttpServletResponse response) throws IOException {
+                            HttpServletResponse response) throws Exception {
         Result result = orderService.save(openID, subOrders, address_id);
         response.getWriter().print(result);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/order/update")
-    public void update(@RequestParam("id") int id, @RequestParam("newState") String newState, HttpServletResponse response) throws IOException {
+    public void update(@RequestParam("id") String id, @RequestParam("newState") String newState, HttpServletResponse response) throws IOException {
         Result result = orderService.updateState(id, newState);
         response.getWriter().print(result);
     }

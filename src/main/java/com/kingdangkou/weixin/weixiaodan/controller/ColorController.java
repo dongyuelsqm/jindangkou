@@ -1,9 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
-import com.kingdangkou.weixin.weixiaodan.entity.ColorEntity;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.service.ColorService;
-import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by dongy on 2016-12-16.
@@ -30,8 +27,8 @@ public class ColorController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/website/color")
     public void get(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        List<ColorEntity> colorEntities = colorService.list();
-        response.getWriter().print(JSONArray.fromObject(colorEntities));
+        Result result = colorService.list();
+        response.getWriter().print(result);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/website/color")

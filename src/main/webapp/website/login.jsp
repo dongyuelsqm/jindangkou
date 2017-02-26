@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-sm-offset-4 col-sm-4">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="iconfont icon-mima"></i></span>
+                                    <span class="input-group-addon"><i class="iconfont icon-pwd"></i></span>
                                     <input type="password" class="form-control" name="userPassword" id="userPassword" value="" placeholder="请输入您的密码"/>
                                 </div>
                             </div>

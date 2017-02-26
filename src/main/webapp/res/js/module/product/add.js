@@ -11,6 +11,8 @@ define(function(require, exports, module) {
         util = require('util/util');
 
     var template = util.template,
+        SelectView = form.SelectView,
+        CheckboxView = form.CheckboxView,
         colorMap = require('module/default/colors').colorMap;
 
     require('plupload');
@@ -30,8 +32,7 @@ define(function(require, exports, module) {
         '-701': '内存错误',
         '-702': '文件大小超过了plupload所能处理的最大值'
     };
-    var html_img = '<img src="${contextPath}/res/css/base/img/upload-default.png" alt="" class="upload-default"/>/' +
-                    '<input type="hidden" value="" name="pictures"/>';
+    var html_img = '<img src="" alt="" class="upload-default" />';
     var validates = {
             rules: {
                 name: {required: true},
@@ -89,12 +90,6 @@ define(function(require, exports, module) {
             'click button[role="btn-submit"]': 'submit'
         },
         initialize: function(options){
-            this.$checkboxs = [];
-            this.uploaders_store = [];
-            this.$inventory = this.$('#inventory');
-            this.inventoryItemTmpl = template('inventoryItem');
-            this.sizeItemTmpl = template('sizeItem');
-
             this.init();
             this.initImgUpload();
             this.initVideoUpload();
@@ -103,17 +98,87 @@ define(function(require, exports, module) {
         },
         init: function(){
             var _this = this;
-            _.each(this.$('.checkbox-inline'), function(item, index){
-                _this.$checkboxs.push(new form.CheckboxView({el: $(item)}));
-            });
 
-            this.videos = [];
-            this.pictures = [];
+            this.cacheEls();
+            this.initColors();
+            this.initSizes();
+            this.initDepartment();
+
+            new SelectView({el: this.$('#postal-dropdown')});
+
             if(this.$('#video').attr('src') !== ''){
                 this.$('#video').show();
             }else{
                 this.$('#video-default').show();
             }
+        },
+        cacheEls: function(){
+            this.$checkboxs = [];
+            this.uploaders_store = [];
+            this.videos = [];
+            this.pictures = [];
+
+            this.$inventory = this.$('#inventory');
+            this.$imgDefault = this.$('img.upload-default[role="upload-img"]');
+            this.$videoDefault = this.$('img.upload-default[role="upload-video"]');
+            this.$imgWrapper = this.$imgDefault.parent();
+            this.$videoWrapper = this.$videoDefault.parent();
+            this.$colorsWrapper = this.$('#color-wrapper');
+            this.$sizesWrapper = this.$('#size-wrapper');
+
+            this.inventoryItemTmpl = template('inventoryItem');
+            this.sizeItemTmpl = template('sizeItem');
+            this.colorTmpl = template('color');
+            this.sizeTmpl = template('size');
+        },
+        initColors: function(){
+            var _this = this;
+            $.ajax({
+                url: G.contextPath + 'website/color',
+                type: 'get',
+                success: function(rsp){
+                    console.log(rsp.detail);
+                    _this.$colorsWrapper.empty();
+                    _.each(rsp.detail, function(item, index){
+                        _this.$colorsWrapper.append(_this.colorTmpl(item));
+                    });
+
+                    _.each(_this.$colorsWrapper.find('input[type=checkbox]'), function(item, index){
+                        _this.$checkboxs.push(new CheckboxView({el: $(item).parent()}));
+                    });
+                }
+            });
+        },
+        initSizes: function(){
+            var _this = this;
+            $.ajax({
+                url: G.contextPath + 'website/size/list',
+                type: 'get',
+                success: function(rsp){
+                    console.log(rsp);
+                    _this.$sizesWrapper.empty();
+                    _.each(rsp, function(item, index){
+                        _this.$sizesWrapper.append(_this.sizeTmpl(item));
+                    });
+
+                    _.each(_this.$sizesWrapper.find('input[type=checkbox]'), function(item, index){
+                        _this.$checkboxs.push(new CheckboxView({el: $(item).parent()}));
+                    });
+                }
+            });
+        },
+        initDepartment: function(){
+            new SelectView({
+                el: this.$('#department-dropdown'),
+                template: '<li><a href="javascript:" data-val="{{id}}" >{{name}}</a></li>',
+                sync: true,
+                store:{
+                    url: G.contextPath + 'department/list',
+                    extractResult: function(rsp){
+                        return rsp.objs;
+                    }
+                }
+            });
         },
         initImgUpload: function(){
             var _this = this, uploader = {};
@@ -157,7 +222,17 @@ define(function(require, exports, module) {
 
                     if(result.success){
                         // var finalName = result.url;
-                        _this.pictures.push(result.detail);
+                        console.log(result.detail[0]);
+                        var url = G.contextPath + 'upload/' + result.detail[0];
+                        if(_this.$img){
+                            _this.$img.attr('src', url);
+                        }else{
+                            if(_this.$imgWrapper.find('img').length > 4 && _this.$imgDefault.css('display') === 'block'){
+                                _this.$imgDefault.hide();
+                            }
+                            _this.$imgDefault.before('<img src="' + url + '" alt="" role="upload-img" class="upload-img" />');
+                        }
+                        _this.pictures.push(result.detail[0]);
                     }else{
                         alert(result.detail || '上传出错');
                     }
@@ -214,7 +289,17 @@ define(function(require, exports, module) {
                 if(result.success){
                     // this.$('#video').show();
                     // this.$('#video-default').hide();
-                    _this.videos.push(result.detail);
+                    var url = G.contextPath + 'upload/' + result.detail[0];
+                    if(this.$video){
+                        _this.$video.attr('src', url);
+                    }else{
+                        if(_this.$videoDefault.css('display') === 'block'){
+                            _this.$videoDefault.hide();
+                            this.$('#video').attr('src', url).show();
+                        }
+                    }
+
+                    _this.videos.push(result.detail[0]);
                 }else{
                     alert(result.detail || '上传出错');
                 }
@@ -231,28 +316,30 @@ define(function(require, exports, module) {
         'uploadImage': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this;
-
+            this.$img = $this.hasClass('upload-default') ? false : $this;
             this.$('#btn-img').trigger('click');
         },
         'uploadVideo': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this;
-
+            this.$video = $this.hasClass('upload-default') ? false : $this;
             this.$('#btn-video').trigger('click');
         },
         'toggleInventory': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this,
-                color = $this.val();
+                color = $this.val(),
+                colorName = $this.data('name');
 
             if($this.prop('checked')){
                 if(this.$('#inventory-' + color).length < 1){
-                    this.$inventory.append(this.inventoryItemTmpl({'colorCode': color, 'colorName': colorMap[color]}));
+                    this.$inventory.append(this.inventoryItemTmpl({'colorCode': color, 'colorName': colorName}));
 
                     _.each(this.$('input[role="size"]'), function(item, index){
                         if($(item).prop('checked')){
-                            var size = $(item).val();
-                            _this.$('#inventory-' + color).find('.inventory-size').append(_this.sizeItemTmpl({'sizeCode': size}));
+                            var size = $(item).val(),
+                                sizeName = $(item).data('name');
+                            _this.$('#inventory-' + color).find('.inventory-size').append(_this.sizeItemTmpl({'sizeName': sizeName, 'sizeCode': size}));
                         }
                     });
                 }
@@ -265,12 +352,13 @@ define(function(require, exports, module) {
         'addSize': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this,
-                size = $this.val();
+                size = $this.val(),
+                name = 'xl';
             // if(this.validator.element(this.$('input[name="color"]'))){
                 if($this.prop('checked')){
                     var $inventory_size = this.$inventory.find('.inventory-size')
                     if($inventory_size.length > 0){
-                        $inventory_size.append(this.sizeItemTmpl({'sizeCode': size}));
+                        $inventory_size.append(this.sizeItemTmpl({'sizeName': name, 'sizeCode': size}));
                     }
                 }else{
                     if(this.$inventory.find('.inventory-' + size).length > 0) {

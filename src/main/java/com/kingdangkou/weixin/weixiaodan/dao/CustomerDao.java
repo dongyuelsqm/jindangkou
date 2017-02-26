@@ -8,4 +8,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CustomerDao extends BaseDaoHibernate4<CustomerEntity>{
+    public CustomerEntity get(String openID){
+        return get(CustomerEntity.class, openID, "openID");
+    }
 }
