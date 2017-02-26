@@ -12,8 +12,8 @@ public class JsAPIConfig {
     private boolean debug;
     private String appId;
     private String timestamp;
-    private String nonce;
-    private String signature;
+    private String nonceStr;
+    private String paySign;
     private String title;
     private String link;
     private String signType;
@@ -47,20 +47,20 @@ public class JsAPIConfig {
         this.timestamp = timestamp;
     }
 
-    public String getNonce() {
-        return nonce;
+    public String getNonceStr() {
+        return nonceStr;
     }
 
-    public void setNonce(String nonce) {
-        this.nonce = nonce;
+    public void setNonceStr(String nonceStr) {
+        this.nonceStr = nonceStr;
     }
 
-    public String getSignature() {
-        return signature;
+    public String getPaySign() {
+        return paySign;
     }
 
-    public void setSignature(String signature) {
-        this.signature = signature;
+    public void setPaySign(String paySign) {
+        this.paySign = paySign;
     }
 
     public String getTitle() {

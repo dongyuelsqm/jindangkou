@@ -57,7 +57,7 @@ public class PaymentListener {
         outSteam.close();
         inStream.close();
         String result = new String(outSteam.toByteArray(), "utf-8");
-        return xmlUtil.parseXml(result);
+        return xmlUtil.xml2Map(result);
     }
 
     public String getPayCallback(){
