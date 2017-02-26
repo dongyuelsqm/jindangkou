@@ -21,7 +21,7 @@ import static com.kingdangkou.weixin.weixiaodan.utils.SHA1.byteArrayToHexString;
  */
 @Component
 public class UnifiedOrderService {
-    private String unifiedOrderUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+    private String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
     @Autowired
     private HttpConnection httpConnection;
@@ -35,7 +35,7 @@ public class UnifiedOrderService {
     public UnifiedOrderService() throws FileNotFoundException {
     }
 
-    public String unifiedOrder(String openId, String orderId, int money, String attach) throws Exception{
+    public JsAPIConfig unifiedOrder(String openId, String orderId, int money, String attach) throws Exception{
         UnifiedOrder unifiedOrder = new UnifiedOrder();
         unifiedOrder.setAppid(config.getAppId());
         unifiedOrder.setAttach(attach);
@@ -56,20 +56,15 @@ public class UnifiedOrderService {
         String sign = createUnifiedOrderSign(unifiedOrder);
         unifiedOrder.setSign(sign);
 
-        /**
-         * 转成XML格式
-         */
         String xml = xmlUtil.toXML("xml", unifiedOrder);
-//        HttpsRequest request = new HttpsRequest();
-//        String response = request.sendPost(unifiedOrderUrl, xml);
-        String response = httpConnection.post(unifiedOrderUrl, xml);
-//
-//  logger.info("unifiedOrder");
-//        logger.info(response);
-        // TODO: 2017-02-06 should add logger here
-        Map<String, String> responseMap = xmlUtil.xml2Map(response);
 
-        return responseMap.get("prepay_id");
+        String response = httpConnection.post(url, xml);
+        // TODO: 2017-02-06 should add logger here
+
+        Map<String, String> responseMap = xmlUtil.xml2Map(response);
+        String prepay_id = responseMap.get("prepay_id");
+
+        return createPayConfig(prepay_id);
     }
 
     public JsAPIConfig createPayConfig(String prepayId) throws Exception {
@@ -114,7 +109,7 @@ public class UnifiedOrderService {
         return MD5Encode(sign.toString()).toUpperCase();
     }
 
-    public static String MD5Encode(String origin) {
+    private String MD5Encode(String origin) {
         String resultString = null;
         try {
             resultString = origin;

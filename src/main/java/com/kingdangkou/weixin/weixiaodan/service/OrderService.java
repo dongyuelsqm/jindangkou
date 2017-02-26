@@ -69,10 +69,8 @@ public class OrderService {
         adjustStorage(order.getSubOrders());
 
         orderDao.save(order);
-        String s = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), (int)(order.getActual_price()*100), items);
-        //order.setWeixinTransactionId(s);
-        JsAPIConfig payConfig = unifiedOrderService.createPayConfig(s);
-        return new Result(true, payConfig);
+        JsAPIConfig jsAPIConfig = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), (int) (order.getActual_price() * 100), items);
+        return new Result(true, jsAPIConfig);
     }
 
     private float calculateMethodPrice(Order order) {
