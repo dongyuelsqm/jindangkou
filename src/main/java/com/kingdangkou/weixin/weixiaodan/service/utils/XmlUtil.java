@@ -9,6 +9,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +27,16 @@ public class XmlUtil {
         return stream.toXML(obj);
     }
 
-    public Map<String, String> parseXml(String response) {
+    public <T> T parseXml(String xml, Class<T> cls) {
+        XStream stream = new XStream(new XppDriver(new NoNameCoder()));
+        stream.alias("express", cls);
+        return (T)stream.fromXML(xml);
+    }
 
-        return (Map<String, String>) stream.fromXML(response);
+    public static <T> T parseXml(File xml, Class<T> cls) {
+        XStream stream = new XStream(new XppDriver(new NoNameCoder()));
+        stream.alias("express", cls);
+        return (T)stream.fromXML(xml);
     }
 
     public Map<String,String> xml2Map(String xml){
