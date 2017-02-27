@@ -63,7 +63,7 @@ public class UnifiedOrderService {
 
         Map<String, String> responseMap = xmlUtil.xml2Map(response);
         String prepay_id = responseMap.get("prepay_id");
-
+        prepay_id = prepay_id == null? response:prepay_id;
         return createPayConfig(prepay_id);
     }
 
