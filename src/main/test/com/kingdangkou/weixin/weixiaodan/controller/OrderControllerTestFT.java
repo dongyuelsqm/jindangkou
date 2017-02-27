@@ -33,7 +33,6 @@ public class OrderControllerTestFT extends TestBase<OrderController> {
                 param("sub_orders", "[{number:1, color:1, size:1, product_id:1000}]").
                 param("address_id", "1")).andDo(print());
         resultActions.andExpect(status().isOk());
-
     }
 
     @Test

@@ -10,15 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
+import java.security.MessageDigest;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.kingdangkou.weixin.weixiaodan.utils.SHA1.byteArrayToHexString;
 
 /**
  * Created by dongy on 2017-02-06.
  */
 @Component
 public class UnifiedOrderService {
-    private String unifiedOrderUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+    private String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 
     @Autowired
     private HttpConnection httpConnection;
@@ -30,14 +33,12 @@ public class UnifiedOrderService {
     private AppConfiguration config;
 
     public UnifiedOrderService() throws FileNotFoundException {
-        //config = (AppConfiguration) ConfigFileReader.getConfigurationData("PaymentInfo.xml");
-
     }
 
-    public String unifiedOrder(String openId, String orderId, float money) throws Exception{
+    public JsAPIConfig unifiedOrder(String openId, String orderId, int money, String attach) throws Exception{
         UnifiedOrder unifiedOrder = new UnifiedOrder();
         unifiedOrder.setAppid(config.getAppId());
-        unifiedOrder.setAttach("hehedesk");
+        unifiedOrder.setAttach(attach);
 
         unifiedOrder.setBody("hehedesk");
         unifiedOrder.setMch_id(config.getMch_id());
@@ -49,22 +50,21 @@ public class UnifiedOrderService {
         unifiedOrder.setOpenid(openId);
         unifiedOrder.setOut_trade_no(orderId);
 
-        unifiedOrder.setSpbill_create_ip("14.23.150.211");
+        unifiedOrder.setSpbill_create_ip("127.0.0.1");
         unifiedOrder.setTotal_fee(money);
 
         String sign = createUnifiedOrderSign(unifiedOrder);
         unifiedOrder.setSign(sign);
 
-        /**
-         * 转成XML格式
-         */
         String xml = xmlUtil.toXML("xml", unifiedOrder);
-        String response = httpConnection.post(unifiedOrderUrl, xml);
-//        logger.info("unifiedOrder");
-//        logger.info(response);
+
+        String response = httpConnection.post(url, xml);
         // TODO: 2017-02-06 should add logger here
-        Map<String, String> responseMap = xmlUtil.parseXml(response);
-        return responseMap.get("prepay_id");
+
+        Map<String, String> responseMap = xmlUtil.xml2Map(response);
+        String prepay_id = responseMap.get("prepay_id");
+
+        return createPayConfig(prepay_id);
     }
 
     public JsAPIConfig createPayConfig(String prepayId) throws Exception {
@@ -105,8 +105,21 @@ public class UnifiedOrderService {
         sign.append("&spbill_create_ip=").append(unifiedOrder.getSpbill_create_ip());
         sign.append("&total_fee=").append(unifiedOrder.getTotal_fee());
         sign.append("&trade_type=").append(unifiedOrder.getTrade_type());
-        sign.append("&key=").append("sasas");
-        return DigestUtils.md5Hex(sign.toString()).toUpperCase();
+        sign.append("&key=").append(config.getKey());
+        return MD5Encode(sign.toString()).toUpperCase();
+    }
+
+    private String MD5Encode(String origin) {
+        String resultString = null;
+        try {
+            resultString = origin;
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            //resultString = byteArrayToHexString(md.digest(resultString.getBytes())); ///深坑啊，赶紧注释掉，用UTF-8
+            resultString = byteArrayToHexString(md.digest(resultString.getBytes("utf-8")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultString;
     }
 
     public HttpConnection getHttpConnection() {

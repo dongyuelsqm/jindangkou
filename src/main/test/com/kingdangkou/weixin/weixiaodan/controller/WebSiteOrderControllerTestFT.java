@@ -19,4 +19,11 @@ public class WebSiteOrderControllerTestFT extends TestBase<WebSiteOrderControlle
         resultActions.andExpect(status().isOk());
 
     }
+
+    @Test
+    public void TestListOrder() throws Exception {
+        ResultActions resultActions = mockMvc.perform(get("/website/order/list/all")).andDo(print());
+        resultActions.andExpect(status().isOk());
+
+    }
 }

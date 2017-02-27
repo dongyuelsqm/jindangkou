@@ -48,11 +48,16 @@ public class OrderService {
 
     public Result save(String openID, String items, String address_id) throws Exception {
         Order order = new Order();
-        order.setCustomerEntity(customerDao.get(openID));
-        order.setAddress(addressDao.get(address_id));
+        CustomerEntity customerEntity = customerDao.get(openID);
+        Address address = addressDao.get(address_id);
+
+
+        order.setCustomerEntity(customerEntity);
+        order.setAddress(address);
 
         try {
-            order.setSubOrders(subOrderService.convertToSubOrders(items));
+            Set<SubOrder> subOrderSet = subOrderService.convertToSubOrders(items);
+            order.setSubOrders(subOrderSet);
         }catch (Exception ex){
             return new Failure(ex.getMessage());
         }
@@ -60,13 +65,12 @@ public class OrderService {
         float total = calculateMethodPrice(order);
         order.setMethod_price(total);
         order.setActual_price(total);
-        orderDao.save(order);
 
         adjustStorage(order.getSubOrders());
 
-        String s = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), order.getActual_price());
-        JsAPIConfig payConfig = unifiedOrderService.createPayConfig(s);
-        return new Result(true, payConfig);
+        orderDao.save(order);
+        JsAPIConfig jsAPIConfig = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), (int) (order.getActual_price() * 100), items);
+        return new Result(true, jsAPIConfig);
     }
 
     private float calculateMethodPrice(Order order) {
@@ -115,19 +119,30 @@ public class OrderService {
         this.orderDao = orderDao;
     }
 
-    public Result updateState(int id, String newState){
+    public Result updateStateAndTransactionId(String id, String newState, String weixinTransactionId){
+        Order order = orderDao.getOrder(id);
         if (OrderStateEnum.getEnum(Integer.valueOf(newState)) == null) return new Failure("badValue");
-        updatePersistence(id, Integer.valueOf(newState));
+        order.setWeixinTransactionId(weixinTransactionId);
+        order.setState(Integer.valueOf(newState));
+        orderDao.update(order);
         return new Success();
     }
 
-    private Result updatePersistence(int id, int newState) {
-        orderDao.updateState(id, newState);
+    public Result updateState(String id, String newState){
+        Order order = orderDao.getOrder(id);
+        if (OrderStateEnum.getEnum(Integer.valueOf(newState)) == null) return new Failure("badValue");
+        order.setState(Integer.valueOf(newState));
+        orderDao.update(order);
         return new Success();
     }
 
     public Result getOrderByDate(String begin, String end) {
         List<Order> ordersByDate = orderDao.getOrdersByDate(begin, end);
         return new Result(true, JSONArray.fromObject(ordersByDate, orderJsonConfig));
+    }
+
+    public Result list(){
+        List<Order> list = orderDao.list(Order.class);
+        return new Result(true, JSONArray.fromObject(list, orderJsonConfig));
     }
 }

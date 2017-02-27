@@ -33,8 +33,9 @@ public class PaymentListener {
             Map<String, String> map = getCallbackParams(request);
             if (map.get("result_code").toString().equalsIgnoreCase("SUCCESS")) {
                 String orderId = map.get("out_trade_no");
+                String weixinTransactionId = map.get("transaction_id");
                 //这里写成功后的业务逻辑
-                orderService.updateState(Integer.valueOf(orderId), String.valueOf(TO_TRANSIT.getValue()));
+                orderService.updateStateAndTransactionId(orderId, String.valueOf(TO_TRANSIT.getValue()), weixinTransactionId);
             }
         } catch (Exception e) {
             e.printStackTrace();

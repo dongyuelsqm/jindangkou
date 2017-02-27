@@ -25,4 +25,10 @@ public class WebSiteOrderController {
         Result orderByDate = orderService.getOrderByDate(begin, end);
         response.getWriter().print(orderByDate);
     }
+
+    @RequestMapping(value = "/order/list/all", method = RequestMethod.GET)
+    public void getAllOrders(HttpServletResponse response) throws IOException {
+        Result list = orderService.list();
+        response.getWriter().print(list);
+    }
 }
