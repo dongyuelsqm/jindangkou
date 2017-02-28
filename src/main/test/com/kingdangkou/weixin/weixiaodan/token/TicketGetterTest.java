@@ -6,21 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertNotNull;
-
+/**
+ * Created by dongy on 2017-02-28.
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spitter-servlet.xml")
-public class AccessTokenHolderTest {
-
+public class TicketGetterTest {
     @Autowired
-    AccessTokenHolder accessTokenHolder;
+    private TicketGetter getter;
+
     @Test
-    public void testGetAccess_Token() throws Exception {
-        Thread.sleep(10 * 100000);
-        String access_token = accessTokenHolder.getAccessToken();
-        String ticket = accessTokenHolder.getTicket();
-        assertNotNull(access_token);
-        System.out.println(access_token);
+    public void getTickets() throws Exception {
+        String ticket = getter.getTickets("Gw8DVJdwXAFzY4ZKaEql7qNPlFO4wklIi_HKGZOUPhUoaRT3Um5IAYDcbqido7uB4i7ElfEdcnWCcccOwHGb9KAJj1zZuWtktZgleiwjfSMOSAdAGACGO");
         System.out.println(ticket);
     }
+
 }
