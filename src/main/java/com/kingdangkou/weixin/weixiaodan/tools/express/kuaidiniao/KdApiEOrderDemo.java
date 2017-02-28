@@ -67,8 +67,12 @@ public class KdApiEOrderDemo {
                 "'Volume':0.0," +
                 "'Remark':'小心轻放'," +
                 "'IsReturnPrintTemplate':1}";
-		JSONObject object = new JSONObject();
-		//object.put()
+		JSONObject json = new JSONObject();
+		json.put("OrderCode", orderId);
+		json.put("ShipperCode", shipperCode);
+		json.put("PayType", payType);
+		json.put("ExpType", "1");
+
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("RequestData", urlEncoder(requestData, "UTF-8"));
 		params.put("EBusinessID", config.getEBusinessID());
