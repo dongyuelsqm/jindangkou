@@ -1,11 +1,15 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.entity.JsAPIConfig;
+import net.sf.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 
 /**
  * Created by dongy on 2017-02-20.
@@ -19,7 +23,7 @@ public class UnifiedOrderServiceTest {
     @Test
     public void unifiedOrder() throws Exception {
         JsAPIConfig jsAPIConfig = service.unifiedOrder("o3Y_kw4pEFSXdVbieWfmGYBJO-bU", "111111", 1, "");
-        System.out.println(jsAPIConfig);
+        System.out.println(JSONObject.fromObject(jsAPIConfig));
     }
 
 
