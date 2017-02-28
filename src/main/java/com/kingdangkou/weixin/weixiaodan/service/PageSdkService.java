@@ -20,13 +20,13 @@ public class PageSdkService {
 
     @Autowired
     private AppConfiguration appConfiguration;
-    public Result getSdkInfo() {
+    public Result getSdkInfo(String url) {
         String ticket = accessTokenHolder.getTicket();
         System.out.println(ticket);
         String appId = appConfiguration.getAppId();
         String timestamp = String.valueOf(System.currentTimeMillis());
         String nonceStr = UUID.randomUUID().toString().substring(0, 30);
-        String signature = getSignature(ticket, timestamp, nonceStr);
+        String signature = getSignature(ticket, timestamp, nonceStr, url);
         JSONObject json = new JSONObject();
         json.put("appId", appId);
         json.put("timestamp", timestamp);
@@ -35,12 +35,12 @@ public class PageSdkService {
         return new Result(true, json);
     }
 
-    private String getSignature(String ticket, String timestamp, String nonceStr) {
+    private String getSignature(String ticket, String timestamp, String nonceStr, String url) {
         StringBuffer sb = new StringBuffer();
         sb.append("&jsapi_ticket=").append(ticket);
         sb.append("&nonceStr=").append(nonceStr);
         sb.append("&timeStamp=").append(timestamp);
-        sb.append("&url=").append("http://112.124.115.74/weixin-1.0-SNAPSHOT/access");
+        sb.append("&url=").append(url);
         return DigestUtils.sha1Hex(sb.toString());
     }
 }

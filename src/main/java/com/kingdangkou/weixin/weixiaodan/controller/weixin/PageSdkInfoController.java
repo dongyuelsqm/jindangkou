@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -20,8 +21,8 @@ public class PageSdkInfoController {
     private PageSdkService pageSdkService;
 
     @RequestMapping(value = "/get", method = RequestMethod.GET)
-    public void getPageInfo(HttpServletResponse response) throws IOException {
-        Result result = pageSdkService.getSdkInfo();
+    public void getPageInfo(@RequestParam("url") String url,  HttpServletResponse response) throws IOException {
+        Result result = pageSdkService.getSdkInfo(url);
         response.getWriter().print(result);
     }
 }

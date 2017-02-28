@@ -15,7 +15,7 @@ public class PageSdkInfoControllerTest extends TestBase<PageSdkInfoController>{
     @Test
     public void getPageInfo() throws Exception {
         Thread.sleep(10*1000);
-        ResultActions resultActions = mockMvc.perform(get("/weixin/page/get")).andDo(print());
+        ResultActions resultActions = mockMvc.perform(get("/weixin/page/get").param("url", "http://112.124.115.74/weixin-1.0-SNAPSHOT/access")).andDo(print());
         resultActions.andExpect(status().isOk());
     }
 
