@@ -68,11 +68,9 @@ define(function(require, exports, module) {
      */
     var OrderRowView = Backbone.View.extend({
         tagName: 'tr',
-        events: {
-            'change input[role="color"]': 'toggleInventory',
-            'change input[role="size"]': 'addSize'
-        },
+        events: {},
         initialize: function(options) {
+            this.model = options.model;
             this.init();
         },
         init: function(){
@@ -86,55 +84,23 @@ define(function(require, exports, module) {
         },
         cacheEls: function(){
             this.$checkboxs = [];
-            this.$inventory = this.$('.inventory');
-            this.$colorsWrapper = this.$('.color-wrapper');
-            this.$sizesWrapper = this.$('.size-wrapper');
 
+            this.template = template('productItem');
             this.inventoryItemTmpl = template('inventoryItem');
-            this.sizeItemTmpl = template('sizeItem');
-            this.colorTmpl = template('color');
-            this.sizeTmpl = template('size');
-        },
-        'toggleInventory': function(ev){
-            var $this = $(ev.currentTarget),
-                _this = this,
-                color = $this.val();
-
-            if($this.prop('checked')){
-                if(this.$('#inventory-' + color).length < 1){
-                    this.$inventory.append(this.inventoryItemTmpl({'colorCode': color, 'colorName': colorMap[color]}));
-                }
-
-                _.each(this.$('input[role="size"]'), function(item, index){
-                    if($(item).prop('checked')){
-                        var size = $(item).val();
-                        _this.$('#inventory-' + color).find('.inventory-size').append(_this.sizeItemTmpl({'sizeCode': size}));
-                    }
-                });
-            }else{
-                if(this.$('#inventory-' + color).length > 0) {
-                    this.$('#inventory-' + color).remove();
-                }
-            }
-        },
-        'addSize': function(ev){
-            var $this = $(ev.currentTarget),
-                _this = this,
-                size = $this.val();
-            // if(this.validator.element(this.$('input[name="color"]'))){
-                if($this.prop('checked')){
-                    var $inventory_size = this.$inventory.find('.inventory-size')
-                    if($inventory_size.length > 0){
-                        $inventory_size.append(this.sizeItemTmpl({'sizeCode': size}));
-                    }
-                }else{
-                    if(this.$inventory.find('.inventory-' + size).length > 0) {
-                        this.$inventory.find('.inventory-' + size).remove();
-                    }
-                }
-            // }
         },
         render: function(){
+            var data = this.model.toJSON(),
+                _this = this;
+            this.$el.html(this.template(data));
+            this.$inventory = this.$('.inventory');
+            _.map(data.storages, function(item, index){
+                _this.$inventory.append(_this.inventoryItemTmpl({
+                    model: item.sizeEntity.name + '' + item.colorEntity.name,
+                    sizeCode: item.sizeEntity.id,
+                    colorCode: item.colorEntity.id,
+                    number: item.number
+                }));
+            });
             return this;
         }
     });
@@ -144,9 +110,13 @@ define(function(require, exports, module) {
      */
     var OrderTableView = Backbone.View.extend({
         initialize: function(options) {
-            new OrderRowView({
-                el: this.$('tbody>tr')
+            this.content = this.$('tbody');
+        },
+        addItem: function(model){
+            var row = new OrderRowView({
+                model: model
             });
+            this.content.append(row.render().el);
         }
     });
 
@@ -184,9 +154,14 @@ define(function(require, exports, module) {
         },
         'addProduct': function(ev){
             var _this = this,
-                $this = $(ev.currentTarget),
-                id = $this.data('productid'),
-                model = this.collection.get(id);
+                $this = $(ev.currentTarget);
+
+            if($this.prop('checked')) {
+                var id = $this.data('productid'),
+                    model = this.collection.get(id);
+
+                this.table.addItem(model);
+            }
         },
         update: function(data){
             this.collection.fetch(data, {reset: true});
@@ -214,6 +189,9 @@ define(function(require, exports, module) {
                 _this.$el.append('<li>无结果</li>');
             }
             return this;
+        },
+        bind: function(table){
+            this.table = table;
         }
     });
 
@@ -242,6 +220,7 @@ define(function(require, exports, module) {
             });
 
             this.productList = new ProductListView();
+            this.productList.bind(this.orderTable)
         },
         'searchProducts': function(ev){
             var _this = this;
@@ -251,9 +230,24 @@ define(function(require, exports, module) {
             var $this = $(ev.currentTarget),
                 _this = this;
             if(this.validator.form()) {
+                var param = _this.$el.serializeObject(),
+                    array = [];
+                // _.each($('.inventory'), function(item, index){
+                    _.each($('input[role="quantity"]'), function(item, index){
+                        var $input = $(this);
+                        if($input.val() !== ''){
+                            array.push({
+                                number: $input.val(),
+                                color: $input.data('color'),
+                                size: $input.data('size')
+                            });
+                        }
+                    });
+                // });
+                param.sub_orders = JSON.stringify(array);
                 $.ajax({
                     url: urls.save,
-                    data: _this.$el.serializeArray(),
+                    data: param,
                     success: function (rsp) {
                         console.log(rsp);
                     }

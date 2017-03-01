@@ -33,77 +33,11 @@
             <thead>
                 <tr>
                     <th>已选商品</th>
-                    <th>勾选商品属性</th>
                     <th>填写数量</th>
                 </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <div style="width: 280px;">
-                        <img src="" alt="" />
-                        维多利亚同款保暖呢大衣保暖呢大衣批发
-                    </div>
-                </td>
-                <td>
-                    <div style="width: 280px;">
-                        <div class="row">
-                            <label class="col-md-3 control-label">尺码</label>
-                            <div class="col-md-9">
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="size" role="size" value="xs"/> xs
-                                </span>
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="size" role="size" value="s"/> s
-                                </span>
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="size" value="m"/> m
-                                </span>
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="size" value="x"/> x
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-3 control-label">颜色</label>
-                            <div class="col-md-9">
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="color" role="color" value="red"/> 红色
-                                </span>
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="color" role="color" value="coffee"/> 咖啡色
-                                </span>
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="color" role="color" value="blue"/> 蓝色
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div style="width: 350px;">
-                        <ul class="inventory" id="inventory"></ul>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
+            <tbody></tbody>
         </table>
-    </div>
-    <div class="row">
-        <label class="col-md-3 control-label">运费<span class="required">*</span></label>
-        <div class="col-md-5">
-            <div class="dropdown">
-                <div class="input-group">
-                    <input type="text" readonly class="form-control"  placeholder="" />
-                    <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
-                </div>
-                <input type="hidden" name="postal" />
-                <ul class="ul-dropdown">
-                    <li class="selected"><a href="javascript:" data-val="300000">包邮</a></li>
-                    <li><a href="javascript:" data-val="300001">不包邮</a></li>
-                </ul>
-            </div>
-        </div>
     </div>
     <div class="row">
         <label class="col-md-3 control-label">交易状态<span class="required">*</span></label>
@@ -174,96 +108,24 @@
 
 <script type="text/html" id="tmpl-productItem">
     <td>
-        <div style="width: 280px;">
+        <div style="width: 420px;">
             <img src="{{pictures}}" alt="{{name}}" />{{name}}
         </div>
     </td>
     <td>
-        <div style="width: 280px;">
-            <div class="row">
-                <label class="col-md-3 control-label">颜色</label>
-                <div class="col-md-9 color-wrapper">
-                    <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="red"/> 红色
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="coffee"/> 咖啡色
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="blue"/> 蓝色
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="yellow"/> 黄色
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="pink"/> 粉色
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="oringe"/> 橙色
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="purple"/> 紫色
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <label class="col-md-3 control-label">尺码</label>
-                <div class="col-md-5 size-wrapper">
-                    <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="xs"/> xs
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="s"/> s
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="m"/> m
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="x"/> x
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="xl"/> xl
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="xxl"/> xxl
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="xxxl"/> xxxl
-                    </span>
-                </div>
-            </div>
-        </div>
-    </td>
-    <td>
-        <div style="width: 350px;">
+        <div style="width: 490px;">
             <ul class="inventory"></ul>
         </div>
     </td>
 </script>
 
 <script type="text/html" id="tmpl-inventoryItem">
-    <li data-color="{{colorCode}}" id="inventory-{{colorCode}}">
-        <label class="col-md-2">{{colorName}}：</label>
-        <div class="col-md-10 inventory-size"></div>
+    <li >
+        <label class="col-md-2">{{model}}：</label>
+        <div class="col-md-10 inventory-size">
+            <input type="text" role="quantity" data-size="{{sizeCode}}" data-color="{{colorCode}}" class="input-icon input-icon-count" placeholder="{{number}}" value=""/>
+        </div>
     </li>
-</script>
-
-<script type="text/html" id="tmpl-sizeItem">
-    <div class="col-md-3 inventory-{{sizeCode}}">
-        {{sizeName}}: <input type="text" role="quantity" data-size="{{sizeCode}}" class="input-icon input-icon-count" placeholder="" value=""/>
-    </div>
-</script>
-
-<script type="text/html" id="tmpl-color">
-    <span class="checkbox-inline">
-        <input type="checkbox" role="color" value="1" data-name="{{name}}" /> {{name}}
-    </span>
-</script>
-
-<script type="text/html" id="tmpl-size">
-    <span class="checkbox-inline">
-        <input type="checkbox" role="size" value="1" data-name="{{name}}" /> {{name}}
-    </span>
 </script>
 
 <script type="text/javascript">

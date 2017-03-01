@@ -29,6 +29,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!--
                         <div class="row">
                             <div class="col-sm-4 col-sm-offset-4">
                                 <input type="text" class="form-control verify-code left" name="verifyCode" id="verifyCode" placeholder="请输入验证码" />
@@ -46,13 +47,11 @@
                                 <a href="#password!confirmAccount.action" class="forget-pwd pull-right" >忘记密码</a>
                             </div>
                         </div>
+                        -->
                         <div class="row">
-                            <div class="col-sm-offset-4 col-sm-4">
+                            <div class="col-sm-offset-4 col-sm-4 text-center">
                                 <button type="button" class="btn btn-submit btn-login">提交</button>
                             </div>
-                        </div>
-                        <div class="text-center">
-                            <a href="#register.action" class="register" >免费注册</a>
                         </div>
                     </form>
                 </div>
