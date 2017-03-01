@@ -24,7 +24,7 @@ public class PageSdkService {
         String ticket = accessTokenHolder.getTicket();
         System.out.println(ticket);
         String appId = appConfiguration.getAppId();
-        String timestamp = String.valueOf(System.currentTimeMillis());
+        String timestamp = String.valueOf(System.currentTimeMillis()/1000);
         String nonceStr = UUID.randomUUID().toString().substring(0, 30);
         String signature = getSignature(ticket, timestamp, nonceStr, url);
         JSONObject json = new JSONObject();
@@ -37,10 +37,11 @@ public class PageSdkService {
 
     private String getSignature(String ticket, String timestamp, String nonceStr, String url) {
         StringBuffer sb = new StringBuffer();
-        sb.append("&jsapi_ticket=").append(ticket);
-        sb.append("&nonceStr=").append(nonceStr);
-        sb.append("&timeStamp=").append(timestamp);
+        sb.append("jsapi_ticket=").append(ticket);
+        sb.append("&noncestr=").append(nonceStr);
+        sb.append("&timestamp=").append(timestamp);
         sb.append("&url=").append(url);
+        System.out.println(sb);
         return DigestUtils.sha1Hex(sb.toString());
     }
 }
