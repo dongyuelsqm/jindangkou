@@ -32,6 +32,8 @@ public class PageSdkService {
         json.put("timestamp", timestamp);
         json.put("nonceStr", nonceStr);
         json.put("signature", signature);
+        json.put("url", url);
+        json.put("ticket", ticket);
         return new Result(true, json);
     }
 
