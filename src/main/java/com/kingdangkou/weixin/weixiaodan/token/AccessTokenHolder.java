@@ -15,11 +15,15 @@ import java.util.TimerTask;
 public class AccessTokenHolder {
     private int period = 3600 * 1000;
     private String accessToken;
+    private String ticket;
     @Autowired
     AppInfoHolder appInfoHolder;
 
     @Autowired
     private WeixinMsgSender weixinMsgSender;
+
+    @Autowired
+    private TicketGetter ticketGetter;
 
     public AccessTokenHolder(){
         Timer timer = new Timer(true);
@@ -33,6 +37,7 @@ public class AccessTokenHolder {
                 HashMap<String, String> params = appInfoHolder.getParams();
                 String s = weixinMsgSender.sendGet(params);
                 accessToken = JSONObject.fromObject(s).getString("access_token");
+                ticket = ticketGetter.getTickets(accessToken);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -77,5 +82,13 @@ public class AccessTokenHolder {
 
     public void setTimerTask(TimerTask timerTask) {
         this.timerTask = timerTask;
+    }
+
+    public String getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
     }
 }

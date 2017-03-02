@@ -2,6 +2,11 @@
 <%@ include file="../common/taglibs.jsp"%>
 <%@ include file="../common/upper-part.jsp"%>
 <style>
+    ul.product-list{border: 1px solid #cdcdcd; box-shadow: 0 0 3px #aaa;}
+    ul.product-list > li{background-color: #fff; line-height: 30px; overflow: hidden; padding: 10px;}
+        ul.product-list > li > span{float: left; padding: 10px;}
+        ul.product-list > li > img{float: left; height: 100px; width: 100px;}
+
     ul.inventory > li{line-height: 30px; margin-bottom: 5px; overflow: hidden;}
         ul.inventory > li > label,
         ul.inventory > li div{padding-left: 0; padding-right: 0;}
@@ -20,6 +25,7 @@
                 <input type="text" class="form-control search-text" name="" placeholder="输入货号或商品名称进行搜索">
                 <span class="input-group-addon btn-search" role="btn-search">搜索</span>
             </div>
+            <ul class="product-list" id="product-list"></ul>
         </div>
     </div>
     <div class="row">
@@ -88,10 +94,10 @@
         <div class="col-md-5">
             <div class="dropdown">
                 <div class="input-group">
-                    <input type="text" id="" readonly class="form-control"  placeholder="" />
+                    <input type="text" readonly class="form-control"  placeholder="" />
                     <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                 </div>
-                <input type="hidden" id="" name="postal" />
+                <input type="hidden" name="postal" />
                 <ul class="ul-dropdown">
                     <li class="selected"><a href="javascript:" data-val="300000">包邮</a></li>
                     <li><a href="javascript:" data-val="300001">不包邮</a></li>
@@ -104,10 +110,10 @@
         <div class="col-md-5">
             <div class="dropdown">
                 <div class="input-group">
-                    <input type="text" id="" readonly class="form-control"  placeholder="" />
+                    <input type="text" readonly class="form-control"  placeholder="" />
                     <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                 </div>
-                <input type="hidden" id="" name="status" />
+                <input type="hidden" name="status" />
                 <ul class="ul-dropdown">
                     <li class="selected"><a href="javascript:" data-val="0">待付款</a></li>
                     <li><a href="javascript:" data-val="1">交易成功</a></li>
@@ -155,29 +161,28 @@
 </form>
 <%@include file="../common/lower-part.jsp"%>
 
-<script type="text/html" id="tmpl-order-item">
+<script type="text/html" id="tmpl-orderItem">
     <li>
-        <img src="" alt="" />
-        维多利亚同款保暖呢大衣保暖呢大衣批发
-        <span>价格</span>
+        <img src="{{pictures}}" alt="{{name}}" />
+        <span>货号: {{code}}</br>{{name}}</span>
+        <span class="">${{price}}</span>
         <span class="checkbox-inline pull-right">
-            <input type="checkbox" name="color" value="red"/> 红色
+            <input type="checkbox" data-productid="{{id}}" role="product" value=""/>
         </span>
     </li>
 </script>
 
-<script type="text/html" id="tmpl-">
+<script type="text/html" id="tmpl-productItem">
     <td>
         <div style="width: 280px;">
-            <img src="" alt="" />
-            维多利亚同款保暖呢大衣保暖呢大衣批发
+            <img src="{{pictures}}" alt="{{name}}" />{{name}}
         </div>
     </td>
     <td>
         <div style="width: 280px;">
             <div class="row">
                 <label class="col-md-3 control-label">颜色</label>
-                <div class="col-md-9">
+                <div class="col-md-9 color-wrapper">
                     <span class="checkbox-inline">
                         <input type="checkbox" name="color" role="color" value="red"/> 红色
                     </span>
@@ -203,7 +208,7 @@
             </div>
             <div class="row">
                 <label class="col-md-3 control-label">尺码</label>
-                <div class="col-md-5">
+                <div class="col-md-5 size-wrapper">
                     <span class="checkbox-inline">
                         <input type="checkbox" name="size" role="size" value="xs"/> xs
                     </span>
@@ -237,7 +242,7 @@
 </script>
 
 <script type="text/html" id="tmpl-inventoryItem">
-    <li data-color="blue" id="inventory-{{colorCode}}">
+    <li data-color="{{colorCode}}" id="inventory-{{colorCode}}">
         <label class="col-md-2">{{colorName}}：</label>
         <div class="col-md-10 inventory-size"></div>
     </li>
@@ -245,8 +250,20 @@
 
 <script type="text/html" id="tmpl-sizeItem">
     <div class="col-md-3 inventory-{{sizeCode}}">
-        {{sizeCode}}: <input type="text" role="quantity" data-size="{{sizeCode}}" class="input-icon input-icon-count" placeholder="" value=""/>
+        {{sizeName}}: <input type="text" role="quantity" data-size="{{sizeCode}}" class="input-icon input-icon-count" placeholder="" value=""/>
     </div>
+</script>
+
+<script type="text/html" id="tmpl-color">
+    <span class="checkbox-inline">
+        <input type="checkbox" role="color" value="1" data-name="{{name}}" /> {{name}}
+    </span>
+</script>
+
+<script type="text/html" id="tmpl-size">
+    <span class="checkbox-inline">
+        <input type="checkbox" role="size" value="1" data-name="{{name}}" /> {{name}}
+    </span>
 </script>
 
 <script type="text/javascript">

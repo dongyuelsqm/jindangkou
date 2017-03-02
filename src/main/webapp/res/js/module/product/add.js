@@ -12,8 +12,7 @@ define(function(require, exports, module) {
 
     var template = util.template,
         SelectView = form.SelectView,
-        CheckboxView = form.CheckboxView,
-        colorMap = require('module/default/colors').colorMap;
+        CheckboxView = form.CheckboxView;
 
     require('plupload');
     require('jquery-validate');
@@ -80,6 +79,14 @@ define(function(require, exports, module) {
             wrapper: 'div'
         };
 
+    var urls = {
+        save: G.contextPath + 'website/product/add',
+        sizes: G.contextPath + 'website/size/list',
+        colors: G.contextPath + 'website/color',
+        departments: G.contextPath + 'department/list',
+        upload:  G.contextPath + 'file/upload'
+    };
+
     var FormView = Backbone.View.extend({
         events: {
             'click img[role="upload-img"]': 'uploadImage',
@@ -134,10 +141,9 @@ define(function(require, exports, module) {
         initColors: function(){
             var _this = this;
             $.ajax({
-                url: G.contextPath + 'website/color',
+                url: urls.colors,
                 type: 'get',
                 success: function(rsp){
-                    console.log(rsp.detail);
                     _this.$colorsWrapper.empty();
                     _.each(rsp.detail, function(item, index){
                         _this.$colorsWrapper.append(_this.colorTmpl(item));
@@ -152,12 +158,11 @@ define(function(require, exports, module) {
         initSizes: function(){
             var _this = this;
             $.ajax({
-                url: G.contextPath + 'website/size/list',
+                url: urls.sizes,
                 type: 'get',
                 success: function(rsp){
-                    console.log(rsp);
                     _this.$sizesWrapper.empty();
-                    _.each(rsp, function(item, index){
+                    _.each(rsp.detail, function(item, index){
                         _this.$sizesWrapper.append(_this.sizeTmpl(item));
                     });
 
@@ -173,7 +178,7 @@ define(function(require, exports, module) {
                 template: '<li><a href="javascript:" data-val="{{id}}" >{{name}}</a></li>',
                 sync: true,
                 store:{
-                    url: G.contextPath + 'department/list',
+                    url: urls.departments,
                     extractResult: function(rsp){
                         return rsp.objs;
                     }
@@ -184,7 +189,7 @@ define(function(require, exports, module) {
             var _this = this, uploader = {};
             this.uploader_img = new plupload.Uploader({
                     browse_button: document.getElementById('btn-img'),
-                    url: 'file/upload',
+                    url: urls.upload,
                     flash_swf_url: G.contextPath + '/res/js/plugins/plupload/Moxie.swf',
                     silverlight_xap_url : G.contextPath + '/res/js/plugins/plupload/Moxie.xap',
                     multi_selection: false,
@@ -250,7 +255,7 @@ define(function(require, exports, module) {
             var _this = this, uploader = {};
             this.uploader_video = new plupload.Uploader({
                 browse_button: document.getElementById('btn-video'),
-                url: 'file/upload',
+                url: urls.upload,
                 flash_swf_url: G.contextPath + '/res/js/plugins/plupload/Moxie.swf',
                 silverlight_xap_url : G.contextPath + '/res/js/plugins/plupload/Moxie.xap',
                 multi_selection: false,
@@ -397,7 +402,7 @@ define(function(require, exports, module) {
                 param.label = '["1"]';
 
                 $.ajax({
-                    url: G.contextPath + 'website/product/add',
+                    url: urls.save,
                     data: param,
                     success: function (rsp) {
                         if(rsp.success){

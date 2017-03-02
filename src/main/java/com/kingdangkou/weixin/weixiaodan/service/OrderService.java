@@ -11,6 +11,7 @@ import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.OrderJsonConfig;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,14 +48,25 @@ public class OrderService {
     }
 
     public Result save(String openID, String items, String address_id) throws Exception {
-        Order order = new Order();
         CustomerEntity customerEntity = customerDao.get(openID);
         Address address = addressDao.get(address_id);
 
 
+        Order order = new Order();
         order.setCustomerEntity(customerEntity);
         order.setAddress(address);
 
+        Result ex = putSubOrdersToOrder(items, order);
+        if (ex != null) return ex;
+
+        adjustStorage(order.getSubOrders());
+
+        orderDao.save(order);
+        JsAPIConfig jsAPIConfig = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), (int) (order.getActual_price() * 100), items);
+        return new Result(true, jsAPIConfig);
+    }
+
+    private Result putSubOrdersToOrder(String items, Order order) {
         try {
             Set<SubOrder> subOrderSet = subOrderService.convertToSubOrders(items);
             order.setSubOrders(subOrderSet);
@@ -65,12 +77,7 @@ public class OrderService {
         float total = calculateMethodPrice(order);
         order.setMethod_price(total);
         order.setActual_price(total);
-
-        adjustStorage(order.getSubOrders());
-
-        orderDao.save(order);
-        JsAPIConfig jsAPIConfig = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), (int) (order.getActual_price() * 100), items);
-        return new Result(true, jsAPIConfig);
+        return null;
     }
 
     private float calculateMethodPrice(Order order) {
@@ -144,5 +151,21 @@ public class OrderService {
     public Result list(){
         List<Order> list = orderDao.list(Order.class);
         return new Result(true, JSONArray.fromObject(list, orderJsonConfig));
+    }
+
+    public Result addOrder(String name, String sub_orders, String address) {
+        Address addressEntity = (Address) JSONObject.toBean(JSONObject.fromObject(address), Address.class);
+        addressDao.save(addressEntity);
+        CustomerEntity customerEntity = new CustomerEntity();
+        customerEntity.setNickname(name);
+        customerEntity.setOpenID("default");
+        customerDao.save(customerEntity);
+        Order order = new Order();
+        putSubOrdersToOrder(sub_orders, order);
+        order.setCustomerEntity(customerEntity);
+        order.setAddress(addressEntity);
+        adjustStorage(order.getSubOrders());
+        orderDao.save(order);
+        return new Success();
     }
 }

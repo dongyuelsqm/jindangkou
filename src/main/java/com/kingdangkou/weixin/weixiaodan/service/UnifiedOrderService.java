@@ -63,7 +63,7 @@ public class UnifiedOrderService {
 
         Map<String, String> responseMap = xmlUtil.xml2Map(response);
         String prepay_id = responseMap.get("prepay_id");
-
+        prepay_id = prepay_id == null? response:prepay_id;
         return createPayConfig(prepay_id);
     }
 
@@ -83,10 +83,10 @@ public class UnifiedOrderService {
         String signature = DigestUtils.md5Hex(sign.toString()).toUpperCase();
 
         jsAPIConfig.setAppId(config.getAppId());
-        jsAPIConfig.setNonce(nonce);
+        jsAPIConfig.setNonceStr(nonce);
         jsAPIConfig.setTimestamp(timestamp);
         jsAPIConfig.setPackageName(packageName);
-        jsAPIConfig.setSignature(signature);
+        jsAPIConfig.setPaySign(signature);
 
         return jsAPIConfig;
     }
