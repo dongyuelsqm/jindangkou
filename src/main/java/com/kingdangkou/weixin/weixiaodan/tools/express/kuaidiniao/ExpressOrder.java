@@ -1,6 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao;
 
 import com.kingdangkou.weixin.weixiaodan.entity.Address;
+import java.util.List;
 
 /**
  * Created by dongy on 2017-02-28.
@@ -14,16 +15,18 @@ public class ExpressOrder {
     private int IsNotice;
     private Address sender = new Address("11", "11", "opend", "opend", "opend", "opend", "opend");
     private Address receiver;
+    private List<Commodity> commodity;
     public ExpressOrder(){}
-    public ExpressOrder(String orderCode, String shipperCode, int payType, int expType, Address sender, Address receiver, int isReturnPrintTemplate, int isNotice) {
-        OrderCode = orderCode;
-        ShipperCode = shipperCode;
-        PayType = payType;
-        ExpType = expType;
+    public ExpressOrder(String orderCode, String shipperCode, int payType, int expType, List<Commodity> commodity, Address sender, Address receiver, int isReturnPrintTemplate, int isNotice) {
+        this.OrderCode = orderCode;
+        this.ShipperCode = shipperCode;
+        this.PayType = payType;
+        this.ExpType = expType;
         this.receiver = receiver;
         this.sender = sender;
-        IsReturnPrintTemplate = isReturnPrintTemplate;
-        IsNotice = isNotice;
+        this.IsReturnPrintTemplate = isReturnPrintTemplate;
+        this.IsNotice = isNotice;
+        this.commodity = commodity;
     }
 
 
@@ -90,5 +93,13 @@ public class ExpressOrder {
 
     public void setReceiver(Address receiver) {
         this.receiver = receiver;
+    }
+
+    public List<Commodity> getCommodity() {
+        return commodity;
+    }
+
+    public void setCommodity(List<Commodity> commodity) {
+        this.commodity = commodity;
     }
 }
