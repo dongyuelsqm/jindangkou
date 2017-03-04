@@ -2,6 +2,7 @@ package com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao;
 
 import com.kingdangkou.weixin.weixiaodan.entity.Address;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,8 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao.PayType.Prepaid;
 
 /**
  *
@@ -45,34 +48,30 @@ public class KdApiEOrderDemo {
      * Json方式 电子面单
 	 * @throws Exception 
      */
-	public String orderOnlineByJson(String orderId, String shipperCode, PayType payType, int IsNotice, Address rev, Address send) throws Exception{
+	public String orderOnlineByJson(ExpressOrder order) throws Exception{
 		//new ExpressOrder(orderId, shipperCode, payType.getValue(), 1, 1, )
-		String requestData= "{'OrderCode': '" + orderId + "'," +
-                "'ShipperCode':'" + shipperCode + "'," +
-                "'PayType':" + payType.getValue() + "," +
-                "'ExpType':1," +
-                "'Cost':1.0," +
-                "'OtherCost':1.0," +
-                "'Sender':" +
-                "{" +
-                "'Company':'LV','Name':'Taylor','Mobile':'15018442396','ProvinceName':'上海','CityName':'上海','ExpAreaName':'青浦区','Address':'明珠路73号'}," +
-                "'Receiver':" +
-                "{" +
-                "'Company':'GCCUI','Name':'Yann','Mobile':'15018442396','ProvinceName':'北京','CityName':'北京','ExpAreaName':'朝阳区','Address':'三里屯街道雅秀大厦'}," +
-                "'Commodity':" +
-                "[{" +
-                "'GoodsName':'鞋子','Goodsquantity':1,'GoodsWeight':1.0}]," +
-                "'Weight':1.0," +
-                "'Quantity':1," +
-                "'Volume':0.0," +
-                "'Remark':'小心轻放'," +
-                "'IsReturnPrintTemplate':1}";
-		JSONObject json = new JSONObject();
-		json.put("OrderCode", orderId);
-		json.put("ShipperCode", shipperCode);
-		json.put("PayType", payType);
-		json.put("ExpType", "1");
+//		String requestData= "{'OrderCode': '" + orderId + "'," +
+//                "'ShipperCode':'" + shipperCode + "'," +
+//                "'PayType':" + Prepaid.getValue() + "," +
+//                "'ExpType':1," +
+//                "'Cost':1.0," +
+//                "'OtherCost':1.0," +
+//                "'Sender':" +
+//                "{" +
+//                "'Company':'LV','Name':'Taylor','Mobile':'15018442396','ProvinceName':'上海','CityName':'上海','ExpAreaName':'青浦区','Address':'明珠路73号'}," +
+//                "'Receiver':" +
+//                "{" +
+//                "'Company':'GCCUI','Name':'Yann','Mobile':'15018442396','ProvinceName':'北京','CityName':'北京','ExpAreaName':'朝阳区','Address':'三里屯街道雅秀大厦'}," +
+//                "'Commodity':" +
+//                "[{" +
+//                "'GoodsName':'鞋子','Goodsquantity':1,'GoodsWeight':1.0}]," +
+//                "'Weight':1.0," +
+//                "'Quantity':1," +
+//                "'Volume':0.0," +
+//                "'Remark':'小心轻放'," +
+//                "'IsReturnPrintTemplate':1}";
 
+		String requestData = JSONObject.fromObject(order).toString();
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("RequestData", urlEncoder(requestData, "UTF-8"));
 		params.put("EBusinessID", config.getEBusinessID());

@@ -1,5 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao;
 
+import com.kingdangkou.weixin.weixiaodan.entity.Address;
+import net.sf.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,19 @@ public class KdApiEOrderDemoTest {
     KdApiEOrderDemo demo;
     @Test
     public void orderOnlineByJson() throws Exception {
-        String s = demo.orderOnlineByJson();
+        Address address = new Address("name", "mobile", "openid", "province", "city", "are", "address");
+        ExpressOrder order = new ExpressOrder("1", "EMS", PayType.Prepaid.getValue(), 1, address, address, 0, 0);
+        System.out.println(JSONObject.fromObject(order));
+        String s = demo.orderOnlineByJson(order);
         System.out.println(s);
+    }
+
+    @Test
+    public void testJson(){
+        ExpressOrder order = new ExpressOrder();
+        JSONObject object = JSONObject.fromObject(order);
+        System.out.println(object.toString());
+//        JSONObject.fromObject()
     }
 
 }

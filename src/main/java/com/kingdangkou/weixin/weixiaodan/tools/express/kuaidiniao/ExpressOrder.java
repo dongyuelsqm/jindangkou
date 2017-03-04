@@ -1,5 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao;
 
+import com.kingdangkou.weixin.weixiaodan.entity.Address;
+
 /**
  * Created by dongy on 2017-02-28.
  */
@@ -8,21 +10,23 @@ public class ExpressOrder {
     private String ShipperCode;
     private int PayType;
     private int ExpType;
-    private String Sender;
-    private String Receiver;
     private int IsReturnPrintTemplate;
     private int IsNotice;
-
-    public ExpressOrder(String orderCode, String shipperCode, int payType, int expType, String sender, String receiver, int isReturnPrintTemplate, int isNotice) {
+    private Address sender = new Address("11", "11", "opend", "opend", "opend", "opend", "opend");
+    private Address receiver;
+    public ExpressOrder(){}
+    public ExpressOrder(String orderCode, String shipperCode, int payType, int expType, Address sender, Address receiver, int isReturnPrintTemplate, int isNotice) {
         OrderCode = orderCode;
         ShipperCode = shipperCode;
         PayType = payType;
         ExpType = expType;
-        Sender = sender;
-        Receiver = receiver;
+        this.receiver = receiver;
+        this.sender = sender;
         IsReturnPrintTemplate = isReturnPrintTemplate;
         IsNotice = isNotice;
     }
+
+
 
     public String getOrderCode() {
         return OrderCode;
@@ -56,22 +60,6 @@ public class ExpressOrder {
         ExpType = expType;
     }
 
-    public String getSender() {
-        return Sender;
-    }
-
-    public void setSender(String sender) {
-        Sender = sender;
-    }
-
-    public String getReceiver() {
-        return Receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        Receiver = receiver;
-    }
-
     public int getIsReturnPrintTemplate() {
         return IsReturnPrintTemplate;
     }
@@ -86,5 +74,21 @@ public class ExpressOrder {
 
     public void setIsNotice(int isNotice) {
         IsNotice = isNotice;
+    }
+
+    public Address getSender() {
+        return sender;
+    }
+
+    public void setSender(Address sender) {
+        this.sender = sender;
+    }
+
+    public Address getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Address receiver) {
+        this.receiver = receiver;
     }
 }
