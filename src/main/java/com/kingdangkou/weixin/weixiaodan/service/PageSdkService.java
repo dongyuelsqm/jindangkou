@@ -2,12 +2,14 @@ package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.entity.AppConfiguration;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
+import com.kingdangkou.weixin.weixiaodan.service.utils.Sign;
 import com.kingdangkou.weixin.weixiaodan.token.AccessTokenHolder;
 import net.sf.json.JSONObject;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -22,11 +24,13 @@ public class PageSdkService {
     private AppConfiguration appConfiguration;
     public Result getSdkInfo(String url) {
         String ticket = accessTokenHolder.getTicket();
+        Map<String, String> signs = Sign.sign(ticket, url);
         System.out.println(ticket);
+        System.out.println(url);
         String appId = appConfiguration.getAppId();
-        String timestamp = String.valueOf(System.currentTimeMillis()/1000);
-        String nonceStr = UUID.randomUUID().toString().substring(0, 30);
-        String signature = getSignature(ticket, timestamp, nonceStr, url);
+        String timestamp = signs.get("timestamp");
+        String nonceStr = signs.get("nonceStr");
+        String signature = signs.get("signature");
         JSONObject json = new JSONObject();
         json.put("appId", appId);
         json.put("timestamp", timestamp);
