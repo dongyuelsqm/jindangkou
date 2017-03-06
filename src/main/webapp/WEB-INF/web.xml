@@ -38,13 +38,32 @@
         <servlet-name>default</servlet-name>
         <url-pattern>*.css</url-pattern>
     </servlet-mapping>
-
+    <!--<servlet>-->
+        <!--<servlet-name>cgi</servlet-name>-->
+        <!--<servlet-class>org.apache.catalina.servlets.CGIServlet</servlet-class>-->
+        <!--<init-param>-->
+            <!--<param-name>debug</param-name>-->
+            <!--<param-value>0</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>cgiPathPrefix</param-name>-->
+            <!--<param-value>WEB-INF/cgi</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>passShellEnvironment</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+        <!--<load-on-startup>5</load-on-startup>-->
+    <!--</servlet>-->
     <servlet>
         <servlet-name>spitter</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>cgi</servlet-name>-->
+        <!--<url-pattern>/cgi-bin/*</url-pattern>-->
+    <!--</servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>spitter</servlet-name>
         <url-pattern>/</url-pattern>
