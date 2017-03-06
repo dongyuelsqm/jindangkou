@@ -1,8 +1,10 @@
 package com.kingdangkou.weixin.weixiaodan.controller.weixin;
 
 import com.kingdangkou.weixin.weixiaodan.controller.TestBase;
+import com.kingdangkou.weixin.weixiaodan.token.AccessTokenHolder;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.junit.Assert.assertEquals;
@@ -14,11 +16,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by dongy on 2017-02-28.
  */
 public class PageSdkInfoControllerTest extends TestBase<PageSdkInfoController>{
+    @Autowired
+    private AccessTokenHolder tokenHolder;
     @Test
     public void getPageInfo() throws Exception {
         Thread.sleep(10*1000);
         ResultActions resultActions = mockMvc.perform(get("/weixin/page/get").param("url", "http://112.124.115.74/weixin-1.0-SNAPSHOT/access")).andDo(print());
         resultActions.andExpect(status().isOk());
+        assertEquals(1, tokenHolder.getCounter());
     }
 
     @Test
