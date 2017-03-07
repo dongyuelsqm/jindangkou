@@ -31,4 +31,10 @@ public class WebSiteOrderController {
         Result list = orderService.list();
         response.getWriter().print(list);
     }
+
+    @RequestMapping(value = "/order/add", method = RequestMethod.POST)
+    public void addOrder(@RequestParam("name") String name, @RequestParam("sub_orders") String sub_orders, @RequestParam("address") String address, HttpServletResponse response) throws IOException {
+        Result result = orderService.addOrder(name, sub_orders, address);
+        response.getWriter().print(result);
+    }
 }
