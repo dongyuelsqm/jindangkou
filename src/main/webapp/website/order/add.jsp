@@ -7,14 +7,17 @@
         ul.product-list > li > span{float: left; padding: 10px;}
         ul.product-list > li > img{float: left; height: 100px; width: 100px;}
 
-    ul.inventory > li{line-height: 30px; margin-bottom: 5px; overflow: hidden;}
+    ul.inventory > li{line-height: 30px; margin-bottom: 5px; overflow: hidden; width: 20%;}
         ul.inventory > li > label,
         ul.inventory > li div{padding-left: 0; padding-right: 0;}
         ul.inventory > li > div > div{float: left; margin-bottom: 5px;}
-            ul.inventory > li > div input{padding-left: 5px; width: 40px;}
+            ul.inventory > li > div input{padding-left: 5px; width: 60px;}
 
     .table{border-bottom: 1px solid #ddd;}
-    .table .row{line-height: 30px;}
+        .table .row{line-height: 30px;}
+
+    .nest{margin-bottom: 10px;}
+    .dropdown{width: auto;}
 </style>
 <h1 class="content-title">添加订单</h1>
 <form class="block-body form" id="order-form">
@@ -40,32 +43,9 @@
         </table>
     </div>
     <div class="row">
-        <label class="col-md-3 control-label">交易状态<span class="required">*</span></label>
-        <div class="col-md-5">
-            <div class="dropdown">
-                <div class="input-group">
-                    <input type="text" readonly class="form-control"  placeholder="" />
-                    <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
-                </div>
-                <input type="hidden" name="status" />
-                <ul class="ul-dropdown">
-                    <li class="selected"><a href="javascript:" data-val="0">待付款</a></li>
-                    <li><a href="javascript:" data-val="1">交易成功</a></li>
-                    <li><a href="javascript:" data-val="2">交易关闭</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <label class="col-md-3 control-label">买家用户名<span class="required">*</span></label>
         <div class="col-md-5">
             <input type="text" name="username" placeholder="请输入买家用户名" value=""/>
-        </div>
-    </div>
-    <div class="row">
-        <label class="col-md-3 control-label">应收款<span class="required">*</span></label>
-        <div class="col-md-5">
-            <input type="text" name="price" class="input-icon input-icon-price" placeholder="请输入应收款" />
         </div>
     </div>
     <br/>
@@ -84,7 +64,41 @@
     <div class="row">
         <label class="col-md-3 control-label">收货地址<span class="required">*</span></label>
         <div class="col-md-5">
-            <input type="text" name="address" placeholder="请输入收货地址" value=""/>
+            <div class="row nest">
+                <div class="col-md-4">
+                    <div class="dropdown" id="province-dropdown">
+                        <div class="input-group">
+                            <input type="text" readonly class="form-control" value="省份" placeholder="" />
+                            <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
+                        </div>
+                        <input type="hidden" name="province" id="province"/>
+                        <ul class="ul-dropdown" id="provinceId"></ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dropdown" id="city-dropdown">
+                        <div class="input-group">
+                            <input type="text" readonly class="form-control" value="城市" placeholder="" />
+                            <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
+                        </div>
+                        <input type="hidden" name="city" id="city"/>
+                        <ul class="ul-dropdown" id="cityId"></ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dropdown" id="district-dropdown">
+                        <div class="input-group">
+                            <input type="text" readonly class="form-control" value="区/县" placeholder="" />
+                            <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
+                        </div>
+                        <input type="hidden" name="district" id="district"/>
+                        <ul class="ul-dropdown" id="districtId"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 col-md-offset-3">
+            <input type="text" placeholder="请输入详细地址" id="detail" name="detail" value="" />
         </div>
     </div>
     <div class="row">
@@ -108,12 +122,12 @@
 
 <script type="text/html" id="tmpl-productItem">
     <td>
-        <div style="width: 420px;">
+        <div style="width: 220px;">
             <img src="{{pictures}}" alt="{{name}}" />{{name}}
         </div>
     </td>
     <td>
-        <div style="width: 490px;">
+        <div style="width: 700px;">
             <ul class="inventory"></ul>
         </div>
     </td>
@@ -121,9 +135,9 @@
 
 <script type="text/html" id="tmpl-inventoryItem">
     <li >
-        <label class="col-md-2">{{model}}：</label>
-        <div class="col-md-10 inventory-size">
-            <input type="text" role="quantity" data-size="{{sizeCode}}" data-color="{{colorCode}}" class="input-icon input-icon-count" placeholder="{{number}}" value=""/>
+        <label class="col-md-5 text-right">{{model}}：</label>
+        <div class="col-md-7 inventory-size">
+            <input type="text" role="quantity" data-size="{{sizeCode}}" data-color="{{colorCode}}" data-productid="{{productId}}" class="input-icon input-icon-count" placeholder="{{number}}" value=""/>
         </div>
     </li>
 </script>
