@@ -76,7 +76,7 @@ define(function(require, exports, module) {
     };
 
     var urls = {
-        save: G.contextPath + 'order/add',
+        save: G.contextPath + 'website/order/add',
         sizes: G.contextPath + 'website/size/list',
         colors: G.contextPath + 'website/color',
         search: G.contextPath + 'product/list'
@@ -87,7 +87,9 @@ define(function(require, exports, module) {
      */
     var OrderRowView = Backbone.View.extend({
         tagName: 'tr',
-        events: {},
+        events: {
+            'blur input[role="quantity"]': 'validNum'
+        },
         initialize: function(options) {
             this.model = options.model;
             this.init();
@@ -114,14 +116,24 @@ define(function(require, exports, module) {
             this.$inventory = this.$('.inventory');
             _.map(data.storages, function(item, index){
                 _this.$inventory.append(_this.inventoryItemTmpl({
-                    model: item.sizeEntity.name + '' + item.colorEntity.name,
+                    model: item.sizeEntity.name + ' ' + item.colorEntity.name,
                     sizeCode: item.sizeEntity.id,
                     colorCode: item.colorEntity.id,
                     number: item.number,
-                    productId: item.product_id
+                    productId: item.id
                 }));
             });
             return this;
+        },
+        'validNum': function(ev){
+            var $this = $(ev.currentTarget),
+                max = parseInt($this.attr('placeholder')),
+                val = parseInt($this.val());
+
+            if(val > max){
+                alert('输入数值不能大于' + max + '，请重新输入');
+                $this.val('');
+            }
         }
     });
 
@@ -222,9 +234,9 @@ define(function(require, exports, module) {
         events: {
             'click button[role="btn-submit"]': 'submit',
             'click span[role="btn-search"]': 'searchProducts',
-            'change #provinceId>li>a': 'selectProvince',
-            'change #cityId>li>a': 'selectCity',
-            'change #districtId>li>a': 'selectDistrict'
+            'change #province_select>li>a': 'selectProvince',
+            'change #city_select>li>a': 'selectCity',
+            'change #district_select>li>a': 'selectDistrict'
         },
         initialize: function(options){
             this.init();
@@ -233,9 +245,10 @@ define(function(require, exports, module) {
         },
         init: function(){
             var _this = this;
+             _this.select_map = {};
 
             _.each(this.$('.dropdown'), function(item, index){
-                new SelectView({el: $(item)});
+                _this.select_map[item.id] = new SelectView({el: $(item)});
             });
 
             this.orderTable = new OrderTableView({
@@ -277,7 +290,7 @@ define(function(require, exports, module) {
                         _this.districtId = (val === item.name ? item.Id : '');
                     }
                 });
-                _this.$('#' + _this.selectType + '-dropdown').find('ul.ul-dropdown').html(html);
+                _this.$('#' + _this.selectType + '_dropdown').find('ul.ul-dropdown').html(html);
 
                 if(_this.selectType === 'province' && val && val !== ''){
                     _this.selectProvince(_this.provinceId);
@@ -291,17 +304,14 @@ define(function(require, exports, module) {
                 array = [];
 
             if(typeof ev === 'object'){
-                $this = $(ev.currentTarget),
-                    provinceId = $this.data('val');
+                $this = $(ev.currentTarget);
+                provinceId = $this.data('val');
             }else{
-                $this = _this.$('#provinceId');
                 provinceId = ev;
+                this.select_map['province_dropdown'].setText(provinceId);
             }
 
             if(provinceId !== ''){
-                this.$('#cityId').prop('disabled', false);
-                this.$('#province').val($this.text());
-
                 _.each(cityMap.cityMap, function(item, index){
                     if(item.ProID === provinceId){
                         array.push(item);
@@ -322,17 +332,15 @@ define(function(require, exports, module) {
 
             this.cityId = null;
             if(typeof ev === 'object'){
-                $this = $(ev.currentTarget),
-                    cityId = $this.data('val');
+                $this = $(ev.currentTarget);
+                cityId = $this.data('val');
             }else{
-                $this = _this.$('#cityId');
+                // $this = _this.$('#city_select');
                 cityId = ev;
+                this.select_map['city_dropdown'].setText(cityId);
             }
 
             if(cityId !== ''){
-                this.$('#districtId').prop('disabled', false);
-                this.$('#city').val($this.text());
-
                 _.each(cityMap.districtMap, function(item, index){
                     if(item.CityID === cityId){
                         array.push(item);
@@ -351,16 +359,12 @@ define(function(require, exports, module) {
 
             this.districtId = null;
             if(typeof ev === 'object'){
-                $this = $(ev.currentTarget),
-                    districtId = $this.data('val');
+                $this = $(ev.currentTarget);
+                districtId = $this.data('val');
             }else{
-                $this = this.$('#districtId');
+                // $this = this.$('#district_select');
                 districtId = ev;
-            }
-
-            if(districtId !== ''){
-                this.$('#detail').prop('disabled', false);
-                this.$('#district').val($this.text());
+                this.select_map['district_dropdown'].setText(districtId);
             }
         },
         'searchProducts': function(ev){
@@ -394,17 +398,17 @@ define(function(require, exports, module) {
                         case 'detail':
                         case 'district':
                         case 'province':
-                        case 'name':
-                        case 'openID':
                         case 'phone':
                             obj[key] = value;
+                            delete param[key];
+                            break;
+                        case 'receiver':
+                            obj['name'] = value;
                             delete param[key];
                             break;
                         default:
                             break;
                     }
-
-                    obj['openID'] = '';
                 })
                 param.sub_orders = JSON.stringify(array);
                 param.address = JSON.stringify(obj);

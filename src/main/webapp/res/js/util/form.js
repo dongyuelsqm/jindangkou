@@ -196,6 +196,7 @@ define(function(require, exports, module){
         },
         cacheEls: function(){
             this.$ul = this.$('.ul-dropdown');
+            this.$as = this.$('li');
             this.$text = this.$('input[type=text]');
             this.$val = this.$('input[type=hidden]');
             this.$addon = this.$('.input-group-addon');
@@ -266,6 +267,29 @@ define(function(require, exports, module){
                 data: data,
                 reset: true
             });
+        },
+        getText: function(val){
+            var _this = this,
+                text = '';
+            _.each(_this.$as, function(item, index){
+                if($(item).data('val') === val){
+                    text = $(item).html();
+                    // break;
+                }
+            });
+            return text;
+        },
+        setText: function(val){
+            var _this = this,
+                text = '';
+            _.each(_this.$as, function(item, index){
+                if($(item).data('val') === val){
+                    text = $(item).html();
+                    // break;
+                }
+            });
+            this.$text.val(text);
+            this.$val.val(val);
         }
     });
     

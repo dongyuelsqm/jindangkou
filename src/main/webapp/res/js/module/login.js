@@ -71,7 +71,7 @@ define(function(require, exports, module) {
         login: function(){
             var _this = this;
             // _this.password = _this.old_pwd === _this.password ? _this.password : _this.encryptPassword(_this.password);
-            if(!_this.valid()) {
+            if(_this.valid()) {
                 $.ajax({
                     url: G.contextPath + 'website/login',
                     data: {

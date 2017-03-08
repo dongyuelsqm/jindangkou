@@ -2,7 +2,9 @@
 <%@ include file="../common/taglibs.jsp"%>
 <%@ include file="../common/upper-part.jsp"%>
 <style>
-    ul.product-list{border: 1px solid #cdcdcd; box-shadow: 0 0 3px #aaa;}
+    .search-input{width: auto;}
+
+    ul.product-list{border: 1px solid #cdcdcd; box-shadow: 0 0 3px #aaa; width: 324px;}
     ul.product-list > li{background-color: #fff; line-height: 30px; overflow: hidden; padding: 10px;}
         ul.product-list > li > span{float: left; padding: 10px;}
         ul.product-list > li > img{float: left; height: 100px; width: 100px;}
@@ -45,7 +47,7 @@
     <div class="row">
         <label class="col-md-3 control-label">买家用户名<span class="required">*</span></label>
         <div class="col-md-5">
-            <input type="text" name="username" placeholder="请输入买家用户名" value=""/>
+            <input type="text" name="name" placeholder="请输入买家用户名" value=""/>
         </div>
     </div>
     <br/>
@@ -66,33 +68,33 @@
         <div class="col-md-5">
             <div class="row nest">
                 <div class="col-md-4">
-                    <div class="dropdown" id="province-dropdown">
+                    <div class="dropdown" id="province_dropdown">
                         <div class="input-group">
                             <input type="text" readonly class="form-control" value="省份" placeholder="" />
                             <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                         </div>
                         <input type="hidden" name="province" id="province"/>
-                        <ul class="ul-dropdown" id="provinceId"></ul>
+                        <ul class="ul-dropdown" id="province_select"></ul>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="dropdown" id="city-dropdown">
+                    <div class="dropdown" id="city_dropdown">
                         <div class="input-group">
                             <input type="text" readonly class="form-control" value="城市" placeholder="" />
                             <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                         </div>
                         <input type="hidden" name="city" id="city"/>
-                        <ul class="ul-dropdown" id="cityId"></ul>
+                        <ul class="ul-dropdown" id="city_select"></ul>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="dropdown" id="district-dropdown">
+                    <div class="dropdown" id="district_dropdown">
                         <div class="input-group">
                             <input type="text" readonly class="form-control" value="区/县" placeholder="" />
                             <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                         </div>
                         <input type="hidden" name="district" id="district"/>
-                        <ul class="ul-dropdown" id="districtId"></ul>
+                        <ul class="ul-dropdown" id="district_select"></ul>
                     </div>
                 </div>
             </div>
