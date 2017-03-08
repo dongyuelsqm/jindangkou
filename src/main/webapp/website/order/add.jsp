@@ -7,14 +7,17 @@
         ul.product-list > li > span{float: left; padding: 10px;}
         ul.product-list > li > img{float: left; height: 100px; width: 100px;}
 
-    ul.inventory > li{line-height: 30px; margin-bottom: 5px; overflow: hidden;}
+    ul.inventory > li{line-height: 30px; margin-bottom: 5px; overflow: hidden; width: 20%;}
         ul.inventory > li > label,
         ul.inventory > li div{padding-left: 0; padding-right: 0;}
         ul.inventory > li > div > div{float: left; margin-bottom: 5px;}
-            ul.inventory > li > div input{padding-left: 5px; width: 40px;}
+            ul.inventory > li > div input{padding-left: 5px; width: 60px;}
 
     .table{border-bottom: 1px solid #ddd;}
-    .table .row{line-height: 30px;}
+        .table .row{line-height: 30px;}
+
+    .nest{margin-bottom: 10px;}
+    .dropdown{width: auto;}
 </style>
 <h1 class="content-title">添加订单</h1>
 <form class="block-body form" id="order-form">
@@ -33,105 +36,16 @@
             <thead>
                 <tr>
                     <th>已选商品</th>
-                    <th>勾选商品属性</th>
                     <th>填写数量</th>
                 </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <div style="width: 280px;">
-                        <img src="" alt="" />
-                        维多利亚同款保暖呢大衣保暖呢大衣批发
-                    </div>
-                </td>
-                <td>
-                    <div style="width: 280px;">
-                        <div class="row">
-                            <label class="col-md-3 control-label">尺码</label>
-                            <div class="col-md-9">
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="size" role="size" value="xs"/> xs
-                                </span>
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="size" role="size" value="s"/> s
-                                </span>
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="size" value="m"/> m
-                                </span>
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="size" value="x"/> x
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="col-md-3 control-label">颜色</label>
-                            <div class="col-md-9">
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="color" role="color" value="red"/> 红色
-                                </span>
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="color" role="color" value="coffee"/> 咖啡色
-                                </span>
-                                <span class="checkbox-inline">
-                                    <input type="checkbox" name="color" role="color" value="blue"/> 蓝色
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div style="width: 350px;">
-                        <ul class="inventory" id="inventory"></ul>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
+            <tbody></tbody>
         </table>
-    </div>
-    <div class="row">
-        <label class="col-md-3 control-label">运费<span class="required">*</span></label>
-        <div class="col-md-5">
-            <div class="dropdown">
-                <div class="input-group">
-                    <input type="text" readonly class="form-control"  placeholder="" />
-                    <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
-                </div>
-                <input type="hidden" name="postal" />
-                <ul class="ul-dropdown">
-                    <li class="selected"><a href="javascript:" data-val="300000">包邮</a></li>
-                    <li><a href="javascript:" data-val="300001">不包邮</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <label class="col-md-3 control-label">交易状态<span class="required">*</span></label>
-        <div class="col-md-5">
-            <div class="dropdown">
-                <div class="input-group">
-                    <input type="text" readonly class="form-control"  placeholder="" />
-                    <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
-                </div>
-                <input type="hidden" name="status" />
-                <ul class="ul-dropdown">
-                    <li class="selected"><a href="javascript:" data-val="0">待付款</a></li>
-                    <li><a href="javascript:" data-val="1">交易成功</a></li>
-                    <li><a href="javascript:" data-val="2">交易关闭</a></li>
-                </ul>
-            </div>
-        </div>
     </div>
     <div class="row">
         <label class="col-md-3 control-label">买家用户名<span class="required">*</span></label>
         <div class="col-md-5">
             <input type="text" name="username" placeholder="请输入买家用户名" value=""/>
-        </div>
-    </div>
-    <div class="row">
-        <label class="col-md-3 control-label">应收款<span class="required">*</span></label>
-        <div class="col-md-5">
-            <input type="text" name="price" class="input-icon input-icon-price" placeholder="请输入应收款" />
         </div>
     </div>
     <br/>
@@ -150,7 +64,41 @@
     <div class="row">
         <label class="col-md-3 control-label">收货地址<span class="required">*</span></label>
         <div class="col-md-5">
-            <input type="text" name="address" placeholder="请输入收货地址" value=""/>
+            <div class="row nest">
+                <div class="col-md-4">
+                    <div class="dropdown" id="province-dropdown">
+                        <div class="input-group">
+                            <input type="text" readonly class="form-control" value="省份" placeholder="" />
+                            <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
+                        </div>
+                        <input type="hidden" name="province" id="province"/>
+                        <ul class="ul-dropdown" id="provinceId"></ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dropdown" id="city-dropdown">
+                        <div class="input-group">
+                            <input type="text" readonly class="form-control" value="城市" placeholder="" />
+                            <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
+                        </div>
+                        <input type="hidden" name="city" id="city"/>
+                        <ul class="ul-dropdown" id="cityId"></ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="dropdown" id="district-dropdown">
+                        <div class="input-group">
+                            <input type="text" readonly class="form-control" value="区/县" placeholder="" />
+                            <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
+                        </div>
+                        <input type="hidden" name="district" id="district"/>
+                        <ul class="ul-dropdown" id="districtId"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 col-md-offset-3">
+            <input type="text" placeholder="请输入详细地址" id="detail" name="detail" value="" />
         </div>
     </div>
     <div class="row">
@@ -174,96 +122,24 @@
 
 <script type="text/html" id="tmpl-productItem">
     <td>
-        <div style="width: 280px;">
+        <div style="width: 220px;">
             <img src="{{pictures}}" alt="{{name}}" />{{name}}
         </div>
     </td>
     <td>
-        <div style="width: 280px;">
-            <div class="row">
-                <label class="col-md-3 control-label">颜色</label>
-                <div class="col-md-9 color-wrapper">
-                    <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="red"/> 红色
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="coffee"/> 咖啡色
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="blue"/> 蓝色
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="yellow"/> 黄色
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="pink"/> 粉色
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="oringe"/> 橙色
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="color" role="color" value="purple"/> 紫色
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <label class="col-md-3 control-label">尺码</label>
-                <div class="col-md-5 size-wrapper">
-                    <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="xs"/> xs
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="s"/> s
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="m"/> m
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="x"/> x
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="xl"/> xl
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="xxl"/> xxl
-                    </span>
-                            <span class="checkbox-inline">
-                        <input type="checkbox" name="size" role="size" value="xxxl"/> xxxl
-                    </span>
-                </div>
-            </div>
-        </div>
-    </td>
-    <td>
-        <div style="width: 350px;">
+        <div style="width: 700px;">
             <ul class="inventory"></ul>
         </div>
     </td>
 </script>
 
 <script type="text/html" id="tmpl-inventoryItem">
-    <li data-color="{{colorCode}}" id="inventory-{{colorCode}}">
-        <label class="col-md-2">{{colorName}}：</label>
-        <div class="col-md-10 inventory-size"></div>
+    <li >
+        <label class="col-md-5 text-right">{{model}}：</label>
+        <div class="col-md-7 inventory-size">
+            <input type="text" role="quantity" data-size="{{sizeCode}}" data-color="{{colorCode}}" data-productid="{{productId}}" class="input-icon input-icon-count" placeholder="{{number}}" value=""/>
+        </div>
     </li>
-</script>
-
-<script type="text/html" id="tmpl-sizeItem">
-    <div class="col-md-3 inventory-{{sizeCode}}">
-        {{sizeName}}: <input type="text" role="quantity" data-size="{{sizeCode}}" class="input-icon input-icon-count" placeholder="" value=""/>
-    </div>
-</script>
-
-<script type="text/html" id="tmpl-color">
-    <span class="checkbox-inline">
-        <input type="checkbox" role="color" value="1" data-name="{{name}}" /> {{name}}
-    </span>
-</script>
-
-<script type="text/html" id="tmpl-size">
-    <span class="checkbox-inline">
-        <input type="checkbox" role="size" value="1" data-name="{{name}}" /> {{name}}
-    </span>
 </script>
 
 <script type="text/javascript">

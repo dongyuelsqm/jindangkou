@@ -79,8 +79,8 @@ textarea {line-height: 28px; padding: 0 5px; width: 100%;}
 
 /* mask */
 .mask{background:rgba(0, 0, 0, 0.5); filter:progid:DXImageTransform.Microsoft.Gradient(startColorStr=#88000000,endColorStr=#88000000); display: none; height: 100%; position: fixed; width: 100%; z-index: 100;}
-    .mask-msg{color: #fff; height: 30px; line-height: 30px; left: 50%; margin-top: -15px; position: absolute; top: 50%; }
-    .mask-msg.loading{background: url(./img/loading.gif) no-repeat 0 center; padding-left: 20px;}
+    .mask_msg{color: #fff; height: 30px; line-height: 30px; left: 50%; margin-top: -15px; position: absolute; top: 50%; }
+    .mask_msg.loading{background: url(./img/loading.gif) no-repeat 0 center; padding-left: 20px;}
     
 /* menu */
 .content-menu > ul > li{}
