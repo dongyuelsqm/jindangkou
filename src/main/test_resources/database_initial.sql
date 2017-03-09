@@ -1,9 +1,10 @@
+use jindangkou;
 drop table products;
 drop table product_quantity;
 drop table orders;
 drop table sub_orders;
 drop table addresses;
-drop table department;
+/*drop table department;*/
 drop table inventory;
 drop table admin;
 drop table labels;
@@ -42,8 +43,10 @@ insert into product_quantity (product_id, color, size, number) values(1,1,1, 10)
 insert into departments (name) values ('treasures');
 insert into addresses(name, open_id, phone, province, city, district, detail) values ('zhangsan', 'ssss', '15111111', 'zhejiang', 'hangzhou', 'xihu', 'xihu');
 insert into labels(title) values ("hot");
-insert into orders (discount, open_id, address_id, deal_date, ship_id, state, express_number, method_price, actual_price, weixin_order_id) values (1.1, 1, 1, '2012-1-1', 'd', 1, 'dd', 1.1, 1.1, 1);
+insert into orders (id, discount, open_id, address_id, deal_date, ship_id, state, express_number, method_price, actual_price, weixin_order_id)
+values (1, 1.1, 1, 1, '2012-1-1', 'd', 1, 'dd', 1.1, 1.1, 1);
 insert into product_label_links (product_id, label_id) values (1, 1);
 insert into sub_orders (product_id, order_id, color_id, size_id, number) values (1, 1, 1, 1, 1);
 INSERT INTO customers(open_id, nickname, sex, province, city, country, headimgurl, privilege , unionid, access_time)VALUES (1, 'nickname', '1', 'hebei', 'cangzhou', 'China', '2', 'd', 'ddd', '2016-1-1 00:00:00');
-INSERT INTO unified_order(id, app_id, mch_id, attach, body, nonce_str, notify_url, openid, out_trade_no, spbill_create_ip, total_fee, trade_type, sign, device_info) VALUES (1, 'openid', 'mch_id', 'attach', 'body', 'nonce_str', 'notify_url', 'openid', 'out_trade_no', 'spbill_create_ip', 1.1, 'trade_type', 'sign', 'device_info');
+INSERT INTO unified_order(id, app_id, mch_id, attach, body, nonce_str, notify_url, openid, out_trade_no, spbill_create_ip, total_fee, trade_type, sign, device_info)
+VALUES (1, 1, 1, 1, 'body', 'nonce_str', 'notify_url', 'openid', 'out_trade_no', 'spbill_create_ip', 1.1, 'trade_type', 'sign', 'device_info');

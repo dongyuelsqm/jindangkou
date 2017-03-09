@@ -20,6 +20,8 @@
 
     .nest{margin-bottom: 10px;}
     .dropdown{width: auto;}
+        .dropdown ul{max-height: 400px; overflow-y: auto;}
+        .dropdown ul > li > a{line-height: normal; height: auto; padding-left: 15px; padding-right: 15px; width: auto;}
 </style>
 <h1 class="content-title">添加订单</h1>
 <form class="block-body form" id="order-form">
@@ -73,7 +75,7 @@
                             <input type="text" readonly class="form-control" value="省份" placeholder="" />
                             <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                         </div>
-                        <input type="hidden" name="province" id="province"/>
+                        <input type="hidden" name="province" id="province" value="" />
                         <ul class="ul-dropdown" id="province_select"></ul>
                     </div>
                 </div>
@@ -83,7 +85,7 @@
                             <input type="text" readonly class="form-control" value="城市" placeholder="" />
                             <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                         </div>
-                        <input type="hidden" name="city" id="city"/>
+                        <input type="hidden" name="city" id="city" value="" />
                         <ul class="ul-dropdown" id="city_select"></ul>
                     </div>
                 </div>
@@ -93,7 +95,7 @@
                             <input type="text" readonly class="form-control" value="区/县" placeholder="" />
                             <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                         </div>
-                        <input type="hidden" name="district" id="district"/>
+                        <input type="hidden" name="district" id="district" value="" />
                         <ul class="ul-dropdown" id="district_select"></ul>
                     </div>
                 </div>

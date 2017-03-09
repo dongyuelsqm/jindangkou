@@ -133,6 +133,13 @@ define(function(require, exports, module) {
             if(val > max){
                 alert('输入数值不能大于' + max + '，请重新输入');
                 $this.val('');
+                return false;
+            }
+
+            if(_.isNaN(val)){
+                alert('请输入正整数');
+                $this.val('');
+                return false;
             }
         }
     });
@@ -247,17 +254,19 @@ define(function(require, exports, module) {
             var _this = this;
              _this.select_map = {};
 
-            _.each(this.$('.dropdown'), function(item, index){
-                _this.select_map[item.id] = new SelectView({el: $(item)});
-            });
-
             this.orderTable = new OrderTableView({
                 el: '#order-table'
             });
 
             this.productList = new ProductListView();
             this.productList.bind(this.orderTable);
-            
+
+            _.each(this.$('.dropdown'), function(item, index){
+                _this.select_map[item.id] = new SelectView({
+                    el: $(item),
+                    init_data: true
+                });
+            });
             this.initProvince();
         },
         initProvince: function(){
@@ -265,14 +274,22 @@ define(function(require, exports, module) {
             _this.selectType = 'province';
             _this.selectData = cityMap.provinceMap || [];
             _this.setSelectData();
+
+            // this.$('#province').parent().find('input[type=text]').val('省份');
+            // this.$('#city').parent().find('input[type=text]').val('城市');
+            // this.$('#district').parent().find('input[type=text]').val('区/县');
         },
         setSelectData: function(){
             var _this = this;
             if(_this.selectData.length > 0){
                 var html = '';
-                if(_this.selectType === 'province'){
-                    html = '<li class="selected"><a href="javascript:" data-val="" >省份</a></li>';
-                }
+                // if(_this.selectType === 'province'){
+                //     html = '<li class="selected"><a href="javascript:" data-val="" >省份</a></li>';
+                // }else if(_this.selectType === 'city'){
+                //     html = '<li class="selected"><a href="javascript:" data-val="" >城市</a></li>';
+                // }else if(_this.selectType === 'district'){
+                //     html = '<li class="selected"><a href="javascript:" data-val="" >区/县</a></li>';
+                // }
 
                 var val = _this.$('#' + _this.selectType).val(),
                     id = 0;
@@ -291,10 +308,6 @@ define(function(require, exports, module) {
                     }
                 });
                 _this.$('#' + _this.selectType + '_dropdown').find('ul.ul-dropdown').html(html);
-
-                if(_this.selectType === 'province' && val && val !== ''){
-                    _this.selectProvince(_this.provinceId);
-                }
             }
         },
         'selectProvince': function(ev){
