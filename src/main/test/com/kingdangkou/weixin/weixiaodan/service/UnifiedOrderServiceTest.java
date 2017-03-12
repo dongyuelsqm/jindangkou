@@ -1,6 +1,5 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
-import com.kingdangkou.weixin.weixiaodan.entity.JsAPIConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class UnifiedOrderServiceTest {
 
     @Test
     public void unifiedOrder() throws Exception {
-        JsAPIConfig jsAPIConfig = service.unifiedOrder("o3Y_kw4pEFSXdVbieWfmGYBJO-bU", "111111", 1, "");
+        String jsAPIConfig = service.unifiedOrder("o3Y_kw4pEFSXdVbieWfmGYBJO-bU", "1111661111", 1, "ddd");
         System.out.println(jsAPIConfig);
     }
 

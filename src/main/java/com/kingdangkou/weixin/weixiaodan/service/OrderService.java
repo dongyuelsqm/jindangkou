@@ -62,7 +62,7 @@ public class OrderService {
         adjustStorage(order.getSubOrders());
 
         orderDao.save(order);
-        JsAPIConfig jsAPIConfig = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), (int) (order.getActual_price() * 100), items);
+        String jsAPIConfig = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), (int) (order.getActual_price() * 100), items);
         return new Result(true, jsAPIConfig);
     }
 

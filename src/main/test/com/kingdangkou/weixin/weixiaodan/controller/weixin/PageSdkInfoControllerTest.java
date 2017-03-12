@@ -21,7 +21,7 @@ public class PageSdkInfoControllerTest extends TestBase<PageSdkInfoController>{
     @Test
     public void getPageInfo() throws Exception {
         Thread.sleep(10*1000);
-        ResultActions resultActions = mockMvc.perform(get("/weixin/page/get").param("url", "http://paimeida.com/web/")).andDo(print());
+        ResultActions resultActions = mockMvc.perform(get("/weixin/page/get").param("url", "http://www.paimeida.com/web/index3.html?code=011nUarV08E5KW1qj0tV0xGrrV0nUarK&state=STATE")).andDo(print());
         resultActions.andExpect(status().isOk());
         assertEquals(1, tokenHolder.getCounter());
     }
