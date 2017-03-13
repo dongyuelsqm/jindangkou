@@ -24,6 +24,17 @@ public class OrderDao extends BaseDaoHibernate4<Order>{
         return get(Order.class, key, "id");
     }
 
+    public void updateStateAndTransactionId(String id, int newState, String weixinTransactionId){
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Order order = session.get(Order.class, Long.valueOf(id));
+        order.setState(newState);
+        order.setWeixinTransactionId(weixinTransactionId);
+        session.saveOrUpdate(order);
+        transaction.commit();
+        session.close();
+    }
+
     @Override
     public void save(Order entity) {
         Session session = sessionFactory.openSession();

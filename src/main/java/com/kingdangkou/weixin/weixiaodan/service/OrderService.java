@@ -127,11 +127,8 @@ public class OrderService {
     }
 
     public Result updateStateAndTransactionId(String id, String newState, String weixinTransactionId){
-        Order order = orderDao.getOrder(id);
         if (OrderStateEnum.getEnum(Integer.valueOf(newState)) == null) return new Failure("badValue");
-        order.setWeixinTransactionId(weixinTransactionId);
-        order.setState(Integer.valueOf(newState));
-        orderDao.update(order);
+        orderDao.updateStateAndTransactionId(id, Integer.valueOf(newState), weixinTransactionId);
         return new Success();
     }
 
