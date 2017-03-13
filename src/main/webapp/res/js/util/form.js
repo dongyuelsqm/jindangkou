@@ -192,10 +192,12 @@ define(function(require, exports, module){
                     this.setData(new Backbone.Collection(options.data));
                 }
             }
+            this.init_data = options.init_data;
             this.addCurrentClass();
         },
         cacheEls: function(){
             this.$ul = this.$('.ul-dropdown');
+            this.$as = this.$('li');
             this.$text = this.$('input[type=text]');
             this.$val = this.$('input[type=hidden]');
             this.$addon = this.$('.input-group-addon');
@@ -209,14 +211,19 @@ define(function(require, exports, module){
             }
         },
         addCurrentClass: function(){
-            var $selected = {};
-            if(this.$('li.selected').length < 1){
-                $selected = this.$('li').eq(0).find('a');
-            }else{
-                $selected = this.$('li.selected>a');
+            if(this.init_data){
+                this.$text.val(this.$text.val());
+                this.$val.val(this.$val.val());
+            }else {
+                var $selected = {};
+                if(this.$('li.selected').length < 1){
+                    $selected = this.$('li').eq(0).find('a');
+                }else{
+                    $selected = this.$('li.selected>a');
+                }
+                this.$text.val($selected.html());
+                this.$val.val($selected.data('val'));
             }
-            this.$text.val($selected.html());
-            this.$val.val($selected.data('val'));
         },
         setData: function(collection, opt){
             var _this = this;
@@ -266,6 +273,20 @@ define(function(require, exports, module){
                 data: data,
                 reset: true
             });
+        },
+        getText: function(val){
+            var _this = this,
+                text = '';
+            _.each(_this.$as, function(item, index){
+                if($(item).data('val') === val){
+                    text = $(item).html();
+                    // break;
+                }
+            });
+            return text;
+        },
+        setText: function(val){
+            this.$('a[data-val='+ val + ']').trigger('click');
         }
     });
     

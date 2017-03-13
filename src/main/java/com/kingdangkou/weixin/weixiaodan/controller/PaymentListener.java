@@ -6,12 +6,14 @@ import com.kingdangkou.weixin.weixiaodan.service.utils.XmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum.TO_TRANSIT;
 
@@ -21,13 +23,14 @@ import static com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum.TO_TRANSIT;
 @Controller
 @RequestMapping(value = "/wxpay/pay.action")
 public class PaymentListener {
+    Logger logger = Logger.getLogger(this.getClass().toString());
     @Autowired
     private OrderService orderService;
 
     @Autowired
     private XmlUtil xmlUtil;
     @ResponseBody
-    @RequestMapping(value="wechat_notify")
+    @RequestMapping(value="wechat_notify", method = RequestMethod.POST)
     public String wechatPayNotify(HttpServletRequest request){
         try {
             Map<String, String> map = getCallbackParams(request);
@@ -36,12 +39,16 @@ public class PaymentListener {
                 String weixinTransactionId = map.get("transaction_id");
                 //这里写成功后的业务逻辑
                 orderService.updateStateAndTransactionId(orderId, String.valueOf(TO_TRANSIT.getValue()), weixinTransactionId);
+            }else {
+                logger.info("pay failed!");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            logger.info("exception hanpped!");
+        }finally {
+            return getPayCallback();
         }
 
-        return getPayCallback();
     }
 
     public Map<String, String> getCallbackParams(HttpServletRequest request)

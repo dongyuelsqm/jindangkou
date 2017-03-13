@@ -9,3 +9,6 @@
         &copy; 2016 jindangkou.com 京ICP备05002571号
     </div>
 </div>
+<div class="mask">
+    <div class="mask_msg"></div>
+</div>

@@ -37,4 +37,9 @@ public class OrderServiceTest {
         JSONObject jsonObject = JSONObject.fromObject(orderModel, config);
         System.out.println(jsonObject);
     }
+
+    @Test
+    public void testUpdateStateAndTransactionId() throws Exception {
+        service.updateStateAndTransactionId("1489333473192", "1", "sddfdfdfdf");
+    }
 }

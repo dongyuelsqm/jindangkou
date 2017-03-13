@@ -1,11 +1,10 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.entity.AppConfiguration;
-import com.kingdangkou.weixin.weixiaodan.entity.JsAPIConfig;
 import com.kingdangkou.weixin.weixiaodan.entity.UnifiedOrder;
 import com.kingdangkou.weixin.weixiaodan.service.utils.XmlUtil;
 import com.kingdangkou.weixin.weixiaodan.utils.HttpConnection;
-import org.apache.commons.codec.digest.DigestUtils;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +34,7 @@ public class UnifiedOrderService {
     public UnifiedOrderService() throws FileNotFoundException {
     }
 
-    public JsAPIConfig unifiedOrder(String openId, String orderId, int money, String attach) throws Exception{
+    public String unifiedOrder(String openId, String orderId, int money, String attach) throws Exception{
         UnifiedOrder unifiedOrder = new UnifiedOrder();
         unifiedOrder.setAppid(config.getAppId());
         unifiedOrder.setAttach(attach);
@@ -64,11 +63,10 @@ public class UnifiedOrderService {
         Map<String, String> responseMap = xmlUtil.xml2Map(response);
         String prepay_id = responseMap.get("prepay_id");
         prepay_id = prepay_id == null? response:prepay_id;
-        return createPayConfig(prepay_id);
+        return createPayConfig(prepay_id, xml);
     }
 
-    public JsAPIConfig createPayConfig(String prepayId) throws Exception {
-        JsAPIConfig jsAPIConfig = new JsAPIConfig();
+    private String createPayConfig(String prepayId, String xml) throws Exception {
 
         String nonce = UUID.randomUUID().toString();
         String timestamp = Long.toString(System.currentTimeMillis() / 1000);
@@ -77,18 +75,21 @@ public class UnifiedOrderService {
         sign.append("appId=").append(config.getAppId());
         sign.append("&nonceStr=").append(nonce);
         sign.append("&package=").append(packageName);
-        sign.append("&signType=").append(jsAPIConfig.getSignType());
+        sign.append("&signType=").append("MD5");
         sign.append("&timeStamp=").append(timestamp);
         sign.append("&key=").append(config.getKey());
-        String signature = DigestUtils.md5Hex(sign.toString()).toUpperCase();
+        System.out.println(sign);
+        String signature = MD5Encode(sign.toString()).toUpperCase();
 
-        jsAPIConfig.setAppId(config.getAppId());
-        jsAPIConfig.setNonceStr(nonce);
-        jsAPIConfig.setTimestamp(timestamp);
-        jsAPIConfig.setPackageName(packageName);
-        jsAPIConfig.setPaySign(signature);
-
-        return jsAPIConfig;
+        JSONObject json = new JSONObject();
+        json.put("appId", config.getAppId());
+        json.put("timeStamp", timestamp);
+        json.put("nonceStr", nonce);
+        json.put("package", packageName);
+        json.put("signType", "MD5");
+        json.put("paySign", signature);
+        json.put("xml", xml);
+        return json.toString();
     }
 
     public String createUnifiedOrderSign(UnifiedOrder unifiedOrder){

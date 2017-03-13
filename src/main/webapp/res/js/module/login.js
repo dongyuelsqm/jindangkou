@@ -17,8 +17,8 @@ define(function(require, exports, module) {
     
     var formView = Backbone.View.extend({
         events: {
-            'click .btn-login': '_login',
-            'click .verifyImg-change': 'verifyImgChange',
+            'click .btn-login': 'login',
+            // 'click .verifyImg-change': 'verifyImgChange',
             'keydown .form-control': 'stepByOne'
         },
         initialize: function(options){
@@ -28,26 +28,29 @@ define(function(require, exports, module) {
             
             this.cacheEls();
             
-            this.isRemember = util.getCookie('isRemember');
-            if (this.isRemember && this.isRemember.toLowerCase() === 'true') {
-                this.username = util.getCookie('userName');
-                this.$isRemember.trigger('check');
-                this._login();
-            }
+            // this.isRemember = util.getCookie('isRemember');
+            // if (this.isRemember && this.isRemember.toLowerCase() === 'true') {
+            //     this.username = util.getCookie('userName');
+            //     this.$isRemember.trigger('check');
+            //     this._login();
+            // }
         },
         cacheEls: function(){
-        	this.$isRemember = this.$('#isRemember');
             this.$userName = this.$('#userName');
             this.$password = this.$('#userPassword');
-            this.$verifyCode = this.$('#verifyCode');
+            // this.$isRemember = this.$('#isRemember');
+            // this.$verifyCode = this.$('#verifyCode');
             this.$error_msg = this.$('.error-msg');
             this.$error = this.$error_msg.parent();
+
+            this.$mask = $('.mask');
+            this.$mask_msg = $('.mask_msg');
         },
         valid: function(){
         	
         	this.userName = $.trim(this.$userName.val());
             this.password = $.trim(this.$password.val());
-            this.verifyCode = $.trim(this.$verifyCode.val());
+            // this.verifyCode = $.trim(this.$verifyCode.val());
 
             if (this.userName == '') {
                 this.$error_msg.html('请输入您的用户名/邮箱/手机号码');
@@ -57,117 +60,68 @@ define(function(require, exports, module) {
                 this.$error_msg.html('请输入您的密码');
                 this.$error.show();
                 return false;
-            } else if (this.verifyCode == '') {
-                this.$error_msg.html('请输入验证码');
-                this.$error.show();
-                return false;
             }
+            // } else if (this.verifyCode == '') {
+            //     this.$error_msg.html('请输入验证码');
+            //     this.$error.show();
+            //     return false;
+            // }
             return true;
-        },
-        _login: function(ev){
-        	
-        	var _this = this,
-        		$this = {};
-        	
-        	if(ev){
-        		ev.preventDefault();
-                var $this = $(ev.currentTarget);
-                _this.$btn = $this;
-        	}else{
-        		_this.$btn = this.$('.btn-login');
-        	}
-            if(!ev || _this.valid()) {
-
-                $.ajax({
-                    url: './login!isRepeatLogin.action',
-                    data: {
-                        'userName': _this.userName
-                    },
-                    beforeSend: function () {
-                        $this.prop('disabled', true);
-                    },
-                    complete: function () {
-                        //$this.prop('disabled', false);
-                    },
-                    success: function (rsp) {
-                        if (rsp.successSign) {
-                            // true 表示重复登录
-                            alert('该账号已在其他设备上登录，确认在此设备上登录吗？', function(){
-                                _this.login();
-                            }, function(){
-                            	$this.prop('disabled', false);
-                            });
-                        } else {
-                            // false 表示没有重复登录
-                            _this.login();
-                        }
-                    },
-                    error: function (e) {
-                        $this.prop('disabled', false);
-                        alert('操作失败，请稍后重试！');
-                    }
-                });
-            }
         },
         login: function(){
             var _this = this;
-            _this.password = _this.old_pwd === _this.password ? _this.password : _this.encryptPassword(_this.password);
-
-            $.ajax({
-                url: './login!login.action',
-                data: {
-                    'userName': _this.userName,
-                    'userPassword': _this.password,
-                    'verifyCode': _this.verifyCode,
-                    'isRemember': _this.isRemember.val()
-                },
-                beforeSend: function(){
-                    _this.$error.hide();
-                    G.$mask_msg.html('正在登录，请稍候...').addClass('loading');
-                    G.$mask.show();
-                },
-                complete: function(){
-                	_this.$btn.prop('disabled', false);
-                    var timer = setTimeout(function() {
-                        G.$mask.hide();
-                        clearTimeout(timer);
-                    }, 500);
-                },
-                success: function(rsp){
-                    console.log(rsp);
-                    var msg = rsp.successSign ? '登录成功！跳转中...' : '登录失败！';
-                    G.$mask_msg.html(msg).removeClass('loading');
-                    if (rsp.successSign) {
-                        $(window).on('hashchange', function(e){
-                            location.reload();
-                        });
-
-                        _this.userName = rsp.resultObj[0].userName;
-                        _this.rememberme();
-                        if(G.returnUrl){
-                            location.href = G.returnUrl === 'index.action' ? './index.action' : '#' + G.returnUrl;
-                        }else {
-                            location.href = './index.action';
-                        }
-
-                    } else {
-                        if(rsp.errorMessage){
-                            alert(rsp.errorMessage);
-                            return false;
-                        }
-                        var timer = setTimeout(function() {
-                            _this.$error_msg.html(rsp.loginId || rsp.password || rsp.validCode);
-                            _this.$error.show();
-                            _this.$verifyCode.val('');
-                            _this.verifyImg();
+            // _this.password = _this.old_pwd === _this.password ? _this.password : _this.encryptPassword(_this.password);
+            if(_this.valid()) {
+                $.ajax({
+                    url: G.contextPath + 'website/login',
+                    data: {
+                        // 'userName': _this.userName,
+                        // 'userPassword': _this.password
+                        'username': $.trim(this.$userName.val()),
+                        'password': $.trim(this.$password.val())
+                        // 'verifyCode': _this.verifyCode,
+                        // 'isRemember': _this.isRemember.val()
+                    },
+                    type: 'post',
+                    beforeSend: function () {
+                        _this.$error.hide();
+                        _this.$mask_msg.html('正在登录，请稍候...').addClass('loading');
+                        _this.$mask.show();
+                    },
+                    complete: function () {
+                        _this.$btn.prop('disabled', false);
+                        var timer = setTimeout(function () {
+                            _this.$mask.hide();
                             clearTimeout(timer);
                         }, 500);
+                    },
+                    success: function (rsp) {
+                        console.log(rsp);
+                        var msg = rsp.successSign ? '登录成功！跳转中...' : '登录失败！';
+                        G.$mask_msg.html(msg).removeClass('loading');
+                        if (rsp.successSign) {
+                            $(window).on('hashchange', function (e) {
+                                location.reload();
+                            });
+
+                            _this.userName = rsp.resultObj[0].userName;
+                        } else {
+                            if (rsp.errorMessage) {
+                                alert(rsp.errorMessage);
+                                return false;
+                            }
+                            var timer = setTimeout(function () {
+                                _this.$error_msg.html(rsp.loginId || rsp.password || rsp.validCode);
+                                _this.$error.show();
+                                clearTimeout(timer);
+                            }, 500);
+                        }
+                    },
+                    error: function (e) {
+                        _this.$mask_msg.html('登录失败，请稍后重试活或联系管理员');
                     }
-                },
-                error: function(e){
-                    G.$mask_msg.html('登录失败，请稍后重试活或联系管理员');
-                }
-            });
+                });
+            }
         },
         encryptPassword: function(password){
         	try{
@@ -202,7 +156,7 @@ define(function(require, exports, module) {
                 if ($this.attr('id') == 'userName') {
                     this.$password.focus();
                 } else if ($this.attr('id') == 'userPassword') { 
-                    this.$verifyCode.focus();
+                    // this.$verifyCode.focus();
                 } else { 
                     this.$('.btn-submit').trigger('click');
                 }

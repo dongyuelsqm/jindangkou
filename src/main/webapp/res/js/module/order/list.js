@@ -21,7 +21,7 @@ define(function(require, exports, module) {
         BaseItemSetting = collectionExtension.BaseItemSetting;
 
     var urls = {
-        listUrl: G.contextPath + 'website/order/list'
+        listUrl: G.contextPath + 'website/order/list/all'
     };
     //基础视图
     var noDataTemplate = '<span class="no-data">暂无数据</span>',

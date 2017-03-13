@@ -1,34 +1,21 @@
 package com.kingdangkou.weixin.weixiaodan.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  * Created by dongy on 2017-02-07.
  */
 @Entity
-@Table(name = "JsAPIConfig")
 public class JsAPIConfig {
-    private boolean debug;
     private String appId;
-    private String timestamp;
+    private String timeStamp;
     private String nonceStr;
     private String paySign;
-    private String title;
-    private String link;
     private String signType;
     private String packageName;
 
     public JsAPIConfig(){
         signType = "MD5";
-    }
-
-    public boolean isDebug() {
-        return debug;
-    }
-
-    public void setDebug(boolean debug) {
-        this.debug = debug;
     }
 
     public String getAppId() {
@@ -39,12 +26,12 @@ public class JsAPIConfig {
         this.appId = appId;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public String getTimeStamp() {
+        return timeStamp;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public String getNonceStr() {
@@ -61,22 +48,6 @@ public class JsAPIConfig {
 
     public void setPaySign(String paySign) {
         this.paySign = paySign;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
     }
 
     public String getSignType() {
