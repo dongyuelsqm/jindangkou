@@ -20,12 +20,12 @@ public class AddressControllerTest extends TestBase<AddressController>{
         ResultActions resultActions = mockMvc.perform(
                 post("/address/register")
                         .param("name", address.getName())
-                        .param("phone", address.getPhone())
+                        .param("phone", address.getMobile())
                         .param("openID", address.getOpenID())
-                        .param("province", address.getProvince())
-                        .param("city", address.getCity())
-                        .param("district", address.getDisctrict())
-                        .param("detail", address.getDetail()))
+                        .param("province", address.getProvinceName())
+                        .param("city", address.getCityName())
+                        .param("district", address.getExpAreaName())
+                        .param("detail", address.getAddress()))
                 .andDo(print());
         resultActions.andExpect(status().isOk()).andExpect(content().string("{\"detail\":\"\",\"success\":true}"));
     }

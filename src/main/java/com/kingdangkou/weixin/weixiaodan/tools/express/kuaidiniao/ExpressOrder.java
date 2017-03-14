@@ -1,5 +1,11 @@
 package com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao;
 
+<<<<<<< HEAD
+=======
+import com.kingdangkou.weixin.weixiaodan.entity.Address;
+import java.util.List;
+
+>>>>>>> origin/Feature_express
 /**
  * Created by dongy on 2017-02-28.
  */
@@ -8,21 +14,25 @@ public class ExpressOrder {
     private String ShipperCode;
     private int PayType;
     private int ExpType;
-    private String Sender;
-    private String Receiver;
     private int IsReturnPrintTemplate;
     private int IsNotice;
-
-    public ExpressOrder(String orderCode, String shipperCode, int payType, int expType, String sender, String receiver, int isReturnPrintTemplate, int isNotice) {
-        OrderCode = orderCode;
-        ShipperCode = shipperCode;
-        PayType = payType;
-        ExpType = expType;
-        Sender = sender;
-        Receiver = receiver;
-        IsReturnPrintTemplate = isReturnPrintTemplate;
-        IsNotice = isNotice;
+    private Address sender = new Address("11", "11", "opend", "opend", "opend", "opend", "opend");
+    private Address receiver;
+    private List<Commodity> commodity;
+    public ExpressOrder(){}
+    public ExpressOrder(String orderCode, String shipperCode, int payType, int expType, List<Commodity> commodity, Address sender, Address receiver, int isReturnPrintTemplate, int isNotice) {
+        this.OrderCode = orderCode;
+        this.ShipperCode = shipperCode;
+        this.PayType = payType;
+        this.ExpType = expType;
+        this.receiver = receiver;
+        this.sender = sender;
+        this.IsReturnPrintTemplate = isReturnPrintTemplate;
+        this.IsNotice = isNotice;
+        this.commodity = commodity;
     }
+
+
 
     public String getOrderCode() {
         return OrderCode;
@@ -56,6 +66,7 @@ public class ExpressOrder {
         ExpType = expType;
     }
 
+<<<<<<< HEAD
     public String getSender() {
         return Sender;
     }
@@ -72,6 +83,8 @@ public class ExpressOrder {
         Receiver = receiver;
     }
 
+=======
+>>>>>>> origin/Feature_express
     public int getIsReturnPrintTemplate() {
         return IsReturnPrintTemplate;
     }
@@ -87,4 +100,31 @@ public class ExpressOrder {
     public void setIsNotice(int isNotice) {
         IsNotice = isNotice;
     }
+<<<<<<< HEAD
+=======
+
+    public Address getSender() {
+        return sender;
+    }
+
+    public void setSender(Address sender) {
+        this.sender = sender;
+    }
+
+    public Address getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Address receiver) {
+        this.receiver = receiver;
+    }
+
+    public List<Commodity> getCommodity() {
+        return commodity;
+    }
+
+    public void setCommodity(List<Commodity> commodity) {
+        this.commodity = commodity;
+    }
+>>>>>>> origin/Feature_express
 }

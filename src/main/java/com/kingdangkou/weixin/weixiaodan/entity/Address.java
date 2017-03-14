@@ -17,34 +17,34 @@ import javax.validation.constraints.Size;
 public class Address {
     private int id;
     private String openID;
-    private String province;
-    private String city;
-    private String disctrict;
-    private String detail;
+    private String provinceName;
+    private String cityName;
+    private String expAreaName;
+    private String address;
     private String name;
-    private String phone;
+    private String mobile;
 
     public Address() {}
 
-    public Address(String id, String name, String phone, String openID, String province, String city, String disctrict, String detail) {
+    public Address(String id, String name, String mobile, String openID, String provinceName, String cityName, String expAreaName, String address) {
         this.id = Integer.valueOf(id);
         this.openID = openID;
-        this.province = province;
-        this.city = city;
-        this.disctrict = disctrict;
-        this.detail = detail;
+        this.provinceName = provinceName;
+        this.cityName = cityName;
+        this.expAreaName = expAreaName;
+        this.address = address;
         this.name = name;
-        this.phone = phone;
+        this.mobile = mobile;
     }
 
-    public Address(String name, String phone, String openID, String province, String city, String disctrict, String detail) {
+    public Address(String name, String mobile, String openID, String provinceName, String cityName, String expAreaName, String address) {
         this.name = name;
-        this.phone = phone;
+        this.mobile = mobile;
         this.openID = openID;
-        this.province = province;
-        this.city = city;
-        this.disctrict = disctrict;
-        this.detail = detail;
+        this.provinceName = provinceName;
+        this.cityName = cityName;
+        this.expAreaName = expAreaName;
+        this.address = address;
     }
 
     @Column(name = "id")
@@ -69,45 +69,45 @@ public class Address {
         this.openID = openID;
     }
 
-    @Size(min = 1, max = 10, message = "province can not be run")
-    @Column(name = "province")
+    @Size(min = 1, max = 10, message = "provinceName can not be run")
+    @Column(name = "provinceName")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public String getProvince() {
-        return province;
+    public String getProvinceName() {
+        return provinceName;
     }
 
-    public void setProvince(String province) {
-        this.province = province;
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
     }
 
-    @Column(name = "city")
+    @Column(name = "cityName")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public String getCity() {
-        return city;
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     @Column(name = "district")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public String getDisctrict() {
-        return disctrict;
+    public String getExpAreaName() {
+        return expAreaName;
     }
 
-    public void setDisctrict(String disctrict) {
-        this.disctrict = disctrict;
+    public void setExpAreaName(String expAreaName) {
+        this.expAreaName = expAreaName;
     }
 
-    @Column(name = "detail")
+    @Column(name = "address")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public String getDetail() {
-        return detail;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Column(name = "name")
@@ -120,14 +120,14 @@ public class Address {
         this.name = name;
     }
 
-    @Column(name = "phone")
+    @Column(name = "mobile")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
-    public String getPhone() {
-        return phone;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     @Override
@@ -137,7 +137,7 @@ public class Address {
 
         Address address = (Address) o;
 
-        if (province.equals(address.province) || city.equals(address.city) || disctrict.equals(address.disctrict) || detail.equals(address.detail)) return false;
+        if (provinceName.equals(address.provinceName) || cityName.equals(address.cityName) || expAreaName.equals(address.expAreaName) || this.address.equals(address.address)) return false;
 
         return true;
     }
