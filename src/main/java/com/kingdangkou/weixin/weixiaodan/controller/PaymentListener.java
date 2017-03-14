@@ -1,5 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.controller;
 
+import com.kingdangkou.weixin.weixiaodan.cache.PaymentMsgHolder;
 import com.kingdangkou.weixin.weixiaodan.entity.PayCallback;
 import com.kingdangkou.weixin.weixiaodan.service.OrderService;
 import com.kingdangkou.weixin.weixiaodan.service.utils.XmlUtil;
@@ -28,20 +29,27 @@ public class PaymentListener {
     private OrderService orderService;
 
     @Autowired
+    private PaymentMsgHolder msgHolder;
+
+    @Autowired
     private XmlUtil xmlUtil;
     @ResponseBody
     @RequestMapping(value="wechat_notify", method = RequestMethod.POST)
     public String wechatPayNotify(HttpServletRequest request){
         try {
             Map<String, String> map = getCallbackParams(request);
-            if (map.get("result_code").toString().equalsIgnoreCase("SUCCESS")) {
-                String orderId = map.get("out_trade_no");
-                String weixinTransactionId = map.get("transaction_id");
-                //这里写成功后的业务逻辑
-                orderService.updateStateAndTransactionId(orderId, String.valueOf(TO_TRANSIT.getValue()), weixinTransactionId);
-            }else {
+            if (!map.get("result_code").toString().equalsIgnoreCase("SUCCESS")) {
                 logger.info("pay failed!");
+                return getPayCallback();
             }
+            if (!msgHolder.checkValidation(map.get("out_trade_no"), map.get("sign"))){
+                logger.info("illegal notification!");
+                return getPayCallback();
+            }
+            String orderId = map.get("out_trade_no");
+            String weixinTransactionId = map.get("transaction_id");
+            //这里写成功后的业务逻辑
+            orderService.updateStateAndTransactionId(orderId, String.valueOf(TO_TRANSIT.getValue()), weixinTransactionId);
         } catch (Exception e) {
             e.printStackTrace();
             logger.info("exception hanpped!");

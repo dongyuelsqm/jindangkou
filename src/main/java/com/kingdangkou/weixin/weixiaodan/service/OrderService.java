@@ -1,5 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
+import com.kingdangkou.weixin.weixiaodan.cache.PaymentMsgHolder;
 import com.kingdangkou.weixin.weixiaodan.dao.AddressDao;
 import com.kingdangkou.weixin.weixiaodan.dao.CustomerDao;
 import com.kingdangkou.weixin.weixiaodan.dao.OrderDao;
@@ -41,6 +42,9 @@ public class OrderService {
     @Autowired
     private UnifiedOrderService unifiedOrderService;
 
+    @Autowired
+    private PaymentMsgHolder msgHolder;
+
     public OrderService() {}
 
     public OrderService(OrderDao orderDao) {
@@ -62,7 +66,10 @@ public class OrderService {
         adjustStorage(order.getSubOrders());
 
         orderDao.save(order);
-        String jsAPIConfig = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), (int) (order.getActual_price() * 100), items);
+
+        JSONObject jsAPIConfig = unifiedOrderService.unifiedOrder(openID, String.valueOf(order.getId()), (int) (order.getActual_price() * 100), items);
+
+        msgHolder.put(String.valueOf(order.getId()), (String) jsAPIConfig.get("paySign"));
         return new Result(true, jsAPIConfig);
     }
 

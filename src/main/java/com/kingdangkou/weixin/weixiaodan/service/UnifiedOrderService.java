@@ -34,7 +34,7 @@ public class UnifiedOrderService {
     public UnifiedOrderService() throws FileNotFoundException {
     }
 
-    public String unifiedOrder(String openId, String orderId, int money, String attach) throws Exception{
+    public JSONObject unifiedOrder(String openId, String orderId, int money, String attach) throws Exception{
         UnifiedOrder unifiedOrder = new UnifiedOrder();
         unifiedOrder.setAppid(config.getAppId());
         unifiedOrder.setAttach(attach);
@@ -66,7 +66,7 @@ public class UnifiedOrderService {
         return createPayConfig(prepay_id, xml);
     }
 
-    private String createPayConfig(String prepayId, String xml) throws Exception {
+    private JSONObject createPayConfig(String prepayId, String xml) throws Exception {
 
         String nonce = UUID.randomUUID().toString();
         String timestamp = Long.toString(System.currentTimeMillis() / 1000);
@@ -89,7 +89,7 @@ public class UnifiedOrderService {
         json.put("signType", "MD5");
         json.put("paySign", signature);
         json.put("xml", xml);
-        return json.toString();
+        return json;
     }
 
     public String createUnifiedOrderSign(UnifiedOrder unifiedOrder){
