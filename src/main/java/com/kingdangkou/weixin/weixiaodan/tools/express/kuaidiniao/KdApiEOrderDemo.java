@@ -45,7 +45,7 @@ public class KdApiEOrderDemo {
      * Json方式 电子面单
 	 * @throws Exception 
      */
-	public String orderOnlineByJson(String orderId, String shipperCode, PayType payType, int IsNotice, Address rev, Address send) throws Exception{
+	public String orderOnlineByJson(String orderId, String shipperCode, PayType payType, int isNotice, Address rev, Address send) throws Exception{
 		//new ExpressOrder(orderId, shipperCode, payType.getValue(), 1, 1, )
 		String requestData= "{'OrderCode': '" + orderId + "'," +
                 "'ShipperCode':'" + shipperCode + "'," +
@@ -53,12 +53,8 @@ public class KdApiEOrderDemo {
                 "'ExpType':1," +
                 "'Cost':1.0," +
                 "'OtherCost':1.0," +
-                "'Sender':" +
-                "{" +
-                "'Company':'LV','Name':'Taylor','Mobile':'15018442396','ProvinceName':'上海','CityName':'上海','ExpAreaName':'青浦区','Address':'明珠路73号'}," +
-                "'Receiver':" +
-                "{" +
-                "'Company':'GCCUI','Name':'Yann','Mobile':'15018442396','ProvinceName':'北京','CityName':'北京','ExpAreaName':'朝阳区','Address':'三里屯街道雅秀大厦'}," +
+                "'Sender':" + convertAddressToJsonString(send)+
+                "'Receiver':" + convertAddressToJsonString(rev)+
                 "'Commodity':" +
                 "[{" +
                 "'GoodsName':'鞋子','Goodsquantity':1,'GoodsWeight':1.0}]," +
@@ -66,6 +62,7 @@ public class KdApiEOrderDemo {
                 "'Quantity':1," +
                 "'Volume':0.0," +
                 "'Remark':'小心轻放'," +
+				"'IsNotice':" + isNotice +
                 "'IsReturnPrintTemplate':1}";
 		JSONObject json = new JSONObject();
 		json.put("OrderCode", orderId);
@@ -86,6 +83,18 @@ public class KdApiEOrderDemo {
 		//根据公司业务处理返回的信息......
 		
 		return result;
+	}
+
+	private String convertAddressToJsonString(Address address){
+		JSONObject json = new JSONObject();
+		json.put("Company", "");
+		json.put("Name", address.getName());
+		json.put("Mobile", address.getPhone());
+		json.put("ProvinceName", address.getProvince());
+		json.put("CityName", address.getCity());
+		json.put("ExpAreaName", address.getDisctrict());
+		json.put("Address", address.getDetail());
+		return json.toString();
 	}
 	/**
      * MD5加密

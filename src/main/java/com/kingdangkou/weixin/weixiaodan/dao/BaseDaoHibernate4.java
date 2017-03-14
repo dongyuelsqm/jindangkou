@@ -29,6 +29,7 @@ public class BaseDaoHibernate4<T> implements BaseDao<T>
 		String hql = "From " + entityClazz.getSimpleName() + " where " + key +"=\'" + value + "\'";
 		T obj = session.createQuery(hql, entityClazz).uniqueResult();
 		transaction.commit();
+		session.close();
 		return obj;
 	}
 	public void save(T entity)
