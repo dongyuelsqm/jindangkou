@@ -1,11 +1,10 @@
 package com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao;
 
-<<<<<<< HEAD
-=======
 import com.kingdangkou.weixin.weixiaodan.entity.Address;
+
+import java.util.ArrayList;
 import java.util.List;
 
->>>>>>> origin/Feature_express
 /**
  * Created by dongy on 2017-02-28.
  */
@@ -20,7 +19,7 @@ public class ExpressOrder {
     private Address receiver;
     private List<Commodity> commodity;
     public ExpressOrder(){}
-    public ExpressOrder(String orderCode, String shipperCode, int payType, int expType, List<Commodity> commodity, Address sender, Address receiver, int isReturnPrintTemplate, int isNotice) {
+    public ExpressOrder(String orderCode, String shipperCode, int payType, int expType, Address sender, Address receiver, int isReturnPrintTemplate, int isNotice) {
         this.OrderCode = orderCode;
         this.ShipperCode = shipperCode;
         this.PayType = payType;
@@ -29,7 +28,10 @@ public class ExpressOrder {
         this.sender = sender;
         this.IsReturnPrintTemplate = isReturnPrintTemplate;
         this.IsNotice = isNotice;
-        this.commodity = commodity;
+        Commodity commodity = new Commodity();
+        ArrayList<Commodity> commodities = new ArrayList<>();
+        commodities.add(commodity);
+        this.commodity = commodities;
     }
 
 
@@ -66,25 +68,6 @@ public class ExpressOrder {
         ExpType = expType;
     }
 
-<<<<<<< HEAD
-    public String getSender() {
-        return Sender;
-    }
-
-    public void setSender(String sender) {
-        Sender = sender;
-    }
-
-    public String getReceiver() {
-        return Receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        Receiver = receiver;
-    }
-
-=======
->>>>>>> origin/Feature_express
     public int getIsReturnPrintTemplate() {
         return IsReturnPrintTemplate;
     }
@@ -100,8 +83,6 @@ public class ExpressOrder {
     public void setIsNotice(int isNotice) {
         IsNotice = isNotice;
     }
-<<<<<<< HEAD
-=======
 
     public Address getSender() {
         return sender;
@@ -126,5 +107,4 @@ public class ExpressOrder {
     public void setCommodity(List<Commodity> commodity) {
         this.commodity = commodity;
     }
->>>>>>> origin/Feature_express
 }

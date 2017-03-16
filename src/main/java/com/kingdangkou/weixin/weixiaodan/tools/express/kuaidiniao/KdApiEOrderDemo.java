@@ -45,16 +45,16 @@ public class KdApiEOrderDemo {
      * Json方式 电子面单
 	 * @throws Exception 
      */
-	public String orderOnlineByJson(String orderId, String shipperCode, PayType payType, int isNotice, Address rev, Address send) throws Exception{
+	public String orderOnlineByJson(ExpressOrder express) throws Exception{
 		//new ExpressOrder(orderId, shipperCode, payType.getValue(), 1, 1, )
-		String requestData= "{'OrderCode': '" + orderId + "'," +
-                "'ShipperCode':'" + shipperCode + "'," +
-                "'PayType':" + payType.getValue() + "," +
+		String requestData= "{'OrderCode': '" + express.getOrderCode() + "'," +
+                "'ShipperCode':'" + express.getShipperCode() + "'," +
+                "'PayType':" + express.getPayType() + "," +
                 "'ExpType':1," +
                 "'Cost':1.0," +
                 "'OtherCost':1.0," +
-                "'Sender':" + convertAddressToJsonString(send)+
-                "'Receiver':" + convertAddressToJsonString(rev)+
+                "'Sender':" + convertAddressToJsonString(express.getSender())+
+                "'Receiver':" + convertAddressToJsonString(express.getReceiver())+
                 "'Commodity':" +
                 "[{" +
                 "'GoodsName':'鞋子','Goodsquantity':1,'GoodsWeight':1.0}]," +
@@ -62,12 +62,12 @@ public class KdApiEOrderDemo {
                 "'Quantity':1," +
                 "'Volume':0.0," +
                 "'Remark':'小心轻放'," +
-				"'IsNotice':" + isNotice +
+				"'IsNotice':" + express.getIsNotice() +
                 "'IsReturnPrintTemplate':1}";
 		JSONObject json = new JSONObject();
-		json.put("OrderCode", orderId);
-		json.put("ShipperCode", shipperCode);
-		json.put("PayType", payType);
+		json.put("OrderCode", express.getOrderCode());
+		json.put("ShipperCode", express.getShipperCode());
+		json.put("PayType", express.getPayType());
 		json.put("ExpType", "1");
 
 		Map<String, String> params = new HashMap<String, String>();
@@ -89,11 +89,11 @@ public class KdApiEOrderDemo {
 		JSONObject json = new JSONObject();
 		json.put("Company", "");
 		json.put("Name", address.getName());
-		json.put("Mobile", address.getPhone());
-		json.put("ProvinceName", address.getProvince());
-		json.put("CityName", address.getCity());
-		json.put("ExpAreaName", address.getDisctrict());
-		json.put("Address", address.getDetail());
+		json.put("Mobile", address.getMobile());
+		json.put("ProvinceName", address.getProvinceName());
+		json.put("CityName", address.getCityName());
+		json.put("ExpAreaName", address.getExpAreaName());
+		json.put("Address", address.getAddress());
 		return json.toString();
 	}
 	/**

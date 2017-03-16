@@ -10,6 +10,7 @@ import com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum;
 import com.kingdangkou.weixin.weixiaodan.model.Failure;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
+import com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao.ExpressOrder;
 import com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao.KdApiEOrderDemo;
 import com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao.PayType;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.OrderJsonConfig;
@@ -175,7 +176,7 @@ public class OrderService {
         order.setAddress(addressEntity);
         adjustStorage(order.getSubOrders());
         orderDao.save(order);
-        kuaidiniaoApi.orderOnlineByJson(String.valueOf(order.getId()), "EMS", PayType.Collect, 1, addressEntity, addressEntity);
+        kuaidiniaoApi.orderOnlineByJson(new ExpressOrder(String.valueOf(order.getId()), "EMS", PayType.Collect.getValue(), 1, addressEntity, addressEntity, 0, 1));
         return new Success();
     }
 }
