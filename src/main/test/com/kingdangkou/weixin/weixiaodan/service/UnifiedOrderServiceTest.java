@@ -22,7 +22,7 @@ public class UnifiedOrderServiceTest {
 
     @Test
     public void unifiedOrder() throws Exception {
-        JsAPIConfig jsAPIConfig = service.unifiedOrder("o3Y_kw4pEFSXdVbieWfmGYBJO-bU", "111111", 1, "");
+        JSONObject jsAPIConfig = service.unifiedOrder("o3Y_kw4pEFSXdVbieWfmGYBJO-bU", "111111", 1, "");
         System.out.println(JSONObject.fromObject(jsAPIConfig));
     }
 

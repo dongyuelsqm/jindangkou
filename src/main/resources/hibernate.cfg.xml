@@ -8,6 +8,7 @@
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="connection.url">jdbc:mysql://localhost:3306/emp?useUnicode=true&amp;characterEncoding=UTF8</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="minEvictableIdleTimeMillis">18000000</property>
     <property name="c3p0.timeout">30000</property>
     <!-- 最大可缓存数据库语句对象 -->
     <property name="c3p0.max_statements">20</property>
@@ -19,6 +20,7 @@
     <property name="hibernate.c3p0.max_size">20</property>
     <!--最小连接数-->
     <property name="hibernate.c3p0.min_size">5</property>
+    <property name="testConnectionOnCheckin">true</property>
     <!-- DB schema will be updated if needed -->
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.Address"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.CollectionEntity"/>

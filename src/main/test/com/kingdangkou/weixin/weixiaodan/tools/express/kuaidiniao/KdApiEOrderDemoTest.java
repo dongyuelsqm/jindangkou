@@ -24,7 +24,7 @@ public class KdApiEOrderDemoTest {
         ArrayList<Commodity> commodities = new ArrayList<>();
         commodities.add(commodity);
         Address address = new Address("name", "mobile", "openid", "province", "city", "are", "address");
-        ExpressOrder order = new ExpressOrder("1", "EMS", PayType.Prepaid.getValue(), 1, commodities, address, address, 0, 1);
+        ExpressOrder order = new ExpressOrder("1", "EMS", PayType.Prepaid.getValue(), 1, address, address, 0, 1);
         System.out.println(JSONObject.fromObject(order));
         String s = demo.orderOnlineByJson(order);
         System.out.println(s);
