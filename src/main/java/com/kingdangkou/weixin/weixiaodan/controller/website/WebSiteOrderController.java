@@ -26,13 +26,13 @@ public class WebSiteOrderController {
 
     @RequestMapping(value = "/order/date/list", method = RequestMethod.GET)
     public void getOrdersByDate(@RequestParam("begin") String begin, @RequestParam("end") String end, HttpServletResponse response) throws IOException {
-        Result orderByDate = orderService.getOrderByDate(begin, end);
+        Result orderByDate = webSiteOrderService.getOrderByDate(begin, end);
         response.getWriter().print(orderByDate);
     }
 
     @RequestMapping(value = "/order/list/all", method = RequestMethod.GET)
     public void getAllOrders(HttpServletResponse response) throws IOException {
-        Result list = orderService.list();
+        Result list = webSiteOrderService.list();
         response.getWriter().print(list);
     }
 

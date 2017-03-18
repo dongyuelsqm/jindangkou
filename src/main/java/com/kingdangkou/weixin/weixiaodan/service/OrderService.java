@@ -153,16 +153,6 @@ public class OrderService {
         return new Success();
     }
 
-    public Result getOrderByDate(String begin, String end) {
-        List<Order> ordersByDate = orderDao.getOrdersByDate(begin, end);
-        return new Result(true, JSONArray.fromObject(ordersByDate, orderJsonConfig));
-    }
-
-    public Result list(){
-        List<Order> list = orderDao.list(Order.class);
-        return new Result(true, JSONArray.fromObject(list, orderJsonConfig));
-    }
-
     public Result addOrder(String name, String sub_orders, String address) throws Exception {
         Address addressEntity = (Address) JSONObject.toBean(JSONObject.fromObject(address), Address.class);
         addressDao.save(addressEntity);
@@ -179,4 +169,5 @@ public class OrderService {
         kuaidiniaoApi.orderOnlineByJson(new ExpressOrder(String.valueOf(order.getId()), "EMS", PayType.Collect.getValue(), 1, addressEntity, addressEntity, 0, 1));
         return new Success();
     }
+
 }
