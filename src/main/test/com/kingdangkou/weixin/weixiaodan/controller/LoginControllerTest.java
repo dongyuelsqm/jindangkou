@@ -17,4 +17,10 @@ public class LoginControllerTest extends TestBase<LoginController> {
         resultActions.andExpect(status().isOk());
     }
 
+    @Test
+    public void udpate() throws Exception {
+        ResultActions resultActions = mockMvc.perform(post("/website/code/update").param("id", "1").param("code", "code")).andDo(print());
+        resultActions.andExpect(status().isOk());
+
+    }
 }
