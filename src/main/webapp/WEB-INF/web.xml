@@ -98,7 +98,7 @@
         <filter-class>com.kingdangkou.weixin.weixiaodan.filter.ResponseFilter</filter-class>
         <init-param>
             <param-name>isDebug</param-name>
-            <param-value>true</param-value>
+            <param-value>false</param-value>
         </init-param>
     </filter>
 

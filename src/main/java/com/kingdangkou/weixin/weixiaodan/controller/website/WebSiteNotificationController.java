@@ -15,7 +15,7 @@ import java.io.IOException;
  * Created by dongy on 2017-01-10.
  */
 @Controller
-@RequestMapping("/website")
+@RequestMapping("/website/notification")
 public class WebSiteNotificationController {
     @Autowired
     private NotificationService notificationService;
@@ -26,7 +26,13 @@ public class WebSiteNotificationController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/remove")
-    public void remove(@RequestParam("id") String id, HttpServletResponse response){
-        notificationService.delete(id);
+    public void remove(@RequestParam("id") String id, HttpServletResponse response) throws IOException {
+        Result result = notificationService.delete(id);
+        response.getWriter().print(result);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/update")
+    public void update(@RequestParam("new_title") String title, @RequestParam("id") String id, HttpServletResponse response){
+        notificationService.update(id, title);
     }
 }
