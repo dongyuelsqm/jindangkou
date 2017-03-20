@@ -7,7 +7,7 @@
               <ul class="navs pull-right" id="log">
                   <li id="nav-7" style="padding-right: 0;">
                       <a href="${contextPath}/website/member/personal-center.action" >
-                        <span id="user-name">ll</span>
+                        <span id="user-name">admin</span>
                         <label class="highlight" id="message-count"></label>
                       </a>
                   </li>

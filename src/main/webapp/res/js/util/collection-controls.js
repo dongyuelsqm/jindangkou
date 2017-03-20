@@ -10,6 +10,7 @@ define(function (require, exports, module) {
         util = require('util/util'),
         form = require('util/form');
 
+    require('perfect-scrollbar');
     var SelectView = form.SelectView;
 
     //数据
@@ -186,14 +187,17 @@ define(function (require, exports, module) {
      *  {object} itemOption: 该视图子项的配置
     */
     var CollectionView = BaseView.extend({
+        errorDataTemplate: util.render(errorDataTemplate),
+        loadingDataTemplate: util.render(loadingDataTemplate),
+        noDataTemplate: util.render(noDataTemplate),
         initialize: function (options) {
             this.store = new CollectionStore(options.store);
             this.data = this.store.data;
             this.items = [];
 
-            this.errorDataTemplate = options.errorDataTemplate || this.errorDataTemplate || util.render(errorDataTemplate);
-            this.loadingDataTemplate = options.loadingDataTemplate || this.loadingDataTemplate || util.render(loadingDataTemplate);
-            this.noDataTemplate = options.noDataTemplate || this.noDataTemplate || util.render(noDataTemplate);
+            this.errorDataTemplate = options.errorDataTemplate || this.errorDataTemplate;
+            this.loadingDataTemplate = options.loadingDataTemplate || this.loadingDataTemplate;
+            this.noDataTemplate = options.noDataTemplate || this.noDataTemplate;
 
             this.$content = this.$el;
             if (options.appendTo) {

@@ -23,13 +23,13 @@ lable{margin-bottom: 0;}
 
 /* input */
 input[type=text],
-input[type=password]{line-height: 28px; height: 30px; padding: 0 10px; width: 100%;}
-select{line-height: 28px; height: 30px; padding-left: 10px; width: 100%;}
-textarea {line-height: 28px; padding: 0 5px; width: 100%;}
+input[type=password]{line-height: 38px; height: 40px; padding: 0 10px; width: 100%;}
+select{line-height: 38px; height: 40px; padding-left: 10px; width: 100%;}
+textarea {line-height: 30px; padding: 0 5px; width: 100%;}
 
 .input-icon{background-image: url(./img/input-icon.png); background-repeat: no-repeat; background-position-x: right;}
-.input-icon-price{background-position-y: -28px;}
-.input-icon-count{background-position-y: -56px;}
+.input-icon-price{background-position-y: -38px;}
+.input-icon-count{background-position-y: -76px;}
 
 /* base */
 .display-hidden{display: none;}
@@ -186,14 +186,14 @@ th > .order{background-image: url(./img/order-arrow.png); background-repeat: no-
 /* form */
 .form{}
     .form .btn{border-radius: 4px; font-size: 12px; height: 30px; line-height: 30px; margin-right: 20px; padding: 0; width: 50%;}
-.form > .row { line-height: 30px; margin-bottom: 10px; margin-top: 10px; position: relative;}
-    .form .control-label{font-weight: normal; line-height: 30px; text-align: right;}
+.form > .row { line-height: 40px; margin-bottom: 30px; margin-top: 30px; position: relative;}
+    .form .control-label{font-weight: normal; line-height: 40px; text-align: right;}
     	.form .form-control-static{padding-top: 0; padding-bottom: 0;}
 	    /*.form .input-group-addon{background: #fff; border-radius: 0; font-size: 15px;}*/
 	    .form .form-control{background: #fff; border-radius: 0; display: inline-block;}
 	    .form .form-control.error{border-color: #ea3527; color: #ea3527;}
         .form .verify-img{height: 30px; vertical-align: middle; }
-        .form .comment {color: #cdcdcd; line-height: 20px; margin-bottom: 5px; margin-top: 5px;}
+        .form .comment {color: #cdcdcd; line-height: 30px; margin-bottom: 5px; margin-top: 5px;}
         	.form .comment a{padding: 0 5px; vertical-align: baseline;}
         .form .agreement { color: #aaa; }
 		.form .upload-img,

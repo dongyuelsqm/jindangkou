@@ -46,13 +46,33 @@
             <tbody></tbody>
         </table>
     </div>
+    <!--
+    <div class="row">
+        <label class="col-md-3 control-label">运费<span class="required">*</span></label>
+        <div class="col-md-5">
+            <input type="text" name="" placeholder="请输入买家用户名" value=""/>
+        </div>
+    </div>
+    <div class="row">
+        <label class="col-md-3 control-label">交易状态<span class="required">*</span></label>
+        <div class="col-md-5">
+            <input type="text" name="name" placeholder="请输入买家用户名" value=""/>
+        </div>
+    </div>
+    -->
     <div class="row">
         <label class="col-md-3 control-label">买家用户名<span class="required">*</span></label>
         <div class="col-md-5">
             <input type="text" name="name" placeholder="请输入买家用户名" value=""/>
         </div>
     </div>
-    <br/>
+    <div class="row">
+        <label class="col-md-3 control-label">应收款<span class="required">*</span></label>
+        <div class="col-md-5">
+            <input type="text" name="" class="input-icon input-icon-price" placeholder="请输入应收款" value=""/>
+        </div>
+    </div>
+    <hr/>
     <div class="row">
         <label class="col-md-3 control-label">收货人<span class="required">*</span></label>
         <div class="col-md-5">
@@ -106,7 +126,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-offset-3 col-md-5">
+        <div class="col-md-offset-3 col-md-5 text-center">
             <button type="button" class="btn btn-submit" data-do="submit" role="btn-submit">提交</button>
         </div>
     </div>

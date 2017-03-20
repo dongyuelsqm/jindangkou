@@ -11,7 +11,7 @@
 <div id="table-wrapper" class="table-wrapper block-body">
     <div class="table-operation clearfix" id="search-box">
         <div class="operation-left pull-left">
-            <input type="text" class="form-control" placeholder="请选择时间" value="2016-01-01">
+            <%--<input type="text" class="form-control" placeholder="请选择时间" value="2016-01-01">--%>
             <a class="btn btn-submit" href="javascript:" role="btn-today">当天</a>
         </div>
         <div class="operation-right pull-right">

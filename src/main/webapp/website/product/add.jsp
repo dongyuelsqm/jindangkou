@@ -102,7 +102,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-offset-3 col-md-5">
+        <div class="col-md-offset-3 col-md-5 text-center">
             <button type="button" class="btn btn-submit" data-do="submit" role="btn-submit">提交</button>
         </div>
     </div>

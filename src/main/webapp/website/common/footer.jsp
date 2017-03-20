@@ -6,7 +6,7 @@
         <a href="javascript:" title="关注我们" class="attention"><i class="iconfont icon-weixin"></i></a>
     </div>
     <div class="text-center">
-        &copy; 2016 jindangkou.com 京ICP备05002571号
+        &copy; 2016 jindangkou.com 渝ICP备16007040号-2
     </div>
 </div>
 <div class="mask">

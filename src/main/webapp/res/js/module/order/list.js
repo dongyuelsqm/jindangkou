@@ -49,7 +49,6 @@ define(function(require, exports, module) {
      */
     var OrderRowView = CheckableRowView.extend({
         tagName: 'tbody',
-        noDataTemplate: util.render('<tr><td colspan="{{colCount}}">' + noDataTemplate + '</td></tr>'),
         events: {
             'click .editor': 'editor'
         },
@@ -84,6 +83,7 @@ define(function(require, exports, module) {
         tagName: 'div',
         errorDataTemplate: util.render('<tr><td colspan="{{colCount}}">' + errorDataTemplate + '</td></tr>'),
         loadingDataTemplate: util.render('<tr><td colspan="{{colCount}}">' + loadingDataTemplate + '</td></tr>'),
+        noDataTemplate: util.render('<tr><td colspan="{{colCount}}">' + noDataTemplate + '</td></tr>'),
         initialize: function(options) {
             this._super_initialize(options);
             this.$content = this.$tbody = this.$('#order-table-detail');
