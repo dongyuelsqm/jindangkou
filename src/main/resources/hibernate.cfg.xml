@@ -37,6 +37,6 @@
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.NotificationEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.CustomerEntity"/>
     <mapping class="com.kingdangkou.weixin.weixiaodan.entity.UnifiedOrder"/>
-
+    <mapping class="com.kingdangkou.weixin.weixiaodan.entity.StoreInfoEntity"/>
   </session-factory>
 </hibernate-configuration>
