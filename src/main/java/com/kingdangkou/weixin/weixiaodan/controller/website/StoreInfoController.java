@@ -20,10 +20,10 @@ public class StoreInfoController {
 
     @Autowired
     private StoreInfoService storeInfoService;
-    @RequestMapping(value = "/storeinfo/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/storekeeperinfo/add", method = RequestMethod.POST)
     public void update(@RequestParam("username") String username,
                        @RequestParam("phone") String phone,
-                       @RequestParam("qq") String qq,
+                       @RequestParam("QQ") String qq,
                        @RequestParam("email") String email,
                        @RequestParam("name") String name,
                        @RequestParam("address") String address,

@@ -70,7 +70,7 @@ public class Address {
     }
 
     @Size(min = 1, max = 10, message = "provinceName can not be run")
-    @Column(name = "provinceName")
+    @Column(name = "province")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getProvinceName() {
         return provinceName;
@@ -80,7 +80,7 @@ public class Address {
         this.provinceName = provinceName;
     }
 
-    @Column(name = "cityName")
+    @Column(name = "city")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getCityName() {
         return cityName;
@@ -100,7 +100,7 @@ public class Address {
         this.expAreaName = expAreaName;
     }
 
-    @Column(name = "address")
+    @Column(name = "detail")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getAddress() {
         return address;
@@ -120,7 +120,7 @@ public class Address {
         this.name = name;
     }
 
-    @Column(name = "mobile")
+    @Column(name = "phone")
     @Pattern(regexp = "[a-zA-Z0-9]+", message = "contains invalid chars")
     public String getMobile() {
         return mobile;

@@ -15,3 +15,4 @@ CREATE TABLE collections(id INT PRIMARY KEY AUTO_INCREMENT, product_id INT, open
 CREATE TABLE shoping_cart(id INT PRIMARY KEY AUTO_INCREMENT, product_id INT, open_id INT, color_id INT, size_id INT, number INT) character set = utf8;
 CREATE TABLE notifications(id int primary key AUTO_INCREMENT, title VARCHAR(100), created_at DATETIME) character set = utf8;
 CREATE TABLE customers(id int primary key AUTO_INCREMENT, open_id VARCHAR(100) NOT NULL , nickname VARCHAR(100), sex INTEGER, province VARCHAR(20), city VARCHAR(20), country VARCHAR(20), headimgurl VARCHAR(100), privilege VARCHAR(100), unionid VARCHAR(100), access_time DATETIME) CHARACTER SET = utf8;
+CREATE TABLE store_info(id int primary key AUTO_INCREMENT, username VARCHAR(100) NOT NULL , phone VARCHAR(100), qq VARCHAR(20), email VARCHAR(20), name VARCHAR(20), address_id VARCHAR(20), tel VARCHAR(100), picture VARCHAR(100)) CHARACTER SET = utf8;

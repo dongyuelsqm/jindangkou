@@ -1,5 +1,6 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
+import com.kingdangkou.weixin.weixiaodan.dao.AddressDao;
 import com.kingdangkou.weixin.weixiaodan.dao.StoreInfoDao;
 import com.kingdangkou.weixin.weixiaodan.entity.Address;
 import com.kingdangkou.weixin.weixiaodan.entity.StoreInfoEntity;
@@ -17,9 +18,12 @@ public class StoreInfoService {
     @Autowired
     private StoreInfoDao storeInfoDao;
 
+    @Autowired
+    private AddressDao addressDao;
     public Result update(String username, String phone, String qq, String email, String name, String address, String tel, String picture) {
         StoreInfoEntity storeInfoEntity = storeInfoDao.get();
         updateAddress(storeInfoEntity.getAddress(), address, name, phone);
+        addressDao.update(storeInfoEntity.getAddress());
         storeInfoEntity.setUsername(username);
         storeInfoEntity.setPhone(phone);
         storeInfoEntity.setQq(qq);
@@ -32,7 +36,7 @@ public class StoreInfoService {
     }
 
     public void updateAddress(Address address, String json, String name, String phone){
-        JSONObject object = JSONObject.fromObject(address);
+        JSONObject object = JSONObject.fromObject(json);
         String provinceName = object.getString("provinceName");
         String cityName = object.getString("cityName");
         String expAreaName = object.getString("expAreaName");
