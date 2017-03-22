@@ -13,8 +13,15 @@ define(function(require, exports, module) {
     var collectionControls = require('util/collection-controls'),
         collectionExtension = require('util/collection-extension'),
         TableView  = collectionControls.TableView,
+        TableRowView = collecttionControls.TableRowView,
         PaginationView = collectionControls.PaginationView,
         BaseItemSetting = collectionExtension.BaseItemSetting;
+
+    var urls = {
+        list: G.contextPath + 'notification/list',
+        add: G.contextPath + 'website/notification/add',
+        delete: G.contextPath + 'website/notification/remove'
+    };
 
     var FormView = Backbone.View.extend({
         events: {
@@ -23,17 +30,49 @@ define(function(require, exports, module) {
         'submit': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this;
-            if(this.$('textarea').val() === '') {
+            if(_this.$('textarea').val() === '') {
+                alert('请输入公告内容');
+                return false;
+            }
+
+            $.ajax({
+                url: urls.add,
+                data: _this.$el.serializeArray(),
+                type: 'post',
+                dateType: 'json',
+                success: function (rsp) {
+                    if(rsp.success){
+                        alert('发布公告成功！', function(){
+                            _this.$('textarea').val('');
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+    var NoticeTableRowView = TableRowView.extend({
+        events:{
+            'click a[data-do="delete"]': 'delete'
+        },
+        'delete': function(ev){
+            var _this = this;
+            alert('是否删除公告？', function(){
                 $.ajax({
-                    url: G.contextPath + 'customer/add',
-                    data: _this.$el.serializeArray(),
+                    url: urls.delete,
+                    data: 'id=' + _this.model.get('id'),
                     type: 'post',
                     dateType: 'json',
                     success: function (rsp) {
-                        console.log(rsp);
+                        if(rsp.success){
+                            alert('删除公告成功！', function(){
+                                //更新列表
+                                _this.parentView.update;
+                            });
+                        }
                     }
                 });
-            }
+            }, true)
         }
     });
 
@@ -43,7 +82,7 @@ define(function(require, exports, module) {
             new TableView({
                 el: '#notice-table',
                 store: {
-                    url: urls.listUrl,
+                    url: urls.list,
                     pagination: {
                         enable: true
                     }
@@ -52,6 +91,7 @@ define(function(require, exports, module) {
                     template: util.template('notice-row'),
                     defaultSetting: BaseItemSetting
                 },
+                rowView: NoticeTableRowView,
                 sync: true,
                 idAttribute: 'noticeId'
             });
