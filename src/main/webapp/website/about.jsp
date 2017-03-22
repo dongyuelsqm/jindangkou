@@ -5,7 +5,7 @@
 <style>
     .about-detail{background-color: #576981; overflow: hidden; }
         .about-detail > img{height: 460px; width: 800px;}
-        .about-detail > div{color: #fff; font-size: 14px; padding: 100px 20px; width: 400px;}
+        .about-detail > div{color: #fff; font-size: 14px; padding: 100px 20px; width: 370px;}
             .about-detail p{text-indent: 2em; line-height: 20px;}
             .about-detail p.text-center{text-indent: 0; margin-top: 30px;}
 
@@ -35,8 +35,8 @@
                         <img src="${contextPath}/res/css/module/img/about-s3.png" alt="" />
                     </div>
                     <div class="about-detail">
-                        <img class="pull-left" src="${contextPath}/res/css/module/img/about-2.png" alt="" />
-                        <div class="pull-right">
+                        <img class="pull-right" src="${contextPath}/res/css/module/img/about-2.png" alt="" />
+                        <div class="pull-left">
                             <p class="info">通过金档口平台，批发商可以轻松管理自己的微信各类信息，打造专属的微商城，对微信营销实现有效监控，极大扩展潜在客户群和实现企业的运营目标。金档口平台很好的弥补了微信公众平台本身功能不足、针对性不强、交互不便利的问题，用户无需下载app，即可关注商家微信服务号即可进行交易。</p>
                             <p class="text-center"><a href="${contextPath}/website/contact.jsp" class="btn btn-white"><i class="iconfont icon-contact"></i>联系我们</a></p>
                         </div>

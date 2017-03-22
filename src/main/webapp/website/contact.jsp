@@ -20,7 +20,7 @@
         input.form-control{height: 50px;}
     .form .btn-submit,
     .form .btn-submit:hover,
-    .form .btn-submit:focus{background-color: #cda34d; border-radius: 20px; font-size: 16px; height: 40px; line-height: 40px; width: 50%;}
+    .form .btn-submit:focus{background-color: #f20b11; border-radius: 20px; font-size: 16px; height: 40px; line-height: 40px; width: 50%;}
 </style>
 <body>
 <div id="J_body" class="J_body">

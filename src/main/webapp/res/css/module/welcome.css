@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+.container > div{margin-bottom: 20px;}
+.banners{position: relative;}
+.banner{background-position: center; background-repeat: no-repeat; display: block; height: 400px; position: relative; text-align: center; width: 100%;}
+.flex-control-nav{bottom: 10px; height: 25px; overflow: hidden; position: absolute; text-align: center; width: 100%;}
+.flex-control-nav > li{display: inline;}
+.flex-control-nav > li > a{background: url(./img/nav.png) no-repeat 0 center; display: inline-block; font-size: 0; height: 25px; vertical-align: middle; width: 25px;}
+.flex-control-nav > li> a:hover,
+.flex-control-nav > li > a.flex-active{background-position: -25px center; cursor: default;}
+.intro-info{}
+.intro-info > .intro{float: left; text-align: center; width: 25%;}
+.intro-info > .intro > img{background: url(./img/wel-info.png) no-repeat center; height: 140px; padding: 40px 25px; width: 140px;}
+.intro-info > .intro > h2{color: #333; font-size: 16px; line-height: 50px; }
+.intro-info > .intro > p{color: #666; font-size: 14px; line-height: 25px; text-align: left;}
+.video-intro{display: table;}
+.video-intro > .intro{display: table-cell; padding-left: 30px; padding-right: 30px;}
+.video-intro > .intro > h2{color: #666; font-size: 30px; line-height: 60px;}
+.video-intro > .intro > p{color: #999; font-size: 18px; line-height: 30px;}
+
+.form{background-color: rgba(0, 0, 0, 0.5); height: 300px; position: absolute; padding-right: 35px; padding-left: 35px; padding-top: 30px; right: 200px; top: 50px; width: 290px; z-index: 1;}
+.form > h1{color: #fff; font-size: 18px; font-weight: normal; margin-bottom: 20px;}
+.form > .row{margin-bottom: 10px; margin-top: 0;}
+.form .form-control{background: url(./img/login1.png) no-repeat 0 0 #fff; border-color: #ffae2f; color: #3d4e66; padding-left: 50px;}
+#userName{background-position-y:0;}
+#userPassword{background-position-y: -40px;}
+.form a{color: #fff;}
+.form .error{color: #4d4d4d; display: none; line-height: 25px; text-align: center; }
+.error .iconfont{color: #f20b11;}
+.form .btn{width: 100%;}

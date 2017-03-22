@@ -3,7 +3,7 @@
 <%@ include file="./common/head.jsp"%>
 <c:set var="currentPath" value="agent" />
 <style>
-    h1.agent-title{background: url(../res/css/module/img/agent-title.png) no-repeat center; color: #cda34d; font-size: 16px; line-height: 120px; height: 120px; margin-top: 20px; margin-bottom: 20px;}
+    h1.agent-title{background: url(../res/css/module/img/agent-title.png) no-repeat center; color: #f20b11; font-size: 16px; line-height: 120px; height: 120px; margin-top: 20px; margin-bottom: 20px;}
 
     .agent-detail{padding: 40px; overflow: hidden;}
         .agent-advantage{padding-bottom: 10px;}

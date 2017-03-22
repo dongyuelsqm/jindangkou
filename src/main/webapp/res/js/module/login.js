@@ -12,19 +12,19 @@ define(function(require, exports, module) {
 
     var CheckboxView = form.CheckboxView;
     
-    require('jquery-md5');
-    var RSA = require('rsa');
+    // require('jquery-md5');
+    // var RSA = require('rsa');
     
     var formView = Backbone.View.extend({
         events: {
-            'click .btn-login': 'login',
-            // 'click .verifyImg-change': 'verifyImgChange',
+            'click [data-do="login"]': 'login',
+            'click [data-do="verifyImg-change"]': 'verifyImgChange',
             'keydown .form-control': 'stepByOne'
         },
         initialize: function(options){
-            new CheckboxView({
-            	el: this.$('input[type=checkbox]').parent()
-            });
+            // new CheckboxView({
+            // 	el: this.$('input[type=checkbox]').parent()
+            // });
             
             this.cacheEls();
             
@@ -39,7 +39,7 @@ define(function(require, exports, module) {
             this.$userName = this.$('#userName');
             this.$password = this.$('#userPassword');
             // this.$isRemember = this.$('#isRemember');
-            // this.$verifyCode = this.$('#verifyCode');
+            this.$verifyCode = this.$('#verifyCode');
             this.$error_msg = this.$('.error-msg');
             this.$error = this.$error_msg.parent();
 
@@ -50,7 +50,7 @@ define(function(require, exports, module) {
         	
         	this.userName = $.trim(this.$userName.val());
             this.password = $.trim(this.$password.val());
-            // this.verifyCode = $.trim(this.$verifyCode.val());
+            this.verifyCode = $.trim(this.$verifyCode.val());
 
             if (this.userName == '') {
                 this.$error_msg.html('请输入您的用户名/邮箱/手机号码');
@@ -60,12 +60,11 @@ define(function(require, exports, module) {
                 this.$error_msg.html('请输入您的密码');
                 this.$error.show();
                 return false;
+            }else if (this.verifyCode == '') {
+                this.$error_msg.html('请输入验证码');
+                this.$error.show();
+                return false;
             }
-            // } else if (this.verifyCode == '') {
-            //     this.$error_msg.html('请输入验证码');
-            //     this.$error.show();
-            //     return false;
-            // }
             return true;
         },
         login: function(){
@@ -77,9 +76,9 @@ define(function(require, exports, module) {
                     data: {
                         // 'userName': _this.userName,
                         // 'userPassword': _this.password
-                        'username': $.trim(this.$userName.val()),
-                        'password': $.trim(this.$password.val())
-                        // 'verifyCode': _this.verifyCode,
+                        'username': _this.userName,
+                        'password': _this.password,
+                        'verifyCode': _this.verifyCode
                         // 'isRemember': _this.isRemember.val()
                     },
                     type: 'post',
@@ -156,7 +155,7 @@ define(function(require, exports, module) {
                 if ($this.attr('id') == 'userName') {
                     this.$password.focus();
                 } else if ($this.attr('id') == 'userPassword') { 
-                    // this.$verifyCode.focus();
+                    this.$verifyCode.focus();
                 } else { 
                     this.$('.btn-submit').trigger('click');
                 }

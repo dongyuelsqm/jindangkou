@@ -1,6 +1,28 @@
 @charset "UTF-8";
-.content{background-color: #fff; height: 642px;}
-    .form{height: 230px; margin-top: -110px; position: absolute; top: 50%; width: 100%;}
-        a.register{color: #242424; text-decoration: underline;}
+@import url(../base/reset.css);
+body,
+form,
+button,
+input,
+div,
+img,
+a{box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;}
+
+.J_body{background-color: #3d4e66; bottom:0; left:0; position:absolute; right:0; top:0; overflow: hidden;}
+/* float */
+.pull-left{float: left;}
+.pull-right{float: right;}
+.content{left: 50%; margin-left: -227px; margin-top: -240px; position: absolute; top: 50%; }
+.logo{background: url(../base/img/brand-icon.png) no-repeat 0 center; display: block; height: 56px;}
+.form{background-color: #495e7a; border: 1px solid #42556e; margin-top: 10px; padding: 30px 60px; width: 454px;}
+    .form .form-control{background: url(./img/login.png) no-repeat 0 0 #e9eef5; border-color: #ffae2f; color: #3d4e66; padding-left: 65px;}
+        #userName{background-position-y:0;}
+        #userPassword{background-position-y: -38px;}
+        #verifyCode{background-position-y: -76px; width: 70%;}
+    .form .btn{background-color: #ffae2f; width: 100%;}
+    .form .row{overflow: hidden;}
+        .form .verify-img{width: 30%;}
+
+    a.register{color: #242424; text-decoration: underline;}
 .error{color: #4d4d4d; display: none; line-height: 25px; text-align: center; }
-    .error .iconfont{color: #e11377;}
+    .error .iconfont{color: #f20b11;}

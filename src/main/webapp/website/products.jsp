@@ -9,8 +9,8 @@
         ul.information h3{color: #666; font-size: 14px; margin-top: 10px;}
         ul.information div{border-radius: 50px; font-size: 32px; height: 100px; line-height: 100px; margin: auto; width: 100px;}
             ul.information div > span{font-size: 14px;}
-            ul.information div.odd{background-color: #cda34d; color: #fff; }
-            ul.information div.even{background-color: #fff; border: 2px solid #cda34d; color: #cda34d;}
+            ul.information div.odd{background-color: #f20b11; color: #fff; }
+            ul.information div.even{background-color: #fff; border: 2px solid #f20b11; color: #f20b11;}
 
     .products-wrapper > div{margin: auto; width: 960px;}
         .products-wrapper > div > img,
@@ -30,7 +30,7 @@
 
     .table{margin: 0 auto 20px; width: 800px;}
         .table > thead th{text-align: center; line-height: 2em;}
-        .table > tbody td .iconfont{color: #cda34d; font-weight: 700;}
+        .table > tbody td .iconfont{color: #b6b6b6; font-weight: 700;}
 
 </style>
 <body>
@@ -131,7 +131,7 @@
                                     <td>1</td>
                                     <td>CHANEL</td>
                                     <td><i class="iconfont icon-checkmark"></i></td>
-                                    <td><i class="iconfont icon-checkmark-s"></i></td>
+                                    <td><i class="iconfont icon-checkmark"></i></td>
                                     <td>服务号</td>
                                 </tr>
                             </tbody>

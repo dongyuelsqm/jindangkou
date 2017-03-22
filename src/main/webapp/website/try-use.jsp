@@ -15,7 +15,7 @@
         .step-1 > div{margin-top: 138px;}
         .step-2 > div{margin-top: 82px;}
         .step-3 > div{margin-top: 198px;}
-            .step p{color: #cda34d; font-size: 18px;}
+            .step p{color: #f20b11; font-size: 18px;}
             .step p.num{color: #b2b2b2; font-size: 30px;}
     .step img{border: 10px solid #e6e6e6; margin-left: 70px;}
         .step-3 img{margin-left: 30px;}
