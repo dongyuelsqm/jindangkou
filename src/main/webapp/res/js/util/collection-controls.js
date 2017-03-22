@@ -267,6 +267,7 @@ define(function (require, exports, module) {
             this._super_initialize(options);
             this.template = options.template;
             this.defaultSetting = options.defaultSetting || {};
+            this.parentView = options.parentView;
         },
         bind: function (model) {
             this.model = model;
@@ -406,6 +407,7 @@ define(function (require, exports, module) {
 
             this.ItemView = options.itemView || this.ItemView;
             this.itemOption = options.item;
+            this.itemOption.parentView = this;
             
             if (options.param) {
 //                this.param = options.param;

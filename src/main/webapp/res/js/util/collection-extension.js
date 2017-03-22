@@ -66,7 +66,6 @@ define(function (require, exports, module) {
         },
         initialize: function (options) {
             this._super_initialize(options);
-            this.parentView = options.parentView;
 //            form.checkbox(this.$('.checkbox'));
         },
         render: function () {
@@ -105,7 +104,6 @@ define(function (require, exports, module) {
         },
         initialize: function (options) {
             this._super_initialize(options);
-            this.itemOption.parentView = this;
             this.checkedList = new Backbone.Collection;
 
             this.$checkboxAll = new CheckboxView({
