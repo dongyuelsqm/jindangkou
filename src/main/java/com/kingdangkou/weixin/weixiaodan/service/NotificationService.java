@@ -36,4 +36,9 @@ public class NotificationService {
         NotificationEntity latest = notificationDao.getLatest();
         return new Result(true, latest);
     }
+
+    public Result update(String id, String title) {
+        notificationDao.update(id, title);
+        return new Success();
+    }
 }

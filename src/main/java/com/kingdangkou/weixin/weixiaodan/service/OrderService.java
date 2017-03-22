@@ -10,6 +10,9 @@ import com.kingdangkou.weixin.weixiaodan.enums.OrderStateEnum;
 import com.kingdangkou.weixin.weixiaodan.model.Failure;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import com.kingdangkou.weixin.weixiaodan.model.Success;
+import com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao.ExpressOrder;
+import com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao.KdApiEOrderDemo;
+import com.kingdangkou.weixin.weixiaodan.tools.express.kuaidiniao.PayType;
 import com.kingdangkou.weixin.weixiaodan.utils.configs.OrderJsonConfig;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -44,6 +47,9 @@ public class OrderService {
 
     @Autowired
     private PaymentMsgHolder msgHolder;
+
+    @Autowired
+    private KdApiEOrderDemo kuaidiniaoApi;
 
     public OrderService() {}
 
@@ -147,17 +153,7 @@ public class OrderService {
         return new Success();
     }
 
-    public Result getOrderByDate(String begin, String end) {
-        List<Order> ordersByDate = orderDao.getOrdersByDate(begin, end);
-        return new Result(true, JSONArray.fromObject(ordersByDate, orderJsonConfig));
-    }
-
-    public Result list(){
-        List<Order> list = orderDao.list(Order.class);
-        return new Result(true, JSONArray.fromObject(list, orderJsonConfig));
-    }
-
-    public Result addOrder(String name, String sub_orders, String address) {
+    public Result addOrder(String name, String sub_orders, String address) throws Exception {
         Address addressEntity = (Address) JSONObject.toBean(JSONObject.fromObject(address), Address.class);
         addressDao.save(addressEntity);
         CustomerEntity customerEntity = new CustomerEntity();
@@ -170,6 +166,8 @@ public class OrderService {
         order.setAddress(addressEntity);
         adjustStorage(order.getSubOrders());
         orderDao.save(order);
+        kuaidiniaoApi.orderOnlineByJson(new ExpressOrder(String.valueOf(order.getId()), "EMS", PayType.Collect.getValue(), 1, addressEntity, addressEntity, 0, 1));
         return new Success();
     }
+
 }

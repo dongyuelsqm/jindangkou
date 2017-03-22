@@ -14,13 +14,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class WebSiteNotificationControllerTest extends TestBase<WebSiteNotificationController>{
     @Test
     public void add() throws Exception {
-        ResultActions resultActions = mockMvc.perform(post("/website/add").param("title", "打折优惠！")).andDo(print());
+        ResultActions resultActions = mockMvc.perform(post("/website/notification/add").param("title", "打折优惠！")).andDo(print());
         resultActions.andExpect(status().isOk());
     }
 
     @Test
+    public void update() throws Exception {
+        ResultActions resultActions = mockMvc.perform(post("/website/notification/update").param("new_title", "newTitle").param("id", "1")).andDo(print());
+        resultActions.andExpect(status().isOk());
+
+    }
+
+    @Test
     public void remove() throws Exception {
-        ResultActions resultActions = mockMvc.perform(post("/website/remove").param("id", "2")).andDo(print());
+        ResultActions resultActions = mockMvc.perform(post("/website/notification/remove").param("id", "1")).andDo(print());
         resultActions.andExpect(status().isOk());
     }
 }

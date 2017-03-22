@@ -14,6 +14,6 @@ public class AddressTest {
     Address address =(Address) ctx.getBean("address");
     @Test
     public void testSetProvince() throws Exception {
-        address.setProvince("///");
+        address.setProvinceName("///");
     }
 }

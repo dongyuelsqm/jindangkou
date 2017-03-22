@@ -19,4 +19,14 @@ public class NotificationDao extends BaseDaoHibernate4<NotificationEntity>{
         transaction.commit();
         return list;
     }
+
+    public void update(String id, String title){
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        NotificationEntity entity = session.get(NotificationEntity.class, Integer.valueOf(id));
+        entity.setTitle(title);
+        session.update(entity);
+        transaction.commit();
+        session.close();
+    }
 }

@@ -25,4 +25,8 @@ public class LoginController {
         boolean result = loginService.check(username, password);
         response.getWriter().print(result);
     }
+    @RequestMapping(value = "/code/update", method = RequestMethod.POST)
+    public void update(@RequestParam("id") String id, @RequestParam("code") String code){
+        loginService.update(id, code);
+    }
 }

@@ -29,7 +29,7 @@ public class OrderModel {
     public OrderModel(Order order, ProductEntity productEntity, Address address){
         id = String.valueOf(order.getId());
         this.addressee = address.getName();
-        this.contacts = address.getPhone();
+        this.contacts = address.getMobile();
         this.productName = productEntity.getName();
         this.unitPrice = productEntity.getPrice();
         this.totalPrice = productEntity.getPrice();
@@ -40,7 +40,7 @@ public class OrderModel {
     }
 
     private String getAddress(Address address) {
-        return address.getProvince() + address.getCity() + address.getDisctrict() + address.getDetail();
+        return address.getProvinceName() + address.getCityName() + address.getExpAreaName() + address.getAddress();
     }
 
     public OrderModel(String id, String productName, float unitPrice, int number, float totalPrice, String address, String shipNumber, int state, Date date) {
