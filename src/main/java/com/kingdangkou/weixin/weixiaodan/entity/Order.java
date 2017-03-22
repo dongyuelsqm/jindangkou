@@ -93,7 +93,7 @@ public class Order {
         this.customerEntity = customerEntity;
     }
 
-    @Column(name = "deal_date")
+    @Column(name = "date")
     public Date getDate() {
         return date;
     }
