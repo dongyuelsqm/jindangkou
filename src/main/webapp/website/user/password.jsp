@@ -3,7 +3,7 @@
 <%@ include file="../common/upper-part.jsp"%>
 <h1 class="content-title">修改密码</h1>
 <form class="block-body form" id="password-form">
-    <input type="hidden" name="id" value=""/>
+    <input type="hidden" name="id" value="${sessionScope._USER_INFO_USER_ID_}"/>
     <div class="row">
         <label class="col-md-3 control-label">原始密码<span class="required">*</span></label>
         <div class="col-md-5">
