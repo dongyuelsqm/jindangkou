@@ -164,7 +164,8 @@ define(function(require, exports, module) {
 
                 if(result.successSign){
                     var finalName = result.url;
-                    _this.$('input[name="pictures"]').val(finalName);
+                    _this.$('input[name="picture"]').val(finalName);
+                    _this.$('img.upload-default').attr('src', G.contextPath + 'upload/' + result.detail[0]);
                 }else{
                     alert(result.errorMessage || '上传出错');
                 }
