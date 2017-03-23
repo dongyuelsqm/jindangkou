@@ -29,7 +29,6 @@ public class LoginFilter implements Filter {
         //System.out.println(path);
 
         // 从session里取员工工号信息
-        String empId = (String) session.getAttribute("boss");
 
         /*创建类Constants.java，里面写的是无需过滤的页面
         for (int i = 0; i < Constants.NoFilter_Pages.length; i++) {
@@ -40,16 +39,17 @@ public class LoginFilter implements Filter {
             }
         }*/
 
+        if (isDebug){
+            chain.doFilter(request, response);
+            return;
+        }
         // 登陆页面无需过滤
         if(path.indexOf("/login.jsp") > -1) {
             chain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        if (isDebug){
-            chain.doFilter(request, response);
-            return;
-        }
+        String empId = (String) session.getAttribute("_USER_INFO_USER_ID_");
         // 判断如果没有取到员工信息,就跳转到登陆页面
         if (empId == null || "".equals(empId)) {
             // 跳转到登陆页面

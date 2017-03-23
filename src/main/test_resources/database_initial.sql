@@ -38,6 +38,7 @@ create table customers(id int primary key AUTO_INCREMENT, open_id varchar(100) N
 CREATE TABLE unified_order(id int primary key AUTO_INCREMENT, app_id INT, mch_id INT, attach INT, body VARCHAR(1000), nonce_str VARCHAR(200), notify_url VARCHAR (200), openid VARCHAR(200), out_trade_no VARCHAR(200), spbill_create_ip VARCHAR(200), total_fee FLOAT, trade_type VARCHAR(200), sign VARCHAR(200), device_info VARCHAR(200));
 CREATE TABLE store_info(id int primary key AUTO_INCREMENT, username VARCHAR(100) NOT NULL , phone VARCHAR(100), qq VARCHAR(20), email VARCHAR(20), name VARCHAR(20), address_id VARCHAR(20), tel VARCHAR(100), picture VARCHAR(100)) CHARACTER SET = utf8;
 
+INSERT INTO admin(username, password)  VALUES ('username', 'password');
 insert into products (name, department_id, unit_price, description, pictures, videos, minimum, postal, code, input_date) values('jeans', 1, 1.11, 'good','pic', 'videos', 10, '1', 'code', '2016-12-22 00:00:00');
 insert into sizes (name) values('avg');
 insert into colors (name) values ('red');

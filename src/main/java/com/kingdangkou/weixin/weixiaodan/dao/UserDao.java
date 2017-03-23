@@ -1,6 +1,8 @@
 package com.kingdangkou.weixin.weixiaodan.dao;
 
 import com.kingdangkou.weixin.weixiaodan.entity.User;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,7 +10,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UserDao extends BaseDaoHibernate4<User> {
-    public User get(String userName){
-        return get(User.class, userName);
+    public User get(String name, String password){
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        String hql = "From User where userName=:username and password=:password";
+        User obj = session.createQuery(hql, User.class).setString("username", name).setString("password", password).uniqueResult();
+        transaction.commit();
+        session.close();
+        return obj;
     }
 }

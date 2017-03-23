@@ -19,7 +19,22 @@ public class LoginControllerTest extends TestBase<LoginController> {
 
     @Test
     public void udpate() throws Exception {
-        ResultActions resultActions = mockMvc.perform(post("/website/code/update").param("id", "1").param("code", "code")).andDo(print());
+        ResultActions resultActions = mockMvc.perform(post("/website/code/update").
+                param("id", "1").
+                param("old_code", "new_code").
+                param("new_code", "new_code").
+                param("confirm_code", "new_code")).andDo(print());
+        resultActions.andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void udpate_withInvalidCode() throws Exception {
+        ResultActions resultActions = mockMvc.perform(post("/website/code/update").
+                param("id", "1").
+                param("old_code", "code").
+                param("new_code", "new_code").
+                param("confirm_code", "new_code")).andDo(print());
         resultActions.andExpect(status().isOk());
 
     }
