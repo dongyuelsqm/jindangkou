@@ -92,30 +92,30 @@
                 <div class="col-md-4">
                     <div class="dropdown" id="province_dropdown">
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" value="省份" placeholder="" />
+                            <input type="text" readonly class="form-control" name="province" value="省份" placeholder="" />
                             <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                         </div>
-                        <input type="hidden" name="province" id="province" value="" />
+                        <input type="hidden" id="province" value="" />
                         <ul class="ul-dropdown" id="province_select"></ul>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="dropdown" id="city_dropdown">
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" value="城市" placeholder="" />
+                            <input type="text" readonly class="form-control" name="city" value="城市" placeholder="" />
                             <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                         </div>
-                        <input type="hidden" name="city" id="city" value="" />
+                        <input type="hidden" id="city" value="" />
                         <ul class="ul-dropdown" id="city_select"></ul>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="dropdown" id="district_dropdown">
                         <div class="input-group">
-                            <input type="text" readonly class="form-control" value="区/县" placeholder="" />
+                            <input type="text" readonly class="form-control" name="district"  value="区/县" placeholder="" />
                             <span class="input-group-addon" role="select" ><i class="iconfont icon-unfold"></i></span>
                         </div>
-                        <input type="hidden" name="district" id="district" value="" />
+                        <input type="hidden" id="district" value="" />
                         <ul class="ul-dropdown" id="district_select"></ul>
                     </div>
                 </div>
@@ -171,3 +171,5 @@
         mod.run();
     });
 </script>
+</body>
+</html>

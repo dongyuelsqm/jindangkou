@@ -101,7 +101,7 @@ define(function(require, exports, module) {
 				newPassword: {
 					required: '请输入密码',
 					rangelength: '密码必须为6-16个字符',
-					pwd: '密码至少包含字母、数字和符号其中的两种',
+					pwd: '密码至少包含字母、数字和符号其中的两种'
 				},
 				confirmPassword: {
 					equalTo: '两次输入密码不一致'

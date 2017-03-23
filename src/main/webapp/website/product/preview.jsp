@@ -7,3 +7,5 @@
     <img src="${contextPath}/res/css/module/img/preview.png" alt="商城预览" title="商城预览" />
 </div>
 <%@include file="../common/lower-part.jsp"%>
+</body>
+</html>

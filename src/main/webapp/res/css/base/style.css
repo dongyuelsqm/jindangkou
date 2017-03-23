@@ -191,7 +191,7 @@ th > .order{background-image: url(./img/order-arrow.png); background-repeat: no-
 	    .form .form-control{background: #fff; border-radius: 0; display: inline-block;}
 	    .form .form-control.error{border-color: #ea3527; color: #ea3527;}
         .form .verify-img{cursor: pointer; height: 40px; vertical-align: middle;}
-        .form .comment {color: #cdcdcd; line-height: 30px; margin-bottom: 5px; margin-top: 5px;}
+        .form .comment {color: #cdcdcd; line-height: 1.5em; margin-bottom: 5px; margin-top: 5px;}
         	.form .comment a{padding: 0 5px; vertical-align: baseline;}
         .form .agreement { color: #aaa; }
 

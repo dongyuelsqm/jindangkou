@@ -13,7 +13,6 @@ define(function(require, exports, module) {
     var template = util.template,
         SelectView = form.SelectView,
         CheckboxView = form.CheckboxView,
-        colorMap = require('module/default/colors').colorMap,
         cityMap = require('module/default/cityMap');
 
     require('jquery-validate');

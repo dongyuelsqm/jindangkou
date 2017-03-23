@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ include file="./common/taglibs.jsp"%>
 <%@ include file="common/upper-part.jsp"%>
+<c:set var="currentPath" value="index" />
 <link rel="stylesheet" href="${contextPath}/res/css/module/index.css" />
 <div class="index-block">
 	<ul class="index-nav block-body">
@@ -43,3 +44,5 @@
         mod.run();
     });
 </script>
+</body>
+</html>

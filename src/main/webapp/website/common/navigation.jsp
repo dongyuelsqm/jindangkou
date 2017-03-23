@@ -4,16 +4,7 @@
       <div class="navs-wrapper">
           <div class="container clearfix">
               <span class="brand pull-left"></span>
-              <ul class="navs pull-right" id="log">
-                  <li id="nav-" style="padding-right: 0;"><a href="${contextPath}/website/login.jsp" >登录</a></li>
-                  <li id="nav-7" style="padding-right: 0;">
-                      <a href="${contextPath}/website/member/personal-center.action" >
-                        <span id="user-name">admin</span>
-                      </a>
-                  </li>
-                  <li id="" style="padding: 0 5px;">|</li>
-                  <li id="nav-8" style="padding: 0;"><a href="javascript:" id="logout">退出</a></li>
-              </ul>
+              <c:if test="${empty sessionScope._USER_INFO_LOGIN_NAME_}">
               <ul class="navs pull-right" id="navs">
                   <li id="nav-1" <c:if test="${currentPath == 'welcome'}">class="active"</c:if> ><a href="${contextPath}/website/welcome.jsp" >首页</a></li>
                   <li id="nav-2" <c:if test="${currentPath == 'products'}">class="active"</c:if> ><a href="${contextPath}/website/products.jsp" >产品大全</a></li>
@@ -21,6 +12,24 @@
                   <li id="nav-4" <c:if test="${currentPath == 'agent'}">class="active"</c:if> ><a href="${contextPath}/website/agent.jsp" >区域代理</a></li>
                   <li id="nav-5" <c:if test="${currentPath == 'about'}">class="active"</c:if> ><a href="${contextPath}/website/about.jsp" >关于我们</a></li>
               </ul>
+              </c:if>
+              <c:if test="${sessionScope._USER_INFO_LOGIN_NAME_}">
+              <ul class="navs pull-right" id="navs">
+                  <li id="nav-1" <c:if test="${currentPath == 'index'}">class="active"</c:if> ><a href="${contextPath}/website/index.jsp" >店铺概况</a></li>
+                  <li id="nav-2" <c:if test="${currentPath == 'order_0'}">class="active"</c:if> ><a href="${contextPath}/website/order/list.jsp" >今日订单</a></li>
+                  <li id="nav-3" <c:if test="${currentPath == 'order_1'}">class="active"</c:if> ><a href="${contextPath}/website/order/list.jsp" >未发订单</a></li>
+                  <li id="nav-4" <c:if test="${currentPath == 'order_2'}">class="active"</c:if> ><a href="${contextPath}/website/order/list.jsp" >已发订单</a></li>
+                  <li id="nav-5" style="padding-right: 0;">
+                      <span id="user-name">${sessionScope._USER_INFO_LOGIN_NAME_}<i class="iconfont icon-unfold"></i></span>
+                      <ul class="sub-navs" id="sub-navs">
+                          <li><a href="${contextPath}/website/user/password.jsp" >修改密码</a></li>
+                          <li><a href="#" >公众号管理</a></li>
+                      </ul>
+                  </li>
+                  <li id="" style="padding: 0 5px;">|</li>
+                  <li id="nav-6" style="padding: 0;"><a href="javascript:" id="logout">退出</a></li>
+              </ul>
+              </c:if>
           </div>
       </div>
   </div>
