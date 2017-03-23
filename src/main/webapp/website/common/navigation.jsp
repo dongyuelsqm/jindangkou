@@ -20,9 +20,11 @@
                   <li id="nav-3" <c:if test="${currentPath == 'order_1'}">class="active"</c:if> ><a href="${contextPath}/website/order/list.jsp" >未发订单</a></li>
                   <li id="nav-4" <c:if test="${currentPath == 'order_2'}">class="active"</c:if> ><a href="${contextPath}/website/order/list.jsp" >已发订单</a></li>
                   <li id="nav-5" style="padding-right: 0;">
-                      <a href="${contextPath}/website/member/personal-center.action" >
-                          <span id="user-name">admin</span>
-                      </a>
+                      <span id="user-name">admin<i class="iconfont icon-unfold"></i></span>
+                      <ul class="sub-navs" id="sub-navs">
+                          <li><a href="${contextPath}/website/user/password.jsp" >修改密码</a></li>
+                          <li><a href="#" >公众号管理</a></li>
+                      </ul>
                   </li>
                   <li id="" style="padding: 0 5px;">|</li>
                   <li id="nav-6" style="padding: 0;"><a href="javascript:" id="logout">退出</a></li>

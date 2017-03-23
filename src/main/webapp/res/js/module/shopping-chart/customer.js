@@ -7,15 +7,13 @@ define(function(require, exports, module) {
     var $ = require('jquery'),
         _ = require('underscore'),
         Backbone = require('backbone'),
-        form = require('util/form'),
-        util = require('util/util');
+        form = require('util/form');
 
     require('plupload');
     require('jquery-validate');
     require('jquery-validate-add');
 
-    var template = util.template,
-        SelectView = form.SelectView,
+    var SelectView = form.SelectView,
         cityMap = require('module/default/cityMap');
 
     var upload_error = {
@@ -288,7 +286,6 @@ define(function(require, exports, module) {
         'submit': function(ev){
             var $this = $(ev.currentTarget),
                 _this = this;
-            console.log(_this.$el.serializeArray());
             if(this.validator.form()) {
                 var param = _this.$el.serializeObject(),
                     obj = {'openID': 'sss'};
