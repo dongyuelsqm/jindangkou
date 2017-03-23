@@ -23,7 +23,8 @@
 		.navs{height: 80px; overflow: visible;}
             .navs > li{line-height: 80px;}
             .navs > li > a{}
-            	 #message-count{font-size: 12px; vertical-align: super;}
+			#user-name{background: url(./img/user.png) no-repeat 0 center; display: inline-block; height: 40px; line-height: 40px; padding-left: 50px;}
+            	 /*#message-count{font-size: 12px; vertical-align: super;}*/
 /*				.navs > li > .active-arrow{background: url(../base/img/header-arrow.png) center no-repeat; bottom: -7px; height: 7px; left: 0; position: absolute; width: 100%; z-index: 11;}
     .navigation > .subnavs-wrapper{background: #fff; display: none; left:0; height: 70px; position:absolute; right: 0; z-index: 10;}
         .subnavs{position: absolute;}

@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../common/taglibs.jsp"%>
 <%@ include file="../common/upper-part.jsp"%>
+<style>
+    .form .comment{line-height: 40px; margin-bottom: 0;  margin-top: 0; }
+</style>
 <h1 class="content-title">商户信息</h1>
 <form class="block-body form" id="customer-form">
     <div class="row">
@@ -67,3 +70,5 @@
         mod.run();
     });
 </script>
+</body>
+</html>

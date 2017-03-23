@@ -14,5 +14,3 @@
     <script type="text/javascript">
         seajs.use('module/base/main');
     </script>
-</body>
-</html>
