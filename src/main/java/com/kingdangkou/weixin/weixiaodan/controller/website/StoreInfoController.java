@@ -25,7 +25,7 @@ public class StoreInfoController {
                        @RequestParam("phone") String phone,
                        @RequestParam("QQ") String qq,
                        @RequestParam("email") String email,
-                       @RequestParam("name") String name,
+                       @RequestParam("storeName") String name,
                        @RequestParam("address") String address,
                        @RequestParam("tel") String tel,
                        @RequestParam("picture") String picture, HttpServletResponse response) throws IOException {

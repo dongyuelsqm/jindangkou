@@ -19,7 +19,6 @@ public class StoreInfoControllerTest extends TestBase<StoreInfoController>{
                 param("username", "username").
                 param("phone", "123313123").
                 param("QQ", "123456").
-                param("name", "name").
                 param("email", "dongyue@gmail.com").
                 param("storeName", "storename").
                 param("address", "{\"address\":\"xihu\",\"cityName\":\"hangzhou\",\"expAreaName\":\"xihuhhhhh\",\"openID\":\"ssss\",\"provinceName\":\"zhejiang\"}").
