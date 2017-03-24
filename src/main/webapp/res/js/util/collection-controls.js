@@ -230,6 +230,15 @@ define(function (require, exports, module) {
                 _this.setTemplateHtml(_this.noDataTemplate(_this.noDataModel));
             }
         },
+        addItem: function(data){
+            var item = new this.ItemView(this.itemOption),
+                model = new Backbone.Model(data || {});
+            model.set({index: this.items.length});
+            item.bind(model);
+            this.items.push(item);
+
+            _this.$content.append(item.el);
+        },
         setData: function (data) {
             this.store.reset(data);
             this.render();

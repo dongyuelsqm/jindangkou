@@ -91,7 +91,7 @@ define(function(require, exports, module) {
                         }
                     },
                     row: {
-                        template: util.template('product-row'),
+                        template: util.template('productRow'),
                         defaultSetting: BaseItemSetting
                     },
                     rowView: ProductRowView,

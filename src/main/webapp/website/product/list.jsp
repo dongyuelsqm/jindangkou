@@ -3,9 +3,9 @@
 <%@ include file="../common/upper-part.jsp"%>
 <h1 class="content-title">商品列表</h1>
 <div id="table-wrapper" class="table-wrapper block-body">
-	<div class="table-operation clearfix" id="search-box">
+	<div class="operations clearfix" id="search-box">
 		<div class="operation-left pull-left">
-			<div class="checkbox-inline"><input type="checkbox" class="checkbox checkbox-all" /></div>
+			<span class="checkbox-inline"><input type="checkbox" class="checkbox checkbox-all" /></span>
 			<a class="btn btn-submit" href="javascript:" role="btn-delete-mul">删除</a>
 			<a class="btn btn-submit" href="javascript:" role="btn-off-shelf">下架</a>
 		</div>
@@ -34,7 +34,7 @@
 </div>
 <%@include file="../common/lower-part.jsp"%>
 
-<script type="text/html" id="tmpl-product-row">
+<script type="text/html" id="tmpl-productRow">
     <td><span class="checkbox-inline"><input type="checkbox" class="checkbox checkbox-all" /></span></td>
 	<td>
         <div style="width: 100px;">

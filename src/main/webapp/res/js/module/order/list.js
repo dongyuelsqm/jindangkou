@@ -145,7 +145,7 @@ define(function(require, exports, module) {
                         }
                     },
                     row: {
-                        template: util.template('order-row'),
+                        template: util.template('orderRow'),
                         defaultSetting: BaseItemSetting
                     },
                     rowView: OrderRowView,

@@ -8,13 +8,13 @@
 </style>
 <h1 class="content-title">订单列表</h1>
 <div id="table-wrapper" class="table-wrapper block-body">
-	<div class="table-operation clearfix" id="search-box">
-		<div class="operation-left left">
-			<div class="checkbox-inline"><input type="checkbox" class="checkbox checkbox-all" /></div>
+	<div class="operations clearfix" id="search-box">
+		<div class="operation-left pull-left">
+			<span class="checkbox-inline"><input type="checkbox" class="checkbox checkbox-all" /></span>
 			<a class="btn btn-submit" href="javascript:" role="btn-delete-mul">删除</a>
 			<a class="btn btn-submit" href="javascript:" role="btn-download">下载</a>
 		</div>
-		<div class="operation-right right">
+		<div class="operation-right pull-right">
 			<div class="input-group search-input">
 				<input type="text" class="form-control search-text" name="orderNo" placeholder="输入订单号进行搜索">
 				<span class="input-group-addon btn-search" >搜索</span>
@@ -76,7 +76,7 @@
 </div>
 <%@include file="../common/lower-part.jsp"%>
 
-<script type="text/html" id="tmpl-order-row">
+<script type="text/html" id="tmpl-orderRow">
 	<tr class="order-title" role="order-info">
 		<td>
 			<span class="checkbox-inline"><input type="checkbox" class="checkbox" /></span>

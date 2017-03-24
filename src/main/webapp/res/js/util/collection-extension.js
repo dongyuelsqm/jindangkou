@@ -151,9 +151,9 @@ define(function (require, exports, module) {
             _.extend({}, CheckableParentModel, { ItemView: CheckableRowView })
         );
     //可勾选列表视图及子项视图
-    var CheckableListItemView = collectionControls.ListItemView.extend(CheckableItemModel),
+    var CheckableItemView = collectionControls.ListItemView.extend(CheckableItemModel),
         CheckableListView = collectionControls.ListView.extend(
-            _.extend({}, CheckableParentModel, { ItemView: CheckableListItemView })
+            _.extend({}, CheckableParentModel, { ItemView: CheckableItemView })
         );
 
     module.exports = {
@@ -161,6 +161,6 @@ define(function (require, exports, module) {
         CheckableTableView: CheckableTableView,
         CheckableRowView: CheckableRowView,
         CheckableListView: CheckableListView,
-        CheckableListItemView: CheckableListItemView
+        CheckableItemView: CheckableItemView
     };
 });

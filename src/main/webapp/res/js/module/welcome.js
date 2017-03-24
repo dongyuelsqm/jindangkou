@@ -68,12 +68,9 @@ define(function(require, exports, module) {
                         if (rsp.successSign) {
                             alert('登录成功');
                         } else {
-                            if (rsp.errorMessage) {
-                                alert(rsp.errorMessage);
-                                return false;
-                            }
+
                             var timer = setTimeout(function () {
-                                _this.$error_msg.html(rsp.loginId || rsp.password || rsp.validCode);
+                                _this.$error_msg.html(rsp.detail || '登录失败！');
                                 _this.$error.show();
                                 clearTimeout(timer);
                             }, 500);

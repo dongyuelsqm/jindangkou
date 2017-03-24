@@ -3,7 +3,7 @@
 <%@ include file="../common/upper-part.jsp"%>
 <h1 class="content-title">客户统计</h1>
 <div id="table-wrapper" class="table-wrapper block-body">
-    <div class="table-operation clearfix" id="search-box">
+    <div class="operations clearfix" id="search-box">
         <div class="operation-right pull-right">
             <div class="input-group search-input">
                 <input type="text" class="form-control search-text" name="orderNo" placeholder="输入商品名称进行搜索">
