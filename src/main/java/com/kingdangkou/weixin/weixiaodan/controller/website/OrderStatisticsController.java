@@ -22,7 +22,9 @@ public class OrderStatisticsController {
 
     @RequestMapping(value = "/date", method = RequestMethod.GET)
     public void getOrderStatisticsByOrder(@RequestParam("date") String date, HttpServletResponse response) throws IOException {
-        Result statisticsByOrder = orderStatisticsService.getStatisticsByOrder(date);
+        Result statisticsByOrder = orderStatisticsService.getStatisticsByDate(date);
         response.getWriter().print(statisticsByOrder);
     }
+
+
 }

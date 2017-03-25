@@ -1,7 +1,7 @@
 package com.kingdangkou.weixin.weixiaodan.service;
 
 import com.kingdangkou.weixin.weixiaodan.dao.OrderStatisticsDao;
-import com.kingdangkou.weixin.weixiaodan.entity.DateOrderStatistics;
+import com.kingdangkou.weixin.weixiaodan.entity.OrderStatisticsData;
 import com.kingdangkou.weixin.weixiaodan.entity.Order;
 import com.kingdangkou.weixin.weixiaodan.model.Result;
 import net.sf.json.JSONArray;
@@ -21,19 +21,26 @@ public class OrderStatisticsService {
     @Autowired
     private OrderStatisticsDao orderStatisticsDao;
 
-    public Result getStatisticsByOrder(String date) {
+    public Result getStatisticsByDate(String date) {
         JSONArray json = JSONArray.fromObject(date);
         Object[] objects = json.toArray();
         HashMap<String, List<Order>> orders = orderStatisticsDao.getOrders(objects);
-        List<DateOrderStatistics> statisticss = convertToDateOrderStatisticss(orders);
+        List<OrderStatisticsData> statisticss = convertToDateOrderStatisticss(orders);
         return new Result(true, statisticss);
     }
 
-    private List<DateOrderStatistics> convertToDateOrderStatisticss(HashMap<String, List<Order>> orders) {
-        List<DateOrderStatistics> statisticss = new ArrayList<>();
+    public Result getStatisticsByDistriction(String districts){
+        JSONArray json = JSONArray.fromObject(districts);
+        Object[] array = json.toArray();
+        List ordersByDistricts = orderStatisticsDao.getOrdersByDistricts(array);
+        return new Result(true, ordersByDistricts);
+    }
+
+    private List<OrderStatisticsData> convertToDateOrderStatisticss(HashMap<String, List<Order>> orders) {
+        List<OrderStatisticsData> statisticss = new ArrayList<>();
         for (Map.Entry<String, List<Order>> entry: orders.entrySet()){
-            DateOrderStatistics statistics = new DateOrderStatistics();
-            statistics.setTime(entry.getKey());
+            OrderStatisticsData statistics = new OrderStatisticsData();
+            statistics.setKey(entry.getKey());
             statistics.setOrderNumber(entry.getValue().size());
             int total = 0;
             List<String> customers = new ArrayList<>();

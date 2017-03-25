@@ -28,4 +28,9 @@ public class OrderStatisticsDaoTest {
         assertEquals("sddfdfdfdf", orders.get("2017-03-12").get(0).getWeixinTransactionId());
     }
 
+    @Test
+    public void getOrdersByDistriction(){
+        List ordersByDistricts = orderStatisticsDao.getOrdersByDistricts(null);
+        System.out.println(ordersByDistricts);
+    }
 }

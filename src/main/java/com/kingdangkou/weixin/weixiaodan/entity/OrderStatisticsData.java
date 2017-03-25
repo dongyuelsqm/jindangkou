@@ -3,18 +3,18 @@ package com.kingdangkou.weixin.weixiaodan.entity;
 /**
  * Created by dongy on 2017-03-22.
  */
-public class DateOrderStatistics {
-    private String time;
+public class OrderStatisticsData {
+    private String key;
     private int orderNumber;
     private int sales;
     private int customerNumber;
 
-    public String getTime() {
-        return time;
+    public String getKey() {
+        return key;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public int getOrderNumber() {
