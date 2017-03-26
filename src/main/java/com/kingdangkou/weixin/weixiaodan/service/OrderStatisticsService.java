@@ -29,19 +29,18 @@ public class OrderStatisticsService {
         return new Result(true, statisticss);
     }
 
-    public Result getStatisticsByDistriction(String districts){
-        JSONArray json = JSONArray.fromObject(districts);
-        Object[] array = json.toArray();
-        List ordersByDistricts = orderStatisticsDao.getOrdersByDistricts(array);
-        return new Result(true, ordersByDistricts);
+    public Result getStatisticsByDistrict(){
+        List<Object[]> list = orderStatisticsDao.getOrdersByProvince();
+        List<OrderStatisticsData> formedDatas = new ArrayList<>();
+        for (Object[] statics: list){
+            formedDatas.add(new OrderStatisticsData(statics[2].toString(), Integer.valueOf(statics[0].toString()), Integer.valueOf(statics[0].toString()), Integer.valueOf(statics[0].toString()) ));
+        }
+        return new Result(true, formedDatas);
     }
 
     private List<OrderStatisticsData> convertToDateOrderStatisticss(HashMap<String, List<Order>> orders) {
         List<OrderStatisticsData> statisticss = new ArrayList<>();
         for (Map.Entry<String, List<Order>> entry: orders.entrySet()){
-            OrderStatisticsData statistics = new OrderStatisticsData();
-            statistics.setKey(entry.getKey());
-            statistics.setOrderNumber(entry.getValue().size());
             int total = 0;
             List<String> customers = new ArrayList<>();
             for (Order order: entry.getValue()){
@@ -50,9 +49,7 @@ public class OrderStatisticsService {
                 if (customers.contains(openID)) continue;
                 customers.add(openID);
             }
-            statistics.setCustomerNumber(customers.size());
-            statistics.setSales(total);
-            statisticss.add(statistics);
+            statisticss.add(new OrderStatisticsData(entry.getKey(), entry.getValue().size(), total, customers.size()));
         }
         return statisticss;
     }

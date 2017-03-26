@@ -21,10 +21,17 @@ public class OrderStatisticsController {
     private OrderStatisticsService orderStatisticsService;
 
     @RequestMapping(value = "/date", method = RequestMethod.GET)
-    public void getOrderStatisticsByOrder(@RequestParam("date") String date, HttpServletResponse response) throws IOException {
+    public void getOrderStatisticsByDate(@RequestParam("date") String date, HttpServletResponse response) throws IOException {
         Result statisticsByOrder = orderStatisticsService.getStatisticsByDate(date);
         response.getWriter().print(statisticsByOrder);
     }
+
+    @RequestMapping(value = "/district", method = RequestMethod.GET)
+    public void getOrderStatisticsByDistrict(HttpServletResponse response) throws IOException {
+        Result result = orderStatisticsService.getStatisticsByDistrict();
+        response.getWriter().print(result);
+    }
+
 
 
 }

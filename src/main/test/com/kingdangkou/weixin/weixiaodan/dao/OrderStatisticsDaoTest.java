@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by dongy on 2017-03-22.
@@ -30,7 +30,7 @@ public class OrderStatisticsDaoTest {
 
     @Test
     public void getOrdersByDistriction(){
-        List ordersByDistricts = orderStatisticsDao.getOrdersByDistricts(null);
-        System.out.println(ordersByDistricts);
+        List ordersByDistricts = orderStatisticsDao.getOrdersByProvince();
+        assertTrue(ordersByDistricts.size() == 1);
     }
 }

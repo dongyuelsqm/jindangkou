@@ -9,6 +9,13 @@ public class OrderStatisticsData {
     private int sales;
     private int customerNumber;
 
+    public OrderStatisticsData(String key, int orderNumber, int sales, int customerNumber) {
+        this.key = key;
+        this.orderNumber = orderNumber;
+        this.sales = sales;
+        this.customerNumber = customerNumber;
+    }
+
     public String getKey() {
         return key;
     }

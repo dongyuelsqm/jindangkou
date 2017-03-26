@@ -28,10 +28,10 @@ public class OrderStatisticsDao extends BaseDaoHibernate4<Order>{
         return orders;
     }
 
-    public List getOrdersByDistricts(Object[] districts){
+    public List getOrdersByProvince(){
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        List list = session.createQuery("select count (o.id) as order_number, sum(o.actual_price) as money, o.address from Order as o group by o.address").list();
+        List list = session.createQuery("select count (o.id) as order_number, sum(o.actual_price) as money, o.address.provinceName from Order as o group by o.address.provinceName").list();
         transaction.commit();
         session.close();
         return list;
